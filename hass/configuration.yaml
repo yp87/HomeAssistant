@@ -1,4 +1,3 @@
-# TODO - Move everything that was configured through UI to yaml.
 homeassistant:
   name: Home
   latitude: !secret home_latitude
