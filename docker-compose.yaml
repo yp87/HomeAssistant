@@ -1,5 +1,15 @@
 version: '3'
 services:
+  mqtt:
+    image: eclipse-mosquitto:latest
+    container_name: "mqtt"
+    restart: always
+    network_mode: host
+    ports:
+      - 1883:1883
+    volumes:
+      - ../mosquitto/config:/mosquitto/config
+
   homeassistant:
     container_name: hass
     #image: homeassistant/home-assistant:0.113.2    #Specific Version
@@ -11,15 +21,5 @@ services:
     restart: always
     network_mode: host
     depends_on:
-      mqtt:
-        condition: service_started
-
-  mqtt:
-    image: eclipse-mosquitto:latest
-    container_name: "mqtt"
-    restart: always
-    network_mode: host
-    ports:
-      - 1883:1883
-    volumes:
-      - ../mosquitto/config:/mosquitto/config
+      - mqtt:
+          condition: service_started
