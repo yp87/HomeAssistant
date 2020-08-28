@@ -8,5 +8,5 @@ ForEach-Object {
   $childPath = "$_".substring("$($sourcePath)".length+1)
   $dest = "$(Get-Secret HomeAssistantConfigPath -AsPlainText)\$($childPath)"
   Invoke-Command -Session $s -ScriptBlock { New-Item -Path $args[0] -type File -Force } -ArgumentList $dest
-  Copy-Item -Verbose -Path $_ -Destination $dest -Force -ToSession $s
+  Copy-Item -Path $_ -Destination $dest -Force -ToSession $s
 }
