@@ -190,7 +190,7 @@ hyperion_priority:
   port: !secret hyperion_port
 
 zone: !include zone.yaml
-alarm_control_panel: !include secret_alarm_control_panel.yaml
+alarm_control_panel: !include alarm_control_panel.yaml
 switch: !include_dir_merge_list switch
 binary_sensor: !include_dir_merge_list binary_sensor
 group: !include groups.yaml

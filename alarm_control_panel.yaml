@@ -1,0 +1,4 @@
+- platform: mqtt
+  name: !secret alarm_name
+  state_topic: !secret alarm_state_topic
+  command_topic: !secret alarm_command_topic
