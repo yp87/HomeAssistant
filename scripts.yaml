@@ -1,0 +1,106 @@
+auto_switch_on:
+  mode: parallel
+  sequence:
+    - service: switch.turn_on
+      data_template:
+        entity_id: "{{ auto_switch_entity }}"
+    - service: script.turn_on
+      data_template:      
+        entity_id: script.auto_switch_off
+        variables:
+          auto_switch_entity: "{{ auto_switch_entity }}" 
+          duration_seconds: "{{ duration_seconds }}"
+
+auto_switch_off:
+  mode: parallel
+  sequence:
+    - delay:
+        seconds: "{{ duration_seconds }}"
+    - condition: template    
+      value_template: '{{(as_timestamp(now()) - as_timestamp(states[auto_switch_entity].last_changed) >= ((duration_seconds|int) - 1))}}'
+    - service: switch.turn_off
+      data_template:
+        entity_id: "{{ auto_switch_entity }}"
+
+# TODO - Simplify with new repeat mode.
+intrusion_detected:
+  sequence:
+    - service: media_player.volume_set
+      entity_id: media_player.maison
+      data_template:
+        volume_level: >
+          {% if (loop | int) > 0 %}
+            1
+          {% else %}
+            0.3
+          {% endif %}
+    - condition: template
+      value_template: "{{ (loop | int) > 0 }}"
+    - service: script.turn_on
+      data_template:
+        entity_id: script.intrusion_detected_loop
+        variables:  
+          loop: "{{ loop }}"    
+
+intrusion_detected_loop:
+  sequence:
+    - service: tts.google_translate_say
+      entity_id: media_player.maison
+      data:
+        message: >
+          Une intrusion a été détectée. Les vidéos de votre arrivé et les informations de votre mobile ont été enregistrés. 
+          La police a été informée. Quittez immédiatement les lieux.           
+        language: 'fr'
+    - delay:
+        seconds: 30
+    - service: script.turn_on
+      data_template:
+        entity_id: script.intrusion_detected
+        variables:  
+          loop: "{{ (loop | int) - 1 }}" 
+
+fred_add_consumed_milk:
+  sequence:
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.fred_last_milk
+      data_template:
+        time: "{{ now().strftime('%H:%M:%S') }}"
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.fred_daily_milk_consumption
+        value: "{{ added_milk_quantity | float + states('input_number.fred_daily_milk_consumption') | float }}"
+    - service: notify.all_people
+      data_template:
+        message: >
+           Fred est rendu à {{ states('input_number.fred_daily_milk_consumption') }} onces de lait.
+
+fred_vit_d_drop:
+  sequence:
+    - condition: state
+      entity_id: input_boolean.fred_had_drop
+      state: "off"
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.fred_had_drop
+    - service: notify.all_people
+      data:
+        message: "Fred a pris sa goutte."
+
+yan_pills:
+  sequence:
+    - condition: state
+      entity_id: input_boolean.yan_had_pills
+      state: "off"
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.yan_had_pills
+    - service: notify.all_people
+      data:
+        message: "Yan a pris ses pillules."
+
+phone_notification:
+  mode: parallel
+  sequence:
+    - condition: template
+      value_template: '{{ is_state("person." + owner, "home") }}'
+    - service_template: input_boolean.{% if type == "notification" %}toggle{% elif type == "rings" %}turn_on{% else %}turn_off{% endif %}
+      data_template:
+        entity_id: input_boolean.{{ owner }}_phone_{{ type or "rings"}}

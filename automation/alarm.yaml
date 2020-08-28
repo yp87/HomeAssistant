@@ -1,0 +1,74 @@
+- alias: back door open turn off thermostat
+  trigger:
+    platform: state
+    entity_id: binary_sensor.back_door
+    from: "off"
+    to: "on"
+    for: "00:03:00"
+  condition:
+    condition: state
+    entity_id: climate.main_floor
+    state: home
+  action:   
+    - service: climate.set_preset_mode
+      data:
+        entity_id: climate.main_floor
+        preset_mode: away
+    - wait_template: '{{ is_state("binary_sensor.back_door", "off") }}'
+    - service: climate.set_preset_mode
+      data:
+        entity_id: climate.main_floor
+        preset_mode: home
+
+- alias: Disarmed alarm
+  trigger:
+    platform: state
+    entity_id: alarm_control_panel.home_alarm
+    to: 'disarmed'
+  action:   
+    - service: climate.set_preset_mode
+      data:
+        entity_id: climate.main_floor
+        preset_mode: home
+    #For christmas tree! Also add to All_Light_switch group and comment other instances  
+    #- service: switch.turn_on
+    #  data:
+    #    entity_id: switch.christmas_tree_switch
+
+- alias: Disarmed alarm from pending
+  trigger:
+    platform: state
+    entity_id: alarm_control_panel.home_alarm
+    from: 'pending'
+    to: 'disarmed'
+  condition:
+    condition: or
+    conditions:
+      - condition: sun
+        after: sunset
+        after_offset: "-01:00:00"
+      - condition: sun
+        before: sunrise
+        after_offset: "01:00:00"
+  action:   
+    - service: light.turn_on
+      data:
+        entity_id: light.kitchen_main_light, light.ground_floor_hallway_light
+        brightness: 50  
+
+- alias: armed away alarm
+  trigger:
+    platform: state
+    entity_id: alarm_control_panel.home_alarm
+    to: 'armed_away'
+  action:
+    - service: climate.set_preset_mode
+      data:
+        entity_id: climate.main_floor
+        preset_mode: away
+    - service: light.turn_off
+      entity_id: all
+    - service: switch.turn_off
+      entity_id: group.all_light_switches
+    - service: remote.turn_off
+      entity_id: remote.yharmony

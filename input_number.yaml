@@ -1,0 +1,4 @@
+fred_daily_milk_consumption:
+  name: Nombre d'onces consommé par Frédérique aujourd'hui
+  max: 254
+  min: 0

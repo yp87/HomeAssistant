@@ -1,0 +1,136 @@
+- alias: everyone has left
+  trigger:
+  - platform: state
+    entity_id: group.all_people
+    from: 'home'
+    to: 'not_home'
+  condition:
+    condition: or
+    conditions:
+     - condition: state
+       entity_id: switch.garage_door
+       state: 'on'
+     - condition: state
+       entity_id: alarm_control_panel.home_alarm
+       state: 'disarmed'
+  action:
+    - service: notify.all_people
+      data_template:
+        # The garage message will be handled in "close garage door if no one is home"
+        message: >
+          On dirait que quelque chose cloche..
+          {% if is_state('alarm_control_panel.home_alarm', 'disarmed') %}
+          Il n'y a personne à la maison et le système d'alarme est désarmé.
+          {% endif %}          
+    - repeat:
+        sequence:
+          - delay:
+              milliseconds: 20000
+          - service: notify.all_people
+            data_template:
+              message: >
+                {% if is_state('switch.garage_door', 'on') %}
+                la porte de garage est toujours ouverte. 
+                {% endif %}
+                {% if is_state('alarm_control_panel.home_alarm', 'disarmed') %}
+                le système d'alarme est toujours désarmé.
+                {% endif %}          
+        until:
+          - condition: or
+            conditions:
+            - condition: state
+              entity_id: group.all_people
+              state: 'home'
+            - condition: and
+              conditions:
+              - condition: state
+                entity_id: switch.garage_door
+                state: 'off'
+              - condition: state
+                entity_id: alarm_control_panel.home_alarm
+                state: 'armed_away'           
+    - service: notify.all_people
+      data:
+        message: Le problème est maintenant réglé.
+
+- alias: intrusion when no one is home
+  trigger:
+  - platform: state
+    entity_id: switch.garage_door
+    to: 'on'
+  - platform: state
+    entity_id: alarm_control_panel.home_alarm
+    from: 'armed_away'
+  action:
+    - delay:
+        seconds: 60
+    - condition: state
+      entity_id: group.all_people
+      state: 'not_home'
+    - service: notify.all_people
+      data_template:
+        # The garage message will be handled in "close garage door if no one is home"
+        message: >
+          Une intrusion a été détectée.
+          {% if trigger.entity_id == 'alarm_control_panel.home_alarm' %}
+            Il n'y a personne à la maison et le système d'alarme n'est plus armé.
+          {% endif %}
+    - delay:
+        seconds: 60
+    - condition: state
+      entity_id: group.all_people
+      state: 'not_home'
+    - service: script.turn_on
+      data_template:
+        entity_id: script.intrusion_detected
+        variables:  
+          loop: 20
+
+- alias: close garage door if no one is home
+  trigger:
+  - platform: state
+    entity_id: group.all_people
+    from: 'home'
+    to: 'not_home'
+  - platform: state
+    entity_id: switch.garage_door
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: switch.garage_door
+        state: 'on'
+      - condition: state
+        entity_id: group.all_people
+        state: 'not_home'
+  action:
+    - service: notify.all_people
+      data:
+        message: Il n'y a personne à la maison et la porte de garage est ouverte. 
+    - repeat:
+        sequence:
+          - service: notify.all_people
+            data:
+              message: Fermeture de la porte de garage en cours...
+          - service: switch.turn_off
+            entity_id: switch.garage_door
+          - delay:
+              milliseconds: 15000
+        until:
+          - condition: or
+            conditions:
+            - condition: state
+              entity_id: switch.garage_door
+              state: 'off'
+            - condition: state
+              entity_id: group.all_people
+              state: 'home'
+    - service: notify.all_people
+      data_template:        
+        message: >
+          {% if is_state('switch.garage_door', 'off') %}
+            La porte de garage est maintenant fermée.
+          {% else %}
+            La porte de garage n'est pas encore fermée, mais il y a maintenant quelqu'un à la maison.
+          {% endif %}

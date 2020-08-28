@@ -1,0 +1,32 @@
+- alias: update leaf in morning
+  trigger:
+    # Update three times because leaf api is very slow and unreliable.
+    - platform: time
+      at: "05:45:00"
+    - platform: time
+      at: "06:00:00"
+    - platform: time
+      at: "06:15:00"
+  action:
+    - service: nissan_leaf.update
+      data:
+        vin: !secret nissan_vin
+
+- alias: leaf - hue - Long Press ON
+  trigger: 
+    - platform: state 
+      entity_id: sensor.hue_dimmer_switch_1
+      to: "1_hold"
+  action: 
+     - service: notify.cath
+       data_template:
+         message: >
+          {% set weekday = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'] %}
+          {% set dt = states.sensor.eve2gmmug_charge.attributes.updated_on %}         
+          Bon matin Catherine! Ton carosse est chargé à {{ states('sensor.eve2gmmug_charge') }}% et est
+          {% if is_state("binary_sensor.eve2gmmug_plug_status", "on") %}
+          branché.
+          {% else %}
+          DÉBRANCHÉ.
+          {% endif %}
+          La dernière mise à jour est ce {{ weekday[dt.weekday()] }} à {{ dt.astimezone().strftime('%HH%M') }}.

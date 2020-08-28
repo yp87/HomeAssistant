@@ -1,0 +1,72 @@
+- alias: Alert midnight resets
+  trigger:
+    - platform: time
+      at: '00:00:00'
+  action:
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.fred_daily_milk_consumption
+        value: 0
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.fred_had_drop
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.yan_had_pills
+
+- alias: frederique drop notify
+  trigger:
+    - platform: time
+      at: '09:00:00'
+  condition:
+    - condition: state
+      entity_id: input_boolean.fred_had_drop
+      state: "off"
+  action:
+    - service: notify.all_people
+      data:
+        message: "N'oubliez pas la goutte à Fred!"
+
+- alias: yan pills notify
+  trigger:
+    - platform: time
+      at: '21:00:00'
+  condition:
+    - condition: state
+      entity_id: input_boolean.yan_had_pills
+      state: "off"
+  mode: single
+  action:
+    - service: notify.yan
+      data:
+        message: "Yan, prends tes pillules!"
+    - condition: and
+      conditions:
+        - condition: state
+          entity_id: person.yan
+          state: "home"
+        - condition: state
+          entity_id: alarm_control_panel.home_alarm
+          state:  "disarmed"
+    - repeat:
+        sequence:
+          - delay: "00:00:02"
+          - service: light.turn_on
+            data:
+              entity_id: light.table_de_chevet_de_yan
+              brightness: 56
+              xy_color: [0.672, 0.324]
+              transition: 1
+          - delay: "00:00:02"
+          - service: light.turn_off
+            data:
+              entity_id: light.table_de_chevet_de_yan
+              transition: 1
+        until: 
+          - condition: template
+            value_template: '{{ is_state("input_boolean.yan_had_pills", "on") }}'
+    - service: light.turn_on
+      data:
+        entity_id: light.table_de_chevet_de_yan
+        brightness: 1
+        color_temp: 366
+    - service: light.turn_off
+      entity_id: light.table_de_chevet_de_yan
