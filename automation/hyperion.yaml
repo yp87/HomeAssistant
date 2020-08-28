@@ -99,7 +99,7 @@
             data_template:
               effect: Cinema brighten lights
               args: >
-                { "color-start": [0, 0, 0], 
+                { "color-start": [0, 0, 0],
                   "color-end": {{ [0, 255, 0] if trigger.entity_id == "input_boolean.yan_phone_notification" else [190, 0, 255] }},
                   "fade-time": 0.8 }
               priority: '{{ 126 if trigger.entity_id == "input_boolean.yan_phone_notification" else 124 }}'

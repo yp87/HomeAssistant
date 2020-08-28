@@ -105,7 +105,7 @@ zwave:
   usb_path: !secret zwave_usb_path
   polling_interval: 0
   network_key: !secret zwave_network_key
-  
+
 logger:
   default: info
 

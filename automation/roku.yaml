@@ -42,7 +42,7 @@
       type: keypress
       key: Fwd
   action:
-    - service: media_player.media_seek       
+    - service: media_player.media_seek
       entity_id: media_player.salon_tv
       data_template:
         seek_position: '{{ ((states.media_player.salon_tv.attributes.media_position) + 30) | float}}'
@@ -55,7 +55,7 @@
       type: keypress
       key: Rev
   action:
-    - service: media_player.media_seek       
+    - service: media_player.media_seek
       entity_id: media_player.salon_tv
       data_template:
         seek_position: '{{ ((states.media_player.salon_tv.attributes.media_position) - 30) | float}}'
@@ -71,7 +71,7 @@
     value_template: >
       {{ trigger.event.data.key in ['Lit_1', 'Lit_2', 'Lit_3', 'Lit_4', 'Lit_5', 'Lit_6', 'Lit_7', 'Lit_8', 'Lit_9', 'Lit_0'] }}
   action:
-    - service: media_player.media_seek       
+    - service: media_player.media_seek
       entity_id: media_player.salon_tv
       data_template:
         seek_position: >

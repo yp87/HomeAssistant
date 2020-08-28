@@ -9,7 +9,7 @@
     condition: state
     entity_id: climate.main_floor
     state: home
-  action:   
+  action:
     - service: climate.set_preset_mode
       data:
         entity_id: climate.main_floor
@@ -25,12 +25,12 @@
     platform: state
     entity_id: alarm_control_panel.home_alarm
     to: 'disarmed'
-  action:   
+  action:
     - service: climate.set_preset_mode
       data:
         entity_id: climate.main_floor
         preset_mode: home
-    #For christmas tree! Also add to All_Light_switch group and comment other instances  
+    #For christmas tree! Also add to All_Light_switch group and comment other instances
     #- service: switch.turn_on
     #  data:
     #    entity_id: switch.christmas_tree_switch
@@ -50,11 +50,11 @@
       - condition: sun
         before: sunrise
         after_offset: "01:00:00"
-  action:   
+  action:
     - service: light.turn_on
       data:
         entity_id: light.kitchen_main_light, light.ground_floor_hallway_light
-        brightness: 50  
+        brightness: 50
 
 - alias: armed away alarm
   trigger:

@@ -1,9 +1,9 @@
 - alias: Hue remote automation - Long Press Off
-  trigger: 
-    - platform: state 
+  trigger:
+    - platform: state
       entity_id: sensor.hue_dimmer_switch_1
       to: "4_hold"
-  action: 
+  action:
     - service: alarm_control_panel.alarm_arm_home
       entity_id: all
     - service: light.turn_off
@@ -27,15 +27,15 @@
         language: 'fr'
 
 - alias: Hue remote automation - Long Press ON
-  trigger: 
-    - platform: state 
+  trigger:
+    - platform: state
       entity_id: sensor.hue_dimmer_switch_1
       to: "1_hold"
   condition:
     condition: state
     entity_id: group.all_people
     state: "home"
-  action: 
+  action:
     - service: alarm_control_panel.alarm_disarm
       entity_id: all
     - service: climate.set_preset_mode

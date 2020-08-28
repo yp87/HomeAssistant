@@ -18,3 +18,4 @@ __pycache__/
 .*
 !/.gitignore
 !/.HA_VERSION
+!/.editorconfig
