@@ -63,8 +63,8 @@ sun:
 mqtt:
   broker: 127.0.0.1
   port: 1883
-  username: !secret MQTT_username
-  password: !secret MQTT_password
+  username: !secret mqtt_username
+  password: !secret mqtt_password
 
 # TODO - move these to different files
 sensor:
