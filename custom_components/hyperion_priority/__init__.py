@@ -13,10 +13,10 @@ COLOR = 'color'
 ARGS = 'args'
 
 def setup(hass, config):
-    """Service to send commands to hyperion."""  
+    """Service to send commands to hyperion."""
     _host = config[DOMAIN][CONF_HOST]
     _port = config[DOMAIN][CONF_PORT]
-    
+
     def apply_effect(call):
         effect = call.data.get(EFFECT)
         priority = call.data.get(PRIORITY)
@@ -30,7 +30,7 @@ def setup(hass, config):
                 "command": "effect",
                 "priority": int(priority),
                 "effect": {"name": effect, "args": args,}
-            }            
+            }
         )
 
     def clear_priority(call):
@@ -80,8 +80,7 @@ def setup(hass, config):
 
         sock.close()
         return json.loads(response)
-        
-        
+
     hass.services.register(DOMAIN, 'apply_effect', apply_effect)
     hass.services.register(DOMAIN, 'clear_priority', clear_priority)
     return True

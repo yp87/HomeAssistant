@@ -13,16 +13,16 @@
         vin: !secret nissan_vin
 
 - alias: leaf - hue - Long Press ON
-  trigger: 
-    - platform: state 
+  trigger:
+    - platform: state
       entity_id: sensor.hue_dimmer_switch_1
       to: "1_hold"
-  action: 
+  action:
      - service: notify.cath
        data_template:
          message: >
           {% set weekday = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'] %}
-          {% set dt = states.sensor.eve2gmmug_charge.attributes.updated_on %}         
+          {% set dt = states.sensor.eve2gmmug_charge.attributes.updated_on %}
           Bon matin Catherine! Ton carosse est chargé à {{ states('sensor.eve2gmmug_charge') }}% et est
           {% if is_state("binary_sensor.eve2gmmug_plug_status", "on") %}
           branché.

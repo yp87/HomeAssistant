@@ -15,14 +15,14 @@ white_noise_start:
     - service: script.turn_on
       data_template:
         entity_id: script.white_noise_play
-        variables:  
-          media_player_id: "{{ media_player_id }}" 
+        variables:
+          media_player_id: "{{ media_player_id }}"
     - delay: 00:00:02
     - service: media_player.volume_set
       data_template:
         entity_id: "{{ media_player_id }}"
         volume_level: "{{ states('input_number.fred_white_noise_level') | float }}"
-    
+
 white_noise_play:
   sequence:
     - service: media_player.play_media
@@ -34,7 +34,7 @@ white_noise_play:
       data_template:
         entity_id: script.white_noise_loop
         variables:
-          media_player_id: "{{ media_player_id }}" 
+          media_player_id: "{{ media_player_id }}"
 
 white_noise_loop:
   sequence:
@@ -42,7 +42,7 @@ white_noise_loop:
     - service: script.turn_on
       data_template:
         entity_id: script.white_noise_play
-        variables:  
+        variables:
           media_player_id: "{{ media_player_id }}"
 
 white_noise_stop:

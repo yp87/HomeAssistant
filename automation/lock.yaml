@@ -4,7 +4,7 @@
     entity_id: lock.front_door_lock
     to: 'unlocked'
     for:
-      minutes: 5  
+      minutes: 5
   - platform: state
     entity_id: binary_sensor.front_door
     to: 'off'

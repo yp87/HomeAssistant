@@ -21,7 +21,7 @@
           On dirait que quelque chose cloche..
           {% if is_state('alarm_control_panel.home_alarm', 'disarmed') %}
           Il n'y a personne à la maison et le système d'alarme est désarmé.
-          {% endif %}          
+          {% endif %}
     - repeat:
         sequence:
           - delay:
@@ -30,11 +30,11 @@
             data_template:
               message: >
                 {% if is_state('switch.garage_door', 'on') %}
-                la porte de garage est toujours ouverte. 
+                la porte de garage est toujours ouverte.
                 {% endif %}
                 {% if is_state('alarm_control_panel.home_alarm', 'disarmed') %}
                 le système d'alarme est toujours désarmé.
-                {% endif %}          
+                {% endif %}
         until:
           - condition: or
             conditions:
@@ -48,7 +48,7 @@
                 state: 'off'
               - condition: state
                 entity_id: alarm_control_panel.home_alarm
-                state: 'armed_away'           
+                state: 'armed_away'
     - service: notify.all_people
       data:
         message: Le problème est maintenant réglé.
@@ -83,7 +83,7 @@
     - service: script.turn_on
       data_template:
         entity_id: script.intrusion_detected
-        variables:  
+        variables:
           loop: 20
 
 - alias: close garage door if no one is home
@@ -107,7 +107,7 @@
   action:
     - service: notify.all_people
       data:
-        message: Il n'y a personne à la maison et la porte de garage est ouverte. 
+        message: Il n'y a personne à la maison et la porte de garage est ouverte.
     - repeat:
         sequence:
           - service: notify.all_people
@@ -127,7 +127,7 @@
               entity_id: group.all_people
               state: 'home'
     - service: notify.all_people
-      data_template:        
+      data_template:
         message: >
           {% if is_state('switch.garage_door', 'off') %}
             La porte de garage est maintenant fermée.

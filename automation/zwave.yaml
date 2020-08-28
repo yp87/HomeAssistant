@@ -39,8 +39,8 @@
     - service: light.turn_on
       data:
         entity_id: light.frederique_night_light
-        brightness: 255 
-          
+        brightness: 255
+
 - alias: Frederique main light triple down
   trigger:
     - platform: event
@@ -52,7 +52,7 @@
   action:
     - service: light.turn_off
       data:
-        entity_id: 
+        entity_id:
           - light.frederique_night_light
           - light.frederique_main_light
 
@@ -77,7 +77,7 @@
           - light.table_de_chevet_de_cath
           - light.table_de_chevet_de_yan
         brightness: 150
-    
+
 - alias: Frederique main light double down
   trigger:
     - platform: event
@@ -89,7 +89,7 @@
   action:
     - service: light.turn_off
       data:
-        entity_id: 
+        entity_id:
           - light.frederique_main_light
           - light.frederique_night_light
     # For baby monitor only
@@ -105,7 +105,7 @@
         entity_id: zwave.frederique_main_light
         scene_id: 1
         scene_data: 3
-  action:    
+  action:
     # For baby monitor only
     - service: switch.turn_off
       data:
@@ -117,7 +117,7 @@
       event_type: zwave.scene_activated
       event_data:
         scene_id: 1
-        scene_data: 0 
+        scene_data: 0
   condition:
     condition: template
     value_template: '{{states.light[trigger.event.data.entity_id.split(".")[1]] != None}}'
@@ -132,7 +132,7 @@
           255
           {% endif %}
     - service: zwave.refresh_entity
-      data_template:        
+      data_template:
         entity_id: '{{"light." + trigger.event.data.entity_id.split(".")[1]}}'
 
 - alias: Bathroom ceiling light single click up
@@ -146,7 +146,7 @@
   action:
     - service: light.turn_on
       data:
-        entity_id: 
+        entity_id:
           - light.bathroom_ceiling_light
           - light.bathroom_mirror_light
         brightness: 255
@@ -157,20 +157,20 @@
 - alias: bathroom any light single click down
   trigger:
     - platform: event
-      event_type: zwave.scene_activated   
+      event_type: zwave.scene_activated
       event_data:
         entity_id: zwave.bathroom_ceiling_light
         scene_id: 2
         scene_data: 0
     - platform: event
-      event_type: zwave.scene_activated   
+      event_type: zwave.scene_activated
       event_data:
         entity_id: zwave.bathroom_mirror_light
         scene_id: 2
         scene_data: 0
   action:
     - service: light.turn_off
-      entity_id: 
+      entity_id:
         - light.bathroom_ceiling_light
         - light.bathroom_mirror_light
     - service: script.turn_on
@@ -183,7 +183,7 @@
 - alias: bathroom fan double click up
   trigger:
     - platform: event
-      event_type: zwave.scene_activated   
+      event_type: zwave.scene_activated
       event_data:
         entity_id: zwave.master_bathroom_fan
         scene_id: 1
@@ -199,7 +199,7 @@
 - alias: bathroom fan triple click up
   trigger:
     - platform: event
-      event_type: zwave.scene_activated   
+      event_type: zwave.scene_activated
       event_data:
         entity_id: zwave.master_bathroom_fan
         scene_id: 1
@@ -216,17 +216,17 @@
 - alias: bathroom any light double click up
   trigger:
     - platform: event
-      event_type: zwave.scene_activated   
+      event_type: zwave.scene_activated
       event_data:
         entity_id: zwave.bathroom_ceiling_light
         scene_id: 1
-        scene_data: 3 
+        scene_data: 3
     - platform: event
-      event_type: zwave.scene_activated   
+      event_type: zwave.scene_activated
       event_data:
         entity_id: zwave.bathroom_mirror_light
         scene_id: 1
-        scene_data: 3 
+        scene_data: 3
   condition:
     condition: template
     value_template: '{{states.light[trigger.event.data.entity_id.split(".")[1]] != None}}'
@@ -239,7 +239,7 @@
 - alias: bathroom ceiling tripple click down
   trigger:
     - platform: event
-      event_type: zwave.scene_activated   
+      event_type: zwave.scene_activated
       event_data:
         entity_id: zwave.bathroom_ceiling_light
         scene_id: 2
@@ -249,35 +249,35 @@
     entity_id: group.all_people
     state: "home"
   action:
-    - service: light.turn_off      
-      entity_id: 
+    - service: light.turn_off
+      entity_id:
         - light.bathroom_ceiling_light
         - light.bathroom_mirror_light
     - service: switch.turn_off
       entity_id: switch.master_bathroom_fan
     - service: light.turn_on
       data:
-        entity_id: 
+        entity_id:
           - light.kitchen_main_light
-          - light.upper_stairs_light  
-        brightness: 40    
+          - light.upper_stairs_light
+        brightness: 40
     - service: alarm_control_panel.alarm_disarm
-      entity_id: all   
+      entity_id: all
 
 - alias: bathroom any light double click down
   trigger:
     - platform: event
-      event_type: zwave.scene_activated   
+      event_type: zwave.scene_activated
       event_data:
         entity_id: zwave.bathroom_ceiling_light
         scene_id: 2
-        scene_data: 3 
+        scene_data: 3
     - platform: event
-      event_type: zwave.scene_activated   
+      event_type: zwave.scene_activated
       event_data:
         entity_id: zwave.bathroom_mirror_light
         scene_id: 2
-        scene_data: 3 
+        scene_data: 3
   condition:
     condition: template
     value_template: '{{states.light[trigger.event.data.entity_id.split(".")[1]] != None}}'
@@ -289,7 +289,7 @@
 - alias: front light double click down
   trigger:
     - platform: event
-      event_type: zwave.scene_activated   
+      event_type: zwave.scene_activated
       event_data:
         entity_id: zwave.light_front
         scene_id: 2

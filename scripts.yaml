@@ -5,10 +5,10 @@ auto_switch_on:
       data_template:
         entity_id: "{{ auto_switch_entity }}"
     - service: script.turn_on
-      data_template:      
+      data_template:
         entity_id: script.auto_switch_off
         variables:
-          auto_switch_entity: "{{ auto_switch_entity }}" 
+          auto_switch_entity: "{{ auto_switch_entity }}"
           duration_seconds: "{{ duration_seconds }}"
 
 auto_switch_off:
@@ -16,7 +16,7 @@ auto_switch_off:
   sequence:
     - delay:
         seconds: "{{ duration_seconds }}"
-    - condition: template    
+    - condition: template
       value_template: '{{(as_timestamp(now()) - as_timestamp(states[auto_switch_entity].last_changed) >= ((duration_seconds|int) - 1))}}'
     - service: switch.turn_off
       data_template:
@@ -39,8 +39,8 @@ intrusion_detected:
     - service: script.turn_on
       data_template:
         entity_id: script.intrusion_detected_loop
-        variables:  
-          loop: "{{ loop }}"    
+        variables:
+          loop: "{{ loop }}"
 
 intrusion_detected_loop:
   sequence:
@@ -48,16 +48,16 @@ intrusion_detected_loop:
       entity_id: media_player.maison
       data:
         message: >
-          Une intrusion a été détectée. Les vidéos de votre arrivé et les informations de votre mobile ont été enregistrés. 
-          La police a été informée. Quittez immédiatement les lieux.           
+          Une intrusion a été détectée. Les vidéos de votre arrivé et les informations de votre mobile ont été enregistrés.
+          La police a été informée. Quittez immédiatement les lieux.
         language: 'fr'
     - delay:
         seconds: 30
     - service: script.turn_on
       data_template:
         entity_id: script.intrusion_detected
-        variables:  
-          loop: "{{ (loop | int) - 1 }}" 
+        variables:
+          loop: "{{ (loop | int) - 1 }}"
 
 fred_add_consumed_milk:
   sequence:
