@@ -189,7 +189,7 @@ hyperion_priority:
   host: !secret hyperion_ip_address
   port: !secret hyperion_port
 
-zone: !include secret_zone.yaml
+zone: !include zone.yaml
 alarm_control_panel: !include secret_alarm_control_panel.yaml
 switch: !include_dir_merge_list switch
 binary_sensor: !include_dir_merge_list binary_sensor
