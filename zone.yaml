@@ -1,0 +1,19 @@
+- name: Work_yan
+  latitude: !secret work_yan_latitude
+  longitude: !secret work_yan_longitude
+  radius: 400
+
+- name: work_cath_1
+  latitude: !secret work_cath_1_latitude
+  longitude: !secret work_cath_1_longitude
+  radius: 400
+
+- name: work_cath_2
+  latitude: !secret work_cath_2_latitude
+  longitude: !secret work_cath_2_longitude
+  radius: 400
+
+- name: work_cath_3
+  latitude: !secret work_cath_3_latitude
+  longitude: !secret work_cath_3_longitude
+  radius: 400
