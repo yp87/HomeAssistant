@@ -4,6 +4,7 @@ secret*.yaml
 *.db
 *.sqlite
 
+/certs
 /zwcfg*.xml
 /zwscene.xml
 /service_account.json
