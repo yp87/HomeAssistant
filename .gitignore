@@ -4,19 +4,20 @@ secret*.yaml
 *.db
 *.sqlite
 
-/certs
-/zwcfg*.xml
-/zwscene.xml
-/service_account.json
-/known_devices*
-/options.xml
-/harmony_6042342.conf
-/harmony_yharmony.conf
-/tts/
+/mosquitto
+/hass/certs
+/hass/zwcfg*.xml
+/hass/zwscene.xml
+/hass/service_account.json
+/hass/known_devices*
+/hass/options.xml
+/hass/harmony_6042342.conf
+/hass/harmony_yharmony.conf
+/hass/tts/
 
 __pycache__/
 
 .*
 !/.gitignore
-!/.HA_VERSION
-!/.editorconfig
+!/hass/.HA_VERSION
+!/hass/.editorconfig

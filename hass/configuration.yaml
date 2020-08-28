@@ -60,6 +60,12 @@ map:
 
 sun:
 
+mqtt:
+  broker: 127.0.0.1
+  port: 1883
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+
 # TODO - move these to different files
 sensor:
   - platform: time_date
