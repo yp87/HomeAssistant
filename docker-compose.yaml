@@ -5,7 +5,7 @@ services:
     #image: homeassistant/home-assistant:0.113.2    #Specific Version
     image: homeassistant/home-assistant:stable
     volumes:
-      - .:/config
+      - ./hass:/config
     devices:
       - /dev/zwave:/dev/zwave
     restart: always
@@ -21,4 +21,4 @@ services:
     ports:
       - 1883:1883
     volumes:
-      - ../mosquitto/config:/mosquitto/config
+      - ./mosquitto/config:/mosquitto/config
