@@ -6,6 +6,7 @@ services:
 before_install:
   - mkdir hass/certs
   - touch hass/certs/FakeKey.pem
+  - touch hass/service_account.json
   - mv .dummy_secrets.yaml hass/secrets.yaml
   - docker pull homeassistant/home-assistant:stable
   
