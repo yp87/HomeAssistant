@@ -6,9 +6,8 @@ services:
 before_install:
   - touch $TRAVIS_BUILD_DIR/hass/FakeCertificate.pem
   - touch $TRAVIS_BUILD_DIR/hass/FakeKey.pem
-  - touch $TRAVIS_BUILD_DIR/hass/service_account.json
-  - mv $TRAVIS_BUILD_DIR/travis_dummy/.dummy_secrets.yaml hass/secrets.yaml
-  - mv $TRAVIS_BUILD_DIR/travis_dummy/.dummy_service_account.json hass/service_account.json
+  - mv $TRAVIS_BUILD_DIR/.travis_dummy/dummy_secrets.yaml hass/secrets.yaml
+  - mv $TRAVIS_BUILD_DIR/.travis_dummy/dummy_service_account.json hass/service_account.json
   - docker pull homeassistant/home-assistant:stable
   
 script:
