@@ -4,4 +4,4 @@ services:
     extends:
       file: docker-compose.base.yaml
       service: homeassistant-base
-    command: --script check_config --info all
+    command: check_config --info all

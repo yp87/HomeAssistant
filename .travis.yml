@@ -8,8 +8,8 @@ before_install:
   - touch hass/certs/FakeKey.pem
   - mv .dummy_secrets.yaml hass/secrets.yaml
   - docker-compose --version
-  - docker-compose -f docker-compose.yaml -f docker-compose.ci.yaml pull
+  - docker-compose -f docker-compose.ci.yaml pull
   - docker ps
   
 script:
-  - docker-compose -f docker-compose.yaml -f docker-compose.ci.yaml up --exit-code-from homeassistant-check-config --build homeassistant-check-config
+  - docker-compose -f docker-compose.ci.yaml up --exit-code-from homeassistant-check-config --build homeassistant-check-config
