@@ -7,7 +7,7 @@ TODO:
 - ~~Setup stub secrets for futur travis integration~~
 - ~~Setup travis to validate configs in PR~~
 - Automatically update config for hass and restart when build pass on master
-- Automatically update config for hass and restart when build pass on specific branches
+- Automatically update config for hass and restart when build pass on specific branches/commit/PR?
 - ~~Read .HA_VERSION to pull correct image in travis~~
 - Allow to build with latest Home assistant version to check config before upgrade Home Assistant
 - force PR for master
