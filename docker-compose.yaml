@@ -13,11 +13,6 @@ services:
     depends_on:
       - mqtt
 
-  homeassistant-check-config:
-    extends:
-      service: homeassistant
-    command: --script check_config --info all
-
   mqtt:
     container_name: mqtt
     image: eclipse-mosquitto:latest
