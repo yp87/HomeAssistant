@@ -1,6 +1,6 @@
 version: '2'
 services:
-  homeassistant:
+  homeassistant-check-config:
     extends:
       file: docker-compose.yaml
       service: homeassistant
