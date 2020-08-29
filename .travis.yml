@@ -1,10 +1,10 @@
-language: python
+language: minimal
 
 services:
   - docker
 
 before_install:
-  - export HA_VERSION=foo="`cat $TRAVIS_BUILD_DIR/hass/HA_VERSION`"
+  - export HA_VERSION=foo="`cat $TRAVIS_BUILD_DIR/hass/.HA_VERSION`"
   - echo "HELLO $SOME_VAR"
   #- touch $TRAVIS_BUILD_DIR/hass/FakeCertificate.pem
   #- touch $TRAVIS_BUILD_DIR/hass/FakeKey.pem
