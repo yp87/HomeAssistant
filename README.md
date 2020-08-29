@@ -11,7 +11,7 @@ TODO:
     - Then what? Create a docker image to run the smee.io client to receive events.
     - But we need to transfer the command to the host so it can run the deploy script
       - How? 
-        - ssh into host? security concerns, but allow to directly run scripts on host. 
+        - ssh into host? security concerns, but allow to directly run scripts on host. Or use Home Assistant's travis sensor, but still have similar issues..
         - named pipe or socket? we would need an always running service on the host that can receive the commands.. but would be nice to run everything from docker :(
         - any other solution?
 - Automatically update config for hass and restart when build pass on specific branches/commit/PR?
