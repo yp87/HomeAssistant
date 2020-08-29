@@ -14,4 +14,4 @@ install:
   - docker pull homeassistant/home-assistant:$HA_VERSION
   
 script:
-  - docker run -v $TRAVIS_BUILD_DIR/hass:/config homeassistant/home-assistant:stable python -m homeassistant --config /config --script check_config --info all
+  - docker run -v $TRAVIS_BUILD_DIR/hass:/config homeassistant/home-assistant:$HA_VERSION python -m homeassistant --config /config --script check_config --info all
