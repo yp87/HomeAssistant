@@ -1,8 +1,0 @@
-version: '2'
-services:
-  homeassistant-base:
-    container_name: hass
-    #image: homeassistant/home-assistant:0.113.2    #Specific Version
-    image: homeassistant/home-assistant:stable
-    volumes:
-      - ./hass:/config

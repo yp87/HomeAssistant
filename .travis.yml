@@ -7,9 +7,7 @@ before_install:
   - mkdir hass/certs
   - touch hass/certs/FakeKey.pem
   - mv .dummy_secrets.yaml hass/secrets.yaml
-  - docker-compose --version
-  - docker-compose -f docker-compose.base.yaml pull
-  - docker ps
+  - docker pull homeassistant/home-assistant:stable
   
 script:
-  - docker-compose -f docker-compose.base.yaml run homeassistant-base --script check_config --info all
+  - docker run homeassistant/home-assistant:stable ./hass:/config --script check_config --info all
