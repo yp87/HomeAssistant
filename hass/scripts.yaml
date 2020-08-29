@@ -104,3 +104,60 @@ phone_notification:
     - service_template: input_boolean.{% if type == "notification" %}toggle{% elif type == "rings" %}turn_on{% else %}turn_off{% endif %}
       data_template:
         entity_id: input_boolean.{{ owner }}_phone_{{ type or "rings"}}
+
+white_noise_start:
+  sequence:
+    - service: media_player.volume_set
+      data_template:
+        entity_id: "{{ media_player_id }}"
+        volume_level: 0.01
+    - service: media_player.turn_off
+      data_template:
+        entity_id: "{{ media_player_id }}"
+    - delay: 00:00:01
+    - service: media_player.turn_on
+      data_template:
+        entity_id: "{{ media_player_id }}"
+    - delay: 00:00:01
+    - service: script.turn_on
+      data_template:
+        entity_id: script.white_noise_play
+        variables:
+          media_player_id: "{{ media_player_id }}"
+    - delay: 00:00:02
+    - service: media_player.volume_set
+      data_template:
+        entity_id: "{{ media_player_id }}"
+        volume_level: 22
+
+white_noise_play:
+  sequence:
+    - service: media_player.play_media
+      data_template:
+        media_content_type: audio/mp3
+        entity_id: "{{ media_player_id }}"
+        media_content_id: http://www.gstatic.com/voice_delight/sounds/long/pink_noise.mp3
+    - service: script.turn_on
+      data_template:
+        entity_id: script.white_noise_loop
+        variables:
+          media_player_id: "{{ media_player_id }}"
+
+white_noise_loop:
+  sequence:
+    - delay: 00:52:00
+    - service: script.turn_on
+      data_template:
+        entity_id: script.white_noise_play
+        variables:
+          media_player_id: "{{ media_player_id }}"
+
+white_noise_stop:
+  sequence:
+    - service: script.turn_off
+      entity_id: script.white_noise_play
+    - service: script.turn_off
+      entity_id: script.white_noise_loop
+    - service: media_player.turn_off
+      data_template:
+        entity_id: "{{ media_player_id }}"

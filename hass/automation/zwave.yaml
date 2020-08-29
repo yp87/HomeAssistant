@@ -96,6 +96,11 @@
     - service: switch.turn_on
       data:
         entity_id: switch.christmas_tree_switch
+    - service: script.white_noise_start
+      data:
+        variables:
+          media_player_id: media_player.chambre_fred
+
 
 - alias: Frederique main light double up
   trigger:
@@ -110,6 +115,10 @@
     - service: switch.turn_off
       data:
         entity_id: switch.christmas_tree_switch
+    - service: script.white_noise_stop
+      data:
+        variables:
+          media_player_id: media_player.chambre_fred
 
 - alias: Set zwave light to default when single click up
   trigger:
