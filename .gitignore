@@ -19,5 +19,6 @@ __pycache__/
 
 .*
 !/.gitignore
+!/.dummy_secrets.yaml
 !/hass/.HA_VERSION
 !/hass/.editorconfig
