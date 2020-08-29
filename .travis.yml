@@ -10,4 +10,5 @@ before_install:
   - docker pull homeassistant/home-assistant:stable
   
 script:
-  - docker run -v hass:/config homeassistant/home-assistant:stable python -m homeassistant --config /config --script check_config --info all
+  - docker run -v hass:/config homeassistant/home-assistant:stable ls /config -l
+  #- docker run -v hass:/config homeassistant/home-assistant:stable python -m homeassistant --config /config --script check_config --info all
