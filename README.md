@@ -13,7 +13,8 @@ TODO:
       - How? 
         - ssh into host? security concerns, but allow to directly run scripts on host. Or use Home Assistant's travis sensor, but still have similar issues..
         - named pipe or socket? we would need an always running service on the host that can receive the commands.. but would be nice to run everything from docker :(
-        - any other solution?
+        - any other solution? YES!
+    - Better solution: by creating a docker image and sharing the docker daemon socket to it, it can then use docker-compose to spawn the other containers on the host docker daemon :D.
 - Automatically update config for hass and restart when build pass on specific branches/commit/PR?
 - ~~Read .HA_VERSION to pull correct image in travis~~
 - Allow to build with latest Home assistant version to check config before upgrade Home Assistant
