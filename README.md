@@ -5,5 +5,9 @@ TODO:
 - ~~create script to easily transfer all secrets to home assistant host~~
 - cleanup multi script loops in favor of new repeat mode
 - ~~Setup stub secrets for futur travis integration~~
-- Setup travis to validate configs in PR
+- ~~Setup travis to validate configs in PR~~
+- Automatically update config for hass and restart when build pass on master
+- Automatically update config for hass and restart when build pass on specific branches
+- Read .HA_VERSION to pull correct image in travis
+- Allow to build with latest Home assistant version to check config before upgrade Home Assistant
 - force PR for master
