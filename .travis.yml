@@ -7,7 +7,8 @@ before_install:
   - mkdir hass/certs
   - touch hass/certs/FakeKey.pem
   - mv .dummy_secrets.yaml hass/secrets.yaml
-  - docker pull homeassistant/home-assistant:stable
+  - ls -l
+ # - docker pull homeassistant/home-assistant:stable
   
-script:
-  - docker run -v /hass:/config homeassistant/home-assistant:stable python -m homeassistant --config /config --script check_config --info all
+#script:
+  #- docker run -v /hass:/config homeassistant/home-assistant:stable python -m homeassistant --config /config --script check_config --info all
