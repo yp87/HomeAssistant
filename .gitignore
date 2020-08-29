@@ -1,7 +1,7 @@
-secret*.yaml
+secret*.*
 *[lL]og*.txt
 *.log
-*.db
+*.db*
 *.sqlite
 
 /mosquitto
