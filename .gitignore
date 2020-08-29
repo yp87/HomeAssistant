@@ -1,4 +1,4 @@
-secret*.yaml
+secret*.*
 *[lL]og*.txt
 *.log
 *.db

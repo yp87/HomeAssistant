@@ -1,0 +1,3 @@
+[submodule "alarm/Paradox_IP150"]
+	path = alarm/Paradox_IP150
+	url = https://github.com/maisken/Paradox_IP150.git
