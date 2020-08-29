@@ -10,6 +10,5 @@ services:
   #- docker pull homeassistant/home-assistant:stable
   
 script:
-  - ls / -l
-  #- docker run -v /hass:/config homeassistant/home-assistant:stable ls /config -l
+  - docker run -v $TRAVIS_BUILD_DIR/hass:/config homeassistant/home-assistant:stable ls /config -l
   #- docker run -v hass:/config homeassistant/home-assistant:stable python -m homeassistant --config /config --script check_config --info all
