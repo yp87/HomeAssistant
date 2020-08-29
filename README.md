@@ -19,3 +19,11 @@ TODO:
       6) Wait for complete deployment
       7) commit .HA_VERSION 
       8) push to master (On build success, should not redeploy to Home assistant host.. label? keyword in commit?)
+      
+      
+Helpful links:
+To forward github's webhooks to local server without opening inbound port (smee.io):
+https://www.jenkins.io/blog/2019/01/07/webhook-firewalls/
+
+To let the smee.io client container call deploy script on host:
+https://askubuntu.com/questions/1168090/configure-ssh-server-to-not-ask-key-or-password-over-localhost-connection
