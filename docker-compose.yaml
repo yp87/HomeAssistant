@@ -12,6 +12,7 @@ services:
     network_mode: host
     depends_on:
       - mqtt
+      - alarm
 
   mqtt:
     container_name: mqtt
