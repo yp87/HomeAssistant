@@ -18,6 +18,7 @@ secret*.yaml
 __pycache__/
 
 .*
+!/.travis.yml
 !/.gitignore
 !/.dummy_secrets.yaml
 !/hass/.HA_VERSION
