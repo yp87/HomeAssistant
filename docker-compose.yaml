@@ -22,3 +22,10 @@ services:
       - 1883:1883
     volumes:
       - ./mosquitto/config:/mosquitto/config
+
+  alarm:
+    container_name: alarm
+    build: alarm/
+    image: alarm:latest
+    restart: always
+    network_mode: host
