@@ -12,4 +12,4 @@ before_install:
   - docker ps
   
 script:
-  - docker-compose -f docker-compose.yaml -f docker-compose.ci.yaml up --build homeassistant-check-config
+  - docker-compose -f docker-compose.yaml -f docker-compose.ci.yaml up --exit-code-from homeassistant-check-config --build homeassistant-check-config
