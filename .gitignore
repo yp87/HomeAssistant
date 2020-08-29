@@ -18,6 +18,7 @@ secret*.*
 __pycache__/
 
 .*
+!.dockerfile
 !/.travis.yml
 !/.travis_dummy
 !/.gitignore
