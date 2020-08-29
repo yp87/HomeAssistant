@@ -2,6 +2,6 @@ version: '2'
 services:
   homeassistant-check-config:
     extends:
-      file: docker-compose.yaml
-      service: homeassistant
+      file: docker-compose.base.yaml
+      service: homeassistant-base
     command: --script check_config --info all
