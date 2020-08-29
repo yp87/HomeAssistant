@@ -1,7 +1,0 @@
-version: '2'
-services:
-  homeassistant-check-config:
-    extends:
-      file: docker-compose.base.yaml
-      service: homeassistant-base
-    command: check_config --info all
