@@ -7,6 +7,13 @@ TODO:
 - ~~Setup stub secrets for futur travis integration~~
 - ~~Setup travis to validate configs in PR~~
 - Automatically update config for hass and restart when build pass on master
+    - How? Can use github webhooks with the smee.io service to receive events without opening incoming port.
+    - Then what? Create a docker image to run the smee.io client to receive events.
+    - But we need to transfer the command to the host so it can run the deploy script
+      - How? 
+        - ssh into host? security concerns, but allow to directly run scripts on host. 
+        - named pipe or socket? we would need an always running service on the host that can receive the commands.. but would be nice to run everything from docker :(
+        - any other solution?
 - Automatically update config for hass and restart when build pass on specific branches/commit/PR?
 - ~~Read .HA_VERSION to pull correct image in travis~~
 - Allow to build with latest Home assistant version to check config before upgrade Home Assistant
@@ -19,11 +26,3 @@ TODO:
       6) Wait for complete deployment
       7) commit .HA_VERSION 
       8) push to master (On build success, should not redeploy to Home assistant host.. label? keyword in commit?)
-      
-      
-Helpful links:
-To forward github's webhooks to local server without opening inbound port (smee.io):
-https://www.jenkins.io/blog/2019/01/07/webhook-firewalls/
-
-To let the smee.io client container call deploy script on host:
-https://askubuntu.com/questions/1168090/configure-ssh-server-to-not-ask-key-or-password-over-localhost-connection
