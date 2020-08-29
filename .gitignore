@@ -19,7 +19,7 @@ __pycache__/
 
 .*
 !/.travis.yml
-!/.travis_dummy/*
+!/.travis_dummy
 !/.gitignore
 !/hass/.HA_VERSION
 !/hass/.editorconfig
