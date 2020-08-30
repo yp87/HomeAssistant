@@ -96,8 +96,9 @@
     - service: switch.turn_on
       data:
         entity_id: switch.christmas_tree_switch
-    - service: script.white_noise_start
+    - service: script.turn_on
       data:
+        entity_id: script.white_noise_start
         variables:
           media_player_id: media_player.chambre_fred
 
@@ -115,8 +116,9 @@
     - service: switch.turn_off
       data:
         entity_id: switch.christmas_tree_switch
-    - service: script.white_noise_stop
+    - service: script.turn_on
       data:
+        entity_id: script.white_noise_stop
         variables:
           media_player_id: media_player.chambre_fred
 
