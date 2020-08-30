@@ -128,7 +128,7 @@ white_noise_start:
     - service: media_player.volume_set
       data_template:
         entity_id: "{{ media_player_id }}"
-        volume_level: 22
+        volume_level: 0.22
 
 white_noise_play:
   sequence:
