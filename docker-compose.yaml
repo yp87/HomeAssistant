@@ -5,7 +5,7 @@ services:
   # when master is updated and pass validations.
   supervisor:
     container_name: automation-supervisor
-    build: supervisor
+    build: Supervisor
     image: automation-supervisor:latest
     ports:
       - 3000:3000

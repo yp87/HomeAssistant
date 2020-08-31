@@ -17,4 +17,4 @@ COPY --from=build-env /app/out .
 
 EXPOSE 3000/tcp
 
-ENTRYPOINT ["dotnet", "supervisor.dll"]
+ENTRYPOINT ["dotnet", "Supervisor.dll"]
