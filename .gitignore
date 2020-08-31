@@ -18,8 +18,8 @@ secret*
 __pycache__/
 
 .*
+!.editorconfig
 !/.travis.yml
 !/.travis_dummy
 !/.gitignore
 !/hass/.HA_VERSION
-!/hass/.editorconfig
