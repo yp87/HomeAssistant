@@ -8,4 +8,3 @@ COPY run.sh /WebhookProxy/run.sh
 RUN chmod a+x /WebhookProxy/run.sh
 
 CMD [ "/WebhookProxy/run.sh" ]
-
