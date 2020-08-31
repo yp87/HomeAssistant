@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -13,8 +14,11 @@ namespace Supervisor.Controllers
     {
         [Route("Webhook")]
         [HttpPost()]
-        public IActionResult ReceiveWebhook()
+        public async Task<IActionResult> ReceiveWebhookAsync()
         {
+            using var eventReader = new StreamReader(Request.Body);
+            var eventPayload = await eventReader.ReadToEndAsync();
+            Console.WriteLine(eventPayload);
             return Ok();
         }
     }
