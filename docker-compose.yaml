@@ -3,15 +3,11 @@ services:
   # The purpose of this service is to bootstrap everything
   # and handle github webhook (through smoo.io) to update and restart everything
   # when master is updated and pass validations.
-  automation-supervisor:
-    container_name: automation-supervisor
-    build: .
-    image: automation-supervisor:latest
+  webhookproxy:
+    container_name: webhookproxy
+    build: WebhookProxy
+    image: webhookproxy:latest
     restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./:/automation
-      #Not sure yet if I have to add all volumes from other services like /dev/zwave
 
   homeassistant:
     container_name: hass
