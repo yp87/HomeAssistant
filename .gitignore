@@ -17,6 +17,9 @@ secret*
 
 __pycache__/
 
+[Bb]in/
+[Oo]bj/
+
 .*
 !.editorconfig
 !/.travis.yml
