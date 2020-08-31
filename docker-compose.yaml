@@ -1,8 +1,20 @@
 version: '3'
 services:
   # The purpose of this service is to bootstrap everything
-  # and handle github webhook (through smoo.io) to update and restart everything
+  # and handle github webhook to update and restart everything
   # when master is updated and pass validations.
+  supervisor:
+    container_name: automation-supervisor
+    build: supervisor
+    image: automation-supervisor:latest
+    ports:
+      - 3000:3000
+    restart: always
+    depends_on:
+      - webhookproxy
+
+  # The purpose of this service is to receive github webhook events from the smee.io service
+  # and to forward them to the supervisor service.
   webhookproxy:
     container_name: webhookproxy
     build: WebhookProxy
