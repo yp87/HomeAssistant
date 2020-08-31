@@ -4,11 +4,11 @@ services:
   # and handle github webhook to update and restart everything
   # when master is updated and pass validations.
   supervisor:
-    container_name: automation-supervisor
+    container_name: supervisor
     build: Supervisor
-    image: automation-supervisor:latest
-    ports:
-      - 3000:3000
+    image: supervisor:latest
+    expose:
+      - 3000
     restart: always
     depends_on:
       - webhookproxy
@@ -39,9 +39,8 @@ services:
     container_name: mqtt
     image: eclipse-mosquitto:latest
     restart: always
-    network_mode: host
     ports:
-      - 1883:1883
+      - "1883:1883"
     volumes:
       - ./mosquitto/config:/mosquitto/config
 
@@ -50,4 +49,3 @@ services:
     build: alarm/
     image: alarm:latest
     restart: always
-    network_mode: host
