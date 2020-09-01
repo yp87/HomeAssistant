@@ -3,7 +3,8 @@ TODO:
 - ~~Containerize alarm system scripts and add to docker-compose~~
 - ~~use containerized mosquitto and add to docker-compose~~
 - ~~create script to easily transfer all secrets to home assistant host~~
-- cleanup multi script loops in favor of new repeat mode
+- HomeAssistant: cleanup multi script loops in favor of new repeat mode
+- HomeAssistant: change custom_components huesensor to use git submodule that points to the original repo.
 - ~~Setup stub secrets for futur travis integration~~
 - ~~Setup travis to validate configs in PR~~
 - Automatically update config for hass and restart when build pass on master
@@ -25,3 +26,5 @@ TODO:
       6) Wait for complete deployment
       7) commit .HA_VERSION 
       8) push to master (On build success, should not redeploy to Home assistant host.. label? keyword in commit?)
+- Check what can be done with Travis to only run home assistant config check when something actually changed in home assistant
+- Travis build should build all the containers and validate the outcome (only if something changed that impact each container)
