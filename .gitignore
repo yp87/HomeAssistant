@@ -1,4 +1,4 @@
-secret*.*
+secret*
 *[lL]og*.txt
 *.log
 *.db*
@@ -17,9 +17,12 @@ secret*.*
 
 __pycache__/
 
+[Bb]in/
+[Oo]bj/
+
 .*
+!.editorconfig
 !/.travis.yml
 !/.travis_dummy
 !/.gitignore
 !/hass/.HA_VERSION
-!/hass/.editorconfig
