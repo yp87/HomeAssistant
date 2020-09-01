@@ -15,6 +15,8 @@ WORKDIR /app
 
 COPY --from=build-env /app/out .
 
+COPY ./secret_webhook /app/secret_webhook 
+
 EXPOSE 3000/tcp
 
 ENTRYPOINT ["dotnet", "Supervisor.dll"]
