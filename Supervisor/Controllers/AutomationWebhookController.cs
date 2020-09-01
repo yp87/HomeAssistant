@@ -2,9 +2,11 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
+using Supervisor.Models;
 
 namespace Supervisor.Controllers
 {
@@ -16,28 +18,42 @@ namespace Supervisor.Controllers
 
         private readonly byte[] _secretBytes;
 
+        private readonly JsonSerializerOptions _jsonSerializerOptions;
+
         public AutomationWebhookController(string secret)
         {
             _secretBytes = Encoding.ASCII.GetBytes(secret);
+            _jsonSerializerOptions = new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
         }
 
         [Route("Webhook")]
         [HttpPost()]
         public async Task<IActionResult> ReceiveWebhookAsync()
         {
-            Request.Headers.TryGetValue("X-GitHub-Event", out StringValues eventName);
-            Request.Headers.TryGetValue("X-Hub-Signature", out StringValues signature);
+            string eventName = GetHeaderValue("X-GitHub-Event");
 
-            using var eventReader = new StreamReader(Request.Body);
-            var eventPayload = await eventReader.ReadToEndAsync();
+            if(eventName.ToString().Equals("check_run", StringComparison.OrdinalIgnoreCase))
+            {
+                string signature = GetHeaderValue("X-Hub-Signature");
 
-            if (IsGithubEventAllowed(eventPayload, eventName, signature))
-            {
-                Console.WriteLine("Received an approved event!");
-            }
-            else
-            {
-                 Console.WriteLine("Received an unapproved event :(");
+                using var eventReader = new StreamReader(Request.Body);
+                var eventPayload = await eventReader.ReadToEndAsync();
+
+                if (IsGithubEventAllowed(eventPayload, eventName, signature))
+                {
+                    var gitHubAction = JsonSerializer.Deserialize<GitHubAction>(eventPayload);
+                    NullGuard(gitHubAction, nameof(gitHubAction));
+                    NullGuard(gitHubAction.CheckRun, nameof(gitHubAction.CheckRun));
+
+                    // TODO: ... send to business logic
+                }
+                else
+                {
+                    //TODO: Notify home assistant. Could use the REST api of Home Assistant to start a script
+                }
             }
 
             return Ok();
@@ -46,24 +62,14 @@ namespace Supervisor.Controllers
         private bool IsGithubEventAllowed(string payload, string eventName, string signatureWithPrefix)
         {
             NullGuard(payload, nameof(payload));
-            NullGuard(eventName, nameof(eventName));
-            NullGuard(signatureWithPrefix, nameof(signatureWithPrefix));
-
-            if (!eventName.Equals("check_run", StringComparison.OrdinalIgnoreCase))
-            {
-                return false;
-            }
 
             if (signatureWithPrefix.StartsWith(Sha1Prefix, StringComparison.OrdinalIgnoreCase))
             {
                 var signature = signatureWithPrefix.Substring(Sha1Prefix.Length);
 
                 var payloadBytes = Encoding.ASCII.GetBytes(payload);
-
                 using var hmSha1 = new HMACSHA1(_secretBytes);
-
                 var hash = hmSha1.ComputeHash(payloadBytes);
-
                 var hashString = ToHexString(hash);
 
                 return hashString.Equals(signature);
@@ -83,9 +89,18 @@ namespace Supervisor.Controllers
             return builder.ToString();
         }
 
-        private void NullGuard(string parameter, string parameterName)
+        private string GetHeaderValue(string headerName)
         {
-            if (string.IsNullOrWhiteSpace(parameter))
+            Request.Headers.TryGetValue(headerName, out StringValues headerValues);
+            string value = headerValues.ToString();
+            NullGuard(value, headerName);
+            return value;
+        }
+
+        private void NullGuard(object parameter, string parameterName)
+        {
+            if (parameter == null ||
+                parameter is string stringParameter && string.IsNullOrWhiteSpace(stringParameter))
             {
                 throw new ArgumentNullException(parameterName);
             }
