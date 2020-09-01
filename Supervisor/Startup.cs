@@ -1,3 +1,4 @@
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -17,6 +18,9 @@ namespace Supervisor
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var secret = File.ReadAllText("secret_webhook");
+            services.AddSingleton(s => secret);
+
             services.AddControllers();
         }
 
