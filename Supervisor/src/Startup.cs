@@ -1,9 +1,11 @@
 using System.IO;
+using System.Text.Json;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Supervisor.ActionHandlers;
 
 namespace Supervisor
 {
@@ -20,6 +22,7 @@ namespace Supervisor
         {
             var secret = File.ReadAllText("secret_webhook");
             services.AddSingleton(s => secret);
+            services.AddSingleton<IActionHandler>(new CheckRunActionHandler());
 
             services.AddControllers();
         }
