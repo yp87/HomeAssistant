@@ -12,3 +12,6 @@ indent_size = 2
 
 [secret*]
 insert_final_newline = false
+
+[*.props]
+indent_size = 2

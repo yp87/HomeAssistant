@@ -6,22 +6,30 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
+using Supervisor.ActionHandlers;
 using Supervisor.Models;
 
 namespace Supervisor.Controllers
 {
     [ApiController]
     [Route("Automation")]
-    public class AutomationWebhookController : ControllerBase
+    public class GitHubEventController : ControllerBase
     {
         private const string Sha1Prefix = "sha1=";
 
         private readonly byte[] _secretBytes;
 
+        // If more then one type of action can be handled in the futur,
+        // This will be refactored to have an IActionDispatcher
+        // Which will dispatch to the correct implementation of IActionHandler.
+        // But for now, YAGNI!
+        private readonly IActionHandler _actionHandler;
+
         private readonly JsonSerializerOptions _jsonSerializerOptions;
 
-        public AutomationWebhookController(string secret)
+        public GitHubEventController(IActionHandler actionHandler, string secret)
         {
+            _actionHandler = actionHandler;
             _secretBytes = Encoding.ASCII.GetBytes(secret);
             _jsonSerializerOptions = new JsonSerializerOptions()
             {
@@ -31,29 +39,30 @@ namespace Supervisor.Controllers
 
         [Route("Webhook")]
         [HttpPost()]
-        public async Task<IActionResult> ReceiveWebhookAsync()
+        public async Task<IActionResult> ReceiveEventAsync()
         {
-            string eventName = GetHeaderValue("X-GitHub-Event");
+            string eventName = GetHeaderValue(GitHubHeader.Event);
 
-            if(eventName.ToString().Equals("check_run", StringComparison.OrdinalIgnoreCase))
+            if (!_actionHandler.CanHandleAction(eventName))
             {
-                string signature = GetHeaderValue("X-Hub-Signature");
+                throw new NotSupportedException($"The event {eventName} is not supported");
+            }
 
-                using var eventReader = new StreamReader(Request.Body);
-                var eventPayload = await eventReader.ReadToEndAsync();
+            string signature = GetHeaderValue(GitHubHeader.Signature);
 
-                if (IsGithubEventAllowed(eventPayload, eventName, signature))
-                {
-                    var gitHubAction = JsonSerializer.Deserialize<GitHubAction>(eventPayload);
-                    NullGuard(gitHubAction, nameof(gitHubAction));
-                    NullGuard(gitHubAction.CheckRun, nameof(gitHubAction.CheckRun));
+            using var eventReader = new StreamReader(Request.Body);
+            var eventPayload = await eventReader.ReadToEndAsync();
 
-                    // TODO: ... send to business logic
-                }
-                else
-                {
-                    //TODO: Notify home assistant. Could use the REST api of Home Assistant to start a script
-                }
+            if (IsGithubEventAllowed(eventPayload, eventName, signature))
+            {
+                var gitHubAction = JsonSerializer.Deserialize<GitHubAction>(eventPayload);
+                NullGuard(gitHubAction, nameof(gitHubAction));
+
+                _actionHandler.Handle(gitHubAction);
+            }
+            else
+            {
+                //TODO: Notify home assistant. Could use the REST api of Home Assistant to start a script
             }
 
             return Ok();
