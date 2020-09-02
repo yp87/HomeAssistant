@@ -19,7 +19,7 @@ namespace Supervisor.Controllers
 
         private readonly byte[] _secretBytes;
 
-        // If more then one type of action can be handled in the futur,
+        // If more then one type of action can be handled in the future,
         // This will be refactored to have an IActionDispatcher
         // Which will dispatch to the correct implementation of IActionHandler.
         // But for now, YAGNI!
