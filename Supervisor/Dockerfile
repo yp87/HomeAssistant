@@ -2,15 +2,15 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
 WORKDIR /app
 
 # Copy sln + csproj and restore as distinct layers
-COPY Supervisor.sln .
+COPY Directory.Build.props Supervisor.sln ./
 COPY src/Supervisor.csproj ./src/
-COPY UnitTests/Supervisor.UnitTest.csproj ./UnitTests/
+COPY UnitTests/Supervisor.UnitTests.csproj ./UnitTests/
 
 RUN dotnet restore
 
 # Copy everything else and build
 COPY . ./
-RUN dotnet test .\UnitTests\ -c Release
+RUN dotnet test -c Release
 RUN dotnet publish src -c Release -o out
 
 # Build runtime image
