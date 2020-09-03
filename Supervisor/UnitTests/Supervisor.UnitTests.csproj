@@ -9,6 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Supervisor.csproj" />
+    <ProjectReference Include="..\src\Supervisor.csproj" />
   </ItemGroup>
 </Project>

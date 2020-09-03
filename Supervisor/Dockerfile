@@ -4,13 +4,13 @@ WORKDIR /app
 # Copy sln + csproj and restore as distinct layers
 COPY Supervisor.sln .
 COPY src/Supervisor.csproj ./src/
-COPY Tests/UnitTests/UnitTest.csproj ./Tests/UnitTests/
+COPY UnitTests/Supervisor.UnitTest.csproj ./UnitTests/
 
 RUN dotnet restore
 
 # Copy everything else and build
 COPY . ./
-RUN dotnet test .\Tests\UnitTests\ -c Release
+RUN dotnet test .\UnitTests\ -c Release
 RUN dotnet publish src -c Release -o out
 
 # Build runtime image

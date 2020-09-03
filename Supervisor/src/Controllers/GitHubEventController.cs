@@ -50,52 +50,48 @@ namespace Supervisor.Controllers
 
             string signature = GetHeaderValue(GitHubHeader.Signature);
 
-            using var eventReader = new StreamReader(Request.Body);
-            var eventPayload = await eventReader.ReadToEndAsync();
+            var eventPayload = await ReadPayloadAsync();
 
-            if (IsGithubEventAllowed(eventPayload, eventName, signature))
-            {
-                var gitHubAction = JsonSerializer.Deserialize<GitHubAction>(eventPayload);
-                NullGuard(gitHubAction, nameof(gitHubAction));
-
-                _actionHandler.Handle(gitHubAction);
-            }
-            else
+            if (!IsGithubEventAllowed(eventPayload, eventName, signature))
             {
                 //TODO: Notify home assistant. Could use the REST api of Home Assistant to start a script
+                throw new UnauthorizedAccessException("The provided signature was not valid.");
             }
 
+            return ProcessAction(eventPayload);
+        }
+
+        private IActionResult ProcessAction(string eventPayload)
+        {
+            var gitHubAction = JsonSerializer.Deserialize<GitHubAction>(eventPayload, _jsonSerializerOptions);
+            NullGuard(gitHubAction, nameof(gitHubAction));
+            _actionHandler.Handle(gitHubAction);
             return Ok();
+        }
+
+        private async Task<string> ReadPayloadAsync()
+        {
+            using var eventReader = new StreamReader(Request.Body);
+            var eventPayload = await eventReader.ReadToEndAsync();
+            NullGuard(eventPayload, nameof(eventPayload));
+            return eventPayload;
         }
 
         private bool IsGithubEventAllowed(string payload, string eventName, string signatureWithPrefix)
         {
-            NullGuard(payload, nameof(payload));
-
-            if (signatureWithPrefix.StartsWith(Sha1Prefix, StringComparison.OrdinalIgnoreCase))
+            if (!signatureWithPrefix.StartsWith(Sha1Prefix, StringComparison.OrdinalIgnoreCase))
             {
-                var signature = signatureWithPrefix.Substring(Sha1Prefix.Length);
-
-                var payloadBytes = Encoding.ASCII.GetBytes(payload);
-                using var hmSha1 = new HMACSHA1(_secretBytes);
-                var hash = hmSha1.ComputeHash(payloadBytes);
-                var hashString = ToHexString(hash);
-
-                return hashString.Equals(signature);
+                throw new ArgumentException("The signature does not start with the expected prefix.");
             }
 
-            return false;
-        }
+            var signature = signatureWithPrefix.Substring(Sha1Prefix.Length);
 
-        private static string ToHexString(byte[] bytes)
-        {
-            var builder = new StringBuilder(bytes.Length * 2);
-            foreach (byte b in bytes)
-            {
-                builder.AppendFormat("{0:x2}", b);
-            }
+            var payloadBytes = Encoding.ASCII.GetBytes(payload);
+            using var hmSha1 = new HMACSHA1(_secretBytes);
+            var hash = hmSha1.ComputeHash(payloadBytes);
+            var hashString = StringHelpers.ToHexString(hash);
 
-            return builder.ToString();
+            return hashString.Equals(signature);
         }
 
         private string GetHeaderValue(string headerName)
