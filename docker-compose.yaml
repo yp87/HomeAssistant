@@ -49,3 +49,5 @@ services:
     build: alarm/
     image: alarm:latest
     restart: always
+    depends_on:
+      - mqtt
