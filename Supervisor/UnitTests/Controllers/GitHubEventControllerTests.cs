@@ -14,7 +14,7 @@ using System.IO;
 using System.Text;
 using System.Security.Cryptography;
 
-namespace UnitTest
+namespace Supervisor.UnitTest.Controllers
 {
     public class GitHubEventControllerTests
     {
@@ -54,14 +54,14 @@ namespace UnitTest
         public async Task GivenAnEventController_WithAnUnsupportedEvent_WhenReceivingAnEvent_ThenTheEventIsNotHandled()
         {
             // Arrange
-            var unSupportedEvent = SetupWithEvent(false);
+            var unsupportedEvent = SetupWithEvent(false);
 
             // Act
             Func<Task> executeAsync = () => _controller.ReceiveEventAsync();
 
             // Assert
             var exception = await Assert.ThrowsAsync<NotSupportedException>(executeAsync);
-            Assert.Contains(unSupportedEvent, exception.Message);
+            Assert.Contains(unsupportedEvent, exception.Message);
         }
 
         [Fact]

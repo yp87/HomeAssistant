@@ -1,11 +1,13 @@
 using System.IO;
 using System.Text.Json;
+using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Supervisor.ActionHandlers;
+using Supervisor.Automation;
 
 namespace Supervisor
 {
@@ -20,11 +22,15 @@ namespace Supervisor
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var secret = File.ReadAllText("secret_webhook");
-            services.AddSingleton(s => secret);
-            services.AddSingleton<IActionHandler>(new CheckRunActionHandler());
-
             services.AddControllers();
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            var secret = File.ReadAllText("secret_webhook");
+            builder.RegisterInstance(secret);
+            builder.RegisterType<CheckRunActionHandler>()
+                .As<IActionHandler>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
