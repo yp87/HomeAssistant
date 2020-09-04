@@ -4,6 +4,7 @@ using Supervisor.ActionHandlers;
 using Moq;
 using Supervisor.Models;
 using Supervisor.Automation;
+using System.Threading.Tasks;
 
 namespace Supervisor.UnitTest.ActionHandlers
 {
@@ -13,12 +14,12 @@ namespace Supervisor.UnitTest.ActionHandlers
 
         private readonly CheckRunActionHandler _actionHandler;
 
-        private Mock<IAutomationUpdater> _automationUpdaterMock;
+        private Mock<IAutomationUpdater> aw_automationUpdaterMock;
 
         public CheckRunActionHandlerTests()
         {
-            _automationUpdaterMock = new Mock<IAutomationUpdater>();
-            _actionHandler = new CheckRunActionHandler(_automationUpdaterMock.Object);
+            aw_automationUpdaterMock = new Mock<IAutomationUpdater>();
+            _actionHandler = new CheckRunActionHandler(aw_automationUpdaterMock.Object);
         }
 
         [Fact]
@@ -48,139 +49,139 @@ namespace Supervisor.UnitTest.ActionHandlers
         }
 
         [Fact]
-        public void GivenAnCRActionHandler_WithoutCheckRun_WhenHandling_ThenTheActionIsNotHandled()
+        public async Task GivenAnCRActionHandler_WithoutCheckRun_WhenHandling_ThenTheActionIsNotHandled()
         {
             // Arrange
             var anIncompletedBuild = _fixture.Create<GitHubAction>();
             anIncompletedBuild.CheckRun = null;
 
             // Act
-            _actionHandler.Handle(anIncompletedBuild);
+            await _actionHandler.HandleAsync(anIncompletedBuild);
 
             // Assert
-            _automationUpdaterMock.Verify(m => m.Update(), Times.Never);
+            aw_automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Never);
         }
 
         [Fact]
-        public void GivenAnCRActionHandler_WithoutStatus_WhenHandling_ThenTheActionIsNotHandled()
+        public async Task GivenAnCRActionHandler_WithoutStatus_WhenHandling_ThenTheActionIsNotHandled()
         {
             // Arrange
             var anIncompletedBuild = _fixture.Create<GitHubAction>();
             anIncompletedBuild.CheckRun!.Status = null;
 
             // Act
-            _actionHandler.Handle(anIncompletedBuild);
+            await _actionHandler.HandleAsync(anIncompletedBuild);
 
             // Assert
-            _automationUpdaterMock.Verify(m => m.Update(), Times.Never);
+            aw_automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Never);
         }
 
         [Fact]
-        public void GivenAnCRActionHandler_WithoutCompletedBuild_WhenHandling_ThenTheActionIsNotHandled()
+        public async Task GivenAnCRActionHandler_WithoutCompletedBuild_WhenHandling_ThenTheActionIsNotHandled()
         {
             // Arrange
             var anIncompletedBuild = _fixture.Create<GitHubAction>();
 
             // Act
-            _actionHandler.Handle(anIncompletedBuild);
+            await _actionHandler.HandleAsync(anIncompletedBuild);
 
             // Assert
-            _automationUpdaterMock.Verify(m => m.Update(), Times.Never);
+            aw_automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Never);
         }
 
         [Fact]
-        public void GivenAnCRActionHandler_WithoutSuccessBuild_WhenHandling_ThenTheActionIsNotHandled()
+        public async Task GivenAnCRActionHandler_WithoutSuccessBuild_WhenHandling_ThenTheActionIsNotHandled()
         {
             // Arrange
             var aFailedBuild = _fixture.Create<GitHubAction>();
-            aFailedBuild.CheckRun!.Status = "completed";
+            aFailedBuild.CheckRun!.Status = Constants.GitHubBuildCompleted;
 
             // Act
-            _actionHandler.Handle(aFailedBuild);
+            await _actionHandler.HandleAsync(aFailedBuild);
 
             // Assert
-            _automationUpdaterMock.Verify(m => m.Update(), Times.Never);
+            aw_automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Never);
         }
 
         [Fact]
-        public void GivenAnCRActionHandler_WithoutCheckSuit_WhenHandling_ThenTheActionIsNotHandled()
+        public async Task GivenAnCRActionHandler_WithoutCheckSuit_WhenHandling_ThenTheActionIsNotHandled()
         {
             // Arrange
             var anInvalidBuild = _fixture.Create<GitHubAction>();
-            anInvalidBuild.CheckRun!.Status = "completed";
-            anInvalidBuild.CheckRun.Conclusion = "success";
+            anInvalidBuild.CheckRun!.Status = Constants.GitHubBuildCompleted;
+            anInvalidBuild.CheckRun.Conclusion = Constants.GitHubBuildSuccess;
             anInvalidBuild.CheckRun.CheckSuite = null;
 
             // Act
-            _actionHandler.Handle(anInvalidBuild);
+            await _actionHandler.HandleAsync(anInvalidBuild);
 
             // Assert
-            _automationUpdaterMock.Verify(m => m.Update(), Times.Never);
+            aw_automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Never);
         }
 
         [Fact]
-        public void GivenAnCRActionHandler_WithNonMasterBranch_WhenHandling_ThenTheActionIsNotHandled()
+        public async Task GivenAnCRActionHandler_WithNonMasterBranch_WhenHandling_ThenTheActionIsNotHandled()
         {
             // Arrange
             var aBuildOnANonMasterBranch = _fixture.Create<GitHubAction>();
-            aBuildOnANonMasterBranch.CheckRun!.Status = "completed";
-            aBuildOnANonMasterBranch.CheckRun.Conclusion = "success";
+            aBuildOnANonMasterBranch.CheckRun!.Status = Constants.GitHubBuildCompleted;
+            aBuildOnANonMasterBranch.CheckRun.Conclusion = Constants.GitHubBuildSuccess;
 
             // Act
-            _actionHandler.Handle(aBuildOnANonMasterBranch);
+            await _actionHandler.HandleAsync(aBuildOnANonMasterBranch);
 
             // Assert
-            _automationUpdaterMock.Verify(m => m.Update(), Times.Never);
+            aw_automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Never);
         }
 
         [Fact]
-        public void GivenAnCRActionHandler_WithPullRequests_WhenHandling_ThenTheActionIsNotHandled()
+        public async Task GivenAnCRActionHandler_WithPullRequests_WhenHandling_ThenTheActionIsNotHandled()
         {
             // Arrange
             var aSuccessfulMasterForPRBuild = _fixture.Create<GitHubAction>();
-            aSuccessfulMasterForPRBuild.CheckRun!.Status = "completed";
-            aSuccessfulMasterForPRBuild.CheckRun.Conclusion = "success";
-            aSuccessfulMasterForPRBuild.CheckRun.CheckSuite!.HeadBranch = "master";
+            aSuccessfulMasterForPRBuild.CheckRun!.Status = Constants.GitHubBuildCompleted;
+            aSuccessfulMasterForPRBuild.CheckRun.Conclusion = Constants.GitHubBuildSuccess;
+            aSuccessfulMasterForPRBuild.CheckRun.CheckSuite!.HeadBranch = Constants.MasterBranchName;
 
             // Act
-            _actionHandler.Handle(aSuccessfulMasterForPRBuild);
+            await _actionHandler.HandleAsync(aSuccessfulMasterForPRBuild);
 
             // Assert
-            _automationUpdaterMock.Verify(m => m.Update(), Times.Never);
+            aw_automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Never);
         }
 
         [Fact]
-        public void GivenAnCRActionHandler_WithNullPullRequests_WhenHandling_ThenTheActionIsHandled()
+        public async Task GivenAnCRActionHandler_WithNullPullRequests_WhenHandling_ThenTheActionIsHandled()
         {
             // Arrange
             var aSuccessfulMasterBuild = _fixture.Create<GitHubAction>();
-            aSuccessfulMasterBuild.CheckRun!.Status = "completed";
-            aSuccessfulMasterBuild.CheckRun.Conclusion = "success";
-            aSuccessfulMasterBuild.CheckRun.CheckSuite!.HeadBranch = "master";
+            aSuccessfulMasterBuild.CheckRun!.Status = Constants.GitHubBuildCompleted;
+            aSuccessfulMasterBuild.CheckRun.Conclusion = Constants.GitHubBuildSuccess;
+            aSuccessfulMasterBuild.CheckRun.CheckSuite!.HeadBranch = Constants.MasterBranchName;
             aSuccessfulMasterBuild.CheckRun.CheckSuite.PullRequests = null;
 
             // Act
-            _actionHandler.Handle(aSuccessfulMasterBuild);
+            await _actionHandler.HandleAsync(aSuccessfulMasterBuild);
 
             // Assert
-            _automationUpdaterMock.Verify(m => m.Update(), Times.Once);
+            aw_automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Once);
         }
 
         [Fact]
-        public void GivenAnCRActionHandler_WhenHandling_ThenTheActionIsHandled()
+        public async Task GivenAnCRActionHandler_WhenHandling_ThenTheActionIsHandled()
         {
             // Arrange
             var aSuccessfulMasterBuild = _fixture.Create<GitHubAction>();
-            aSuccessfulMasterBuild.CheckRun!.Status = "completed";
-            aSuccessfulMasterBuild.CheckRun.Conclusion = "success";
-            aSuccessfulMasterBuild.CheckRun.CheckSuite!.HeadBranch = "master";
+            aSuccessfulMasterBuild.CheckRun!.Status = Constants.GitHubBuildCompleted;
+            aSuccessfulMasterBuild.CheckRun.Conclusion = Constants.GitHubBuildSuccess;
+            aSuccessfulMasterBuild.CheckRun.CheckSuite!.HeadBranch = Constants.MasterBranchName;
             aSuccessfulMasterBuild.CheckRun.CheckSuite.PullRequests = new PullRequest[0];
 
             // Act
-            _actionHandler.Handle(aSuccessfulMasterBuild);
+            await _actionHandler.HandleAsync(aSuccessfulMasterBuild);
 
             // Assert
-            _automationUpdaterMock.Verify(m => m.Update(), Times.Once);
+            aw_automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Once);
         }
     }
 }

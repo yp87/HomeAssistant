@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Supervisor.ActionHandlers;
 using Supervisor.Automation;
+using Supervisor.FilesUpdater;
 
 namespace Supervisor
 {
@@ -29,8 +30,20 @@ namespace Supervisor
         {
             var secret = File.ReadAllText("secret_webhook");
             builder.RegisterInstance(secret);
+
             builder.RegisterType<CheckRunActionHandler>()
-                .As<IActionHandler>();
+                .As<IActionHandler>()
+                // Because of the semaphore in the implementation.
+                .SingleInstance();
+
+            builder.RegisterType<AutomationUpdater>()
+                .As<IAutomationUpdater>();
+
+            builder.RegisterType<GitAutomationRepository>()
+                .As<ISourceController>();
+
+            builder.RegisterType<SourceControlFilesUpdater>()
+                .As<IFilesUpdater>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

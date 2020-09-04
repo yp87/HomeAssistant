@@ -75,7 +75,7 @@ namespace Supervisor.UnitTest.Controllers
 
             // Assert
             var exception = await Assert.ThrowsAsync<ArgumentNullException>(executeAsync);
-            Assert.Contains(GitHubHeader.Signature, exception.Message);
+            Assert.Contains(Constants.GitHubHeaderSignature, exception.Message);
         }
 
         [Fact]
@@ -109,7 +109,7 @@ namespace Supervisor.UnitTest.Controllers
         public async Task GivenAnEventController_WithWrongSignature_WhenReceivingAnEvent_ThenTheEventIsUnauthorized()
         {
             // Arrange
-            _aSignature = $"sha1={_fixture.Create<string>()}";
+            _aSignature = $"{Constants.Sha1Prefix}{_fixture.Create<string>()}";
             await SetupWithBodyAsync();
 
             // Act
@@ -129,15 +129,17 @@ namespace Supervisor.UnitTest.Controllers
             var signatureWithoutPrefix = StringHelpers.ToHexString(hmSha1.ComputeHash(payloadBytes));
             _aSignature = $"sha1={signatureWithoutPrefix}";
 
-            _actionHandlerMock.Setup(m => m.Handle(It.Is<GitHubAction>(a => GitHubActionComparer(a))));
+            _actionHandlerMock.Setup(m => m.HandleAsync(It.Is<GitHubAction>(a => GitHubActionComparer(a))))
+                .Returns(Task.CompletedTask);
 
             await SetupWithBodyAsync();
 
             // Act
-            await _controller.ReceiveEventAsync();
+            var returnCode = await _controller.ReceiveEventAsync();
 
             // Assert
-            _actionHandlerMock.Verify(m => m.Handle(It.Is<GitHubAction>(a => GitHubActionComparer(a))), Times.Once);
+            Assert.IsAssignableFrom<OkResult>(returnCode);
+            _actionHandlerMock.Verify(m => m.HandleAsync(It.Is<GitHubAction>(a => GitHubActionComparer(a))), Times.Once);
         }
 
         private bool GitHubActionComparer(GitHubAction gitHubAction)
@@ -151,7 +153,7 @@ namespace Supervisor.UnitTest.Controllers
         {
             string eventName = _fixture.Create<string>();
             _actionHandlerMock.Setup(m => m.CanHandleAction(eventName)).Returns(isEventSupported);
-            _controller.ControllerContext.HttpContext.Request.Headers[GitHubHeader.Event] = eventName;
+            _controller.ControllerContext.HttpContext.Request.Headers[Constants.GitHubHeaderEvent] = eventName;
             return eventName;
         }
 
@@ -159,7 +161,7 @@ namespace Supervisor.UnitTest.Controllers
         {
             SetupWithEvent();
             _aSignature ??= _fixture.Create<string>();
-            _controller.ControllerContext.HttpContext.Request.Headers[GitHubHeader.Signature] = _aSignature;
+            _controller.ControllerContext.HttpContext.Request.Headers[Constants.GitHubHeaderSignature] = _aSignature;
         }
 
         private async Task SetupWithBodyAsync()
