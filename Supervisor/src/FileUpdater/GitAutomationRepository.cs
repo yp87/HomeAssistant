@@ -14,7 +14,7 @@ namespace Supervisor.FilesUpdater
         public async Task<bool> HasUnsynchronizedChangesAsync()
         {
             // Returns true of there are uncommitted changes or
-            // if there are unpushed changes
+            // if there are unpushed changes.
             return !string.IsNullOrEmpty(await RunGitCommandAsync("diff HEAD")) ||
                    !string.IsNullOrEmpty(await RunGitCommandAsync("cherry"));
         }
