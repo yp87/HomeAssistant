@@ -6,7 +6,7 @@ services:
   supervisor:
     container_name: supervisor
     build: Supervisor
-    Volumes:
+    volumes:
       - .:/Source
     image: supervisor:latest
     expose:
