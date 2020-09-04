@@ -2,8 +2,8 @@ using System.Threading.Tasks;
 
 namespace Supervisor.Automation
 {
-    public interface IAutomationUpdater
+    public interface IAutomationDeployer
     {
-        Task UpdateAsync();
+        Task DeployAsync();
     }
 }

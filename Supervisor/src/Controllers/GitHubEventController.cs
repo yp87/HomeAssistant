@@ -15,8 +15,6 @@ namespace Supervisor.Controllers
     [Route("Automation")]
     public class GitHubEventController : ControllerBase
     {
-        private const string Sha1Prefix = "sha1=";
-
         private readonly byte[] _secretBytes;
 
         // If more then one type of action can be handled in the future,
@@ -41,14 +39,14 @@ namespace Supervisor.Controllers
         [HttpPost()]
         public async Task<IActionResult> ReceiveEventAsync()
         {
-            string eventName = GetHeaderValue(GitHubHeader.Event);
+            string eventName = GetHeaderValue(Constants.GitHubHeaderEvent);
 
             if (!_actionHandler.CanHandleAction(eventName))
             {
                 throw new NotSupportedException($"The event {eventName} is not supported");
             }
 
-            string signature = GetHeaderValue(GitHubHeader.Signature);
+            string signature = GetHeaderValue(Constants.GitHubHeaderSignature);
 
             var eventPayload = await ReadPayloadAsync();
 
@@ -58,14 +56,14 @@ namespace Supervisor.Controllers
                 throw new UnauthorizedAccessException("The provided signature was not valid.");
             }
 
-            return ProcessAction(eventPayload);
+            return await ProcessActionAsync(eventPayload);
         }
 
-        private IActionResult ProcessAction(string eventPayload)
+        private async Task<IActionResult> ProcessActionAsync(string eventPayload)
         {
             var gitHubAction = JsonSerializer.Deserialize<GitHubAction>(eventPayload, _jsonSerializerOptions);
             NullGuard(gitHubAction, nameof(gitHubAction));
-            _actionHandler.Handle(gitHubAction);
+            await _actionHandler.HandleAsync(gitHubAction);
             return Ok();
         }
 
@@ -79,12 +77,12 @@ namespace Supervisor.Controllers
 
         private bool IsGithubEventAllowed(string payload, string eventName, string signatureWithPrefix)
         {
-            if (!signatureWithPrefix.StartsWith(Sha1Prefix, StringComparison.OrdinalIgnoreCase))
+            if (!signatureWithPrefix.StartsWith(Constants.Sha1Prefix, StringComparison.OrdinalIgnoreCase))
             {
                 throw new ArgumentException("The signature does not start with the expected prefix.");
             }
 
-            var signature = signatureWithPrefix.Substring(Sha1Prefix.Length);
+            var signature = signatureWithPrefix.Substring(Constants.Sha1Prefix.Length);
 
             var payloadBytes = Encoding.ASCII.GetBytes(payload);
             using var hmSha1 = new HMACSHA1(_secretBytes);

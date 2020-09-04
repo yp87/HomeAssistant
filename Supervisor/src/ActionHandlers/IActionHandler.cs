@@ -1,5 +1,5 @@
-using System;
 using Supervisor.Models;
+using System.Threading.Tasks;
 
 namespace Supervisor.ActionHandlers
 {
@@ -7,6 +7,6 @@ namespace Supervisor.ActionHandlers
     {
         bool CanHandleAction(string actionName);
 
-        void Handle(GitHubAction action);
+        Task HandleAsync(GitHubAction action);
     }
 }
