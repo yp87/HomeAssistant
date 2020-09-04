@@ -1,3 +1,4 @@
+This is a test to see how check_run works with PR
 TODO: 
 - Use containerized database and add to docker-compose
 - ~~Containerize alarm system scripts and add to docker-compose~~
