@@ -31,17 +31,26 @@ namespace Supervisor
                 StartInfo = processStartInfo,
             };
 
+            var programExitCodeAsync = new TaskCompletionSource<int>();
+            process.Exited += (sender, args) =>
+            {
+                programExitCodeAsync.SetResult(process.ExitCode);
+                process.Dispose();
+            };
+
             process.Start();
 
-            string error = await process.StandardError.ReadToEndAsync();
+            // Some program like git may write to stderr even if it is not an error.
+            // Sometime, it is used for information only.
+            string stderr = await process.StandardError.ReadToEndAsync();
+            string stdout = await process.StandardOutput.ReadToEndAsync();
 
-            if (!string.IsNullOrEmpty(error))
+            if (await programExitCodeAsync.Task != 0)
             {
-                throw new Exception($"error while running {_programName} command with {arguments} : {error}");
+                throw new Exception($"error while running {_programName} command with {arguments}. stdout: {stdout}. stderr: {stderr}");
             }
 
-            var rawResponse = await process.StandardOutput.ReadToEndAsync();
-            return Regex.Replace(rawResponse, "[^a-zA-Z0-9]", "");
+            return Regex.Replace(stdout, "[^a-zA-Z]", "");
         }
     }
 }
