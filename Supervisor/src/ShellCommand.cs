@@ -18,6 +18,7 @@ namespace Supervisor
             var processStartInfo = new ProcessStartInfo()
             {
                 WorkingDirectory = "/Source",
+                Arguments = arguments,
                 FileName = _programName,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
