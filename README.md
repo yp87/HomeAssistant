@@ -26,5 +26,5 @@ TODO:
       6) Wait for complete deployment
       7) commit .HA_VERSION 
       8) push to master (On build success, should not redeploy to Home assistant host.. label? keyword in commit?)
-- Check what can be done with Travis to only run home assistant config check when something actually changed in home assistant
+- ~~Check what can be done with Travis to only run home assistant config check when something actually changed in home assistant~~
 - Travis build should build all the containers and validate the outcome (only if something changed that impact each container)
