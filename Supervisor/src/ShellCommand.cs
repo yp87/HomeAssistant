@@ -29,6 +29,8 @@ namespace Supervisor
             var process = new Process()
             {
                 StartInfo = processStartInfo,
+                EnableRaisingEvents = true,
+
             };
 
             var programExitCodeAsync = new TaskCompletionSource<int>();
