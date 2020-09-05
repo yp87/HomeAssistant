@@ -44,6 +44,12 @@ namespace Supervisor
 
             builder.RegisterType<SourceControlFilesUpdater>()
                 .As<IFilesUpdater>();
+
+            builder.RegisterType<HomeAssistantNotifier>()
+                .As<IAutomationNotifier>();
+
+            builder.RegisterType<DockerComposeHomeAssistantDeployer>()
+                .As<IAutomationDeployer>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
