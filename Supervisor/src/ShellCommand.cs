@@ -14,7 +14,7 @@ namespace Supervisor
             _programName = programName;
         }
 
-        public async Task<string> RunCommandAsync(string arguments)
+        public async Task<string> RunCommandAsync(string arguments, bool appendError = false)
         {
             var processStartInfo = new ProcessStartInfo()
             {
@@ -45,7 +45,7 @@ namespace Supervisor
                 throw new Exception($"error while running {_programName} command with {arguments}. stdout: {stdout}. stderr: {stderr}");
             }
 
-            return stdout;
+            return appendError ? $"{stdout}{stderr}" : stdout;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Supervisor.Automation
 
         public async Task DeployAsync()
         {
-            var output = await _dockerComposeShellCommand.RunCommandAsync("up --build -d homeassistant");
+            var output = await _dockerComposeShellCommand.RunCommandAsync("up --build -d homeassistant", true);
             if (output.Contains("hass is up-to-date", StringComparison.InvariantCultureIgnoreCase))
             {
                 // Maybe the docker-compose of home assistant did not change, but it is possible
