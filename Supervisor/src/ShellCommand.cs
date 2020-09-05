@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -30,36 +29,23 @@ namespace Supervisor
             var process = new Process()
             {
                 StartInfo = processStartInfo,
-                EnableRaisingEvents = true,
-            };
-
-            var programExitCodeAsync = new TaskCompletionSource<int>();
-            process.Exited += (sender, args) =>
-            {
-                programExitCodeAsync.SetResult(process.ExitCode);
-                process.Dispose();
-            };
-
-            var sbStdErr = new StringBuilder();
-            process.ErrorDataReceived += (sender, args) =>
-            {
-                sbStdErr.Append(args.Data);
-            };
-
-            var sbStdOut = new StringBuilder();
-            process.OutputDataReceived += (sender, args) =>
-            {
-                sbStdOut.Append(args.Data);
             };
 
             process.Start();
 
-            if (await programExitCodeAsync.Task != 0)
+            // Some program like git may write to stderr even if it is not an error.
+            // Sometime, it is used for information only.
+            string stderr = await process.StandardError.ReadToEndAsync();
+            string stdout = await process.StandardOutput.ReadToEndAsync();
+
+            await Task.Run(() => process.WaitForExit());
+
+            if (process.ExitCode != 0)
             {
-                throw new Exception($"error while running {_programName} command with {arguments}. stdout: {sbStdOut}. stderr: {sbStdErr}");
+                throw new Exception($"error while running {_programName} command with {arguments}. stdout: {stdout}. stderr: {stderr}");
             }
 
-            return Regex.Replace(sbStdOut.ToString(), "[^a-zA-Z]", "");
+            return Regex.Replace(stdout, "[^a-zA-Z]", "");
         }
     }
 }
