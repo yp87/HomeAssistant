@@ -9,8 +9,7 @@ jobs:
       script:
         - |
             if [ "${TRAVIS_COMMIT_RANGE}" ] ; then
-              export CHANGED_FILES="`git diff --name-only $TRAVIS_COMMIT_RANGE`"
-              $CHANGED_FILES | grep -qvE '(^(hass))/' && {
+              ="`git diff --name-only $TRAVIS_COMMIT_RANGE | grep -qE '(^(hass))/' && {
                 echo "Home Assistant files were changed. Testing configuration..."
                 export HA_VERSION="`cat $TRAVIS_BUILD_DIR/hass/.HA_VERSION`"
                 touch $TRAVIS_BUILD_DIR/hass/FakeCertificate.pem
