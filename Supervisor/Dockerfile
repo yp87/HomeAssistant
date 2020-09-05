@@ -21,7 +21,7 @@ RUN curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-c
 
 RUN chmod +x /usr/local/bin/docker-compose
 
-RUN apt-get update && apt-get install -y git && apt-get install
+RUN apt-get update && apt-get install -y git
 
 COPY --from=build-env /app/out .
 

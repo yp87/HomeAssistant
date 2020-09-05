@@ -12,6 +12,8 @@ services:
     image: supervisor:latest
     expose:
       - 3000
+    environment:
+      - BASE_PATH=$PWD
     restart: always
     depends_on:
       - webhookproxy
@@ -29,7 +31,7 @@ services:
     #image: homeassistant/home-assistant:0.113.2    #Specific Version
     image: homeassistant/home-assistant:stable
     volumes:
-      - ./hass:/config
+      - ${BASE_PATH}/hass:/config
     devices:
       - /dev/zwave:/dev/zwave
     restart: always
@@ -45,7 +47,7 @@ services:
     ports:
       - "1883:1883"
     volumes:
-      - ./mosquitto/config:/mosquitto/config
+      - ${BASE_PATH}/mosquitto/config:/mosquitto/config
 
   alarm:
     container_name: alarm
