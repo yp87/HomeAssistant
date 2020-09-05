@@ -2,16 +2,17 @@ language: minimal
 
 services:
   - docker
-
-before_install:
-  - export HA_VERSION="`cat $TRAVIS_BUILD_DIR/hass/.HA_VERSION`"
-  - touch $TRAVIS_BUILD_DIR/hass/FakeCertificate.pem
-  - touch $TRAVIS_BUILD_DIR/hass/FakeKey.pem
-  - mv $TRAVIS_BUILD_DIR/.travis_dummy/dummy_secrets.yaml hass/secrets.yaml
-  - mv $TRAVIS_BUILD_DIR/.travis_dummy/dummy_service_account.json hass/service_account.json
-
-install:
-  - docker pull homeassistant/home-assistant:$HA_VERSION
   
-script:
-  - docker run -v $TRAVIS_BUILD_DIR/hass:/config homeassistant/home-assistant:$HA_VERSION python -m homeassistant --config /config --script check_config --info all
+jobs:
+  include:
+    - name: Test Home Assistant config
+      before_install:
+        - export HA_VERSION="`cat $TRAVIS_BUILD_DIR/hass/.HA_VERSION`"
+        - touch $TRAVIS_BUILD_DIR/hass/FakeCertificate.pem
+        - touch $TRAVIS_BUILD_DIR/hass/FakeKey.pem
+        - mv $TRAVIS_BUILD_DIR/.travis_dummy/dummy_secrets.yaml hass/secrets.yaml
+        - mv $TRAVIS_BUILD_DIR/.travis_dummy/dummy_service_account.json hass/service_account.json
+      install:
+        - docker pull homeassistant/home-assistant:$HA_VERSION
+      script:
+        - docker run -v $TRAVIS_BUILD_DIR/hass:/config homeassistant/home-assistant:$HA_VERSION python -m homeassistant --config /config --script check_config --info all
