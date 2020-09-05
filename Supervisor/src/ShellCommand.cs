@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Supervisor
@@ -39,7 +40,8 @@ namespace Supervisor
                 throw new Exception($"error while running {_programName} command with {arguments} : {error}");
             }
 
-            return await process.StandardOutput.ReadToEndAsync();
+            var rawResponse = await process.StandardOutput.ReadToEndAsync();
+            return Regex.Replace(rawResponse, "[^a-zA-Z]", "");
         }
     }
 }
