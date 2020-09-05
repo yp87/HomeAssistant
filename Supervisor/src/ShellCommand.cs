@@ -41,7 +41,7 @@ namespace Supervisor
             }
 
             var rawResponse = await process.StandardOutput.ReadToEndAsync();
-            return Regex.Replace(rawResponse, "[^a-zA-Z]", "");
+            return Regex.Replace(rawResponse, "[^a-zA-Z0-9]", "");
         }
     }
 }
