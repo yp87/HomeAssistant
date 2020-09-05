@@ -8,6 +8,7 @@ services:
     build: Supervisor
     volumes:
       - .:/Source
+      - /var/run/docker.sock:/var/run/docker.sock
     image: supervisor:latest
     expose:
       - 3000
