@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -30,7 +31,6 @@ namespace Supervisor
             {
                 StartInfo = processStartInfo,
                 EnableRaisingEvents = true,
-
             };
 
             var programExitCodeAsync = new TaskCompletionSource<int>();
@@ -40,19 +40,26 @@ namespace Supervisor
                 process.Dispose();
             };
 
-            process.Start();
+            var sbStdErr = new StringBuilder();
+            process.ErrorDataReceived += (sender, args) =>
+            {
+                sbStdErr.Append(args.Data);
+            };
 
-            // Some program like git may write to stderr even if it is not an error.
-            // Sometime, it is used for information only.
-            string stderr = await process.StandardError.ReadToEndAsync();
-            string stdout = await process.StandardOutput.ReadToEndAsync();
+            var sbStdOut = new StringBuilder();
+            process.OutputDataReceived += (sender, args) =>
+            {
+                sbStdOut.Append(args.Data);
+            };
+
+            process.Start();
 
             if (await programExitCodeAsync.Task != 0)
             {
-                throw new Exception($"error while running {_programName} command with {arguments}. stdout: {stdout}. stderr: {stderr}");
+                throw new Exception($"error while running {_programName} command with {arguments}. stdout: {sbStdOut}. stderr: {sbStdErr}");
             }
 
-            return Regex.Replace(stdout, "[^a-zA-Z]", "");
+            return Regex.Replace(sbStdOut.ToString(), "[^a-zA-Z]", "");
         }
     }
 }
