@@ -7,13 +7,7 @@ TODO:
 - HomeAssistant: change custom_components huesensor to use git submodule that points to the original repo.
 - ~~Setup stub secrets for futur travis integration~~
 - ~~Setup travis to validate configs in PR~~
-- Automatically update config for hass and restart when build pass on master
-    - ~~Configure github webhook.~~
-    - ~~Configure smee.io as proxy service for github webhook.~~
-    - ~~Create webhook proxy container running smee.io client~~
-    - ~~Create empty supervisor aspnetcore container to receive github events from webhook~~
-    - ~~Authenticate web hook event in supervisor~~
-    - Handle github event on build success on master to git pull + deploy homeassistant.
+- ~~Automatically update config for hass and restart when build pass on master~~
 - Automatically update config for hass and restart when build pass on specific branches/commit/PR?
 - ~~Read .HA_VERSION to pull correct image in travis~~
 - Allow to build with latest Home assistant version to check config before upgrade Home Assistant
