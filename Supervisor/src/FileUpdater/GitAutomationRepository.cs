@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Supervisor.FilesUpdater
@@ -8,9 +9,10 @@ namespace Supervisor.FilesUpdater
     {
         private ShellCommand _gitShellCommand = new ShellCommand("git");
 
-        public Task<string> GetCurrentBranchNameAsync()
+        public async Task<string> GetCurrentBranchNameAsync()
         {
-            return _gitShellCommand.RunCommandAsync("rev-parse --abbrev-ref HEAD");
+            string result = await _gitShellCommand.RunCommandAsync("rev-parse --abbrev-ref HEAD");
+            return Regex.Replace(result, "[^a-zA-Z]", "");
         }
 
         public async Task<bool> HasUnsynchronizedChangesAsync()

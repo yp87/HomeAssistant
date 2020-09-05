@@ -45,7 +45,7 @@ namespace Supervisor
                 throw new Exception($"error while running {_programName} command with {arguments}. stdout: {stdout}. stderr: {stderr}");
             }
 
-            return Regex.Replace(stdout, "[^a-zA-Z]", "");
+            return stdout;
         }
     }
 }
