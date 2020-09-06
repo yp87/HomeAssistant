@@ -1,3 +1,12 @@
+- alias: Home assistant started notification
+  trigger:
+    platform: homeassistant
+    event: start
+  action:
+    - service: notify.yan
+      data:
+        message: "Home assistant started."
+
 - alias: Alert midnight resets
   trigger:
     - platform: time

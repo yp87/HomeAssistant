@@ -28,13 +28,20 @@ namespace Supervisor.ActionHandlers
             await _automationSemaphore.WaitAsync();
             try
             {
-                await _automationClient.NotifyAsync($"A build was {action.CheckRun?.Status}.");
-                if ((action.CheckRun?.Status?.Equals(Constants.GitHubBuildCompleted, StringComparison.InvariantCultureIgnoreCase) ?? false) &&
-                    (action.CheckRun.Conclusion?.Equals(Constants.GitHubBuildSuccess, StringComparison.InvariantCultureIgnoreCase)?? false) &&
-                    (action.CheckRun.CheckSuite?.HeadBranch?.Equals(Constants.MasterBranchName, StringComparison.InvariantCultureIgnoreCase) ?? false) &&
-                    (action.CheckRun.CheckSuite.PullRequests?.Length ?? 0) == 0)
+                string buildStatus = action.CheckRun?.Status ?? string.Empty;
+                string buildBranch = action.CheckRun?.CheckSuite?.HeadBranch ?? string.Empty;
+                var buildEventNotification = $"A build was {action.CheckRun?.Status} on branch {buildBranch}.";
+                if (buildStatus.Equals(Constants.GitHubBuildCompleted, StringComparison.InvariantCultureIgnoreCase) &&
+                    (action.CheckRun?.Conclusion?.Equals(Constants.GitHubBuildSuccess, StringComparison.InvariantCultureIgnoreCase)?? false) &&
+                    buildBranch.Equals(Constants.MasterBranchName, StringComparison.InvariantCultureIgnoreCase) &&
+                    (action.CheckRun.CheckSuite?.PullRequests?.Length ?? 0) == 0)
                 {
+                    await _automationClient.NotifyAsync($"{buildEventNotification} Triggering automation update.");
                     await _automationUpdater.UpdateAsync();
+                }
+                else
+                {
+                    await _automationClient.NotifyAsync($"{buildEventNotification} Skipping.");
                 }
             }
             finally
