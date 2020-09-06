@@ -35,7 +35,7 @@ namespace Supervisor.Automation
                 }
                 else
                 {
-                    await _automationClient.NotifyAsync("No critical file changed. Nothing to deploy.");
+                    await _automationClient.NotifyAsync("No critical files changed. Nothing to deploy.");
                 }
             }
             catch (Exception e)
