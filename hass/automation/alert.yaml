@@ -6,7 +6,7 @@
     - delay: "00:00:10"
     - service: notify.yan
       data:
-        message: "Home assistant started."
+        message: "Home Assistant started."
 
 - alias: Alert midnight resets
   trigger:
