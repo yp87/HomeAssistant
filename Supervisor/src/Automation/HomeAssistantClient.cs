@@ -41,13 +41,17 @@ namespace Supervisor.Automation
            return CallServiceAsync("homeassistant", "restart");
         }
 
-        public Task NotifyAsync(string notification)
+        public async Task NotifyAsync(string notification)
         {
             var message = new HomeAssistionNotificationData()
             {
                 Message = notification,
             };
-            return CallServiceAsync("notify", "yan", message);
+
+            // Add a 1 second delay because it looks like the hangouts
+            // integration may skip meassages otherwise.
+            await Task.Delay(1000);
+            await CallServiceAsync("notify", "yan", message);
         }
 
         private async Task CallServiceAsync(string domain, string service, object? data = null)
