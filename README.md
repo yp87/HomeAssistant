@@ -1,9 +1,9 @@
 TODO:
-- ~~When supervisor restarts home assistant because only configurations were changed, send a restart command to home assistant instead of restarting the whole container~~
-- ~~Correctly implement supervisor's home assistant notifier to send messages to home assistant~~
-- HomeAssistant: change custom_components huesensor to use git submodule that points to the
+- HomeAssistant: change custom_components huesensor to use git submodule that points to the original github
 - Use containerized database and add to docker-compose
 - HomeAssistant: cleanup multi script loops in favor of new repeat mode
+- ~~When supervisor restarts home assistant because only configurations were changed, send a restart command to home assistant instead of restarting the whole container~~
+- ~~Correctly implement supervisor's home assistant notifier to send messages to home assistant~~
 - ~~Only restart home assistant if config changed~~
 - ~~Only restart Home assistant dependencies if they changed~~
 - ~~Containerize alarm system scripts and add to docker-compose~~
