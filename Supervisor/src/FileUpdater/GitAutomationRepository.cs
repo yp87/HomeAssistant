@@ -33,7 +33,7 @@ namespace Supervisor.FilesUpdater
 
         private string SanitizeString(string stringToSanitize)
         {
-            return Regex.Replace(stringToSanitize, "[^a-zA-Z]", "");
+            return Regex.Replace(stringToSanitize, "[^a-zA-Z0-9]", "");
         }
     }
 }
