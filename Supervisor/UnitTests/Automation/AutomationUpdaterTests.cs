@@ -16,19 +16,22 @@ namespace Supervisor.UnitTest.Automation
 
         private readonly Mock<IFilesUpdater> _filesUpdaterMock;
 
-        private readonly Mock<IAutomationNotifier> _automationNotifierMock;
+        private readonly Mock<IAutomationClient> _automationClientMock;
 
         private readonly Mock<IAutomationDeployer> _automationDeployerMock;
 
         public AutomationUpdaterTests()
         {
             _filesUpdaterMock = new Mock<IFilesUpdater>(MockBehavior.Strict);
-            _automationNotifierMock = new Mock<IAutomationNotifier>(MockBehavior.Strict);
+            _automationClientMock = new Mock<IAutomationClient>(MockBehavior.Strict);
             _automationDeployerMock = new Mock<IAutomationDeployer>(MockBehavior.Strict);
             _automationUpdater = new AutomationUpdater(
                 _filesUpdaterMock.Object,
-                _automationNotifierMock.Object,
+                _automationClientMock.Object,
                 _automationDeployerMock.Object);
+
+            _automationClientMock.Setup(m => m.NotifyAsync(It.IsAny<string>()))
+                .Returns(Task.CompletedTask);
         }
 
         [Fact]
@@ -39,14 +42,14 @@ namespace Supervisor.UnitTest.Automation
             _filesUpdaterMock.Setup(m => m.UpdateFilesAsync())
                 .Throws(new InvalidOperationException(errorString));
 
-            _automationNotifierMock.Setup(m => m.SendNotificationAsync(errorString))
+            _automationClientMock.Setup(m => m.NotifyAsync(errorString))
                 .Returns(Task.CompletedTask);
 
             // Act
             await _automationUpdater.UpdateAsync();
 
             // Assert
-            _automationNotifierMock.Verify(m => m.SendNotificationAsync(errorString), Times.Once);
+            _automationClientMock.Verify(m => m.NotifyAsync(errorString), Times.Once);
         }
 
         [Fact]
@@ -60,14 +63,14 @@ namespace Supervisor.UnitTest.Automation
             _automationDeployerMock.Setup(m => m.DeployAsync())
                 .Throws(new InvalidOperationException(errorString));
 
-            _automationNotifierMock.Setup(m => m.SendNotificationAsync(errorString))
+            _automationClientMock.Setup(m => m.NotifyAsync(errorString))
                 .Returns(Task.CompletedTask);
 
             // Act
             await _automationUpdater.UpdateAsync();
 
             // Assert
-            _automationNotifierMock.Verify(m => m.SendNotificationAsync(errorString), Times.Once);
+            _automationClientMock.Verify(m => m.NotifyAsync(errorString), Times.Once);
         }
     }
 }

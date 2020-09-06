@@ -1,11 +1,21 @@
 using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Supervisor.Providers;
 
 namespace Supervisor.Automation
 {
     public class DockerComposeHomeAssistantDeployer : IAutomationDeployer
     {
-        private ShellCommand _dockerComposeShellCommand = new ShellCommand("docker-compose");
+        private readonly ShellCommand _dockerComposeShellCommand = new ShellCommand("docker-compose");
+
+        private readonly IAutomationClient _automationClient;
+
+        public DockerComposeHomeAssistantDeployer(IAutomationClient automationClient)
+        {
+            _automationClient = automationClient;
+        }
 
         public async Task DeployAsync()
         {
@@ -14,8 +24,8 @@ namespace Supervisor.Automation
             {
                 // Maybe the docker-compose of home assistant did not change, but it is possible
                 // that a file in the volume of home assistant changed..
-                // TODO: Send restart request to Home assistant directly instead of restarting the container..
-                await _dockerComposeShellCommand.RunCommandAsync("restart homeassistant");
+                await _automationClient.NotifyAsync("Restarting home automation...");
+                await _automationClient.RestartAutomationAsync();
             }
         }
     }

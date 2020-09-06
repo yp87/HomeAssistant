@@ -8,14 +8,14 @@ namespace Supervisor.Automation
     {
         private readonly IFilesUpdater _filesUpdater;
 
-        private readonly IAutomationNotifier _automationNotifier;
+        private readonly IAutomationClient _automationClient;
 
         private readonly IAutomationDeployer _automationDeployer;
 
-        public AutomationUpdater(IFilesUpdater filesUpdater, IAutomationNotifier automationNotifier, IAutomationDeployer automationDeployer)
+        public AutomationUpdater(IFilesUpdater filesUpdater, IAutomationClient automationClient, IAutomationDeployer automationDeployer)
         {
             _filesUpdater = filesUpdater;
-            _automationNotifier = automationNotifier;
+            _automationClient = automationClient;
             _automationDeployer = automationDeployer;
         }
 
@@ -23,12 +23,14 @@ namespace Supervisor.Automation
         {
             try
             {
+                await _automationClient.NotifyAsync("Updating files...");
                 await _filesUpdater.UpdateFilesAsync();
+                await _automationClient.NotifyAsync("Deploying automation server...");
                 await _automationDeployer.DeployAsync();
             }
             catch (Exception e)
             {
-                await _automationNotifier.SendNotificationAsync(e.Message);
+                await _automationClient.NotifyAsync(e.Message);
             }
         }
     }

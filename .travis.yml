@@ -2,13 +2,13 @@ language: minimal
 
 services:
   - docker
-  
+
 jobs:
   include:
     - name: Test Home Assistant config
       script:
         - |
-            if git diff --name-only $TRAVIS_COMMIT_RANGE | grep -qE '(travis\.yml)|^(hass)'; then              
+            if git diff --name-only $TRAVIS_COMMIT_RANGE | grep -qE '(travis\.yml)|^(hass)'; then
                 echo "Home Assistant configuration files were changed. Testing configuration..."
                 export HA_VERSION="`cat $TRAVIS_BUILD_DIR/hass/.HA_VERSION`"
                 touch $TRAVIS_BUILD_DIR/hass/FakeCertificate.pem
@@ -21,9 +21,11 @@ jobs:
     - name: Build and test containers
       script:
         - |
-            if git diff --name-only $TRAVIS_COMMIT_RANGE | grep -qE '(travis\.yml)|(docker-compose\.yaml)|^(WebhookProxy)|^(alarm)|^(Supervisor)'; then             
+            if git diff --name-only $TRAVIS_COMMIT_RANGE | grep -qE '(travis\.yml)|(docker-compose\.yaml)|^(WebhookProxy)|^(alarm)|^(Supervisor)'; then
                 echo "Files related to containers other than Home Assistant configuration were changed. building with docker-compose..."
                 touch $TRAVIS_BUILD_DIR/Supervisor/secret_webhook
+                touch $TRAVIS_BUILD_DIR/Supervisor/secret_automation_api_key
+                touch $TRAVIS_BUILD_DIR/Supervisor/secret_automation_endpoint
                 touch $TRAVIS_BUILD_DIR/alarm/secret_options.json
                 touch $TRAVIS_BUILD_DIR/WebhookProxy/secret_smeeurl
                 docker-compose build --parallel

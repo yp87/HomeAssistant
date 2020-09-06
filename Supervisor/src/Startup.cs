@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Supervisor.ActionHandlers;
 using Supervisor.Automation;
 using Supervisor.FilesUpdater;
+using Supervisor.Providers;
 
 namespace Supervisor
 {
@@ -28,8 +29,14 @@ namespace Supervisor
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            var secret = File.ReadAllText("secret_webhook");
-            builder.RegisterInstance(secret);
+            var webHookSecretProvider = new WebhookSecretProvider(File.ReadAllText("secret_webhook"));
+            builder.RegisterInstance(webHookSecretProvider);
+
+            var automationApiKeyProvider = new AutomationApiKeyProvider(File.ReadAllText("secret_automation_api_key"));
+            builder.RegisterInstance(automationApiKeyProvider);
+
+            var automationEndpointProvider = new AutomationEndpointProvider(File.ReadAllText("secret_automation_endpoint"));
+            builder.RegisterInstance(automationEndpointProvider);
 
             builder.RegisterType<CheckRunActionHandler>()
                 .As<IActionHandler>()
@@ -45,11 +52,13 @@ namespace Supervisor
             builder.RegisterType<SourceControlFilesUpdater>()
                 .As<IFilesUpdater>();
 
-            builder.RegisterType<HomeAssistantNotifier>()
-                .As<IAutomationNotifier>();
-
             builder.RegisterType<DockerComposeHomeAssistantDeployer>()
                 .As<IAutomationDeployer>();
+
+            builder.RegisterType<HomeAssistantClient>()
+                .As<IAutomationClient>()
+                // HomeAssistantClient contains an HttpClient which should be shared.
+                .SingleInstance();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

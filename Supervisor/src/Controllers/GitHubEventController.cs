@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Supervisor.ActionHandlers;
 using Supervisor.Models;
+using Supervisor.Providers;
 
 namespace Supervisor.Controllers
 {
@@ -25,10 +26,10 @@ namespace Supervisor.Controllers
 
         private readonly JsonSerializerOptions _jsonSerializerOptions;
 
-        public GitHubEventController(IActionHandler actionHandler, string secret)
+        public GitHubEventController(IActionHandler actionHandler, WebhookSecretProvider webhookSecretProvider)
         {
             _actionHandler = actionHandler;
-            _secretBytes = Encoding.ASCII.GetBytes(secret);
+            _secretBytes = Encoding.ASCII.GetBytes(webhookSecretProvider.WebhookSecret);
             _jsonSerializerOptions = new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
