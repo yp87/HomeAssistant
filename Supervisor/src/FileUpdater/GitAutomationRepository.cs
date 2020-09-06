@@ -12,7 +12,7 @@ namespace Supervisor.FilesUpdater
         public async Task<string> GetCurrentBranchNameAsync()
         {
             string result = await _gitShellCommand.RunCommandAsync("rev-parse --abbrev-ref HEAD");
-            return Regex.Replace(result, "[^a-zA-Z]", "");
+            return SanitizeString(result);
         }
 
         public async Task<bool> HasUnsynchronizedChangesAsync()
@@ -26,8 +26,14 @@ namespace Supervisor.FilesUpdater
         public async Task<string> UpdateRepositoryAsync()
         {
             string commitIdBeforeUpdate = await _gitShellCommand.RunCommandAsync("log --format=%H -n 1");
+            commitIdBeforeUpdate = SanitizeString(commitIdBeforeUpdate);
             await _gitShellCommand.RunCommandAsync("pull");
             return await _gitShellCommand.RunCommandAsync($"diff --name-only {commitIdBeforeUpdate}");
+        }
+
+        private string SanitizeString(string stringToSanitize)
+        {
+            return Regex.Replace(stringToSanitize, "[^a-zA-Z]", "");
         }
     }
 }
