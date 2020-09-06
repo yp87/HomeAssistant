@@ -76,7 +76,6 @@ sensor:
     value_template: '{{ value_json.ip }}'
     scan_interval: 3600
   - platform: yr
-  - platform: huesensor
   - platform: waze_travel_time
     name: yantohome
     origin: person.yan
