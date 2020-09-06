@@ -8,8 +8,8 @@ jobs:
     - name: Test Home Assistant config
       script:
         - |
-            if [ git diff --name-only $TRAVIS_COMMIT_RANGE | grep -qE '(^(hass))/' ] ; then              
-                echo "Home Assistant files were changed. Testing configuration..."
+            if [ git diff --name-only $TRAVIS_COMMIT_RANGE | grep -qE '^(hass)' ] ; then              
+                echo "Home Assistant configuration files were changed. Testing configuration..."
                 export HA_VERSION="`cat $TRAVIS_BUILD_DIR/hass/.HA_VERSION`"
                 touch $TRAVIS_BUILD_DIR/hass/FakeCertificate.pem
                 touch $TRAVIS_BUILD_DIR/hass/FakeKey.pem
@@ -17,4 +17,11 @@ jobs:
                 mv $TRAVIS_BUILD_DIR/.travis_dummy/dummy_service_account.json hass/service_account.json
                 docker pull homeassistant/home-assistant:$HA_VERSION
                 docker run -v $TRAVIS_BUILD_DIR/hass:/config homeassistant/home-assistant:$HA_VERSION python -m homeassistant --config /config --script check_config --info all
+            fi
+    - name: Build and test supervisor
+      script:
+        - |
+            if [ git diff --name-only $TRAVIS_COMMIT_RANGE | grep -qE '(docker-compose\.yaml)|^(WebhookProxy)|^(alarm)|^(Supervisor)' ] ; then              
+                echo "Files related to containers other than Home Assistant configuration were changed. running docker-compose..."
+                docker-compose build --parallel
             fi
