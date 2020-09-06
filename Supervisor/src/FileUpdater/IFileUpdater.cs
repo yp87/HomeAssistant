@@ -4,6 +4,6 @@ namespace Supervisor.FilesUpdater
 {
     public interface IFilesUpdater
     {
-        Task UpdateFilesAsync();
+        Task<string> UpdateFilesAsync();
     }
 }

@@ -86,7 +86,7 @@ namespace Supervisor.UnitTest.FilesUpdater
                 .ReturnsAsync(false);
 
             _sourceControllerMock.Setup(m => m.UpdateRepositoryAsync())
-                .Returns(Task.CompletedTask);
+                .ReturnsAsync(string.Empty);
 
             // Act
             await _sourceControlFilesUpdater.UpdateFilesAsync();

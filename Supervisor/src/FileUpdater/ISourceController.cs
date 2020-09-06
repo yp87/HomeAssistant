@@ -8,6 +8,6 @@ namespace Supervisor.FilesUpdater
 
         Task<bool> HasUnsynchronizedChangesAsync();
 
-        Task UpdateRepositoryAsync();
+        Task<string> UpdateRepositoryAsync();
     }
 }

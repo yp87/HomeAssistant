@@ -23,9 +23,11 @@ namespace Supervisor.FilesUpdater
                    !string.IsNullOrEmpty(await _gitShellCommand.RunCommandAsync("cherry"));
         }
 
-        public Task UpdateRepositoryAsync()
+        public async Task<string> UpdateRepositoryAsync()
         {
-            return _gitShellCommand.RunCommandAsync("pull");
+            string commitIdBeforeUpdate = await _gitShellCommand.RunCommandAsync("log --format=\"%H\" -n 1");
+            await _gitShellCommand.RunCommandAsync("pull");
+            return await _gitShellCommand.RunCommandAsync($"diff --name-only {commitIdBeforeUpdate}");
         }
     }
 }

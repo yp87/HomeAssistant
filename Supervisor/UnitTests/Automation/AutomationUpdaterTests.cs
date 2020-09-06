@@ -57,13 +57,13 @@ namespace Supervisor.UnitTest.Automation
         {
             // Arrange
             _filesUpdaterMock.Setup(m => m.UpdateFilesAsync())
-                .Returns(Task.CompletedTask);
+                .ReturnsAsync("hass/ Suppervisor/");
 
             string errorString = _fixture.Create<string>();
-            _automationDeployerMock.Setup(m => m.DeployAsync())
+            _automationDeployerMock.Setup(m => m.DeployAsync(It.IsAny<bool>(), It.IsAny<bool>()))
                 .Throws(new InvalidOperationException(errorString));
 
-            _automationClientMock.Setup(m => m.NotifyAsync(errorString))
+            _automationClientMock.Setup(m => m.NotifyAsync(It.IsAny<string>()))
                 .Returns(Task.CompletedTask);
 
             // Act
@@ -71,6 +71,41 @@ namespace Supervisor.UnitTest.Automation
 
             // Assert
             _automationClientMock.Verify(m => m.NotifyAsync(errorString), Times.Once);
+        }
+
+        [Theory]
+        [InlineData("", false, false)]
+        [InlineData("README.md travis.yml .editorConfig", false, false)]
+        [InlineData("WebhookProxy/Dockerfile README.md travis.yml .editorConfig", true, false)]
+        [InlineData("Supervisor/Dockerfile SomeOtherUselessFile", true, false)]
+        [InlineData("README.md alarm/Dockerfile .editorConfig", true, false)]
+        [InlineData("docker-compose.yaml", true, false)]
+        [InlineData("README.md docker-compose.yaml hass/groups.yaml", true, true)]
+        [InlineData("Supervisor/Dockerfile travis.yml hass/groups.yaml", true, true)]
+        public async Task GivenAnUpdater_WithModifiedFiles_WhenUpdating_ThenOnlyTheMatchingSystemIsDeployed(string updatedFiles, bool infrastructureShouldDeploy, bool automationShouldDeploy)
+        {
+            // Arrange
+            _filesUpdaterMock.Setup(m => m.UpdateFilesAsync())
+                .ReturnsAsync(updatedFiles);
+
+            _automationDeployerMock.Setup(m => m.DeployAsync(It.IsAny<bool>(), It.IsAny<bool>()))
+                .Returns(Task.CompletedTask);
+
+            _automationClientMock.Setup(m => m.NotifyAsync(It.IsAny<string>()))
+                .Returns(Task.CompletedTask);
+
+            // Act
+            await _automationUpdater.UpdateAsync();
+
+            // Assert
+            if (infrastructureShouldDeploy || automationShouldDeploy)
+            {
+                _automationDeployerMock.Verify(m => m.DeployAsync(infrastructureShouldDeploy, automationShouldDeploy), Times.Once);
+            }
+            else
+            {
+                _automationDeployerMock.Verify(m => m.DeployAsync(It.IsAny<bool>(), It.IsAny<bool>()), Times.Never);
+            }
         }
     }
 }

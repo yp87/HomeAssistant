@@ -4,6 +4,6 @@ namespace Supervisor.Automation
 {
     public interface IAutomationDeployer
     {
-        Task DeployAsync();
+        Task DeployAsync(bool deployInfrastructure, bool deployAutomation);
     }
 }

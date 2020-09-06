@@ -12,7 +12,7 @@ namespace Supervisor.FilesUpdater
             _sourceController = sourceController;
         }
 
-        public async Task UpdateFilesAsync()
+        public async Task<string> UpdateFilesAsync()
         {
             var branchName = await _sourceController.GetCurrentBranchNameAsync();
             if (!branchName.Equals(Constants.MasterBranchName, StringComparison.InvariantCultureIgnoreCase))
@@ -25,7 +25,7 @@ namespace Supervisor.FilesUpdater
                 throw new InvalidOperationException($"Could not update repository because there are non synchronized changes.");
             }
 
-            await _sourceController.UpdateRepositoryAsync();
+            return await _sourceController.UpdateRepositoryAsync();
         }
     }
 }
