@@ -18,7 +18,7 @@ jobs:
                 docker pull homeassistant/home-assistant:$HA_VERSION
                 docker run -v $TRAVIS_BUILD_DIR/hass:/config homeassistant/home-assistant:$HA_VERSION python -m homeassistant --config /config --script check_config --info all
             fi
-    - name: Build and test supervisor
+    - name: Build and test containers
       script:
         - |
             if git diff --name-only $TRAVIS_COMMIT_RANGE | grep -qE '(travis\.yml)|(docker-compose\.yaml)|^(WebhookProxy)|^(alarm)|^(Supervisor)'; then             
