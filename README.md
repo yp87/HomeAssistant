@@ -7,7 +7,7 @@ TODO:
 - ~~Only restart home assistant if config changed~~
 - ~~Only restart Home assistant dependencies if they changed~~
 - ~~Containerize alarm system scripts and add to docker-compose~~
-- ~~use containerized mosquitto and add to docker-compose~~
+- ~~Use containerized mosquitto and add to docker-compose~~
 - ~~create script to easily transfer all secrets to home assistant host~~original repo.
 - ~~Setup stub secrets for futur travis integration~~
 - ~~Setup travis to validate configs in PR~~
