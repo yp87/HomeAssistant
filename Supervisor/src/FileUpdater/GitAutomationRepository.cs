@@ -25,7 +25,7 @@ namespace Supervisor.FilesUpdater
 
         public async Task<string> UpdateRepositoryAsync()
         {
-            string commitIdBeforeUpdate = await _gitShellCommand.RunCommandAsync("log --format=\"%H\" -n 1");
+            string commitIdBeforeUpdate = await _gitShellCommand.RunCommandAsync("log --format=%H -n 1");
             await _gitShellCommand.RunCommandAsync("pull");
             return await _gitShellCommand.RunCommandAsync($"diff --name-only {commitIdBeforeUpdate}");
         }
