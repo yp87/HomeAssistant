@@ -27,7 +27,7 @@ COPY --from=build-env /app/out .
 
 COPY ./secret_webhook /app/secret_webhook
 COPY ./secret_automation_api_key /app/secret_automation_api_key
-COPY ./secret_automation_enpoint /app/secret_automation_endpoint
+COPY ./secret_automation_endpoint /app/secret_automation_endpoint
 
 
 EXPOSE 3000/tcp
