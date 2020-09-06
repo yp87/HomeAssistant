@@ -13,6 +13,7 @@ using Supervisor.Models;
 using System.IO;
 using System.Text;
 using System.Security.Cryptography;
+using Supervisor.Providers;
 
 namespace Supervisor.UnitTest.Controllers
 {
@@ -36,9 +37,9 @@ namespace Supervisor.UnitTest.Controllers
         {
             _actionHandlerMock = new Mock<IActionHandler>(MockBehavior.Strict);
 
-            var secret = _fixture.Create<string>();
-            _secretBytes = Encoding.ASCII.GetBytes(secret);
-            _controller = new GitHubEventController(_actionHandlerMock.Object, secret);
+            var secretProvider = _fixture.Create<WebhookSecretProvider>();
+            _secretBytes = Encoding.ASCII.GetBytes(secretProvider.WebhookSecret);
+            _controller = new GitHubEventController(_actionHandlerMock.Object, secretProvider);
             _controller.ControllerContext = new ControllerContext();
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
 

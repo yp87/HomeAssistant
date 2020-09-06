@@ -14,12 +14,15 @@ namespace Supervisor.UnitTest.ActionHandlers
 
         private readonly CheckRunActionHandler _actionHandler;
 
-        private Mock<IAutomationUpdater> aw_automationUpdaterMock;
+        private Mock<IAutomationUpdater> _automationUpdaterMock;
 
         public CheckRunActionHandlerTests()
         {
-            aw_automationUpdaterMock = new Mock<IAutomationUpdater>();
-            _actionHandler = new CheckRunActionHandler(aw_automationUpdaterMock.Object);
+            _automationUpdaterMock = new Mock<IAutomationUpdater>();
+            var automationClientMock = new Mock<IAutomationClient>();
+            _actionHandler = new CheckRunActionHandler(_automationUpdaterMock.Object, automationClientMock.Object);
+            automationClientMock.Setup(m => m.NotifyAsync(It.IsAny<string>()))
+                .Returns(Task.CompletedTask);
         }
 
         [Fact]
@@ -59,7 +62,7 @@ namespace Supervisor.UnitTest.ActionHandlers
             await _actionHandler.HandleAsync(anIncompletedBuild);
 
             // Assert
-            aw_automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Never);
+            _automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Never);
         }
 
         [Fact]
@@ -73,7 +76,7 @@ namespace Supervisor.UnitTest.ActionHandlers
             await _actionHandler.HandleAsync(anIncompletedBuild);
 
             // Assert
-            aw_automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Never);
+            _automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Never);
         }
 
         [Fact]
@@ -86,7 +89,7 @@ namespace Supervisor.UnitTest.ActionHandlers
             await _actionHandler.HandleAsync(anIncompletedBuild);
 
             // Assert
-            aw_automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Never);
+            _automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Never);
         }
 
         [Fact]
@@ -100,7 +103,7 @@ namespace Supervisor.UnitTest.ActionHandlers
             await _actionHandler.HandleAsync(aFailedBuild);
 
             // Assert
-            aw_automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Never);
+            _automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Never);
         }
 
         [Fact]
@@ -116,7 +119,7 @@ namespace Supervisor.UnitTest.ActionHandlers
             await _actionHandler.HandleAsync(anInvalidBuild);
 
             // Assert
-            aw_automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Never);
+            _automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Never);
         }
 
         [Fact]
@@ -131,7 +134,7 @@ namespace Supervisor.UnitTest.ActionHandlers
             await _actionHandler.HandleAsync(aBuildOnANonMasterBranch);
 
             // Assert
-            aw_automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Never);
+            _automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Never);
         }
 
         [Fact]
@@ -147,7 +150,7 @@ namespace Supervisor.UnitTest.ActionHandlers
             await _actionHandler.HandleAsync(aSuccessfulMasterForPRBuild);
 
             // Assert
-            aw_automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Never);
+            _automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Never);
         }
 
         [Fact]
@@ -164,7 +167,7 @@ namespace Supervisor.UnitTest.ActionHandlers
             await _actionHandler.HandleAsync(aSuccessfulMasterBuild);
 
             // Assert
-            aw_automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Once);
+            _automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Once);
         }
 
         [Fact]
@@ -181,7 +184,7 @@ namespace Supervisor.UnitTest.ActionHandlers
             await _actionHandler.HandleAsync(aSuccessfulMasterBuild);
 
             // Assert
-            aw_automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Once);
+            _automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Once);
 
         }
     }

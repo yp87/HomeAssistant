@@ -10,11 +10,14 @@ namespace Supervisor.ActionHandlers
     {
         private readonly IAutomationUpdater _automationUpdater;
 
+        private readonly IAutomationClient _automationClient;
+
         private readonly SemaphoreSlim _automationSemaphore = new SemaphoreSlim(1);
 
-        public CheckRunActionHandler(IAutomationUpdater automationUpdater)
+        public CheckRunActionHandler(IAutomationUpdater automationUpdater, IAutomationClient automationClient)
         {
             _automationUpdater = automationUpdater;
+            _automationClient = automationClient;
         }
 
         public bool CanHandleAction(string actionName) =>
@@ -25,6 +28,7 @@ namespace Supervisor.ActionHandlers
             await _automationSemaphore.WaitAsync();
             try
             {
+                await _automationClient.NotifyAsync($"A build was {action.CheckRun?.Status}.");
                 if ((action.CheckRun?.Status?.Equals(Constants.GitHubBuildCompleted, StringComparison.InvariantCultureIgnoreCase) ?? false) &&
                     (action.CheckRun.Conclusion?.Equals(Constants.GitHubBuildSuccess, StringComparison.InvariantCultureIgnoreCase)?? false) &&
                     (action.CheckRun.CheckSuite?.HeadBranch?.Equals(Constants.MasterBranchName, StringComparison.InvariantCultureIgnoreCase) ?? false) &&
