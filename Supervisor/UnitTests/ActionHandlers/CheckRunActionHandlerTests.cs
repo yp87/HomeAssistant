@@ -182,6 +182,7 @@ namespace Supervisor.UnitTest.ActionHandlers
 
             // Assert
             aw_automationUpdaterMock.Verify(m => m.UpdateAsync(), Times.Once);
+
         }
     }
 }
