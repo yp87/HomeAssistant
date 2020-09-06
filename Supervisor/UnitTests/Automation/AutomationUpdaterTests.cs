@@ -77,11 +77,10 @@ namespace Supervisor.UnitTest.Automation
         [InlineData("", false, false)]
         [InlineData("README.md travis.yml .editorConfig", false, false)]
         [InlineData("WebhookProxy/Dockerfile README.md travis.yml .editorConfig", true, false)]
-        [InlineData("Supervisor/Dockerfile SomeOtherUselessFile", true, false)]
         [InlineData("README.md alarm/Dockerfile .editorConfig", true, false)]
         [InlineData("docker-compose.yaml", true, false)]
         [InlineData("README.md docker-compose.yaml hass/groups.yaml", true, true)]
-        [InlineData("Supervisor/Dockerfile travis.yml hass/groups.yaml", true, true)]
+        [InlineData("alarm/Dockerfile travis.yml hass/groups.yaml", true, true)]
         public async Task GivenAnUpdater_WithModifiedFiles_WhenUpdating_ThenOnlyTheMatchingSystemIsDeployed(string updatedFiles, bool infrastructureShouldDeploy, bool automationShouldDeploy)
         {
             // Arrange

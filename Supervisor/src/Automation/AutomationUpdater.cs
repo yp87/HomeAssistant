@@ -51,8 +51,7 @@ namespace Supervisor.Automation
 
         private bool ShouldDeployInfrastructure(string modifiedFiles)
         {
-            return modifiedFiles.Contains("Supervisor/", StringComparison.InvariantCultureIgnoreCase) ||
-                   modifiedFiles.Contains("alarm/", StringComparison.InvariantCultureIgnoreCase) ||
+            return modifiedFiles.Contains("alarm/", StringComparison.InvariantCultureIgnoreCase) ||
                    modifiedFiles.Contains("WebhookProxy/", StringComparison.InvariantCultureIgnoreCase) ||
                    modifiedFiles.Contains("docker-compose.yaml", StringComparison.InvariantCultureIgnoreCase);
         }

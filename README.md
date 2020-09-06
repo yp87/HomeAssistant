@@ -4,7 +4,8 @@ TODO:
 - HomeAssistant: change custom_components huesensor to use git submodule that points to the
 - Use containerized database and add to docker-compose
 - HomeAssistant: cleanup multi script loops in favor of new repeat mode
-- ~~Only restart home assistant if config changed. Same for other components.~~
+- ~~Only restart home assistant if config changed~~
+- ~~Only restart Home assistant dependencies if they changed~~
 - ~~Containerize alarm system scripts and add to docker-compose~~
 - ~~use containerized mosquitto and add to docker-compose~~
 - ~~create script to easily transfer all secrets to home assistant host~~original repo.
