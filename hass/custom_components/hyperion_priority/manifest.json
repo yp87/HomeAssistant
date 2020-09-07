@@ -1,8 +1,0 @@
-{
-    "domain": "hyperion_priority",
-    "name": "hyperion component supporting priority",
-    "documentation": "https://hello.com",
-    "requirements": [],
-    "dependencies": [],
-    "codeowners": ["@ypaquette"]
-}
