@@ -161,3 +161,16 @@ white_noise_stop:
     - service: media_player.turn_off
       data_template:
         entity_id: "{{ media_player_id }}"
+
+lights_off_except:
+  fields:
+    exclude_lights:
+      description: 'Excluded lights as list'
+  sequence:
+    - service: light.turn_off
+      data_template:
+        entity_id: >
+          {% for device in states.light|rejectattr('entity_id','in', exclude_lights )|rejectattr('state','in','off,unavailable') %}
+            {%- if not loop.first %}, {% endif -%}
+            {{ device.entity_id }}
+          {%- endfor %}
