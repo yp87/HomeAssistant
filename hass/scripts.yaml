@@ -167,6 +167,11 @@ lights_off_except:
     exclude_lights:
       description: 'Excluded lights as list'
   sequence:
+    - service: logbook.log
+      data_template:
+        entity_id: script.lights_off_except
+        name: Exclude log
+        message: "Turning off all lights except: {{ exclude_lights }}"
     - service: light.turn_off
       data_template:
         entity_id: >

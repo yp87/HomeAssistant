@@ -10,10 +10,9 @@
       entity_id: all
     - service: script.lights_off_except
       data:
-        variables:
-          exclude_lights:
-            - light.frederique_main_light
-            - light.frederique_night_light
+        exclude_lights:
+          - light.frederique_main_light
+          - light.frederique_night_light
     - service: switch.turn_off
       entity_id: group.all_light_switches
     - service: remote.turn_off
