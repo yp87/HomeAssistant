@@ -3,7 +3,7 @@
     platform: homeassistant
     event: start
   action:
-    - delay: "00:00:20"
+    - delay: "00:00:35"
     - service: notify.yan
       data:
         message: "Home Assistant started."
