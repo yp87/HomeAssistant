@@ -98,11 +98,9 @@
         entity_id: switch.christmas_tree_switch
     - condition: time
       after: '17:30:00'
-    - service: script.turn_on
+    - service: script.white_noise_start
       data:
-        entity_id: script.white_noise_start
-        variables:
-          media_player_id: media_player.chambre_fred
+        media_player_id: media_player.chambre_fred
 
 - alias: Frederique main light double up
   trigger:
@@ -117,11 +115,9 @@
     - service: switch.turn_off
       data:
         entity_id: switch.christmas_tree_switch
-    - service: script.turn_on
+    - service: script.white_noise_stop
       data:
-        entity_id: script.white_noise_stop
-        variables:
-          media_player_id: media_player.chambre_fred
+        media_player_id: media_player.chambre_fred
 
 - alias: Set zwave light to default when single click up
   trigger:
@@ -185,12 +181,10 @@
       entity_id:
         - light.bathroom_ceiling_light
         - light.bathroom_mirror_light
-    - service: script.turn_on
-      entity_id: script.auto_switch_off
+    - service: script.auto_switch_off
       data_template:
-        variables:
-          auto_switch_entity: switch.master_bathroom_fan
-          duration_seconds: 600
+        auto_switch_entity: switch.master_bathroom_fan
+        duration_seconds: 600
 
 - alias: bathroom fan double click up
   trigger:
@@ -201,12 +195,10 @@
         scene_id: 1
         scene_data: 3
   action:
-    - service: script.turn_on
-      entity_id: script.auto_switch_on
+    - service: script.auto_switch_on
       data_template:
-        variables:
-          auto_switch_entity: switch.master_bathroom_fan
-          duration_seconds: 600
+        auto_switch_entity: switch.master_bathroom_fan
+        duration_seconds: 600
 
 - alias: bathroom fan triple click up
   trigger:
@@ -217,12 +209,10 @@
         scene_id: 1
         scene_data: 4
   action:
-    - service: script.turn_on
-      entity_id: script.auto_switch_on
+    - service: script.auto_switch_on
       data_template:
-        variables:
-          auto_switch_entity: switch.master_bathroom_fan
-          duration_seconds: 900
+        auto_switch_entity: switch.master_bathroom_fan
+        duration_seconds: 900
 
 
 - alias: bathroom any light double click up

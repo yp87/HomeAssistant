@@ -4,12 +4,10 @@ auto_switch_on:
     - service: switch.turn_on
       data_template:
         entity_id: "{{ auto_switch_entity }}"
-    - service: script.turn_on
+    - service: script.auto_switch_off
       data_template:
-        entity_id: script.auto_switch_off
-        variables:
-          auto_switch_entity: "{{ auto_switch_entity }}"
-          duration_seconds: "{{ duration_seconds }}"
+        auto_switch_entity: "{{ auto_switch_entity }}"
+        duration_seconds: "{{ duration_seconds }}"
 
 auto_switch_off:
   mode: parallel
@@ -21,43 +19,6 @@ auto_switch_off:
     - service: switch.turn_off
       data_template:
         entity_id: "{{ auto_switch_entity }}"
-
-# TODO - Simplify with new repeat mode.
-intrusion_detected:
-  sequence:
-    - service: media_player.volume_set
-      entity_id: media_player.maison
-      data_template:
-        volume_level: >
-          {% if (loop | int) > 0 %}
-            1
-          {% else %}
-            0.3
-          {% endif %}
-    - condition: template
-      value_template: "{{ (loop | int) > 0 }}"
-    - service: script.turn_on
-      data_template:
-        entity_id: script.intrusion_detected_loop
-        variables:
-          loop: "{{ loop }}"
-
-intrusion_detected_loop:
-  sequence:
-    - service: tts.google_translate_say
-      entity_id: media_player.maison
-      data:
-        message: >
-          Une intrusion a été détectée. Les vidéos de votre arrivé et les informations de votre mobile ont été enregistrés.
-          La police a été informée. Quittez immédiatement les lieux.
-        language: 'fr'
-    - delay:
-        seconds: 30
-    - service: script.turn_on
-      data_template:
-        entity_id: script.intrusion_detected
-        variables:
-          loop: "{{ (loop | int) - 1 }}"
 
 fred_add_consumed_milk:
   sequence:
@@ -107,6 +68,8 @@ phone_notification:
 
 white_noise_start:
   sequence:
+    # This is to prevent the annoying google home startup sound.
+    #-----------------------------------------------------------
     - service: media_player.volume_set
       data_template:
         entity_id: "{{ media_player_id }}"
@@ -119,11 +82,10 @@ white_noise_start:
       data_template:
         entity_id: "{{ media_player_id }}"
     - delay: 00:00:01
-    - service: script.turn_on
+    #-----------------------------------------------------------
+    - service: script.white_noise_play
       data_template:
-        entity_id: script.white_noise_play
-        variables:
-          media_player_id: "{{ media_player_id }}"
+        media_player_id: "{{ media_player_id }}"
     - delay: 00:00:02
     - service: media_player.volume_set
       data_template:
@@ -137,20 +99,16 @@ white_noise_play:
         media_content_type: audio/mp3
         entity_id: "{{ media_player_id }}"
         media_content_id: http://www.gstatic.com/voice_delight/sounds/long/pink_noise.mp3
-    - service: script.turn_on
+    - service: script.white_noise_loop
       data_template:
-        entity_id: script.white_noise_loop
-        variables:
-          media_player_id: "{{ media_player_id }}"
+        media_player_id: "{{ media_player_id }}"
 
 white_noise_loop:
   sequence:
     - delay: 00:52:00
-    - service: script.turn_on
+    - service: script.white_noise_play
       data_template:
-        entity_id: script.white_noise_play
-        variables:
-          media_player_id: "{{ media_player_id }}"
+        media_player_id: "{{ media_player_id }}"
 
 white_noise_stop:
   sequence:
@@ -167,11 +125,6 @@ lights_off_except:
     exclude_lights:
       description: 'Excluded lights as list'
   sequence:
-    - service: logbook.log
-      data_template:
-        entity_id: script.lights_off_except
-        name: Exclude log
-        message: "Turning off all lights except: {{ exclude_lights }}"
     - service: light.turn_off
       data_template:
         entity_id: >

@@ -43,9 +43,7 @@
         before: sunrise
         after_offset: "01:00:00"
   action:
-    - service: script.turn_on
+    - service: script.auto_switch_on
       data:
-        entity_id: script.auto_switch_on
-        variables:
-         duration_seconds: 300
-         auto_switch_entity: switch.entrance_light
+        duration_seconds: 300
+        auto_switch_entity: switch.entrance_light
