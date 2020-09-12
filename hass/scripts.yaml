@@ -136,7 +136,7 @@ lights_off_except:
     - service: light.turn_off
       data_template:
         entity_id: >
-          {% for device in states.light|rejectattr('entity_id','in', exclude_lights )|rejectattr('state','in','off,unavailable') %}
+          {% for device in states.light|rejectattr('entity_id','in', exclude_lights )|rejectattr('state','in','unavailable') %}
             {%- if not loop.first %}, {% endif -%}
             {{ device.entity_id }}
           {%- endfor %}

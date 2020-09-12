@@ -96,14 +96,14 @@
     - service: switch.turn_on
       data:
         entity_id: switch.christmas_tree_switch
-   # - condition: time
-      #after: '17:30:00'
-      #before: '6:30:00'
+    - condition: time
+      after: '17:30:00'
+      before: '6:30:00'
     - service: script.turn_on
       data:
         entity_id: script.white_noise_start
         variables:
-          media_player_id: media_player.kitchen
+          media_player_id: media_player.chambre_fred
 
 - alias: Frederique main light double up
   trigger:

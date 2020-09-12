@@ -3,6 +3,15 @@
     platform: homeassistant
     event: start
   action:
+    - service: media_player.volume_set
+      entity_id: media_player.maison
+      data:
+        volume_level: 0.2
+    - service: tts.google_translate_say
+      entity_id: media_player.kitchen
+      data:
+        message: Démarrage de Home Assistant.
+        language: 'fr'
     - delay: "00:00:35"
     - service: notify.yan
       data:
