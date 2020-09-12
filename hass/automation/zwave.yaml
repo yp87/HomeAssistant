@@ -96,7 +96,7 @@
     - service: switch.turn_on
       data:
         entity_id: switch.christmas_tree_switch
-    - condition: time
+   # - condition: time
       #after: '17:30:00'
       #before: '6:30:00'
     - service: script.turn_on
