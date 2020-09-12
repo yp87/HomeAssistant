@@ -8,11 +8,13 @@
   action:
     - service: alarm_control_panel.alarm_arm_home
       entity_id: all
-    - service: script.lights_off_except
+    - service: script.turn_on
       data:
-        exclude_lights:
-          - light.frederique_main_light
-          - light.frederique_night_light
+        entity_id: script.lights_off_except
+        variables:
+          exclude_lights:
+            - light.frederique_main_light
+            - light.frederique_night_light
     - service: switch.turn_off
       entity_id: group.all_light_switches
     - service: remote.turn_off

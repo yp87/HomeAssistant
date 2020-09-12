@@ -4,10 +4,12 @@ auto_switch_on:
     - service: switch.turn_on
       data_template:
         entity_id: "{{ auto_switch_entity }}"
-    - service: script.auto_switch_off
+    - service: script.turn_on
       data_template:
-        auto_switch_entity: "{{ auto_switch_entity }}"
-        duration_seconds: "{{ duration_seconds }}"
+        entity_id: script.auto_switch_off
+        variables:
+          auto_switch_entity: "{{ auto_switch_entity }}"
+          duration_seconds: "{{ duration_seconds }}"
 
 auto_switch_off:
   mode: parallel
@@ -83,9 +85,11 @@ white_noise_start:
         entity_id: "{{ media_player_id }}"
     - delay: 00:00:01
     #-----------------------------------------------------------
-    - service: script.white_noise_play
+    - service: script.turn_on
       data_template:
-        media_player_id: "{{ media_player_id }}"
+        entity_id: script.white_noise_play
+        variables:
+          media_player_id: "{{ media_player_id }}"
     - delay: 00:00:02
     - service: media_player.volume_set
       data_template:
@@ -99,16 +103,20 @@ white_noise_play:
         media_content_type: audio/mp3
         entity_id: "{{ media_player_id }}"
         media_content_id: http://www.gstatic.com/voice_delight/sounds/long/pink_noise.mp3
-    - service: script.white_noise_loop
+    - service: script.turn_on
       data_template:
-        media_player_id: "{{ media_player_id }}"
+        entity_id: script.white_noise_loop
+        variables:
+          media_player_id: "{{ media_player_id }}"
 
 white_noise_loop:
   sequence:
     - delay: 00:52:00
-    - service: script.white_noise_play
+    - service: script.turn_on
       data_template:
-        media_player_id: "{{ media_player_id }}"
+        entity_id: script.white_noise_play
+        variables:
+          media_player_id: "{{ media_player_id }}"
 
 white_noise_stop:
   sequence:
