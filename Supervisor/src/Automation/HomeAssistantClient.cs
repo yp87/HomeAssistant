@@ -48,9 +48,6 @@ namespace Supervisor.Automation
                 Message = notification,
             };
 
-            // Add a 1 second delay because it looks like the hangouts
-            // integration may skip meassages otherwise.
-            await Task.Delay(1000);
             await CallServiceAsync("notify", "yan", message);
         }
 

@@ -32,8 +32,7 @@ namespace Supervisor.Automation
 
             if (deployAutomation && (!deployInfrastructure || infrastructuredeploymentOutput.Contains("hass is up-to-date", StringComparison.InvariantCultureIgnoreCase)))
             {
-                // Maybe the docker-compose of home assistant did not change, but it is possible
-                // that a file in the volume of home assistant changed..
+                // Soft restart home assistant to reload configuration.
                 await _automationClient.NotifyAsync("Restarting home assistant...");
                 await _automationClient.RestartAutomationAsync();
             }

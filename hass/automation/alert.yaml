@@ -10,9 +10,8 @@
     - service: tts.google_translate_say
       entity_id: media_player.kitchen
       data:
-        message: Démarrage de Home Assistant.
+        message: Home Assistant est démarré.
         language: 'fr'
-    - delay: "00:00:35"
     - service: notify.yan
       data:
         message: "Home Assistant started."
