@@ -3,7 +3,7 @@
   origin: person.yan
   destination: zone.home
   region: !secret home_region
-  - platform: waze_travel_time
+- platform: waze_travel_time
   name: cathtohome
   origin: person.cath
   destination: zone.home
