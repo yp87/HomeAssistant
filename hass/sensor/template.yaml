@@ -41,3 +41,4 @@
         {% else %}
           Other
         {% endif %}
+      entity_id: sensor.front_door_lock_alarm_type
