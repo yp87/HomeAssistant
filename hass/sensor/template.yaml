@@ -1,0 +1,43 @@
+- platform: template
+  sensors:
+    frederique_ceiling_light_brightness:
+      value_template: >-
+        {% if is_state('light.frederique_main_light', 'on') %}
+          {{ states.light.frederique_main_light.attributes.brightness }}
+        {% else %}
+          0
+        {% endif %}
+
+    fred_daily_milk_consumption:
+      value_template: "{{ states('input_number.fred_daily_milk_consumption') | float }}"
+
+    fred_last_milk_elapsed_time:
+      friendly_name: "Depuis le dernier lait"
+      value_template: '{{ (as_timestamp(now()) - states.input_datetime.fred_last_milk.attributes.timestamp ) | timestamp_custom("%Hh%M")}}'
+      entity_id: input_datetime.fred_last_milk,sensor.time
+      
+    harmony_activity:
+      value_template: '{{ states.remote.yharmony.attributes.current_activity }}'
+      entity_id: remote.yharmony
+    
+    front_door_action:
+      value_template: >
+        {% if is_state('sensor.side_door_alarm_type', '22') %}
+          Manual Unlock
+        {% elif is_state('sensor.side_door_alarm_type', '21') %}
+          Manual Lock
+        {% elif is_state('sensor.side_door_alarm_type', '19') %}
+          Keypad Unlock
+        {% elif is_state('sensor.side_door_alarm_type', '18') %}
+          Keypad Lock
+        {% elif is_state('sensor.side_door_alarm_type', '25') %}
+          Wireless Unlock
+        {% elif is_state('sensor.side_door_alarm_type', '24') %}
+          Wireless Lock
+        {% elif is_state('sensor.side_door_alarm_type', '9') %}
+          Lock Jammed
+        {% elif is_state('sensor.side_door_alarm_type', '161') %}
+          Tamper Alarm
+        {% else %}
+          Other
+        {% endif %}

@@ -63,47 +63,7 @@ mqtt:
   broker: 127.0.0.1
   port: 1883
   username: !secret mqtt_username
-  password: !secret mqtt_password
-
-# TODO - move these to different files
-sensor:
-  - platform: time_date
-    display_options:
-      - 'time'
-  - platform: rest
-    resource: https://api.ipify.org/?format=json
-    name: External IP
-    value_template: '{{ value_json.ip }}'
-    scan_interval: 3600
-  - platform: yr
-  - platform: waze_travel_time
-    name: yantohome
-    origin: person.yan
-    destination: zone.home
-    region: !secret home_region
-  - platform: waze_travel_time
-    name: cathtohome
-    origin: person.cath
-    destination: zone.home
-    region: !secret home_region
-  - platform: template
-    sensors:
-      frederique_ceiling_light_brightness:
-        value_template: >-
-          {% if is_state('light.frederique_main_light', 'on') %}
-            {{ states.light.frederique_main_light.attributes.brightness }}
-          {% else %}
-            0
-          {% endif %}
-      fred_daily_milk_consumption:
-        value_template: "{{ states('input_number.fred_daily_milk_consumption') | float }}"
-      fred_last_milk_elapsed_time:
-        friendly_name: "Depuis le dernier lait"
-        value_template: '{{ (as_timestamp(now()) - states.input_datetime.fred_last_milk.attributes.timestamp ) | timestamp_custom("%Hh%M")}}'
-        entity_id: input_datetime.fred_last_milk,sensor.time
-      harmony_activity:
-        value_template: '{{ states.remote.yharmony.attributes.current_activity }}'
-        entity_id: remote.yharmony
+  password: !secret mqtt_password  
 
 zwave:
   usb_path: !secret zwave_usb_path
@@ -197,6 +157,7 @@ zone: !include zone.yaml
 alarm_control_panel: !include alarm_control_panel.yaml
 switch: !include_dir_merge_list switch
 binary_sensor: !include_dir_merge_list binary_sensor
+sensor: !include_dir_merge_list sensor
 group: !include groups.yaml
 automation: !include_dir_merge_list automation
 script: !include scripts.yaml

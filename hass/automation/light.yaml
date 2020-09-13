@@ -27,12 +27,11 @@
     service: switch.turn_off
     entity_id: switch.light_front
 
-- alias: entrance light on
+- alias: turn on entrance light when entering
   trigger:
     - platform: state
-      entity_id: binary_sensor.front_door
-      from: "off"
-      to: "on"
+      entity_id: sensor.front_door_action
+      to: "Keypad Unlock"
   condition:
     condition: or
     conditions:

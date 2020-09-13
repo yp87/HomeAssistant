@@ -1,0 +1,5 @@
+- platform: rest
+  resource: https://api.ipify.org/?format=json
+  name: External IP
+  value_template: '{{ value_json.ip }}'
+  scan_interval: 3600
