@@ -17,7 +17,7 @@ auto_switch_off:
     - delay:
         seconds: "{{ duration_seconds }}"
     - condition: template
-      value_template: '{{(as_timestamp(now()) - as_timestamp(states[auto_switch_entity].last_changed) >= ((duration_seconds|int) - 1))}}'
+      value_template: '{{(as_timestamp(now()) - as_timestamp(states[auto_switch_entity].last_changed) >= ((duration_seconds|int) - 10))}}'
     - service: switch.turn_off
       data_template:
         entity_id: "{{ auto_switch_entity }}"
