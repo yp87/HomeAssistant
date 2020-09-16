@@ -84,6 +84,11 @@
     event_data:
       type: keypress
       key: Lit_c
+  - platform: event
+    event_type: roku_command
+    event_data:
+      type: keypress
+      key: Lit_C
   action:
     - service: light.toggle
       entity_id: light.kitchen_main_light
@@ -95,6 +100,11 @@
     event_data:
       type: keypress
       key: Lit_s
+  - platform: event
+    event_type: roku_command
+    event_data:
+      type: keypress
+      key: Lit_S
   action:
     - service: light.toggle
       entity_id: light.living_room_main_light
@@ -106,6 +116,11 @@
     event_data:
       type: keypress
       key: Lit_e
+  - platform: event
+    event_type: roku_command
+    event_data:
+      type: keypress
+      key: Lit_E
   action:
     - service: light.toggle
       entity_id: light.ground_floor_hallway_light
