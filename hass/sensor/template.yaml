@@ -14,12 +14,10 @@
     fred_last_milk_elapsed_time:
       friendly_name: "Depuis le dernier lait"
       value_template: '{{ (as_timestamp(now()) - states.input_datetime.fred_last_milk.attributes.timestamp ) | timestamp_custom("%Hh%M")}}'
-      entity_id: input_datetime.fred_last_milk,sensor.time
-      
+
     harmony_activity:
       value_template: '{{ states.remote.yharmony.attributes.current_activity }}'
-      entity_id: remote.yharmony
-    
+
     front_door_action:
       value_template: >
         {% if is_state('sensor.front_door_lock_alarm_type', '22') %}
@@ -41,4 +39,3 @@
         {% else %}
           Other
         {% endif %}
-      entity_id: sensor.front_door_lock_alarm_type
