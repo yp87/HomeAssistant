@@ -10,7 +10,7 @@
       before: '23:00:00'
   action:
     service: notify.cath
-    data_template:
+    data:
       message: >
         Yan est parti du travail. Il faut
         {{ states('sensor.yantohome') }} minutes pour rentrer à la maison.
@@ -31,7 +31,7 @@
     event: leave
   action:
     service: notify.yan
-    data_template:
+    data:
       message: >
         Cath est parti du travail. Il faut
         {{ states('sensor.cathtohome') }} minutes pour rentrer à la maison.

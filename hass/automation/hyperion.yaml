@@ -76,12 +76,12 @@
             value_template: '{{ trigger.to_state.state == "on" }}'
         sequence:
           - service: hyperion_priority.apply_effect
-            data_template:
+            data:
               effect: '{{ "Police Lights Solid" if trigger.entity_id == "input_boolean.yan_phone_rings" else "Rainbow swirl fast" }}'
               priority: '{{ 120 if trigger.entity_id == "input_boolean.yan_phone_rings" else 119 }}'
       default:
         - service: hyperion_priority.clear_priority
-          data_template:
+          data:
             priority: '{{ 120 if trigger.entity_id == "input_boolean.yan_phone_rings" else 119 }}'
 
 - alias: Hyperion phone notification
@@ -96,7 +96,7 @@
         count: 2
         sequence:
           - service: hyperion_priority.apply_effect
-            data_template:
+            data:
               effect: Cinema brighten lights
               args: >
                 { "color-start": [0, 0, 0],
@@ -105,7 +105,7 @@
               priority: '{{ 126 if trigger.entity_id == "input_boolean.yan_phone_notification" else 124 }}'
           - delay: "00:00:01"
           - service: hyperion_priority.apply_effect
-            data_template:
+            data:
               effect: Cinema dim lights
               args: >
                 { "color-start": {{ [0, 255, 0] if trigger.entity_id == "input_boolean.yan_phone_notification" else [190, 0, 255] }},
@@ -114,5 +114,5 @@
               priority: '{{ 126 if trigger.entity_id == "input_boolean.yan_phone_notification" else 124 }}'
           - delay: "00:00:01"
     - service: hyperion_priority.clear_priority
-      data_template:
+      data:
         priority: '{{ 126 if trigger.entity_id == "input_boolean.yan_phone_notification" else 124 }}'

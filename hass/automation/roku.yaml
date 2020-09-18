@@ -44,7 +44,7 @@
   action:
     - service: media_player.media_seek
       entity_id: media_player.salon_tv
-      data_template:
+      data:
         seek_position: '{{ ((states.media_player.salon_tv.attributes.media_position) + 30) | float}}'
 
 - alias: 'Roku Rewind'
@@ -57,7 +57,7 @@
   action:
     - service: media_player.media_seek
       entity_id: media_player.salon_tv
-      data_template:
+      data:
         seek_position: '{{ ((states.media_player.salon_tv.attributes.media_position) - 30) | float}}'
 
 - alias: 'Roku Seek'
@@ -73,7 +73,7 @@
   action:
     - service: media_player.media_seek
       entity_id: media_player.salon_tv
-      data_template:
+      data:
         seek_position: >
           {{ ((trigger.event.data.key.split("_")[1] | int) / 10) * states.media_player.salon_tv.attributes.media_duration }}
 

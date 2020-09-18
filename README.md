@@ -3,7 +3,7 @@ TODO:
     - replace sensor templates for watching attributes with the new attribute in triggers
     - replace template conditions with the new attribute in conditions
     - Shorten template condition to simply "condition: mytemplate"
-    - replace all data_template with data
+    - ~~replace all data_template with data~~
     - See if the new automation variables can replace some duplicate templates
     - See if any wait_template can use the new wait variable (completed, timeout)
     - Add "max_exceeded: silent" to single automations

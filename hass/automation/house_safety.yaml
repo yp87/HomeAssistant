@@ -15,7 +15,7 @@
        state: 'disarmed'
   action:
     - service: notify.all_people
-      data_template:
+      data:
         # The garage message will be handled in "close garage door if no one is home"
         message: >
           On dirait que quelque chose cloche..
@@ -27,7 +27,7 @@
           - delay:
               milliseconds: 20000
           - service: notify.all_people
-            data_template:
+            data:
               message: >
                 {% if is_state('switch.garage_door', 'on') %}
                 la porte de garage est toujours ouverte.
@@ -68,7 +68,7 @@
       entity_id: group.all_people
       state: 'not_home'
     - service: notify.all_people
-      data_template:
+      data:
         # The garage message will be handled in "close garage door if no one is home"
         message: >
           Une intrusion a été détectée.
@@ -142,7 +142,7 @@
               entity_id: group.all_people
               state: 'home'
     - service: notify.all_people
-      data_template:
+      data:
         message: >
           {% if is_state('switch.garage_door', 'off') %}
             La porte de garage est maintenant fermée.

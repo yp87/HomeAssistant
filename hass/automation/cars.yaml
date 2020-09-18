@@ -19,7 +19,7 @@
       to: "1_hold"
   action:
      - service: notify.cath
-       data_template:
+       data:
          message: >
           {% set weekday = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'] %}
           {% set dt = states.sensor.eve2gmmug_charge.attributes.updated_on %}
