@@ -26,8 +26,7 @@
         - delay:
             milliseconds: 500
       until:
-        condition: template
-        value_template: "{{ (state_attr('light.frederique_night_light', 'brightness')|int) == target_brightness }}"
+        condition: "{{ (state_attr('light.frederique_night_light', 'brightness')|int) == target_brightness }}"
 
 - alias: Frederique main light triple up
   trigger:
@@ -135,9 +134,7 @@
         scene_data: 0
   variables:
     light_entity_id: '{{ "light." + trigger.event.data.entity_id.split(".")[1] }}'
-  condition:
-    condition: template
-    value_template: '{{ states(light_entity_id) != "unknown" }}'
+  condition: '{{ states(light_entity_id) != "unknown" }}'
   action:
     - service: light.turn_on
       data:
@@ -240,9 +237,7 @@
         scene_data: 3
   variables:
     light_entity_id: '{{ "light." + trigger.event.data.entity_id.split(".")[1] }}'
-  condition:
-    condition: template
-    value_template: '{{ states(light_entity_id) != "unknown" }}'
+  condition: '{{ states(light_entity_id) != "unknown" }}'
   action:
     - service: light.turn_on
       data:
@@ -293,9 +288,7 @@
         scene_data: 3
   variables:
     light_entity_id: '{{ "light." + trigger.event.data.entity_id.split(".")[1] }}'
-  condition:
-    condition: template
-    value_template: '{{ states(light_entity_id) != "unknown" }}'
+  condition: '{{ states(light_entity_id) != "unknown" }}'
   action:
     - service: light.turn_off
       data:

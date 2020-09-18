@@ -73,9 +73,7 @@
     effect_priority: '{{ 120 if trigger.entity_id == "input_boolean.yan_phone_rings" else 119 }}'
   action:
     - choose:
-      - conditions:
-          - condition: template
-            value_template: '{{ trigger.to_state.state == "on" }}'
+      - conditions: '{{ trigger.to_state.state == "on" }}'
         sequence:
           - service: hyperion_priority.apply_effect
             data:

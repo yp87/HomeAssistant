@@ -66,10 +66,7 @@
     event_type: roku_command
     event_data:
       type: keypress
-  condition:
-    condition: template
-    value_template: >
-      {{ trigger.event.data.key in ['Lit_1', 'Lit_2', 'Lit_3', 'Lit_4', 'Lit_5', 'Lit_6', 'Lit_7', 'Lit_8', 'Lit_9', 'Lit_0'] }}
+  condition: "{{ trigger.event.data.key in ['Lit_1', 'Lit_2', 'Lit_3', 'Lit_4', 'Lit_5', 'Lit_6', 'Lit_7', 'Lit_8', 'Lit_9', 'Lit_0'] }}"
   action:
     - service: media_player.media_seek
       entity_id: media_player.salon_tv
