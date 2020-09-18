@@ -25,8 +25,7 @@
             brightness: "{{ target_brightness }}"
         - delay:
             milliseconds: 500
-      until:
-        condition: "{{ (state_attr('light.frederique_night_light', 'brightness')|int) == target_brightness }}"
+      until: "{{ (state_attr('light.frederique_night_light', 'brightness')|int) == target_brightness }}"
 
 - alias: Frederique main light triple up
   trigger:

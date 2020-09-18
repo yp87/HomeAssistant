@@ -78,8 +78,7 @@
             data:
               entity_id: light.table_de_chevet_de_yan
               transition: 1
-        until:
-          - condition: '{{ is_state("input_boolean.yan_had_pills", "on") }}'
+        until: '{{ is_state("input_boolean.yan_had_pills", "on") }}'
     - service: light.turn_on
       data:
         entity_id: light.table_de_chevet_de_yan
