@@ -13,6 +13,8 @@
   trigger:
     - platform: state
       entity_id: sensor.frederique_ceiling_light_brightness
+  variables:
+    target_brightness: "{{ (state_attr('light.frederique_main_light', 'brightness')|int)}}"
   mode: restart
   action:
     repeat:
@@ -20,12 +22,12 @@
         - service: light.turn_on
           data:
             entity_id: light.frederique_night_light
-            brightness: "{{ (state_attr('light.frederique_main_light', 'brightness')|int)}}"
+            brightness: "{{ target_brightness }}"
         - delay:
             milliseconds: 500
       until:
         condition: template
-        value_template: "{{ (state_attr('light.frederique_night_light', 'brightness')|int) == (state_attr('light.frederique_main_light', 'brightness')|int)}}"
+        value_template: "{{ (state_attr('light.frederique_night_light', 'brightness')|int) == target_brightness }}"
 
 - alias: Frederique main light triple up
   trigger:
@@ -131,22 +133,19 @@
       event_data:
         scene_id: 1
         scene_data: 0
+  variables:
+    light_entity_id: '{{ "light." + trigger.event.data.entity_id.split(".")[1] }}'
   condition:
     condition: template
-    value_template: '{{states.light[trigger.event.data.entity_id.split(".")[1]] != None}}'
+    value_template: '{{ states(light_entity_id) != "unknown" }}'
   action:
     - service: light.turn_on
       data:
-        entity_id: '{{"light." + trigger.event.data.entity_id.split(".")[1]}}'
-        brightness: >
-          {% if "light." + trigger.event.data.entity_id.split(".")[1] in states.group.zwave_dimmers_default_low.attributes.entity_id %}
-          1
-          {% else %}
-          255
-          {% endif %}
+        entity_id: '{{ light_entity_id }}'
+        brightness: '{{ 1 if light_entity_id in states.group.zwave_dimmers_default_low.attributes.entity_id else 255}}'
     - service: zwave.refresh_entity
       data:
-        entity_id: '{{"light." + trigger.event.data.entity_id.split(".")[1]}}'
+        entity_id: '{{ light_entity_id }}'
 
 - alias: Bathroom ceiling light single click up
   trigger:
@@ -239,13 +238,15 @@
         entity_id: zwave.bathroom_mirror_light
         scene_id: 1
         scene_data: 3
+  variables:
+    light_entity_id: '{{ "light." + trigger.event.data.entity_id.split(".")[1] }}'
   condition:
     condition: template
-    value_template: '{{states.light[trigger.event.data.entity_id.split(".")[1]] != None}}'
+    value_template: '{{ states(light_entity_id) != "unknown" }}'
   action:
     - service: light.turn_on
       data:
-        entity_id: '{{"light." + trigger.event.data.entity_id.split(".")[1]}}'
+        entity_id: '{{ light_entity_id }}'
         brightness: 255
 
 - alias: bathroom ceiling tripple click down
@@ -290,13 +291,15 @@
         entity_id: zwave.bathroom_mirror_light
         scene_id: 2
         scene_data: 3
+  variables:
+    light_entity_id: '{{ "light." + trigger.event.data.entity_id.split(".")[1] }}'
   condition:
     condition: template
-    value_template: '{{states.light[trigger.event.data.entity_id.split(".")[1]] != None}}'
+    value_template: '{{ states(light_entity_id) != "unknown" }}'
   action:
     - service: light.turn_off
       data:
-        entity_id: '{{"light." + trigger.event.data.entity_id.split(".")[1]}}'
+        entity_id: '{{ light_entity_id }}'
 
 - alias: front light double click down
   trigger:

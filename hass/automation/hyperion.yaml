@@ -69,6 +69,8 @@
       entity_id: input_boolean.yan_phone_rings
     - platform: state
       entity_id: input_boolean.cath_phone_rings
+  variables:
+    effect_priority: '{{ 120 if trigger.entity_id == "input_boolean.yan_phone_rings" else 119 }}'
   action:
     - choose:
       - conditions:
@@ -78,11 +80,11 @@
           - service: hyperion_priority.apply_effect
             data:
               effect: '{{ "Police Lights Solid" if trigger.entity_id == "input_boolean.yan_phone_rings" else "Rainbow swirl fast" }}'
-              priority: '{{ 120 if trigger.entity_id == "input_boolean.yan_phone_rings" else 119 }}'
+              priority: '{{ effect_priority }}'
       default:
         - service: hyperion_priority.clear_priority
           data:
-            priority: '{{ 120 if trigger.entity_id == "input_boolean.yan_phone_rings" else 119 }}'
+            priority: '{{ effect_priority }}'
 
 - alias: Hyperion phone notification
   trigger:
@@ -90,6 +92,9 @@
       entity_id: input_boolean.yan_phone_notification
     - platform: state
       entity_id: input_boolean.cath_phone_notification
+  variables:
+    notification_color: '{{ [0, 255, 0] if trigger.entity_id == "input_boolean.yan_phone_notification" else [190, 0, 255] }}'
+    effect_priority: '{{ 126 if trigger.entity_id == "input_boolean.yan_phone_notification" else 124 }}'
   mode: queued
   action:
     - repeat:
@@ -100,19 +105,19 @@
               effect: Cinema brighten lights
               args: >
                 { "color-start": [0, 0, 0],
-                  "color-end": {{ [0, 255, 0] if trigger.entity_id == "input_boolean.yan_phone_notification" else [190, 0, 255] }},
+                  "color-end": {{ notification_color }},
                   "fade-time": 0.8 }
-              priority: '{{ 126 if trigger.entity_id == "input_boolean.yan_phone_notification" else 124 }}'
+              priority: '{{ effect_priority }}'
           - delay: "00:00:01"
           - service: hyperion_priority.apply_effect
             data:
               effect: Cinema dim lights
               args: >
-                { "color-start": {{ [0, 255, 0] if trigger.entity_id == "input_boolean.yan_phone_notification" else [190, 0, 255] }},
+                { "color-start": {{ notification_color }},
                   "color-end": [0, 0, 0],
                   "fade-time": 0.8 }
-              priority: '{{ 126 if trigger.entity_id == "input_boolean.yan_phone_notification" else 124 }}'
+              priority: '{{ effect_priority }}'
           - delay: "00:00:01"
     - service: hyperion_priority.clear_priority
       data:
-        priority: '{{ 126 if trigger.entity_id == "input_boolean.yan_phone_notification" else 124 }}'
+        priority: '{{ effect_priority }}'

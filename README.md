@@ -4,8 +4,8 @@ TODO:
     - replace template conditions with the new attribute in conditions
     - Shorten template condition to simply "condition: mytemplate"
     - ~~replace all data_template with data~~
-    - See if the new automation variables can replace some duplicate templates
-    - See if any wait_template can use the new wait variable (completed, timeout)
+    - ~~See if the new automation variables can replace some duplicate templates~~
+    - ~~See if any wait_template can use the new wait variable (completed, timeout)~~
     - Add "max_exceeded: silent" to single automations
     - ~~Remove entity_id from template_sensors~~
 - Use containerized database and add to docker-compose
@@ -17,7 +17,7 @@ TODO:
 - ~~Only restart Home assistant dependencies if they changed~~
 - ~~Containerize alarm system scripts and add to docker-compose~~
 - ~~Use containerized mosquitto and add to docker-compose~~
-- ~~create script to easily transfer all secrets to home assistant host~~original repo.
+- ~~create script to easily transfer all secrets to home assistant host~
 - ~~Setup stub secrets for futur travis integration~~
 - ~~Setup travis to validate configs in PR~~
 - ~~Automatically update config for hass and restart when build pass on master~~
