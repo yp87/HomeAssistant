@@ -11,7 +11,8 @@
 - alias: Hyperion Hdmi when casting
   trigger:
     - platform: state
-      entity_id: sensor.harmony_activity
+      entity_id: remote.yharmony
+      attribute: current_activity
       to: "Regarder Chromecast"
   mode: restart
   action:
@@ -27,7 +28,8 @@
     # 15 seconds is the time for the whole system to be ready.
     - delay: "00:00:15"
     - condition: state
-      entity_id: sensor.harmony_activity
+      entity_id: remote.yharmony
+      attribute: current_activity
       state: "Regarder Chromecast"
     - service: light.turn_on
       data:

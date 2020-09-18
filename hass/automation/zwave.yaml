@@ -12,7 +12,8 @@
 - alias: Frederique main light brightness
   trigger:
     - platform: state
-      entity_id: sensor.frederique_ceiling_light_brightness
+      entity_id: light.frederique_main_light
+      attribute: brightness
   variables:
     target_brightness: "{{ (state_attr('light.frederique_main_light', 'brightness')|int)}}"
   mode: restart
