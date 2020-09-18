@@ -1,5 +1,5 @@
 TODO:
-- Update HomeAssistant to 0.115!
+- ~~Update HomeAssistant to 0.115!~~
     - replace sensor templates for watching attributes with the new attribute in triggers
     - replace template conditions with the new attribute in conditions
     - Shorten template condition to simply "condition: mytemplate"
@@ -7,7 +7,7 @@ TODO:
     - See if the new automation variables can replace some duplicate templates
     - See if any wait_template can use the new wait variable (completed, timeout)
     - Add "max_exceeded: silent" to single automations
-    - Remove entity_id from template_sensors
+    - ~~Remove entity_id from template_sensors~~
 - Use containerized database and add to docker-compose
 - ~~HomeAssistant: cleanup multi script loops in favor of new repeat mode~~
 - ~~HomeAssistant: change custom_components huesensor to use git submodule that points to the original github~~ Removed the custom_component in favor of events from the official component.

@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 
 namespace Supervisor
@@ -13,6 +14,11 @@ namespace Supervisor
             }
 
             return builder.ToString();
+        }
+
+        public static bool EqualsIgnoreCase(this string? firstString, string? secondString)
+        {
+            return string.Equals(firstString, secondString, StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

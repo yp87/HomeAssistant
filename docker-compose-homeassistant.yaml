@@ -1,0 +1,36 @@
+version: '3'
+services:
+  homeassistant:
+    container_name: hass
+    #image: homeassistant/home-assistant:0.113.2    #Specific Version
+    image: homeassistant/home-assistant:stable
+    environment:
+      - BASE_PATH
+    volumes:
+      - ${BASE_PATH}/hass:/config
+    devices:
+      - /dev/zwave:/dev/zwave
+    restart: always
+    network_mode: host
+    depends_on:
+      - mqtt
+      - alarm
+
+  mqtt:
+    container_name: mqtt
+    image: eclipse-mosquitto:latest
+    restart: always
+    ports:
+      - "1883:1883"
+    environment:
+      - BASE_PATH
+    volumes:
+      - ${BASE_PATH}/mosquitto/config:/mosquitto/config
+
+  alarm:
+    container_name: alarm
+    build: alarm/
+    image: alarm:latest
+    restart: always
+    depends_on:
+      - mqtt

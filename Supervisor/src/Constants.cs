@@ -12,6 +12,8 @@ namespace Supervisor
 
         public const string GitHubBuildCompleted = "completed";
 
+        public const string GitHubBuildCreated = "created";
+
         public const string GitHubBuildSuccess = "success";
     }
 }
