@@ -35,7 +35,6 @@ jobs:
       - name: Copy stub files
         run: |
           cp -R ./.stubs/infrastructure/* ./
-          ls -R
       - name: Build the docker-compose stack
         run: >-
           docker-compose
