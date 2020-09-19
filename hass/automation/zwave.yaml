@@ -1,5 +1,5 @@
 ---
-#------------------------------
+# ------------------------------
 # Zwave scene
 #  Single tap on	1	0
 #  Single tap off	2	0
@@ -9,14 +9,15 @@
 #  Triple tap off	2	4
 #  Tap and hold on	1	2
 #  Tap and hold off	2	2
-#------------------------------
+# ------------------------------
 - alias: Frederique main light brightness
   trigger:
     - platform: state
       entity_id: light.frederique_main_light
       attribute: brightness
   variables:
-    target_brightness: "{{ (state_attr('light.frederique_main_light', 'brightness')|int)}}"
+    target_brightness: >-
+      {{ (state_attr('light.frederique_main_light', 'brightness')|int)}}
   mode: restart
   action:
     repeat:
@@ -27,7 +28,10 @@
             brightness: "{{ target_brightness }}"
         - delay:
             milliseconds: 500
-      until: "{{ (state_attr('light.frederique_night_light', 'brightness')|int) == target_brightness }}"
+      until: >-
+        {{ (state_attr('light.frederique_night_light', 'brightness')|int)
+           ==
+           target_brightness }}
 
 - alias: Frederique main light triple up
   trigger:
@@ -134,13 +138,20 @@
         scene_id: 1
         scene_data: 0
   variables:
-    light_entity_id: '{{ "light." + trigger.event.data.entity_id.split(".")[1] }}'
+    light_entity_id: >-
+      {{ "light." + trigger.event.data.entity_id.split(".")[1] }}
   condition: '{{ states(light_entity_id) != "unknown" }}'
   action:
     - service: light.turn_on
       data:
         entity_id: '{{ light_entity_id }}'
-        brightness: '{{ 1 if light_entity_id in states.group.zwave_dimmers_default_low.attributes.entity_id else 255}}'
+        brightness: >-
+          {% if light_entity_id in
+                states.group.zwave_dimmers_default_low.attributes.entity_id %}
+            1
+          {% else %}
+            255
+          {% endif %}
     - service: zwave.refresh_entity
       data:
         entity_id: '{{ light_entity_id }}'
@@ -237,7 +248,8 @@
         scene_id: 1
         scene_data: 3
   variables:
-    light_entity_id: '{{ "light." + trigger.event.data.entity_id.split(".")[1] }}'
+    light_entity_id: >-
+      {{ "light." + trigger.event.data.entity_id.split(".")[1] }}
   condition: '{{ states(light_entity_id) != "unknown" }}'
   action:
     - service: light.turn_on
@@ -288,7 +300,8 @@
         scene_id: 2
         scene_data: 3
   variables:
-    light_entity_id: '{{ "light." + trigger.event.data.entity_id.split(".")[1] }}'
+    light_entity_id: >-
+      {{ "light." + trigger.event.data.entity_id.split(".")[1] }}
   condition: '{{ states(light_entity_id) != "unknown" }}'
   action:
     - service: light.turn_off

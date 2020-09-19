@@ -8,16 +8,17 @@
   condition:
     condition: or
     conditions:
-     - condition: state
-       entity_id: switch.garage_door
-       state: 'on'
-     - condition: state
-       entity_id: alarm_control_panel.home_alarm
-       state: 'disarmed'
+      - condition: state
+        entity_id: switch.garage_door
+        state: 'on'
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: 'disarmed'
   action:
     - service: notify.all_people
       data:
-        # The garage message will be handled in "close garage door if no one is home"
+        # The garage message will be handled in
+        # "close garage door if no one is home"
         message: >
           On dirait que quelque chose cloche..
           {% if is_state('alarm_control_panel.home_alarm', 'disarmed') %}
@@ -39,17 +40,17 @@
         until:
           - condition: or
             conditions:
-            - condition: state
-              entity_id: group.all_people
-              state: 'home'
-            - condition: and
-              conditions:
               - condition: state
-                entity_id: switch.garage_door
-                state: 'off'
-              - condition: state
-                entity_id: alarm_control_panel.home_alarm
-                state: 'armed_away'
+                entity_id: group.all_people
+                state: 'home'
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity_id: switch.garage_door
+                    state: 'off'
+                  - condition: state
+                    entity_id: alarm_control_panel.home_alarm
+                    state: 'armed_away'
     - service: notify.all_people
       data:
         message: Le problème est maintenant réglé.
@@ -70,11 +71,13 @@
       state: 'not_home'
     - service: notify.all_people
       data:
-        # The garage message will be handled in "close garage door if no one is home"
+        # The garage message will be handled in
+        # "close garage door if no one is home"
         message: >
           Une intrusion a été détectée.
           {% if trigger.entity_id == 'alarm_control_panel.home_alarm' %}
-            Il n'y a personne à la maison et le système d'alarme n'est plus armé.
+            Il n'y a personne à la maison et
+            le système d'alarme n'est plus armé.
           {% endif %}
     - delay:
         seconds: 60
@@ -91,8 +94,10 @@
           - service: tts.google_translate_say
             entity_id: media_player.maison
             data:
-              message: >
-                Une intrusion a été détectée. Les vidéos de votre arrivé et l'information de votre téléphone mobile ont été enregistrés.
+              message: >-
+                Une intrusion a été détectée.
+                Les vidéos de votre arrivé et l'information
+                de votre téléphone mobile ont été enregistrés.
                 La police a été informée. Quittez immédiatement les lieux.
               language: 'fr'
           - delay:
@@ -123,7 +128,8 @@
   action:
     - service: notify.all_people
       data:
-        message: Il n'y a personne à la maison et la porte de garage est ouverte.
+        message: >-
+          Il n'y a personne à la maison et la porte de garage est ouverte.
     - repeat:
         sequence:
           - service: notify.all_people
@@ -136,17 +142,18 @@
         until:
           - condition: or
             conditions:
-            - condition: state
-              entity_id: switch.garage_door
-              state: 'off'
-            - condition: state
-              entity_id: group.all_people
-              state: 'home'
+              - condition: state
+                entity_id: switch.garage_door
+                state: 'off'
+              - condition: state
+                entity_id: group.all_people
+                state: 'home'
     - service: notify.all_people
       data:
         message: >
           {% if is_state('switch.garage_door', 'off') %}
             La porte de garage est maintenant fermée.
           {% else %}
-            La porte de garage n'est pas encore fermée, mais il y a maintenant quelqu'un à la maison.
+            La porte de garage n'est pas encore fermée,
+            mais il y a maintenant quelqu'un à la maison.
           {% endif %}

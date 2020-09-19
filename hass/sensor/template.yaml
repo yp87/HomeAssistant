@@ -2,11 +2,15 @@
 - platform: template
   sensors:
     fred_daily_milk_consumption:
-      value_template: "{{ states('input_number.fred_daily_milk_consumption') | float }}"
+      value_template: >-
+        {{ states('input_number.fred_daily_milk_consumption') | float }}
 
     fred_last_milk_elapsed_time:
       friendly_name: "Depuis le dernier lait"
-      value_template: '{{ (as_timestamp(now()) - states.input_datetime.fred_last_milk.attributes.timestamp ) | timestamp_custom("%Hh%M")}}'
+      value_template: >-
+        {{ (as_timestamp(now())
+            - states.input_datetime.fred_last_milk.attributes.timestamp )
+           | timestamp_custom("%Hh%M")}}
 
     front_door_action:
       value_template: >

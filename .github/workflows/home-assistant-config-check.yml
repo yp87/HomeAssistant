@@ -1,6 +1,7 @@
 ---
 name: Test Home Assistant Config
 
+# yamllint disable-line rule:truthy
 on:
   push:
     branches:
@@ -29,6 +30,7 @@ jobs:
           args: yamllint .
   home_assistant_current:
     runs-on: ubuntu-latest
+    needs: yamllint
     steps:
       - name: Getting Home Assistant configuration
         uses: actions/checkout@v2
