@@ -30,7 +30,6 @@ jobs:
           args: yamllint .
   home_assistant_current:
     runs-on: ubuntu-latest
-    needs: yamllint
     steps:
       - name: Getting Home Assistant configuration
         uses: actions/checkout@v2
