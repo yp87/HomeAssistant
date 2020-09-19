@@ -23,7 +23,7 @@ auto_switch_off:
            -
            as_timestamp(states[auto_switch_entity].last_changed)
            >=
-           (duration_seconds|int) - 10 }}
+           duration_seconds|int - 10 }}
     - service: switch.turn_off
       data:
         entity_id: "{{ auto_switch_entity }}"
