@@ -24,14 +24,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Copy stub files into configuration folder
         run: cp -R ./.stubs/hass/* ./hass
-      - name: Read current Home Assistant version
-        id: home_assistant_version
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./hass/.HA_VERSION
-      - name: Echo Home Assistant version
-        run: echo "Testing configuration against Home Assistant ${{ steps.home_assistant_version.outputs.content }}"
       - name: Home Assistant Check Config
-        uses: docker://homeassistant/home-assistant:${{  steps.home_assistant_version.outputs.content }}
+        uses: docker://homeassistant/home-assistant:0.115.0
         with:
           args: python -m homeassistant --config ./hass/ --script check_config --info all
