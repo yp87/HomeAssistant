@@ -1,3 +1,4 @@
+---
 all_light_switches:
   name: All light switches
   entities:
@@ -5,7 +6,7 @@ all_light_switches:
     - switch.master_bathroom_fan
     - switch.entrance_light
     # For christmas tree only!
-    #- switch.christmas_tree_switch
+    # - switch.christmas_tree_switch
 
 zwave_dimmers_default_low:
   entities:

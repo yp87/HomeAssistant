@@ -1,3 +1,4 @@
+---
 - alias: Turn Hyperion off when harmony is turned off
   trigger:
     - platform: state
@@ -16,7 +17,8 @@
       to: "Regarder Chromecast"
   mode: restart
   action:
-    # show running dots like a loading effect instead of glitchy lights when starting up the system.
+    # show running dots like a loading effect
+    # instead of glitchy lights when starting up the system.
     - service: hyperion_priority.apply_effect
       data:
         effect: Running dots
@@ -43,11 +45,16 @@
       from: "playing"
       to: "paused"
   action:
-  - service: hyperion_priority.apply_effect
-    data:
-      effect: Cinema brighten lights
-      priority: 130
-      args: { "color-start": [136, 97, 7], "color-end": [238, 173, 47], "fade-time": 2 }
+    - service: hyperion_priority.apply_effect
+      data:
+        effect: Cinema brighten lights
+        priority: 130
+        args: >-
+          {
+            "color-start": [136, 97, 7],
+            "color-end": [238, 173, 47],
+            "fade-time": 2
+          }
 
 - alias: Hyperion playing chromecast
   trigger:
@@ -59,7 +66,12 @@
       data:
         effect: Cinema dim lights
         priority: 130
-        args: { "color-start": [238, 173, 47], "color-end": [136, 97, 7], "fade-time": 2 }
+        args: >-
+          {
+            "color-start": [238, 173, 47],
+            "color-end": [136, 97, 7],
+            "fade-time": 2
+          }
     - delay: "00:00:02"
     - service: hyperion_priority.clear_priority
       data:
@@ -72,15 +84,25 @@
     - platform: state
       entity_id: input_boolean.cath_phone_rings
   variables:
-    effect_priority: '{{ 120 if trigger.entity_id == "input_boolean.yan_phone_rings" else 119 }}'
+    effect_priority: >-
+      {% if trigger.entity_id == "input_boolean.yan_phone_rings" %}
+        120
+      {% else %}
+        119
+      {% endif %}
   action:
     - choose:
-      - conditions: '{{ trigger.to_state.state == "on" }}'
-        sequence:
-          - service: hyperion_priority.apply_effect
-            data:
-              effect: '{{ "Police Lights Solid" if trigger.entity_id == "input_boolean.yan_phone_rings" else "Rainbow swirl fast" }}'
-              priority: '{{ effect_priority }}'
+        - conditions: '{{ trigger.to_state.state == "on" }}'
+          sequence:
+            - service: hyperion_priority.apply_effect
+              data:
+                effect: >-
+                  {% if trigger.entity_id == "input_boolean.yan_phone_rings" %}
+                    "Police Lights Solid"
+                  {% else %}
+                    "Rainbow swirl fast"
+                  {% endif %}
+                priority: '{{ effect_priority }}'
       default:
         - service: hyperion_priority.clear_priority
           data:
@@ -93,8 +115,18 @@
     - platform: state
       entity_id: input_boolean.cath_phone_notification
   variables:
-    notification_color: '{{ [0, 255, 0] if trigger.entity_id == "input_boolean.yan_phone_notification" else [190, 0, 255] }}'
-    effect_priority: '{{ 126 if trigger.entity_id == "input_boolean.yan_phone_notification" else 124 }}'
+    notification_color: >-
+      {% if trigger.entity_id == "input_boolean.yan_phone_notification" %}
+        [0, 255, 0]
+      {% else %}
+        [190, 0, 255]
+      {% endif %}
+    effect_priority: >-
+      {% if trigger.entity_id == "input_boolean.yan_phone_notification" %}
+        126
+      {% else %}
+        124
+      {% endif %}
   mode: queued
   action:
     - repeat:

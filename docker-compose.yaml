@@ -1,3 +1,4 @@
+---
 version: '3'
 services:
   # The purpose of this service is to bootstrap everything
@@ -18,7 +19,8 @@ services:
     depends_on:
       - webhookproxy
 
-  # The purpose of this service is to receive github webhook events from the smee.io service
+  # The purpose of this service is to
+  # receive github webhook events from the smee.io service
   # and to forward them to the supervisor service.
   webhookproxy:
     container_name: webhookproxy

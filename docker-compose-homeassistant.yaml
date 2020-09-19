@@ -1,8 +1,9 @@
+---
 version: '3'
 services:
   homeassistant:
     container_name: hass
-    #image: homeassistant/home-assistant:0.113.2    #Specific Version
+    # image: homeassistant/home-assistant:0.113.2    #Specific Version
     image: homeassistant/home-assistant:stable
     environment:
       - BASE_PATH

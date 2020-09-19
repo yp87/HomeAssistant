@@ -1,3 +1,4 @@
+---
 - alias: Reconnect Hangouts
   trigger:
     - entity_id: sensor.external_ip

@@ -1,4 +1,6 @@
-# Home assistant simulates a roku device to be able to receive commands from harmony hub ;)
+---
+# Home assistant simulates a roku device
+# to be able to receive commands from harmony hub ;)
 - alias: 'Harmony shutting down'
   trigger:
   - platform: state
@@ -6,118 +8,128 @@
     from: 'on'
     to: 'off'
   action:
-  - service: remote.turn_on
-    entity_id: remote.yharmony
-    data:
-      # set fake Off activity to keep emulated roku activated when we turn off harmony hub
-      activity: 'Off'
+    - service: remote.turn_on
+      entity_id: remote.yharmony
+      data:
+        # set fake Off activity to keep emulated roku activated
+        # when we turn off harmony hub
+        activity: 'Off'
 
 - alias: 'Roku Play Pause'
   trigger:
-  - platform: event
-    event_type: roku_command
-    event_data:
-      type: keypress
-      key: Play
+    - platform: event
+      event_type: roku_command
+      event_data:
+        type: keypress
+        key: Play
   action:
     - service: media_player.media_play_pause
       entity_id: media_player.salon_tv
 
 - alias: 'Roku Stop'
   trigger:
-  - platform: event
-    event_type: roku_command
-    event_data:
-      type: keypress
-      key: Back
+    - platform: event
+      event_type: roku_command
+      event_data:
+        type: keypress
+        key: Back
   action:
     - service: media_player.media_stop
       entity_id: media_player.salon_tv
 
 - alias: 'Roku Forward'
   trigger:
-  - platform: event
-    event_type: roku_command
-    event_data:
-      type: keypress
-      key: Fwd
+    - platform: event
+      event_type: roku_command
+      event_data:
+        type: keypress
+        key: Fwd
   action:
     - service: media_player.media_seek
       entity_id: media_player.salon_tv
       data:
-        seek_position: '{{ ((states.media_player.salon_tv.attributes.media_position) + 30) | float}}'
+        seek_position: >-
+          {{ ((states.media_player.salon_tv.attributes.media_position) + 30)
+             | float }}
 
 - alias: 'Roku Rewind'
   trigger:
-  - platform: event
-    event_type: roku_command
-    event_data:
-      type: keypress
-      key: Rev
+    - platform: event
+      event_type: roku_command
+      event_data:
+        type: keypress
+        key: Rev
   action:
     - service: media_player.media_seek
       entity_id: media_player.salon_tv
       data:
-        seek_position: '{{ ((states.media_player.salon_tv.attributes.media_position) - 30) | float}}'
+        seek_position: >-
+          {{ ((states.media_player.salon_tv.attributes.media_position) - 30)
+             | float}}
 
 - alias: 'Roku Seek'
   trigger:
-  - platform: event
-    event_type: roku_command
-    event_data:
-      type: keypress
-  condition: "{{ trigger.event.data.key in ['Lit_1', 'Lit_2', 'Lit_3', 'Lit_4', 'Lit_5', 'Lit_6', 'Lit_7', 'Lit_8', 'Lit_9', 'Lit_0'] }}"
+    - platform: event
+      event_type: roku_command
+      event_data:
+        type: keypress
+  condition: >-
+    {{ trigger.event.data.key in
+        ['Lit_1', 'Lit_2', 'Lit_3', 'Lit_4', 'Lit_5',
+         'Lit_6', 'Lit_7', 'Lit_8', 'Lit_9', 'Lit_0'] }}
   action:
     - service: media_player.media_seek
       entity_id: media_player.salon_tv
       data:
         seek_position: >
-          {{ ((trigger.event.data.key.split("_")[1] | int) / 10) * states.media_player.salon_tv.attributes.media_duration }}
+          {{ ((trigger.event.data.key.split("_")[1] | int) / 10)
+             *
+             states.media_player.salon_tv.attributes.media_duration }}
 
 - alias: 'Roku c'
   trigger:
-  - platform: event
-    event_type: roku_command
-    event_data:
-      type: keypress
-      key: Lit_c
-  - platform: event
-    event_type: roku_command
-    event_data:
-      type: keypress
-      key: Lit_C
+    - platform: event
+      event_type: roku_command
+      event_data:
+        type: keypress
+        key: Lit_c
+    - platform: event
+      event_type: roku_command
+      event_data:
+        type: keypress
+        key: Lit_C
   action:
     - service: light.toggle
       entity_id: light.kitchen_main_light
 
 - alias: 'Roku s'
   trigger:
-  - platform: event
-    event_type: roku_command
-    event_data:
-      type: keypress
-      key: Lit_s
-  - platform: event
-    event_type: roku_command
-    event_data:
-      type: keypress
-      key: Lit_S
+    - platform: event
+      event_type: roku_command
+      event_data:
+        type: keypress
+        key: Lit_s
+    - platform: event
+      event_type: roku_command
+      event_data:
+        type: keypress
+        key: Lit_S
   action:
     - service: light.toggle
       entity_id: light.living_room_main_light
 
 - alias: 'Roku e'
   trigger:
-  - platform: event
-    event_type: roku_command
-    event_data:
-      type: keypress
-      key: Lit_e
-  - platform: event
-    event_type: roku_command
-    event_data:
-      type: keypress
-      key: Lit_E
+    - platform: event
+      event_type: roku_command
+      event_data:
+        type: keypress
+        key: Lit_e
+    - platform: event
+      event_type: roku_command
+      event_data:
+        type: keypress
+        key: Lit_E
   action:
     - service: light.toggle
       entity_id: light.ground_floor_hallway_light

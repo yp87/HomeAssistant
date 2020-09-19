@@ -1,3 +1,4 @@
+---
 apply_effect:
   description: Apply an effect to hyperion for a specified priority.
   fields:
@@ -9,7 +10,12 @@ apply_effect:
       example: 120
     args:
       description: Optional arguments to modify an effect.
-      example: '{ "color-start": [238, 173, 47], "color-end": [136, 97, 7], "fade-time": 2 }'
+      example: >-
+        {
+          "color-start": [238, 173, 47],
+          "color-end": [136, 97, 7],
+          "fade-time": 2
+        }
 
 clear_priority:
   description: Clear the effect for the specified priority.

@@ -1,3 +1,4 @@
+---
 auto_switch_on:
   mode: parallel
   sequence:
@@ -17,7 +18,12 @@ auto_switch_off:
     - delay:
         seconds: "{{ duration_seconds }}"
     - condition: template
-      value_template: '{{(as_timestamp(now()) - as_timestamp(states[auto_switch_entity].last_changed) >= ((duration_seconds|int) - 10))}}'
+      value_template: >-
+        {{ (as_timestamp(now())
+           -
+           (states[auto_switch_entity].last_changed)
+           >=
+           ((duration_seconds|int) - 10)) }}
     - service: switch.turn_off
       data:
         entity_id: "{{ auto_switch_entity }}"
@@ -31,11 +37,16 @@ fred_add_consumed_milk:
     - service: input_number.set_value
       data:
         entity_id: input_number.fred_daily_milk_consumption
-        value: "{{ added_milk_quantity | float + states('input_number.fred_daily_milk_consumption') | float }}"
+        value: >-
+          {{ added_milk_quantity | float
+             +
+             states('input_number.fred_daily_milk_consumption') | float }}
     - service: notify.all_people
       data:
-        message: >
-           Fred est rendu à {{ states('input_number.fred_daily_milk_consumption') }} onces de lait.
+        message: >-
+           Fred est rendu à
+           {{ states('input_number.fred_daily_milk_consumption') }}
+           onces de lait.
 
 fred_vit_d_drop:
   sequence:
@@ -64,14 +75,22 @@ phone_notification:
   sequence:
     - condition: template
       value_template: '{{ is_state("person." + owner, "home") }}'
-    - service_template: input_boolean.{% if type == "notification" %}toggle{% elif type == "rings" %}turn_on{% else %}turn_off{% endif %}
+    - service_template: >-
+        input_boolean.
+        {%- if type == "notification" -%}
+          toggle
+        {%- elif type == "rings" -%}
+          turn_on
+        {%- else -%}
+          turn_off
+        {%- endif -%}
       data:
         entity_id: input_boolean.{{ owner }}_phone_{{ type or "rings"}}
 
 white_noise_start:
   sequence:
     # This is to prevent the annoying google home startup sound.
-    #-----------------------------------------------------------
+    # -----------------------------------------------------------
     - service: media_player.volume_set
       data:
         entity_id: "{{ media_player_id }}"
@@ -84,7 +103,7 @@ white_noise_start:
       data:
         entity_id: "{{ media_player_id }}"
     - delay: 00:00:01
-    #-----------------------------------------------------------
+    # -----------------------------------------------------------
     - service: script.turn_on
       data:
         entity_id: script.white_noise_play
@@ -102,7 +121,8 @@ white_noise_play:
       data:
         media_content_type: audio/mp3
         entity_id: "{{ media_player_id }}"
-        media_content_id: http://www.gstatic.com/voice_delight/sounds/long/pink_noise.mp3
+        media_content_id: >-
+          http://www.gstatic.com/voice_delight/sounds/long/pink_noise.mp3
     - service: script.turn_on
       data:
         entity_id: script.white_noise_loop
@@ -135,8 +155,11 @@ lights_off_except:
   sequence:
     - service: light.turn_off
       data:
-        entity_id: >
-          {% for device in states.light|rejectattr('entity_id','in', exclude_lights )|rejectattr('state','in','unavailable') %}
-            {%- if not loop.first %}, {% endif -%}
-            {{ device.entity_id }}
+        entity_id: >-
+          {% for device in
+                 states.light |
+                 rejectattr('entity_id','in', exclude_lights ) |
+                 rejectattr('state','in','unavailable') %}
+             {%- if not loop.first %}, {% endif -%}
+               {{ device.entity_id }}
           {%- endfor %}

@@ -1,0 +1,44 @@
+---
+name: Home Assistant Config CI
+
+# yamllint disable-line rule:truthy
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'hass/**'
+      - '.github/workflows/**'
+      - '.stubs/hass/**'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'hass/**'
+      - '.github/workflows/**'
+      - '.stubs/hass/**'
+
+jobs:
+  yamllint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Getting Home Assistant configuration
+        uses: actions/checkout@v2
+      - name: Running YAMLlint
+        uses: docker://pipelinecomponents/yamllint:latest
+        with:
+          args: yamllint .
+  home_assistant_current:
+    runs-on: ubuntu-latest
+    needs: yamllint
+    steps:
+      - name: Getting Home Assistant configuration
+        uses: actions/checkout@v2
+      - name: Copy stub files
+        run: cp -R ./.stubs/hass/* ./hass
+      - name: Home Assistant Check Config
+        uses: docker://homeassistant/home-assistant:0.115.0
+        with:
+          args: >-
+            python -m homeassistant --config ./hass/
+            --script check_config --info all

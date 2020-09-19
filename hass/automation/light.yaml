@@ -1,3 +1,4 @@
+---
 - alias: Turn on front light at sunset
   trigger:
     - platform: sun

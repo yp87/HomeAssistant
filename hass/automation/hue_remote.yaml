@@ -1,3 +1,4 @@
+---
 - alias: Hue remote automation - Long Press Off
   trigger:
     - platform: event
@@ -30,7 +31,9 @@
     - service: tts.google_translate_say
       entity_id: media_player.bedroom
       data:
-        message: "N'oubliez pas vos pilules et la nourriture sur le comptoir. Bonne nuit!"
+        message: >-
+          N'oubliez pas vos pilules et la nourriture sur le comptoir.
+          Bonne nuit!
         language: 'fr'
 
 - alias: Hue remote automation - Long Press ON

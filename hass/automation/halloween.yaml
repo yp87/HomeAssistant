@@ -1,3 +1,4 @@
+---
 - alias: Halloween spooky lights
   trigger:
     platform: state
@@ -5,13 +6,13 @@
     to: "on"
   mode: parallel
   action:
-  - repeat:
-      sequence:
-        - service: light.toggle
-          entity_id: switch.light_front
-        - delay:
-            milliseconds: "{{ ( range(100, 4000) | random | int) }}"
-      until:
-        - condition: state
-          entity_id: input_boolean.halloween
-          state: "off"
+    - repeat:
+        sequence:
+          - service: light.toggle
+            entity_id: switch.light_front
+          - delay:
+              milliseconds: "{{ ( range(100, 4000) | random | int) }}"
+        until:
+          - condition: state
+            entity_id: input_boolean.halloween
+            state: "off"
