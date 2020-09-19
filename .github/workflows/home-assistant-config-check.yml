@@ -32,8 +32,6 @@ jobs:
       - name: Echo Home Assistant version
         run: echo "Testing configuration against Home Assistant ${{ steps.home_assistant_version.outputs.content }}"
       - name: Home Assistant Check Config
-        uses: "docker://homeassistant/home-assistant:${{ env.HA_VERSION }}"
+        uses: docker://homeassistant/home-assistant:${{  steps.home_assistant_version.outputs.content }}
         with:
           args: python -m homeassistant --config ./hass/ --script check_config --info all
-        env:
-          HA_VERSION: ${{ steps.home_assistant_version.outputs.content }}
