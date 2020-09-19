@@ -9,14 +9,14 @@ on:
     paths:
       - 'hass/**'
       - '.github/workflows/**'
-      - '.stubs/**'
+      - '.stubs/hass/**'
   pull_request:
     branches:
       - master
     paths:
       - 'hass/**'
       - '.github/workflows/**'
-      - '.stubs/**'
+      - '.stubs/hass/**'
 
 jobs:
   yamllint:
