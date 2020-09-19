@@ -9,6 +9,7 @@ insert_final_newline = true
 
 [*.{yml,yaml}]
 indent_size = 2
+end_of_line = lf
 
 
 [secret*]
