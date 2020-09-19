@@ -56,7 +56,7 @@ namespace Supervisor.UnitTest.ActionHandlers
         {
             // Arrange
             var anIncompletedBuild = _fixture.Create<GitHubAction>();
-            anIncompletedBuild.CheckRun = null;
+            anIncompletedBuild.CheckSuite = null;
 
             // Act
             await _actionHandler.HandleAsync(anIncompletedBuild);
@@ -70,7 +70,7 @@ namespace Supervisor.UnitTest.ActionHandlers
         {
             // Arrange
             var anIncompletedBuild = _fixture.Create<GitHubAction>();
-            anIncompletedBuild.CheckRun!.Status = null;
+            anIncompletedBuild.CheckSuite!.Status = null;
 
             // Act
             await _actionHandler.HandleAsync(anIncompletedBuild);
@@ -97,7 +97,7 @@ namespace Supervisor.UnitTest.ActionHandlers
         {
             // Arrange
             var aFailedBuild = _fixture.Create<GitHubAction>();
-            aFailedBuild.CheckRun!.Status = Constants.GitHubBuildCompleted;
+            aFailedBuild.CheckSuite!.Status = Constants.GitHubBuildCompleted;
 
             // Act
             await _actionHandler.HandleAsync(aFailedBuild);
@@ -111,9 +111,9 @@ namespace Supervisor.UnitTest.ActionHandlers
         {
             // Arrange
             var anInvalidBuild = _fixture.Create<GitHubAction>();
-            anInvalidBuild.CheckRun!.Status = Constants.GitHubBuildCompleted;
-            anInvalidBuild.CheckRun.Conclusion = Constants.GitHubBuildSuccess;
-            anInvalidBuild.CheckRun.CheckSuite = null;
+            anInvalidBuild.CheckSuite!.Status = Constants.GitHubBuildCompleted;
+            anInvalidBuild.CheckSuite.Conclusion = Constants.GitHubBuildSuccess;
+            anInvalidBuild.CheckSuite = null;
 
             // Act
             await _actionHandler.HandleAsync(anInvalidBuild);
@@ -127,8 +127,8 @@ namespace Supervisor.UnitTest.ActionHandlers
         {
             // Arrange
             var aBuildOnANonMasterBranch = _fixture.Create<GitHubAction>();
-            aBuildOnANonMasterBranch.CheckRun!.Status = Constants.GitHubBuildCompleted;
-            aBuildOnANonMasterBranch.CheckRun.Conclusion = Constants.GitHubBuildSuccess;
+            aBuildOnANonMasterBranch.CheckSuite!.Status = Constants.GitHubBuildCompleted;
+            aBuildOnANonMasterBranch.CheckSuite.Conclusion = Constants.GitHubBuildSuccess;
 
             // Act
             await _actionHandler.HandleAsync(aBuildOnANonMasterBranch);
@@ -142,9 +142,9 @@ namespace Supervisor.UnitTest.ActionHandlers
         {
             // Arrange
             var aSuccessfulMasterForPRBuild = _fixture.Create<GitHubAction>();
-            aSuccessfulMasterForPRBuild.CheckRun!.Status = Constants.GitHubBuildCompleted;
-            aSuccessfulMasterForPRBuild.CheckRun.Conclusion = Constants.GitHubBuildSuccess;
-            aSuccessfulMasterForPRBuild.CheckRun.CheckSuite!.HeadBranch = Constants.MasterBranchName;
+            aSuccessfulMasterForPRBuild.CheckSuite!.Status = Constants.GitHubBuildCompleted;
+            aSuccessfulMasterForPRBuild.CheckSuite.Conclusion = Constants.GitHubBuildSuccess;
+            aSuccessfulMasterForPRBuild.CheckSuite!.HeadBranch = Constants.MasterBranchName;
 
             // Act
             await _actionHandler.HandleAsync(aSuccessfulMasterForPRBuild);
@@ -158,10 +158,10 @@ namespace Supervisor.UnitTest.ActionHandlers
         {
             // Arrange
             var aSuccessfulMasterBuild = _fixture.Create<GitHubAction>();
-            aSuccessfulMasterBuild.CheckRun!.Status = Constants.GitHubBuildCompleted;
-            aSuccessfulMasterBuild.CheckRun.Conclusion = Constants.GitHubBuildSuccess;
-            aSuccessfulMasterBuild.CheckRun.CheckSuite!.HeadBranch = Constants.MasterBranchName;
-            aSuccessfulMasterBuild.CheckRun.CheckSuite.PullRequests = null;
+            aSuccessfulMasterBuild.CheckSuite!.Status = Constants.GitHubBuildCompleted;
+            aSuccessfulMasterBuild.CheckSuite.Conclusion = Constants.GitHubBuildSuccess;
+            aSuccessfulMasterBuild.CheckSuite!.HeadBranch = Constants.MasterBranchName;
+            aSuccessfulMasterBuild.CheckSuite.PullRequests = null;
 
             // Act
             await _actionHandler.HandleAsync(aSuccessfulMasterBuild);
@@ -175,10 +175,10 @@ namespace Supervisor.UnitTest.ActionHandlers
         {
             // Arrange
             var aSuccessfulMasterBuild = _fixture.Create<GitHubAction>();
-            aSuccessfulMasterBuild.CheckRun!.Status = Constants.GitHubBuildCompleted;
-            aSuccessfulMasterBuild.CheckRun.Conclusion = Constants.GitHubBuildSuccess;
-            aSuccessfulMasterBuild.CheckRun.CheckSuite!.HeadBranch = Constants.MasterBranchName;
-            aSuccessfulMasterBuild.CheckRun.CheckSuite.PullRequests = new PullRequest[0];
+            aSuccessfulMasterBuild.CheckSuite!.Status = Constants.GitHubBuildCompleted;
+            aSuccessfulMasterBuild.CheckSuite.Conclusion = Constants.GitHubBuildSuccess;
+            aSuccessfulMasterBuild.CheckSuite!.HeadBranch = Constants.MasterBranchName;
+            aSuccessfulMasterBuild.CheckSuite.PullRequests = new PullRequest[0];
 
             // Act
             await _actionHandler.HandleAsync(aSuccessfulMasterBuild);

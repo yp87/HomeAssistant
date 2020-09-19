@@ -6,8 +6,8 @@ namespace Supervisor.Models
     {
         public string? Action { get; set; }
 
-        [JsonPropertyName("check_run")]
-        public CheckRun? CheckRun { get; set; }
+        [JsonPropertyName("check_suite")]
+        public CheckSuite? CheckSuite { get; set; }
 
         public Repository? Repository { get; set; }
 
