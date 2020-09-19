@@ -33,8 +33,7 @@ jobs:
         with:
           submodules: true
       - name: Copy stub files
-        run: |
-          cp -R ./.stubs/infrastructure/* ./
+        run: cp -R ./.stubs/infrastructure/* ./
       - name: Build the docker-compose stack
         run: >-
           docker-compose
