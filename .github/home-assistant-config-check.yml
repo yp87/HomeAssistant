@@ -8,8 +8,6 @@ on:
       - '.github/**'
       - '.stubs/**'
   pull_request:
-    branches: 
-      - master 
     paths: 
       - 'hass/**'
       - '.github/**'
