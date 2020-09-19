@@ -8,10 +8,6 @@ on:
       - '.github/**'
       - '.stubs/**'
   pull_request:
-    paths: 
-      - 'hass/**'
-      - '.github/**'
-      - '.stubs/**'
 
 jobs:
   home_assistant_current:
