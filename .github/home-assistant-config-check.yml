@@ -19,8 +19,8 @@ jobs:
     steps:
       - name: Getting Home Assistant configuration
         uses: actions/checkout@v1
-      - name: Copy stub files into configuration folder
-        run: cp -R ./.stubs/hass/* ./hass
+      #- name: Copy stub files into configuration folder
+      #  run: cp -R ./.stubs/hass/* ./hass
       #- name: Read current Home Assistant version
       #  id: home_assistant_version
       #  uses: juliangruber/read-file-action@v1
