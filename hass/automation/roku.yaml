@@ -54,11 +54,11 @@
 
 - alias: 'Roku Rewind'
   trigger:
-  - platform: event
-    event_type: roku_command
-    event_data:
-      type: keypress
-      key: Rev
+    - platform: event
+      event_type: roku_command
+      event_data:
+        type: keypress
+        key: Rev
   action:
     - service: media_player.media_seek
       entity_id: media_player.salon_tv
@@ -69,10 +69,10 @@
 
 - alias: 'Roku Seek'
   trigger:
-  - platform: event
-    event_type: roku_command
-    event_data:
-      type: keypress
+    - platform: event
+      event_type: roku_command
+      event_data:
+        type: keypress
   condition: >-
     {{ trigger.event.data.key in
         ['Lit_1', 'Lit_2', 'Lit_3', 'Lit_4', 'Lit_5',

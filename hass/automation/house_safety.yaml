@@ -57,12 +57,12 @@
 
 - alias: intrusion when no one is home
   trigger:
-  - platform: state
-    entity_id: switch.garage_door
-    to: 'on'
-  - platform: state
-    entity_id: alarm_control_panel.home_alarm
-    from: 'armed_away'
+    - platform: state
+      entity_id: switch.garage_door
+      to: 'on'
+    - platform: state
+      entity_id: alarm_control_panel.home_alarm
+      from: 'armed_away'
   action:
     - delay:
         seconds: 60
@@ -109,13 +109,13 @@
 
 - alias: close garage door if no one is home
   trigger:
-  - platform: state
-    entity_id: group.all_people
-    from: 'home'
-    to: 'not_home'
-  - platform: state
-    entity_id: switch.garage_door
-    to: 'on'
+    - platform: state
+      entity_id: group.all_people
+      from: 'home'
+      to: 'not_home'
+    - platform: state
+      entity_id: switch.garage_door
+      to: 'on'
   condition:
     condition: and
     conditions:

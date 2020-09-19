@@ -17,7 +17,8 @@
       to: "Regarder Chromecast"
   mode: restart
   action:
-    # show running dots like a loading effect instead of glitchy lights when starting up the system.
+    # show running dots like a loading effect
+    # instead of glitchy lights when starting up the system.
     - service: hyperion_priority.apply_effect
       data:
         effect: Running dots
@@ -91,17 +92,17 @@
       {% endif %}
   action:
     - choose:
-      - conditions: '{{ trigger.to_state.state == "on" }}'
-        sequence:
-          - service: hyperion_priority.apply_effect
-            data:
-              effect: >-
-                {% if trigger.entity_id == "input_boolean.yan_phone_rings" %}
-                  "Police Lights Solid"
-                {% else %}
-                  "Rainbow swirl fast"
-                {% endif %}
-              priority: '{{ effect_priority }}'
+        - conditions: '{{ trigger.to_state.state == "on" }}'
+          sequence:
+            - service: hyperion_priority.apply_effect
+              data:
+                effect: >-
+                  {% if trigger.entity_id == "input_boolean.yan_phone_rings" %}
+                    "Police Lights Solid"
+                  {% else %}
+                    "Rainbow swirl fast"
+                  {% endif %}
+                priority: '{{ effect_priority }}'
       default:
         - service: hyperion_priority.clear_priority
           data:
