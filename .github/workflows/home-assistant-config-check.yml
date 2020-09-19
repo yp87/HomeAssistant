@@ -22,3 +22,5 @@ jobs:
     steps:
       - name: Getting Home Assistant configuration
         uses: actions/checkout@v2
+      - name: Copy stub files into configuration folder
+        run: cp -R ./.stubs/hass/* ./hass
