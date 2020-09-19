@@ -29,3 +29,5 @@ jobs:
         uses: juliangruber/read-file-action@v1
         with:
           path: ./hass/.HA_VERSION
+      - name: Echo Home Assistant version
+        run: echo ${{ steps.home_assistant_version.outputs.content }}
