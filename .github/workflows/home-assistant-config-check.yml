@@ -1,5 +1,5 @@
 ---
-name: Test Home Assistant Config
+name: Home Assistant Config CI
 
 # yamllint disable-line rule:truthy
 on:
@@ -34,7 +34,7 @@ jobs:
     steps:
       - name: Getting Home Assistant configuration
         uses: actions/checkout@v2
-      - name: Copy stub files into configuration folder
+      - name: Copy stub files
         run: cp -R ./.stubs/hass/* ./hass
       - name: Home Assistant Check Config
         uses: docker://homeassistant/home-assistant:0.115.0

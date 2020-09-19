@@ -32,8 +32,10 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules:
-      - name: Copy stub files into configuration folder
-        run: cp -R ./.stubs/infrastructure/* ./
+      - name: Copy stub files
+        run: |
+          cp -R ./.stubs/infrastructure/* ./
+          tree .
       - name: Build the docker-compose stack
         run: >-
           docker-compose
