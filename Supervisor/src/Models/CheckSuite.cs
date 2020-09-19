@@ -36,14 +36,5 @@ namespace Supervisor.Models
 
         [JsonPropertyName("updated_at")]
         public DateTimeOffset? UpdatedAt { get; set; }
-
-        [JsonPropertyName("latest_check_runs_count")]
-        public long LatestCheckRunsCount { get; set; }
-
-        [JsonPropertyName("check_runs_url")]
-        public Uri CheckRunsUrl { get; set; }
-
-        [JsonPropertyName("head_commit")]
-        public HeadCommit HeadCommit { get; set; }
     }
 }
