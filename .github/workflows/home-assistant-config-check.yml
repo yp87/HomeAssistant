@@ -17,6 +17,15 @@ on:
       - '.stubs/**'
 
 jobs:
+  yamllint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Getting Home Assistant configuration
+        uses: actions/checkout@v2
+      - name: Running YAMLlint
+        uses: docker://pipelinecomponents/yamllint:latest
+        with:
+          args: yamllint .
   home_assistant_current:
     runs-on: ubuntu-latest
     steps:
