@@ -30,4 +30,4 @@ jobs:
         with:
           path: ./hass/.HA_VERSION
       - name: Echo Home Assistant version
-        run: echo ${{ steps.home_assistant_version.outputs.content }}
+        run: echo "Hello ${{ steps.home_assistant_version.outputs.content }}"
