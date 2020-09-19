@@ -1,3 +1,4 @@
+---
 - alias: everyone has left
   trigger:
   - platform: state

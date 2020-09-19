@@ -1,3 +1,4 @@
+---
 - alias: Turn Hyperion off when harmony is turned off
   trigger:
     - platform: state

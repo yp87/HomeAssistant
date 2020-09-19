@@ -1,3 +1,4 @@
+---
 apply_effect:
   description: Apply an effect to hyperion for a specified priority.
   fields:

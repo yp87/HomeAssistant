@@ -1,3 +1,4 @@
+---
 # Home assistant simulates a roku device to be able to receive commands from harmony hub ;)
 - alias: 'Harmony shutting down'
   trigger:

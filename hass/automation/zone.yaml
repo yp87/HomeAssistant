@@ -1,3 +1,4 @@
+---
 - alias: Yan leaving work
   trigger:
     platform: zone

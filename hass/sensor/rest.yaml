@@ -1,3 +1,4 @@
+---
 - platform: rest
   resource: https://api.ipify.org/?format=json
   name: External IP

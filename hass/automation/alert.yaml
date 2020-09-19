@@ -1,3 +1,4 @@
+---
 - alias: Home assistant started notification
   trigger:
     platform: homeassistant

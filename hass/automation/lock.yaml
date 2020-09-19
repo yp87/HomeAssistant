@@ -1,3 +1,4 @@
+---
 - alias: 'Auto Lock Front Door'
   trigger:
   - platform: state

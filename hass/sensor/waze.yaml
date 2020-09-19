@@ -1,3 +1,4 @@
+---
 - platform: waze_travel_time
   name: yantohome
   origin: person.yan

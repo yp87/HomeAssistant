@@ -1,3 +1,4 @@
+---
 - name: Work_yan
   latitude: !secret work_yan_latitude
   longitude: !secret work_yan_longitude

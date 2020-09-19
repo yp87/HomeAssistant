@@ -1,3 +1,4 @@
+---
 homeassistant:
   name: Home
   latitude: !secret home_latitude
@@ -63,7 +64,7 @@ mqtt:
   broker: 127.0.0.1
   port: 1883
   username: !secret mqtt_username
-  password: !secret mqtt_password  
+  password: !secret mqtt_password
 
 zwave:
   usb_path: !secret zwave_usb_path

@@ -1,3 +1,4 @@
+---
 - alias: back door open turn off thermostat
   trigger:
     platform: state

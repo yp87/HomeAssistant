@@ -1,3 +1,4 @@
+---
 - alias: update leaf in morning
   trigger:
     # Update three times because leaf api is very slow and unreliable.

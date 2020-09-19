@@ -1,3 +1,4 @@
+---
 - alias: Hue remote automation - Long Press Off
   trigger:
     - platform: event
