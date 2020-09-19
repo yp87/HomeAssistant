@@ -38,7 +38,7 @@ namespace Supervisor
             var automationEndpointProvider = new AutomationEndpointProvider(File.ReadAllText("secret_automation_endpoint"));
             builder.RegisterInstance(automationEndpointProvider);
 
-            builder.RegisterType<CheckRunActionHandler>()
+            builder.RegisterType<CheckSuiteActionHandler>()
                 .As<IActionHandler>()
                 // Because of the semaphore in the implementation.
                 .SingleInstance();

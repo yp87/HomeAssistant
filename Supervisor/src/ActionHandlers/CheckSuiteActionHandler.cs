@@ -9,7 +9,7 @@ using Supervisor.Models;
 
 namespace Supervisor.ActionHandlers
 {
-    public class CheckRunActionHandler : IActionHandler
+    public class CheckSuiteActionHandler : IActionHandler
     {
         private readonly IAutomationUpdater _automationUpdater;
 
@@ -17,7 +17,7 @@ namespace Supervisor.ActionHandlers
 
         private readonly SemaphoreSlim _automationSemaphore = new SemaphoreSlim(1);
 
-        public CheckRunActionHandler(IAutomationUpdater automationUpdater, IAutomationClient automationClient)
+        public CheckSuiteActionHandler(IAutomationUpdater automationUpdater, IAutomationClient automationClient)
         {
             _automationUpdater = automationUpdater;
             _automationClient = automationClient;

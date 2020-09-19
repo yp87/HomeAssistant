@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace Supervisor.UnitTest.ActionHandlers
 {
-    public class CheckRunActionHandlerTests
+    public class CheckSuiteActionHandlerTests
     {
         private readonly Fixture _fixture = new Fixture();
 
-        private readonly CheckRunActionHandler _actionHandler;
+        private readonly CheckSuiteActionHandler _actionHandler;
 
         private Mock<IAutomationUpdater> _automationUpdaterMock;
 
-        public CheckRunActionHandlerTests()
+        public CheckSuiteActionHandlerTests()
         {
             _automationUpdaterMock = new Mock<IAutomationUpdater>();
             var automationClientMock = new Mock<IAutomationClient>();
-            _actionHandler = new CheckRunActionHandler(_automationUpdaterMock.Object, automationClientMock.Object);
+            _actionHandler = new CheckSuiteActionHandler(_automationUpdaterMock.Object, automationClientMock.Object);
             automationClientMock.Setup(m => m.NotifyAsync(It.IsAny<string>()))
                 .Returns(Task.CompletedTask);
         }
@@ -42,7 +42,7 @@ namespace Supervisor.UnitTest.ActionHandlers
         public void GivenAnCRActionHandler_WithSupportedActionName_WhenVerifyingActionSupport_ThenTheActionIsSupported()
         {
             // Arrange
-            var supportedActionName = "check_run";
+            var supportedActionName = "check_suite";
 
             // Act
             bool isActionSupported = _actionHandler.CanHandleAction(supportedActionName);
@@ -52,7 +52,7 @@ namespace Supervisor.UnitTest.ActionHandlers
         }
 
         [Fact]
-        public async Task GivenAnCRActionHandler_WithoutCheckRun_WhenHandling_ThenTheActionIsNotHandled()
+        public async Task GivenAnCRActionHandler_WithoutCheckSuite_WhenHandling_ThenTheActionIsNotHandled()
         {
             // Arrange
             var anIncompletedBuild = _fixture.Create<GitHubAction>();
