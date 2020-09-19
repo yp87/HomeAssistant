@@ -1,0 +1,34 @@
+---
+name: Build infrastructure containers
+
+# yamllint disable-line rule:truthy
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'Supervisor/**'
+      - 'alarm/**'
+      - 'WebhookProxy/**'
+      - 'docker-compose*.yaml
+      - '.github/workflows/**'
+      - '.stubs/infrastructure/**'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'Supervisor/**'
+      - 'alarm/**'
+      - 'WebhookProxy/**'
+      - 'docker-compose*.yaml
+      - '.github/workflows/**'
+      - '.stubs/infrastructure/**'
+
+jobs:      
+  home_assistant_current:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Getting repository files
+        uses: actions/checkout@v2
+      - name: Copy stub files into configuration folder
+        run: cp -R ./.stubs/infrastructure/* ./
