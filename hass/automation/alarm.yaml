@@ -27,15 +27,15 @@
     entity_id: alarm_control_panel.home_alarm
     to: 'disarmed'
   action:
+    # For christmas tree!
+    # Also add to All_Light_switch group and comment other instances
+    # - service: switch.turn_on
+    #  data:
+    #    entity_id: switch.christmas_tree_switch
     - service: climate.set_preset_mode
       data:
         entity_id: climate.main_floor
         preset_mode: home
-      # For christmas tree!
-      # Also add to All_Light_switch group and comment other instances
-      # - service: switch.turn_on
-      #  data:
-      #    entity_id: switch.christmas_tree_switch
 
 - alias: Disarmed alarm from pending
   trigger:

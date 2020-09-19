@@ -24,7 +24,7 @@ on:
       - '.github/workflows/**'
       - '.stubs/infrastructure/**'
 
-jobs:      
+jobs:
   home_assistant_current:
     runs-on: ubuntu-latest
     steps:
@@ -33,4 +33,8 @@ jobs:
       - name: Copy stub files into configuration folder
         run: cp -R ./.stubs/infrastructure/* ./
       - name: Build the docker-compose stack
-        run: docker-compose -f docker-compose.yaml -f docker-compose-homeassistant.yaml build --parallel
+        run: >-
+          docker-compose
+          -f docker-compose.yaml
+          -f docker-compose-homeassistant.yaml
+          build --parallel
