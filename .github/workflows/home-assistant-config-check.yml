@@ -17,7 +17,7 @@ on:
       - '.stubs/**'
 
 jobs:
-  home_assistant_current::
+  verify:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
