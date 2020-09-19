@@ -1,17 +1,18 @@
+---
 name: Test Home Assistant Config
 
 on:
   push:
     branches:
       - master
-    paths: 
+    paths:
       - 'hass/**'
       - '.github/workflows/**'
       - '.stubs/**'
   pull_request:
-    branches: 
-      - master 
-    paths: 
+    branches:
+      - master
+    paths:
       - 'hass/**'
       - '.github/workflows/**'
       - '.stubs/**'
@@ -36,4 +37,6 @@ jobs:
       - name: Home Assistant Check Config
         uses: docker://homeassistant/home-assistant:0.115.0
         with:
-          args: python -m homeassistant --config ./hass/ --script check_config --info all
+          args: >-
+            python -m homeassistant --config ./hass/
+            --script check_config --info all

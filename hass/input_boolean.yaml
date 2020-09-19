@@ -1,6 +1,6 @@
 ---
 halloween:
-  initial: off
+  initial: false
 
 fred_had_drop:
 
