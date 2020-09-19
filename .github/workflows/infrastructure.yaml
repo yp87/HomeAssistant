@@ -1,5 +1,5 @@
 ---
-name: Build infrastructure containers
+name: Infrastructure CI
 
 # yamllint disable-line rule:truthy
 on:
@@ -10,7 +10,7 @@ on:
       - 'Supervisor/**'
       - 'alarm/**'
       - 'WebhookProxy/**'
-      - 'docker-compose*.yaml
+      - 'docker-compose*.yaml'
       - '.github/workflows/**'
       - '.stubs/infrastructure/**'
   pull_request:
@@ -20,7 +20,7 @@ on:
       - 'Supervisor/**'
       - 'alarm/**'
       - 'WebhookProxy/**'
-      - 'docker-compose*.yaml
+      - 'docker-compose*.yaml'
       - '.github/workflows/**'
       - '.stubs/infrastructure/**'
 
@@ -32,3 +32,5 @@ jobs:
         uses: actions/checkout@v2
       - name: Copy stub files into configuration folder
         run: cp -R ./.stubs/infrastructure/* ./
+      - name: Build the docker-compose stack
+        run: docker-compose -f docker-compose.yaml -f docker-compose-homeassistant.yaml build --parallel
