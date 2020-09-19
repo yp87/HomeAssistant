@@ -25,11 +25,13 @@ on:
       - '.stubs/infrastructure/**'
 
 jobs:
-  home_assistant_current:
+  infrastructure:
     runs-on: ubuntu-latest
     steps:
       - name: Getting repository files
         uses: actions/checkout@v2
+        with:
+          submodules:
       - name: Copy stub files into configuration folder
         run: cp -R ./.stubs/infrastructure/* ./
       - name: Build the docker-compose stack
