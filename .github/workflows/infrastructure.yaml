@@ -31,7 +31,7 @@ jobs:
       - name: Getting repository files
         uses: actions/checkout@v2
         with:
-          submodules:
+          submodules: true
       - name: Copy stub files
         run: |
           cp -R ./.stubs/infrastructure/* ./
