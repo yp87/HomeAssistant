@@ -70,7 +70,7 @@ jobs:
   home_assistant_config_check:
     runs-on: ubuntu-latest
     needs: config_changed
-    if: ${{needs.config_changed.outputs.homeassistant}} > 0
+    if: ${{needs.config_changed.outputs.homeassistant}} != "0"
     steps:
       - name: Getting Home Assistant configuration
         uses: actions/checkout@v2
@@ -85,7 +85,7 @@ jobs:
   infrastructure:
     runs-on: ubuntu-latest
     needs: config_changed
-    if: ${{needs.config_changed.outputs.infrastructure}} > 0
+    if: ${{needs.config_changed.outputs.infrastructure}} != "0"
     steps:
       - name: Getting repository files
         uses: actions/checkout@v2
