@@ -20,9 +20,20 @@ jobs:
       - name: Getting Home Assistant configuration
         uses: actions/checkout@v2
       - name: Get all changed files
-        id: changed
-        run: "echo ::set-output name=files::\
-              $(git diff --name-only ${{ github.event.before }} ${{ github.sha }})"
+        run: |
+          if [ $GITHUB_BASE_REF ]; then
+            # Pull Request
+            git fetch origin $GITHUB_BASE_REF --depth=1
+            export DIFF=$( git diff --name-only origin/$GITHUB_BASE_REF $GITHUB_SHA )
+            echo "Diff between origin/$GITHUB_BASE_REF and $GITHUB_SHA"
+          else
+            # Push
+            git fetch origin ${{ github.event.before }} --depth=1
+            export DIFF=$( git diff --name-only ${{ github.event.before }} $GITHUB_SHA )
+            echo "Diff between ${{ github.event.before }} and $GITHUB_SHA"
+          fi
+          echo "$DIFF"
+          echo ::set-output name=files::$DIFF     
       - name: Check Home Assistant config changed
         id: homeassistant
         run: "echo ::set-output name=changed::\
