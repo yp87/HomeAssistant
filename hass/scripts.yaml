@@ -1,14 +1,30 @@
 ---
+update_leaf:
+mode: single
+sequence:
+  repeat:
+    sequence:
+      - service: nissan_leaf.update
+        data:
+          vin: !secret nissan_vin
+      - wait_for_trigger:
+        - platform: state
+          entity_id: sensor.eve2gmmug_charge
+          attribute: update_in_progress
+          state: "false"
+    until:
+      - condition: or
+        conditions:
+          - "{{ repeat.index >= 4}}"
+          - >-
+            {{ as_timestamp(
+                  state_attr('sensor.eve2gmmug_charge', 'updated_on'))
+                >=
+                as_timestamp(
+                  state_attr('sensor.eve2gmmug_charge', 'last_attempt')) }}
+
 test_a:
   sequence:
-    - service: notify.yan
-      data:
-        message: Calling test_b directly
-    - service: script.test_b
-    - service: notify.yan
-      data:
-        message: Hello from test_a after direct test_b call.
-    - delay: '00:00:05'
     - service: notify.yan
       data:
         message: Calling test_b from script.turn_on
@@ -16,9 +32,14 @@ test_a:
       entity_id: script.test_b
     - service: notify.yan
       data:
-        message: Hello from test_a after turning on test_b.
+        message: Calling test_b directly
+    - service: script.test_b
+    - service: notify.yan
+      data:
+        message: Hello from test_a after direct test_b call.
 
 test_b:
+  mode: queued
   sequence:
     - delay: '00:00:05'
     - service: notify.yan
