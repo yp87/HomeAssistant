@@ -40,7 +40,7 @@ jobs:
       - name: Check Home Assistant config changed
         id: homeassistant
         run: "echo ::set-output name=changed::\
-                grep -cE '^(.stubs/hass)|^(.github/workflows)|^(hass)'\
+                $(grep -cE '^(.stubs/hass)|^(.github/workflows)|^(hass)')\
                 <<< ${{ steps.changed.outputs.files }}"
       - name: Check Home Assistant config changed
         id: infrastructure
