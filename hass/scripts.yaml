@@ -1,27 +1,27 @@
 ---
 update_leaf:
-mode: single
-sequence:
-  repeat:
-    sequence:
-      - service: nissan_leaf.update
-        data:
-          vin: !secret nissan_vin
-      - wait_for_trigger:
-        - platform: state
-          entity_id: sensor.eve2gmmug_charge
-          attribute: update_in_progress
-          state: "false"
-    until:
-      - condition: or
-        conditions:
-          - "{{ repeat.index >= 4}}"
-          - >-
-            {{ as_timestamp(
-                  state_attr('sensor.eve2gmmug_charge', 'updated_on'))
-                >=
-                as_timestamp(
-                  state_attr('sensor.eve2gmmug_charge', 'last_attempt')) }}
+  mode: single
+  sequence:
+    repeat:
+      sequence:
+        - service: nissan_leaf.update
+          data:
+            vin: !secret nissan_vin
+        - wait_for_trigger:
+            - platform: state
+              entity_id: sensor.eve2gmmug_charge
+              attribute: update_in_progress
+              state: "false"
+      until:
+        - condition: or
+          conditions:
+            - "{{ repeat.index >= 4}}"
+            - >-
+              {{ as_timestamp(
+                    state_attr('sensor.eve2gmmug_charge', 'updated_on'))
+                  >=
+                  as_timestamp(
+                    state_attr('sensor.eve2gmmug_charge', 'last_attempt')) }}
 
 test_a:
   sequence:
