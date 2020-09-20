@@ -9,6 +9,8 @@ sequence:
   - delay: '00:00:05'
   - service: notify.yan
     message: Calling test_b from script.turn_on
+  - service: script.turn_on
+    entity_id: script.test_b
   - service: notify.yan
     message: Hello from test_a after turning on test_b.
 
