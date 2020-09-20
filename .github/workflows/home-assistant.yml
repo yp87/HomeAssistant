@@ -53,8 +53,8 @@ jobs:
   home_assistant_config_check:
     runs-on: ubuntu-latest
     needs: config_changed
+    if: ${{needs.config_changed.outputs.homeassistant}}
     steps:
-      - if: ${{needs.config_changed.outputs.homeassistant}}
       - name: Getting Home Assistant configuration
         uses: actions/checkout@v2
       - name: Copy stub files
