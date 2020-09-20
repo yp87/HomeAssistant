@@ -45,13 +45,13 @@ jobs:
       - name: Check Home Assistant config changed
         id: infrastructure
         run: "echo ::set-output name=changed::\
-                grep -cE '^(.stubs/infrastructure)|\
+                $(grep -cE '^(.stubs/infrastructure)|\
                           ^(docker-compose\\.yaml)|\
                           ^(.github/workflows)|\
                           ^(WebhookProxy)|\
                           ^(Supervisor)|\
                           ^(alarm)'
-                <<< ${{ steps.changed.outputs.files }}"
+                <<< ${{ steps.changed.outputs.files }})"
       - name: changed files output
         run: |
              echo "home assistant: ${{ steps.homeassistant.outputs.changed }}"
