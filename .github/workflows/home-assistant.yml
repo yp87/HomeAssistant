@@ -20,6 +20,7 @@ jobs:
       - name: Getting Home Assistant configuration
         uses: actions/checkout@v2
       - name: Get all changed files
+        id: changed
         run: |
           if [ $GITHUB_BASE_REF ]; then
             # Pull Request
@@ -37,7 +38,7 @@ jobs:
       - name: Check Home Assistant config changed
         id: homeassistant
         run: "echo ::set-output name=changed::\
-                   $({{ steps.changed.outputs.files }}|\
+                   $(${{ steps.changed.outputs.files }}|\
                    grep -E '^(.stubs/hass)|^(.github/workflows)|^(hass)')"
       - name: Check Home Assistant config changed
         id: infrastructure
