@@ -37,12 +37,15 @@ jobs:
           echo ::set-output name=files::$DIFF     
       - name: Check Home Assistant config changed
         id: homeassistant
-        run: "echo ::set-output name=changed::\
-                   $(${{ steps.changed.outputs.files }}|\
-                   grep -E '^(.stubs/hass)|^(.github/workflows)|^(hass)')"
+        run: |
+              "echo ::set-output name=changed::\
+                $(${{ steps.changed.outputs.files }}|\
+                grep -qE '^(.stubs/hass)|^(.github/workflows)|^(hass)')"
+              echo ${{ steps.homeassistant.outputs.changed }}
       - name: Check Home Assistant config changed
         id: infrastructure
-        run: "echo ::set-output name=changed::\
+        run: |
+              "echo ::set-output name=changed::\
                 $(${{ steps.changed.outputs.files }}|\
                 grep -qE '^(.stubs/infrastructure)|\
                           ^(docker-compose\\.yaml)|\
@@ -50,6 +53,7 @@ jobs:
                           ^(WebhookProxy)|\
                           ^(Supervisor)|\
                           ^(alarm)')"
+              echo ${{ steps.infrastructure.outputs.changed }}
   yamllint:
     runs-on: ubuntu-latest
     needs: config_changed
