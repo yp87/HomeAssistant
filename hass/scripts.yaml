@@ -1,4 +1,23 @@
 ---
+test_a:
+sequence:
+  - service: notify.yan
+    message: Calling test_b directly
+  - service: script.test_b
+  - service: notify.yan
+    message: Hello from test_a after direct test_b call.
+  - delay: '00:00:05'
+  - service: notify.yan
+    message: Calling test_b from script.turn_on
+  - service: notify.yan
+    message: Hello from test_a after turning on test_b.
+
+test_b:
+  - delay: '00:00:05'
+  - service: notify.yan
+    data:
+      message: "Hello from test_b after 5 seconds delay"
+
 auto_switch_on:
   mode: parallel
   sequence:
