@@ -26,3 +26,5 @@ __pycache__/
 !/hass/.HA_VERSION
 !.stubs/
 !.stubs/**
+!.github/
+!.github/**

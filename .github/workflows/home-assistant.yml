@@ -1,0 +1,85 @@
+---
+name: Home Assistant CI
+
+# yamllint disable-line rule:truthy
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  config_changed:
+    runs-on: ubuntu-latest
+    outputs:
+      homeassistant: ${{ steps.homeassistant.outputs.changed }}
+      infrastructure: ${{ steps.infrastructure.outputs.changed }}
+    steps:
+      - name: Getting Home Assistant configuration
+        uses: actions/checkout@v2
+      - name: Get all changed files
+        id: changed
+        run: >-
+          echo ::set-output name=files::
+          git diff --name-only ${{ github.event.before }} ${{ github.sha }}
+      - name: Check Home Assistant config changed
+        id: homeassistant
+        run: "echo ::set-output name=changed::\
+                ${{ steps.changed.outputs.files }} |\
+                grep -qE '^(.stubs/hass)|^(.github/workflows)|^(hass)'"
+      - name: Check Home Assistant config changed
+        id: infrastructure
+        run: "echo ::set-output name=changed::\
+                ${{ steps.changed.outputs.files }} |\
+                grep -qE '^(.stubs/infrastructure)|\
+                          ^(docker-compose\\.yaml)|\
+                          ^(.github/workflows)|\
+                          ^(WebhookProxy)|\
+                          ^(Supervisor)|\
+                          ^(alarm)'"
+  yamllint:
+    runs-on: ubuntu-latest
+    needs: config_changed
+    steps:
+      - if: ${{needs.config_changed.outputs.homeassistant}}
+      - name: Getting Home Assistant configuration
+        uses: actions/checkout@v2
+      - name: Running YAMLlint
+        uses: docker://pipelinecomponents/yamllint:latest
+        with:
+          args: yamllint .
+  home_assistant_config_check:
+    runs-on: ubuntu-latest
+    needs: config_changed
+    steps:
+      - if: ${{needs.config_changed.outputs.homeassistant}}
+      - name: Getting Home Assistant configuration
+        uses: actions/checkout@v2
+      - name: Copy stub files
+        run: cp -R ./.stubs/hass/* ./hass
+      - name: Home Assistant Check Config
+        uses: docker://homeassistant/home-assistant:0.115.0
+        with:
+          args: >-
+            python -m homeassistant --config ./hass/
+            --script check_config --info all
+  infrastructure:
+    runs-on: ubuntu-latest
+    needs: config_changed
+    steps:
+      - if: ${{needs.config_changed.outputs.infrastructure}}
+      - name: Getting repository files
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Copy stub files
+        run: cp -R ./.stubs/infrastructure/* ./
+      - name: Build the infrastructure
+        run: >-
+          docker-compose
+          -f docker-compose.yaml
+          -f docker-compose-homeassistant.yaml
+          build --parallel
+
