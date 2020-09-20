@@ -46,7 +46,7 @@ jobs:
         id: infrastructure
         run: "echo ::set-output name=changed::\
                 $(${{ steps.changed.outputs.files }}|\
-                grep -qE '^(.stubs/infrastructure)|\
+                grep -cE '^(.stubs/infrastructure)|\
                           ^(docker-compose\\.yaml)|\
                           ^(.github/workflows)|\
                           ^(WebhookProxy)|\
@@ -85,7 +85,7 @@ jobs:
   infrastructure:
     runs-on: ubuntu-latest
     needs: config_changed
-    if: needs.config_changed.outputs.infrastructure
+    if: needs.config_changed.outputs.infrastructure > 0
     steps:
       - name: Getting repository files
         uses: actions/checkout@v2
