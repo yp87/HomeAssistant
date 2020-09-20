@@ -22,22 +22,22 @@ jobs:
       - name: Get all changed files
         id: changed
         run: "echo ::set-output name=files::\
-              git diff --name-only ${{ github.event.before }} ${{ github.sha }}"
+              $(git diff --name-only ${{ github.event.before }} ${{ github.sha }})"
       - name: Check Home Assistant config changed
         id: homeassistant
         run: "echo ::set-output name=changed::\
-                   ${{ steps.changed.outputs.files }}|\
-                   grep -E '^(.stubs/hass)|^(.github/workflows)|^(hass)'"
+                   $(${{ steps.changed.outputs.files }}|\
+                   grep -E '^(.stubs/hass)|^(.github/workflows)|^(hass)')"
       - name: Check Home Assistant config changed
         id: infrastructure
         run: "echo ::set-output name=changed::\
-                ${{ steps.changed.outputs.files }}|\
+                $(${{ steps.changed.outputs.files }}|\
                 grep -qE '^(.stubs/infrastructure)|\
                           ^(docker-compose\\.yaml)|\
                           ^(.github/workflows)|\
                           ^(WebhookProxy)|\
                           ^(Supervisor)|\
-                          ^(alarm)'"
+                          ^(alarm)')"
   yamllint:
     runs-on: ubuntu-latest
     needs: config_changed
