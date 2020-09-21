@@ -56,6 +56,7 @@ jobs:
         run: |
              echo "home assistant: ${{ steps.homeassistant.outputs.changed }}"
              echo "infrastructure: ${{ steps.infrastructure.outputs.changed }}"
+
   yamllint:
     runs-on: ubuntu-latest
     needs: config_changed
@@ -67,6 +68,7 @@ jobs:
         uses: docker://pipelinecomponents/yamllint:latest
         with:
           args: yamllint .
+
   home_assistant_config_check:
     runs-on: ubuntu-latest
     needs: config_changed
@@ -77,11 +79,12 @@ jobs:
       - name: Copy stub files
         run: cp -R ./.stubs/hass/* ./hass
       - name: Home Assistant Check Config
-        uses: docker://homeassistant/home-assistant:0.115.0
+        uses: docker://homeassistant/home-assistant:0.115.2
         with:
           args: >-
             python -m homeassistant --config ./hass/
             --script check_config --info all
+
   infrastructure:
     runs-on: ubuntu-latest
     needs: config_changed
