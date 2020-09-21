@@ -7,7 +7,7 @@ update_leaf:
   mode: queued
   sequence:
     - condition: >-
-        {{ as_timestamp(state_attr('sensor.eve2gmmug_charge', 'updated_on')
+        {{ as_timestamp(state_attr('sensor.eve2gmmug_charge', 'updated_on'))
             <= 600 }}
     - repeat:
         sequence:
