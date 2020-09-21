@@ -23,9 +23,9 @@
   condition:
     condition: and
     conditions:
-      # This won't work because it will not check the date..
-      - condition: time
-        after: input_datetime.leaf_next_departure
+      - >-
+        {{ as_timestamp(now())
+           - as_timestamp(states('input_datetime.leaf_next_departure')) >= 0}}
       - condition: state
         entity_id: input_boolean.leaf_next_departure_canceled
         state: "off"
@@ -52,8 +52,9 @@
         until:
           - condition: or
             conditions:
-              - condition: time
-                before: input_datetime.leaf_next_departure
+              - >-
+                {{ as_timestamp(now())
+                  - as_timestamp(states('input_datetime.leaf_next_departure')) < 0}}
               - condition: state
                 entity_id: input_boolean.leaf_next_departure_canceled
                 state: "on"
