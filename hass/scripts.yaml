@@ -6,7 +6,8 @@ update_leaf:
     will ensure the calling script will wait for the update.
   mode: queued
   sequence:
-    - condition: >-
+    - condition: template
+      value_template: >-
         {{ as_timestamp(state_attr('sensor.eve2gmmug_charge', 'updated_on'))
             <= 600 }}
     - repeat:
