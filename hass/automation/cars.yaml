@@ -20,14 +20,15 @@
   trigger:
     - platform: time
       at: '09:00:00'
-  condition: and
-  conditions:
-    # This won't work because it will not check the date..
-    - condition: time
-      after: input_datetime.leaf_next_departure
-    - condition: state
-      entity_id: input_boolean.leaf_next_departure_canceled
-      state: "off"
+  condition:
+    condition: and
+    conditions:
+      # This won't work because it will not check the date..
+      - condition: time
+        after: input_datetime.leaf_next_departure
+      - condition: state
+        entity_id: input_boolean.leaf_next_departure_canceled
+        state: "off"
   action:
     - service: notify.cath
       data:
