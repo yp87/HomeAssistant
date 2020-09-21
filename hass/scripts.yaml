@@ -1,50 +1,34 @@
 ---
 update_leaf:
-  mode: single
-  sequence:
-    repeat:
-      sequence:
-        - service: nissan_leaf.update
-          data:
-            vin: !secret nissan_vin
-        - wait_for_trigger:
-            - platform: state
-              entity_id: sensor.eve2gmmug_charge
-              attribute: update_in_progress
-              state: "false"
-      until:
-        - condition: or
-          conditions:
-            - "{{ repeat.index >= 4}}"
-            - >-
-              {{ as_timestamp(
-                    state_attr('sensor.eve2gmmug_charge', 'updated_on'))
-                  >=
-                  as_timestamp(
-                    state_attr('sensor.eve2gmmug_charge', 'last_attempt')) }}
-
-test_a:
-  sequence:
-    - service: notify.yan
-      data:
-        message: Calling test_b from script.turn_on
-    - service: script.turn_on
-      entity_id: script.test_b
-    - service: notify.yan
-      data:
-        message: Calling test_b directly
-    - service: script.test_b
-    - service: notify.yan
-      data:
-        message: Hello from test_a after direct test_b call.
-
-test_b:
+  description: >-
+    Fetch the leaf's current state with 2 retries.
+    Calling it directly with "service: script.update_leaf"
+    will ensure the calling script will wait for the update.
   mode: queued
   sequence:
-    - delay: '00:00:05'
-    - service: notify.yan
-      data:
-        message: "Hello from test_b after 5 seconds delay"
+    - condition: >-
+        {{ as_timestamp(state_attr('sensor.eve2gmmug_charge', 'updated_on')
+            <= 600 }}
+    - repeat:
+        sequence:
+          - service: nissan_leaf.update
+            data:
+              vin: !secret nissan_vin
+          - wait_for_trigger:
+              - platform: state
+                entity_id: sensor.eve2gmmug_charge
+                attribute: update_in_progress
+                state: "false"
+        until:
+          - condition: or
+            conditions:
+              - "{{ repeat.index >= 4}}"
+              - >-
+                {{ as_timestamp(
+                      state_attr('sensor.eve2gmmug_charge', 'updated_on'))
+                    >=
+                    as_timestamp(
+                      state_attr('sensor.eve2gmmug_charge', 'last_attempt')) }}
 
 auto_switch_on:
   mode: parallel

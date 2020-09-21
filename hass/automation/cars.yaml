@@ -1,17 +1,11 @@
 ---
 - alias: update leaf in morning
   trigger:
-    # Update three times because leaf api is very slow and unreliable.
     - platform: time
       at: "05:45:00"
-    - platform: time
-      at: "06:00:00"
-    - platform: time
-      at: "06:15:00"
   action:
-    - service: nissan_leaf.update
-      data:
-        vin: !secret nissan_vin
+    - service: script.turn_on
+      entity_id: script.update_leaf
 
 - alias: leaf - hue - Long Press ON
   trigger:
