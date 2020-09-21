@@ -7,6 +7,56 @@
     - service: script.turn_on
       entity_id: script.update_leaf
 
+- alias: Reset leaf next departure canceled at midnight
+  trigger:
+    - platform: time
+      at: "00:00:00"
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.leaf_next_departure_canceled
+
+- alias: ask for leaf departure time for tomorrow
+  initial_state: false
+  trigger:
+    - platform: time
+      at: '09:00:00'
+  condition: and
+  conditions:
+    # This won't work because it will not check the date..
+    - condition: time
+      after: input_datetime.leaf_next_departure
+    - condition: state
+      entity_id: input_boolean.leaf_next_departure_canceled
+      state: "off"
+  action:
+    - service: notify.cath
+      data:
+        message: "Il n'y a pas de départ prévu en Leaf demain."
+    - condition: state
+      entity_id: person.cath
+      state: "home"
+    - repeat:
+        sequence:
+          - delay: "00:00:02"
+          - service: light.turn_on
+            data:
+              entity_id: light.table_de_chevet_de_cath
+              brightness: 50
+              transition: 1
+          - delay: "00:00:02"
+          - service: light.turn_off
+            data:
+              entity_id: light.table_de_chevet_de_cath
+              transition: 1
+        until:
+          - condition: or
+            conditions:
+              - condition: time
+                before: input_datetime.leaf_next_departure
+              - condition: state
+                entity_id: input_boolean.leaf_next_departure_canceled
+                state: "on"
+
 - alias: leaf - hue - Long Press ON
   trigger:
     - platform: state

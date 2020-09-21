@@ -17,3 +17,6 @@ yan_phone_notification:
 
 cath_phone_notification:
   initial: false
+
+leaf_next_departure_canceled:
+  initial: false

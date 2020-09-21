@@ -3,3 +3,8 @@ fred_last_milk:
   name: Dernier lait de Frédérique
   has_date: false
   has_time: true
+
+leaf_next_departure:
+  name: L'heure de départ planifié pour le prochain départ en Leaf
+  has_date: true
+  has_time: true
