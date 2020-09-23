@@ -130,29 +130,23 @@
       data:
         entity_id: input_datetime.leaf_start_charging
         timestamp: >-
+          {% set missing_charge = 90 - states('sensor.eve2gmmug_charge')|int %}
+          {% set charge_rate_seconds = 13 / 3600 %}
+          {% set seconds_to_charge = missing_charge / charge_rate_seconds %}
           {{ as_timestamp(states('input_datetime.leaf_next_departure'))
-             + 30 }}
-        # >-
-        # {% set missing_charge = 90 - states('sensor.eve2gmmug_charge')|int %}
-        # {% set charge_rate_seconds = 13 / 3600 %}
-        # {% set seconds_to_charge = missing_charge / charge_rate_seconds %}
-        # {{ as_timestamp(states('input_datetime.leaf_next_departure'))
-        #   - seconds_to_charge }}
+             - seconds_to_charge }}
 
 - alias: Start charging the leaf
   trigger:
     - platform: time
       at: input_datetime.leaf_start_charging
-      # condition: >-
-      #  {{ as_timestamp(states('input_datetime.leaf_next_departure'))
-      #     > as_timestamp(now()) }}
+  condition: >-
+    {{ as_timestamp(states('input_datetime.leaf_next_departure'))
+       > as_timestamp(now()) }}
   action:
-    - service: notify.yan
+    - service: nissan_leaf.start_charge
       data:
-        message: "{{now()}}"
-    # - service: nissan_leaf.start_charge
-    #  data:
-    #    vin: !secret nissan_vin
+        vin: !secret nissan_vin
 
 - alias: Cancel planned leaf charging
   trigger:
