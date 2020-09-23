@@ -25,14 +25,14 @@
     conditions:
       - >-
         {{ as_timestamp(now())
-           - as_timestamp(states('input_datetime.leaf_next_departure')) >= 0}}
+           >= as_timestamp(states('input_datetime.leaf_next_departure')) }}
       - condition: state
         entity_id: input_boolean.leaf_next_departure_canceled
         state: "off"
   action:
-    - service: notify.cath
+    - service: notify.all_people
       data:
-        message: "Il n'y a pas de départ prévu en Leaf demain."
+        message: "Il n'y a pas encore de départ prévu en Leaf demain."
     - condition: state
       entity_id: person.cath
       state: "home"
@@ -53,11 +53,101 @@
           - condition: or
             conditions:
               - >-
-                {{ as_timestamp(now())
-                  - as_timestamp(states('input_datetime.leaf_next_departure')) < 0}}
+                {{ as_timestamp(states('input_datetime.leaf_next_departure'))
+                   > as_timestamp(now()) }}
               - condition: state
                 entity_id: input_boolean.leaf_next_departure_canceled
                 state: "on"
+
+- alias: Alert if the car is not plugged in and need charge.
+  initial_state: false
+  trigger:
+    - platform: time
+      at: '09:00:00'
+    - platform: state
+      entity_id: input_datetime.leaf_start_charging
+  condition:
+    condition: and
+    conditions:
+      - >-
+        {{ as_timestamp(states('input_datetime.leaf_start_charging'))
+           > as_timestamp(now()) }}
+      - condition: state
+        entity_id: input_boolean.leaf_next_departure_canceled
+        state: "off"
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.leaf_plugged_confirmed_by_user
+    - service: script.update_leaf
+    - condition: state
+      entity_id: binary_sensor.eve2gmmug_plug_status
+      state: "off"
+    - service: notify.all_people
+      data:
+        message: >-
+          La Leaf n'est PAS BRANCHÉ. Le chargement ne pourra pas avoir lieu.
+    - condition: state
+      entity_id: person.cath
+      state: "home"
+    - repeat:
+        sequence:
+          - delay: "00:00:02"
+          - service: light.turn_on
+            data:
+              entity_id: light.table_de_chevet_de_cath
+              brightness: 50
+              transition: 1
+          - delay: "00:00:02"
+          - service: light.turn_off
+            data:
+              entity_id: light.table_de_chevet_de_cath
+              transition: 1
+        until:
+          - condition: or
+            conditions:
+              # Leaf update are way to slow to check the real plug status
+              - condition: state
+                entity_id: input_boolean.leaf_plugged_confirmed_by_user
+                state: "on"
+              - condition: state
+                entity_id: input_boolean.leaf_next_departure_canceled
+                state: "on"
+
+- alias: Calculate leaf charge time
+  initial_state: false
+  trigger:
+    - platform: state
+      entity_id: input_datetime.leaf_next_departure
+  condition: >-
+    {{ as_timestamp(states('input_datetime.leaf_next_departure'))
+       > as_timestamp(now()) }}
+  mode: restart
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.leaf_next_departure_canceled
+    - service: script.update_leaf
+    - condition: numeric_state
+      entity_id: sensor.eve2gmmug_charge
+      below: 90
+    - service: input_datetime.set_datetime
+      data:
+        entity_id: input_datetime.leaf_start_charging
+        timestamp: >-
+          {% set missing_charge = 90 - states('sensor.eve2gmmug_charge') %}
+          {% set charge_rate_seconds = 13 / 3600 %}
+          {% set seconds_to_charge = missing_charge / charge_rate_seconds %}
+          {{ as_timestamp(states('input_datetime.leaf_next_departure') - seconds_to_charge }}
+
+- alias: Start charging the Leaf
+  initial_state: false
+  trigger:
+    - platform: time
+      at: input_datetime.leaf_start_charging
+  condition: >-
+    {{ as_timestamp(states('input_datetime.leaf_next_departure'))
+       > as_timestamp(now()) }}
+  action:
+    - service: nissan_leaf.start_charge
 
 - alias: leaf - hue - Long Press ON
   trigger:

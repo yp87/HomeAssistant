@@ -5,6 +5,11 @@ fred_last_milk:
   has_time: true
 
 leaf_next_departure:
-  name: L'heure de départ planifié pour le prochain départ en Leaf
+  name: Heure de départ Leaf
+  has_date: true
+  has_time: true
+
+leaf_start_charging:
+  name: Heure de charge Leaf
   has_date: true
   has_time: true
