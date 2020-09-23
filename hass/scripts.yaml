@@ -13,7 +13,7 @@ update_leaf:
              is none }}
         - >-
           {{ as_timestamp(state_attr('sensor.eve2gmmug_charge', 'updated_on'))
-            <= 600 }}
+             - as_timestamp(now()) <= 600 }}
     - repeat:
         sequence:
           - service: nissan_leaf.update

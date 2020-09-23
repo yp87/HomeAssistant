@@ -19,4 +19,5 @@ cath_phone_notification:
   initial: false
 
 leaf_next_departure_canceled:
-  initial: false
+
+leaf_plugged_confirmed_by_user:
