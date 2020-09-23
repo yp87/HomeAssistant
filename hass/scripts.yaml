@@ -23,7 +23,7 @@ update_leaf:
               - platform: state
                 entity_id: sensor.eve2gmmug_charge
                 attribute: update_in_progress
-                state: "false"
+                state: false
         until:
           - condition: or
             conditions:
