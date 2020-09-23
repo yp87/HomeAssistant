@@ -8,6 +8,7 @@ update_leaf:
   sequence:
     - condition: or
       conditions:
+        - "{{ state_attr('sensor.eve2gmmug_charge', 'updated_on') == None }}"
         - >-
           {{ state_attr('sensor.eve2gmmug_charge', 'updated_on')
              == null }}
