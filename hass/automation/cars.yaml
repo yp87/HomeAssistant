@@ -130,11 +130,11 @@
       data:
         entity_id: input_datetime.leaf_start_charging
         timestamp: >-
-          {% set missing_charge = 90 - states('sensor.eve2gmmug_charge') %}
+          {% set missing_charge = 90 - states('sensor.eve2gmmug_charge')|int %}
           {% set charge_rate_seconds = 13 / 3600 %}
           {% set seconds_to_charge = missing_charge / charge_rate_seconds %}
           {{ as_timestamp(states('input_datetime.leaf_next_departure'))
-             - seconds_to_charge | int }}
+             - seconds_to_charge }}
 
 - alias: Start charging the leaf
   trigger:
