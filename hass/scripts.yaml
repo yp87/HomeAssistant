@@ -202,13 +202,3 @@ lights_off_except:
              {%- if not loop.first %}, {% endif -%}
                {{ device.entity_id }}
           {%- endfor %}
-
-set_departure_time:
-  fields:
-    departure_timestamp:
-      description: 'The timestamp of the departure time'
-  sequence:
-    - service: input_datetime.set_datetime
-      data:
-        entity_id: input_datetime.leaf_next_departure
-        timestamp: "{{ departure_timestamp }}"

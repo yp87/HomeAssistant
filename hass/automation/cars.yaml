@@ -103,7 +103,7 @@
         until:
           - condition: or
             conditions:
-              # Leaf update are way to slow to check the real plug status
+              # Leaf updates are way to slow to check the real plug status
               - condition: state
                 entity_id: input_boolean.leaf_plugged_confirmed_by_user
                 state: "on"
@@ -115,6 +115,9 @@
   trigger:
     - platform: state
       entity_id: input_datetime.leaf_next_departure
+    - platform: state
+      entity_id: person.cath
+      to: 'home'
   condition: >-
     {{ as_timestamp(states('input_datetime.leaf_next_departure'))
        > as_timestamp(now()) }}
@@ -123,6 +126,10 @@
     - service: input_boolean.turn_off
       entity_id: input_boolean.leaf_next_departure_canceled
     - service: script.update_leaf
+    - service: input_datetime.set_datetime
+      data:
+        entity_id: input_datetime.leaf_start_charging
+        timestamp: 0
     - condition: numeric_state
       entity_id: sensor.eve2gmmug_charge
       below: 90
@@ -153,17 +160,15 @@
     - platform: state
       entity_id: input_boolean.leaf_next_departure_canceled
       to: "on"
-  variables:
-    time_in_the_past: "{{ as_timestamp(now()) - 1000 }}"
   action:
     - service: input_datetime.set_datetime
       data:
         entity_id: input_datetime.leaf_next_departure
-        timestamp: "{{ time_in_the_past }}"
+        timestamp: 0
     - service: input_datetime.set_datetime
       data:
         entity_id: input_datetime.leaf_start_charging
-        timestamp: "{{ time_in_the_past }}"
+        timestamp: 0
 
 - alias: leaf - hue - Long Press ON
   trigger:
