@@ -145,6 +145,8 @@
        > as_timestamp(now()) }}
   action:
     - service: nissan_leaf.start_charge
+      data:
+        vin: !secret nissan_vin
 
 - alias: Cancel planned leaf charging
   trigger:
