@@ -152,16 +152,16 @@
       entity_id: input_boolean.leaf_next_departure_canceled
       to: "on"
   variables:
-    time_in_the_past: {{ as_timestamp(now()) - 1000 }}
+    time_in_the_past: "{{ as_timestamp(now()) - 1000 }}"
   action:
     - service: input_datetime.set_datetime
       data:
         entity_id: input_datetime.leaf_next_departure
-        timestamp: {{ time_in_the_past }}
+        timestamp: "{{ time_in_the_past }}"
     - service: input_datetime.set_datetime
       data:
         entity_id: input_datetime.leaf_start_charging
-        timestamp: {{ time_in_the_past }}
+        timestamp: "{{ time_in_the_past }}""
 
 - alias: leaf - hue - Long Press ON
   trigger:
