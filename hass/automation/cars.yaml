@@ -136,7 +136,7 @@
           {% set missing_charge = 90 - states('sensor.eve2gmmug_charge') %}
           {% set charge_rate_seconds = 13 / 3600 %}
           {% set seconds_to_charge = missing_charge / charge_rate_seconds %}
-          {{ as_timestamp(states('input_datetime.leaf_next_departure') - seconds_to_charge }}
+          {{ as_timestamp(states('input_datetime.leaf_next_departure')) - seconds_to_charge }}
 
 - alias: Start charging the Leaf
   initial_state: false
