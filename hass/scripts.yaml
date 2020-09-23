@@ -17,6 +17,7 @@ update_leaf:
               as_timestamp(state_attr('sensor.eve2gmmug_charge', 'updated_on'))
               > 600 }}
     - repeat:
+        count: 4
         sequence:
           - service: nissan_leaf.update
             data:
@@ -28,16 +29,6 @@ update_leaf:
                 attribute: update_in_progress
                 state: false
             timeout: 600
-        until:
-          - condition: or
-            conditions:
-              - "{{ repeat.index >= 4}}"
-              - >-
-                {{ as_timestamp(
-                      state_attr('sensor.eve2gmmug_charge', 'updated_on'))
-                    >=
-                    as_timestamp(
-                      state_attr('sensor.eve2gmmug_charge', 'last_attempt')) }}
 
 auto_switch_on:
   mode: parallel
