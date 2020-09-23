@@ -22,7 +22,8 @@
         - service: light.turn_on
           data:
             entity_id: light.frederique_night_light
-            brightness: "{{ state_attr('light.frederique_main_light', 'brightness')|int }}"
+            brightness: >-
+              {{ state_attr('light.frederique_main_light', 'brightness')|int }}
         - delay:
             milliseconds: 500
       until: >-
