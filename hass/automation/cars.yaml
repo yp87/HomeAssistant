@@ -16,7 +16,6 @@
       entity_id: input_boolean.leaf_next_departure_canceled
 
 - alias: ask for leaf departure time for tomorrow
-  initial_state: false
   trigger:
     - platform: time
       at: '09:00:00'
@@ -60,7 +59,6 @@
                 state: "on"
 
 - alias: Alert if the car is not plugged in and need charge.
-  initial_state: false
   trigger:
     - platform: time
       at: '09:00:00'
@@ -114,7 +112,6 @@
                 state: "on"
 
 - alias: Calculate leaf charge time
-  initial_state: false
   trigger:
     - platform: state
       entity_id: input_datetime.leaf_next_departure
@@ -140,7 +137,6 @@
              - seconds_to_charge }}
 
 - alias: Start charging the Leaf
-  initial_state: false
   trigger:
     - platform: time
       at: input_datetime.leaf_start_charging

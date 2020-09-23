@@ -15,9 +15,6 @@
     - platform: state
       entity_id: light.frederique_main_light
       attribute: brightness
-  variables:
-    target_brightness: >-
-      {{ (state_attr('light.frederique_main_light', 'brightness')|int)}}
   mode: restart
   action:
     repeat:
@@ -25,13 +22,13 @@
         - service: light.turn_on
           data:
             entity_id: light.frederique_night_light
-            brightness: "{{ target_brightness }}"
+            brightness: "{{ state_attr('light.frederique_main_light', 'brightness')|int }}"
         - delay:
             milliseconds: 500
       until: >-
         {{ (state_attr('light.frederique_night_light', 'brightness')|int)
            ==
-           target_brightness }}
+           (state_attr('light.frederique_main_light', 'brightness')|int) }}
 
 - alias: Frederique main light triple up
   trigger:
