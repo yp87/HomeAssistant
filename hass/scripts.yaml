@@ -12,8 +12,9 @@ update_leaf:
           {{ as_timestamp(state_attr('sensor.eve2gmmug_charge', 'updated_on'))
              is none }}
         - >-
-          {{ as_timestamp(state_attr('sensor.eve2gmmug_charge', 'updated_on'))
-             - as_timestamp(now()) <= 600 }}
+          {{  as_timestamp(now()) -
+              as_timestamp(state_attr('sensor.eve2gmmug_charge', 'updated_on'))
+              > 600 }}
     - repeat:
         sequence:
           - service: nissan_leaf.update
@@ -24,6 +25,7 @@ update_leaf:
                 entity_id: sensor.eve2gmmug_charge
                 attribute: update_in_progress
                 state: false
+            timeout: 600
         until:
           - condition: or
             conditions:
