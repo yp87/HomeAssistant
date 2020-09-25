@@ -136,12 +136,12 @@
     - service: input_datetime.set_datetime
       data:
         entity_id: input_datetime.leaf_start_charging
-        timestamp: >-
+        datetime: >-
           {% set missing_charge = 90 - states('sensor.eve2gmmug_charge')|int %}
           {% set charge_rate_seconds = 13 / 3600 %}
           {% set seconds_to_charge = missing_charge / charge_rate_seconds %}
-          {{ as_timestamp(states('input_datetime.leaf_next_departure'))
-             - seconds_to_charge }}
+          {{ (as_timestamp(states('input_datetime.leaf_next_departure'))
+             - seconds_to_charge) | timestamp_utc }}
 
 - alias: Start charging the leaf
   trigger:
