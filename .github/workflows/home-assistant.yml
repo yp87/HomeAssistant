@@ -1,6 +1,8 @@
 ---
 name: Home Assistant CI
 
+runs-on: self-hosted
+
 # yamllint disable-line rule:truthy
 on:
   push:
