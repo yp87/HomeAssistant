@@ -1,8 +1,6 @@
 ---
 name: Home Assistant CI
 
-runs-on: self-hosted
-
 # yamllint disable-line rule:truthy
 on:
   push:
@@ -14,7 +12,7 @@ on:
 
 jobs:
   config_changed:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     outputs:
       homeassistant: ${{ steps.homeassistant.outputs.changed }}
       infrastructure: ${{ steps.infrastructure.outputs.changed }}
@@ -61,7 +59,7 @@ jobs:
              echo "infrastructure: ${{ steps.infrastructure.outputs.changed }}"
 
   yamllint:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: config_changed
     if: needs.config_changed.outputs.homeassistant > 0
     steps:
@@ -73,7 +71,7 @@ jobs:
           args: yamllint .
 
   home_assistant_config_check:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: config_changed
     if: needs.config_changed.outputs.homeassistant > 0
     steps:
@@ -89,7 +87,7 @@ jobs:
             --script check_config --info all
 
   infrastructure:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: config_changed
     if: needs.config_changed.outputs.infrastructure > 0
     steps:
