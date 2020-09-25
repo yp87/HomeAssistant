@@ -18,7 +18,7 @@
 - alias: ask for leaf departure time for tomorrow
   trigger:
     - platform: time
-      at: '09:00:00'
+      at: '21:00:00'
   condition:
     condition: and
     conditions:
@@ -151,9 +151,15 @@
     {{ as_timestamp(states('input_datetime.leaf_next_departure'))
        > as_timestamp(now()) }}
   action:
-    - service: nissan_leaf.start_charge
-      data:
-        vin: !secret nissan_vin
+    # The implementation of the nissan's api is so unreliable
+    # that we do it twice just for luck...
+    - repeat:
+        count: 2
+        sequence:
+          - service: nissan_leaf.start_charge
+            data:
+              vin: !secret nissan_vin
+          - delay: "00:00:30"
 
 - alias: Cancel planned leaf charging
   trigger:

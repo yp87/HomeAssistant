@@ -1,7 +1,10 @@
 ---
 update_leaf:
   description: >-
-    Fetch the leaf's current state with 2 retries.
+    Fetch the leaf's current state.
+    The api may return as succeeded, but with old values
+    Or it may return as error.. and it can take up to 5 minutes to return...
+    That is why we try it 4 times.
     Calling it directly with "service: script.update_leaf"
     will ensure the calling script will wait for the update.
   mode: queued
@@ -29,6 +32,7 @@ update_leaf:
                 attribute: update_in_progress
                 state: false
             timeout: 600
+          - delay: "00:00:10"
 
 auto_switch_on:
   mode: parallel
