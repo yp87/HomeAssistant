@@ -12,7 +12,7 @@ on:
 
 jobs:
   config_changed:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     outputs:
       homeassistant: ${{ steps.homeassistant.outputs.changed }}
       infrastructure: ${{ steps.infrastructure.outputs.changed }}
@@ -40,25 +40,26 @@ jobs:
       - name: Check Home Assistant config changed
         id: homeassistant
         run: "echo ::set-output name=changed::\
-                $(grep -cE '^(.stubs/hass)|^(.github/workflows)|^(hass)'\
-                <<< ${{ steps.changed.outputs.files }})"
-      - name: Check Home Assistant config changed
+                $(grep -cE '.stubs/hass|\
+                            .github/workflows|hass'\
+                <<< \"${{ steps.changed.outputs.files }}\")"
+      - name: Check infrastructure files changed
         id: infrastructure
         run: "echo ::set-output name=changed::\
-                $(grep -cE '^(.stubs/infrastructure)|\
-                          ^(docker-compose\\.yaml)|\
-                          ^(.github/workflows)|\
-                          ^(WebhookProxy)|\
-                          ^(Supervisor)|\
-                          ^(alarm)'
-                <<< ${{ steps.changed.outputs.files }})"
+                $(grep -cE '.stubs/infrastructure|\
+                          docker-compose\\.yaml|\
+                          .github/workflows|\
+                          WebhookProxy|\
+                          Supervisor|\
+                          alarm'
+                <<< \"${{ steps.changed.outputs.files }}\")"
       - name: changed files output
         run: |
              echo "home assistant: ${{ steps.homeassistant.outputs.changed }}"
              echo "infrastructure: ${{ steps.infrastructure.outputs.changed }}"
 
   yamllint:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: config_changed
     if: needs.config_changed.outputs.homeassistant > 0
     steps:
@@ -70,7 +71,7 @@ jobs:
           args: yamllint .
 
   home_assistant_config_check:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: config_changed
     if: needs.config_changed.outputs.homeassistant > 0
     steps:
@@ -86,7 +87,7 @@ jobs:
             --script check_config --info all
 
   infrastructure:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: config_changed
     if: needs.config_changed.outputs.infrastructure > 0
     steps:
