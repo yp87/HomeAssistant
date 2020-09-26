@@ -1,5 +1,5 @@
 ---
-- alias: update leaf in morning
+- alias: Update leaf in morning
   trigger:
     - platform: time
       at: "05:45:00"
@@ -15,7 +15,7 @@
     - service: input_boolean.turn_off
       entity_id: input_boolean.leaf_next_departure_canceled
 
-- alias: ask for leaf departure time for tomorrow
+- alias: Ask for leaf departure time for tomorrow
   trigger:
     - platform: time
       at: '21:00:00'
@@ -176,7 +176,7 @@
         entity_id: input_datetime.leaf_start_charging
         timestamp: 1
 
-- alias: leaf - hue - Long Press ON
+- alias: Leaf - hue - Long Press ON
   trigger:
     - platform: state
       entity_id: sensor.hue_dimmer_switch_1
