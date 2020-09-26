@@ -85,6 +85,10 @@ nissan_leaf:
   region: !secret nissan_region
   update_interval:
     days: 365
+  update_interval_charging:
+    minutes: 30
+  update_interval_climate:
+    minutes: 10
 
 # TODO - move this to another file
 google_assistant:

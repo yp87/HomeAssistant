@@ -13,3 +13,8 @@ leaf_start_charging:
   name: Heure de charge Leaf
   has_date: true
   has_time: true
+
+leaf_start_climate:
+  name: Heure de régulation de température Leaf
+  has_date: true
+  has_time: true
