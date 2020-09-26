@@ -10,6 +10,9 @@ on:
     branches:
       - master
 
+env:
+  DOCKER_USER_OPTION: 1000
+
 jobs:
   config_changed:
     runs-on: self-hosted
