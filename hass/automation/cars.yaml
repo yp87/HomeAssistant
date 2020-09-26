@@ -194,7 +194,7 @@
     - service: notify.all_people
       data:
         message: >-
-           Il semble que le départ prévu de la Leaf n'est pas eu lieu.
+           Il semble que le départ prévu de la Leaf n'a pas eu lieu.
            Il est important d'arrêter le contrôle du climat si c'est le cas.
 
 - alias: Cancel planned leaf departure
