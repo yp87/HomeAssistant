@@ -23,7 +23,7 @@
     condition: and
     conditions:
       - >-
-        {{ as_timestamp(now())
+        {{ as_timestamp(as_timestamp(now()) | timestamp_local)
            >= as_timestamp(states('input_datetime.leaf_next_departure')) }}
       - condition: state
         entity_id: input_boolean.leaf_next_departure_canceled
@@ -53,7 +53,7 @@
             conditions:
               - >-
                 {{ as_timestamp(states('input_datetime.leaf_next_departure'))
-                   > as_timestamp(now()) }}
+                   > as_timestamp(as_timestamp(now()) | timestamp_local) }}
               - condition: state
                 entity_id: input_boolean.leaf_next_departure_canceled
                 state: "on"
@@ -69,7 +69,7 @@
     conditions:
       - >-
         {{ as_timestamp(states('input_datetime.leaf_start_charging'))
-           > as_timestamp(now()) }}
+           > as_timestamp(as_timestamp(now()) | timestamp_local) }}
       - condition: state
         entity_id: input_boolean.leaf_next_departure_canceled
         state: "off"
@@ -120,7 +120,7 @@
       to: 'home'
   condition: >-
     {{ as_timestamp(states('input_datetime.leaf_next_departure'))
-       > as_timestamp(now()) }}
+       > as_timestamp(as_timestamp(now()) | timestamp_local) }}
   mode: restart
   action:
     - service: input_boolean.turn_off
@@ -144,7 +144,7 @@
         entity_id: input_datetime.leaf_start_charging
         datetime: >-
           {% set missing_charge = 90 - states('sensor.eve2gmmug_charge')|int %}
-          {% set charge_rate_seconds = 13 / 3600 %}
+          {% set charge_rate_seconds = 15 / 3600 %}
           {% set seconds_to_charge = missing_charge / charge_rate_seconds %}
           {{ (as_timestamp(states('input_datetime.leaf_next_departure'))
              - seconds_to_charge) | timestamp_utc }}
@@ -174,7 +174,7 @@
       at: input_datetime.leaf_start_climate
   condition: >-
     {{ as_timestamp(states('input_datetime.leaf_next_departure'))
-        > as_timestamp(as_timestamp(now()) | timestamp_local) }}
+       > as_timestamp(as_timestamp(now()) | timestamp_local) }}
   action:
     - condition: state
       entity_id: binary_sensor.eve2gmmug_plug_status
