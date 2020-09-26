@@ -130,7 +130,7 @@
       data:
         entity_id: input_datetime.leaf_start_climate
         datetime: >-
-          {{( (as_timestamp(states('input_datetime.leaf_next_departure'))
+          {{ (as_timestamp(states('input_datetime.leaf_next_departure'))
               - 1800) | timestamp_utc }}
     - service: input_datetime.set_datetime
       data:
@@ -178,7 +178,7 @@
   action:
     - condition: state
       entity_id: binary_sensor.eve2gmmug_plug_status
-      state:  "on"
+      state: "on"
     - service: switch.turn_on
       entity_id: switch.eve2gmmug_climate_control
     - delay: "00:40:00"
