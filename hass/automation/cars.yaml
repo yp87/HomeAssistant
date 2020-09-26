@@ -207,7 +207,8 @@
     - service: input_datetime.set_datetime
       data:
         entity_id: input_datetime.test3
-        datetime: "{{ as_timestamp(states('input_datetime.test2')) | timestamp_utc }}"
+        datetime: >-
+          {{ as_timestamp(states('input_datetime.test2')) | timestamp_utc }}
 
 - alias: test automation2
   trigger:
