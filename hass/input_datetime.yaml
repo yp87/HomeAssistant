@@ -13,13 +13,3 @@ leaf_start_charging:
   name: Heure de charge Leaf
   has_date: true
   has_time: true
-
-test2:
-  name: test2
-  has_date: true
-  has_time: true
-
-test3:
-  name: test3
-  has_date: true
-  has_time: true

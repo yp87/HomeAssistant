@@ -149,7 +149,7 @@
       at: input_datetime.leaf_start_charging
   condition: >-
     {{ as_timestamp(states('input_datetime.leaf_next_departure'))
-       > as_timestamp(now()) }}
+       > as_timestamp(as_timestamp(now()) | timestamp_local) }}
   action:
     # The implementation of the nissan's api is so unreliable
     # that we do it twice just for luck...
@@ -198,24 +198,3 @@
           {%- endif -%}
           La dernière mise à jour est ce {{ weekday[dt.weekday()] }}
           à {{ dt.astimezone().strftime('%HH%M') }}.
-
-- alias: test automation
-  trigger:
-    - platform: state
-      entity_id: input_datetime.test2
-  action:
-    - service: input_datetime.set_datetime
-      data:
-        entity_id: input_datetime.test3
-        datetime: >-
-          {{ as_timestamp(states('input_datetime.test2')) | timestamp_utc }}
-
-- alias: test automation2
-  trigger:
-    - platform: time
-      at: input_datetime.test3
-  action:
-    - service: input_datetime.set_datetime
-      data:
-        entity_id: input_datetime.test2
-        timestamp: 1
