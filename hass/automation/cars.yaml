@@ -61,7 +61,7 @@
 - alias: Alert if the leaf is not plugged in and need charge.
   trigger:
     - platform: time
-      at: '09:00:00'
+      at: '21:00:00'
     - platform: state
       entity_id: input_datetime.leaf_start_charging
   condition:
