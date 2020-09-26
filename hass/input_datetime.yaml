@@ -19,7 +19,7 @@ test2:
   has_date: true
   has_time: true
 
-test2:
+test3:
   name: test3
   has_date: true
   has_time: true
