@@ -184,7 +184,7 @@
     - wait_for_trigger:
         - platform: state
           entity_id: binary_sensor.eve2gmmug_plug_status
-          state: "off"
+          to: "off"
       timeout:
         minutes: 45
     - condition: template
