@@ -182,9 +182,9 @@
     - service: switch.turn_on
       entity_id: switch.eve2gmmug_climate_control
     - wait_for_trigger:
-      - platform: state
-        entity_id: binary_sensor.eve2gmmug_plug_status
-        state: "off"
+        - platform: state
+          entity_id: binary_sensor.eve2gmmug_plug_status
+          state: "off"
       timeout:
         minutes: 45
     - condition: template
@@ -192,7 +192,7 @@
     - service: switch.turn_off
       entity_id: switch.eve2gmmug_climate_control
     - service: notify.all_people
-      date:
+      data:
         message: >-
            Il semble que le départ prévu de la Leaf n'est pas eu lieu.
            Il est important d'arrêter le contrôle du climat si c'est le cas.

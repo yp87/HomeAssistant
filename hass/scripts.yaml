@@ -20,7 +20,7 @@ update_leaf:
               as_timestamp(state_attr('sensor.eve2gmmug_charge', 'updated_on'))
               > 600 }}
     - repeat:
-        count: 3
+        count: 2
         sequence:
           - service: nissan_leaf.update
             data:
