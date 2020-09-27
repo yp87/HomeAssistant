@@ -114,6 +114,8 @@ google_assistant:
     switch.master_bathroom_fan:
       expose: true
       name: Fan de la salle de bain
+      aliases:
+        - Fan
     light.kitchen_main_light:
       expose: true
       name: Cuisine
@@ -129,6 +131,13 @@ google_assistant:
     light.ground_floor_hallway_light:
       expose: true
       name: corridor
+    script.start_the_leaf:
+      expose: true
+      name: Part la Leaf
+      aliases:
+        - Chauffe la Leaf
+        - Refroidis la Leaf
+        - Démarre la leaf
 
 tts:
   - platform: google_translate

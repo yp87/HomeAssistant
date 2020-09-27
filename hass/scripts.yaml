@@ -1,4 +1,16 @@
 ---
+start_the_leaf:
+  description: Used to start the climate on the leaf through google home
+  sequence:
+    - delay: "00:00:10"
+    - service: tts.google_translate_say
+      entity_id: media_player.kitchen
+      data:
+        message: BONJOUR JE DÉMARRE LA LEAF
+        language: 'fr'
+    #- service: switch.turn_on
+    #  entity_id: switch.eve2gmmug_climate_control
+
 update_leaf:
   description: >-
     Fetch the leaf's current state.
