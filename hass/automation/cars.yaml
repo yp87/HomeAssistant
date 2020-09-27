@@ -180,13 +180,7 @@
         minutes: 45
     - condition: template
       value_template: "{{ not wait.completed }}"
-    - service: switch.turn_off
-      entity_id: switch.eve2gmmug_climate_control
-    - service: notify.all_people
-      data:
-        message: >-
-           Il semble que le départ prévu de la Leaf n'a pas eu lieu.
-           Il est important d'arrêter le contrôle du climat si c'est le cas.
+    - service: script.turn_off_leaf_climate
 
 - alias: Cancel planned leaf departure
   trigger:
@@ -206,28 +200,4 @@
       data:
         entity_id: input_datetime.leaf_start_climate
         timestamp: 1
-    - service: switch.turn_off
-      entity_id: switch.eve2gmmug_climate_control
-
-- alias: Leaf - hue - Long Press ON
-  trigger:
-    - platform: state
-      entity_id: sensor.hue_dimmer_switch_1
-      to: "1_hold"
-  action:
-    - service: notify.cath
-      data:
-        message: >-
-          {%- set weekday = ['Lundi','Mardi','Mercredi','Jeudi',
-                            'Vendredi','Samedi','Dimanche'] -%}
-          {%- set dt = states.sensor.eve2gmmug_charge.attributes.updated_on -%}
-            Bon matin Catherine!
-            Ton carosse est chargé à {{ states('sensor.eve2gmmug_charge') }}%
-            et est
-          {%- if is_state("binary_sensor.eve2gmmug_plug_status", "on") -%}
-            branché.
-          {%- else -%}
-            DÉBRANCHÉ.
-          {%- endif -%}
-          La dernière mise à jour est ce {{ weekday[dt.weekday()] }}
-          à {{ dt.astimezone().strftime('%HH%M') }}.
+    - service: script.turn_off_leaf_climate

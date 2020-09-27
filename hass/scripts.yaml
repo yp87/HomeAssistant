@@ -37,6 +37,20 @@ charge_the_leaf:
       data:
         message: "{{ not_plugged_message }}"
 
+turn_off_leaf_climate:
+  sequence:
+    - condition: state
+      entity_id: switch.eve2gmmug_climate_control
+      state:  "on"
+    # This seems to always return an error...
+    - service: switch.turn_off
+      entity_id: switch.eve2gmmug_climate_control
+    - service: notify.all_people
+      data:
+        message: >-
+          Il semble que le départ prévu de la Leaf n'a pas eu lieu.
+          Il est important d'arrêter le contrôle du climat manuellement.
+
 update_leaf:
   description: >-
     Fetch the leaf's current state.
