@@ -41,7 +41,7 @@ turn_off_leaf_climate:
   sequence:
     - condition: state
       entity_id: switch.eve2gmmug_climate_control
-      state:  "on"
+      state: "on"
     # This seems to always return an error...
     - service: switch.turn_off
       entity_id: switch.eve2gmmug_climate_control
