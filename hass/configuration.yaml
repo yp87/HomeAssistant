@@ -134,6 +134,9 @@ google_assistant:
     script.start_the_leaf:
       expose: true
       name: La Leaf
+    script.charge_the_leaf:
+      expose: true
+      name: Charge la Leaf
 
 tts:
   - platform: google_translate

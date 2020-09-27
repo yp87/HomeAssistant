@@ -4,8 +4,7 @@
     - platform: time
       at: "05:45:00"
   action:
-    - service: script.turn_on
-      entity_id: script.update_leaf
+    - service: script.update_leaf
 
 - alias: Reset leaf next departure canceled at midnight
   trigger:
@@ -157,15 +156,7 @@
     {{ as_timestamp(states('input_datetime.leaf_next_departure'))
        > as_timestamp(as_timestamp(now()) | timestamp_local) }}
   action:
-    # The implementation of the nissan's api is so unreliable
-    # that we do it twice just for luck...
-    - repeat:
-        count: 2
-        sequence:
-          - service: nissan_leaf.start_charge
-            data:
-              vin: !secret nissan_vin
-          - delay: "00:00:30"
+    - service: script.charge_the_leaf
 
 
 - alias: Start the leaf climate control
