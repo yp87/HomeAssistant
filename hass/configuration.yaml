@@ -138,6 +138,8 @@ google_assistant:
         - Chauffe la Leaf
         - Refroidis la Leaf
         - Démarre la leaf
+        - Auto
+        - Automobile
 
 tts:
   - platform: google_translate
