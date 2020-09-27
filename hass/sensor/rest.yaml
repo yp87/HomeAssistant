@@ -2,5 +2,10 @@
 - platform: rest
   resource: https://api.ipify.org/?format=json
   name: External IP
-  value_template: '{{ value_json.ip }}'
   scan_interval: 3600
+  value_template: >-
+    {% if value_json is defined and value_json.ip is defined %}
+      {{ value_json.ip }}
+    {% else %}
+      {{ states('sensor.external_ip') }}
+    {% endif %}

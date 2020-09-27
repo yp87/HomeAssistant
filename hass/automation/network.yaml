@@ -1,0 +1,8 @@
+---
+- alias: External ip change
+  trigger:
+    - entity_id: sensor.external_ip
+      platform: state
+  action:
+    - service: hangouts.reconnect
+    - service: rest_command.update_dns_ip

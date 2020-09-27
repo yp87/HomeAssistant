@@ -158,6 +158,10 @@ hyperion_priority:
   host: !secret hyperion_ip_address
   port: !secret hyperion_port
 
+rest_command:
+  update_dns_ip:
+    url: !secret dns_ip_update_url
+
 zone: !include zone.yaml
 alarm_control_panel: !include alarm_control_panel.yaml
 switch: !include_dir_merge_list switch
