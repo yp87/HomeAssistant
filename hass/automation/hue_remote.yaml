@@ -60,13 +60,13 @@
           {%- set weekday = ['Lundi','Mardi','Mercredi','Jeudi',
                             'Vendredi','Samedi','Dimanche'] -%}
           {%- set dt = states.sensor.eve2gmmug_charge.attributes.updated_on -%}
-            Bon matin Catherine!
-            Ton carosse est chargé à {{ states('sensor.eve2gmmug_charge') }}%
-            et est
+          Bon matin Catherine!
+          Ton carosse est chargé à
+          {{- " " + states('sensor.eve2gmmug_charge') }}% et est
           {%- if is_state("binary_sensor.eve2gmmug_plug_status", "on") -%}
-            branché.
+          {{ " " }}branché.
           {%- else -%}
-            DÉBRANCHÉ.
+          {{ " " }}DÉBRANCHÉ.
           {%- endif -%}
-          La dernière mise à jour est ce {{ weekday[dt.weekday()] }}
-          à {{ dt.astimezone().strftime('%HH%M') }}.
+          {{ " " }}La dernière mise à jour est ce {{ weekday[dt.weekday()] -}}
+          {{ " " }}à {{ dt.astimezone().strftime('%HH%M') }}.

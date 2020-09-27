@@ -6,7 +6,6 @@ start_the_leaf:
       entity_id: switch.eve2gmmug_climate_control
 
 charge_the_leaf:
-  description: Used to start charging the leaf through google home
   variables:
     not_plugged_message: >-
       "La Leaf ne peut pas charger car elle n'est pas branchée."
@@ -20,15 +19,13 @@ charge_the_leaf:
             data:
               vin: !secret nissan_vin
           - delay: "00:00:30"
+    - condition: state
+      entity_id: alarm_control_panel.home_alarm
+      state: 'disarmed'
     - service: script.update_leaf
-    - condition: and
-      conditions:
-        - condition: state
-          entity_id: binary_sensor.eve2gmmug_plug_status
-          state: "off"
-        - condition: state
-          entity_id: alarm_control_panel.home_alarm
-          state: 'disarmed'
+    - condition: state
+      entity_id: binary_sensor.eve2gmmug_plug_status
+      state: "off"
     - service: notify.all_people
       data:
         message: "{{ not_plugged_message }}"
