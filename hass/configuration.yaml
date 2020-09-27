@@ -133,13 +133,7 @@ google_assistant:
       name: corridor
     script.start_the_leaf:
       expose: true
-      name: Part la Leaf
-      aliases:
-        - Chauffe la Leaf
-        - Refroidis la Leaf
-        - Démarre la leaf
-        - Auto
-        - Automobile
+      name: La Leaf
 
 tts:
   - platform: google_translate
