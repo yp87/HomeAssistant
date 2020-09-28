@@ -1,0 +1,11 @@
+---
+- platform: template
+  switches:
+    bibicar_climate:
+      value_template: "{{ is_state('climate.bibicar_hvac_climate_system', 'heat_cool') }}"
+      turn_on:
+        service: climate.turn_on
+        entity_id: climate.bibicar_hvac_climate_system
+      turn_off:
+        service: climate.turn_off
+        entity_id: climate.bibicar_hvac_climate_system
