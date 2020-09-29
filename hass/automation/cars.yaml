@@ -1,4 +1,17 @@
 ---
+#Tesla
+
+- alias: Initialize bibicar update to false
+  trigger:
+    platform: homeassistant
+    event: start
+  action:
+    service: switch.turn_off
+    entity_id: switch.bibicar_update_switch
+
+---
+# Leaf
+
 - alias: Update leaf in morning
   trigger:
     - platform: time
@@ -109,6 +122,9 @@
               - condition: state
                 entity_id: input_boolean.leaf_next_departure_canceled
                 state: "on"
+              - condition: state
+                entity_id: binary_sensor.eve2gmmug_plug_status
+                state:  "on"
 
 - alias: Calculate leaf charge and climate time
   trigger:
@@ -124,6 +140,8 @@
   action:
     - service: input_boolean.turn_off
       entity_id: input_boolean.leaf_next_departure_canceled
+    # Allow 15 minutes to plug the car before updating
+    - delay: "00:15:00"
     - service: script.update_leaf
     - service: input_datetime.set_datetime
       data:
@@ -137,12 +155,12 @@
         timestamp: 1
     - condition: numeric_state
       entity_id: sensor.eve2gmmug_charge
-      below: 90
+      below: 80
     - service: input_datetime.set_datetime
       data:
         entity_id: input_datetime.leaf_start_charging
         datetime: >-
-          {% set missing_charge = 90 - states('sensor.eve2gmmug_charge')|int %}
+          {% set missing_charge = 80 - states('sensor.eve2gmmug_charge')|int %}
           {% set charge_rate_seconds = 15 / 3600 %}
           {% set seconds_to_charge = missing_charge / charge_rate_seconds %}
           {{ (as_timestamp(states('input_datetime.leaf_next_departure'))
