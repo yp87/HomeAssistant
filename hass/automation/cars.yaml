@@ -1,5 +1,5 @@
 ---
-#Tesla
+# Tesla
 
 - alias: Initialize bibicar update to false
   trigger:
@@ -9,7 +9,6 @@
     service: switch.turn_off
     entity_id: switch.bibicar_update_switch
 
----
 # Leaf
 
 - alias: Update leaf in morning
@@ -124,7 +123,7 @@
                 state: "on"
               - condition: state
                 entity_id: binary_sensor.eve2gmmug_plug_status
-                state:  "on"
+                state: "on"
 
 - alias: Calculate leaf charge and climate time
   trigger:
