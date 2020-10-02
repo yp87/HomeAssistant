@@ -22,4 +22,4 @@ clear_priority:
   fields:
     priority:
       description: The priority that will be cleared.
-      exemple: 120
+      example: 120

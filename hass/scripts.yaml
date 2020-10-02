@@ -82,6 +82,8 @@ update_leaf:
                 state: false
             timeout: 600
           - delay: "00:00:10"
+    # it can take some time before the stats gets updated.
+    - delay: "00:01:00"
 
 auto_switch_on:
   mode: parallel

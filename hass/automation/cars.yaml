@@ -132,6 +132,8 @@
     - platform: state
       entity_id: person.cath
       to: 'home'
+    - platform: state
+      entity_id: sensor.eve2gmmug_charge
   condition: >-
     {{ as_timestamp(states('input_datetime.leaf_next_departure'))
        > as_timestamp(as_timestamp(now()) | timestamp_local) }}
@@ -196,7 +198,7 @@
       timeout:
         minutes: 45
     - condition: template
-      value_template: "{{ not wait.completed }}"
+      value_template: "{{ wait.trigger is none }}"
     - service: script.turn_off_leaf_climate
 
 - alias: Cancel planned leaf departure
