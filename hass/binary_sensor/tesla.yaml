@@ -19,19 +19,9 @@
   device_class: plug
 
 - platform: mqtt
-  name: tesla_sentry_mode
-  state_topic: "teslamate/cars/1/sentry_mode"
-  icon: mdi:cctv
-
-- platform: mqtt
   name: tesla_windows_open
   state_topic: "teslamate/cars/1/windows_open"
   device_class: window
-
-- platform: mqtt
-  name: tesla_update_available
-  state_topic: "teslamate/cars/1/update_available"
-  icon: mdi:gift
 
 - platform: template
   sensors:

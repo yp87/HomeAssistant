@@ -119,3 +119,13 @@
   name: tesla_version
   state_topic: "teslamate/cars/1/version"
   icon: mdi:alphabetical
+
+- platform: mqtt
+  name: tesla_sentry_mode
+  state_topic: "teslamate/cars/1/sentry_mode"
+  icon: mdi:cctv
+
+- platform: mqtt
+  name: tesla_update_available
+  state_topic: "teslamate/cars/1/update_available"
+  icon: mdi:gift
