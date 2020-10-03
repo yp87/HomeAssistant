@@ -10,3 +10,11 @@
       turn_off:
         service: climate.turn_off
         entity_id: climate.bibicar_hvac_climate_system
+    update_leaf:
+      value_template: "{{ is_state('script.update_leaf', 'on') }}"
+      turn_on:
+        service: script.turn_on
+        entity_id: script.update_leaf
+      turn_off:
+        service: script.turn_off
+        entity_id: script.update_leaf
