@@ -46,6 +46,8 @@ services:
       - DATABASE_NAME=${teslamate_database}
       - DATABASE_HOST=database
       - MQTT_HOST=mqtt
+      - MQTT_USERNAME=${mqtt_username}
+      - MQTT_PASSWORD=${mqtt_password}
     ports:
       - "4000:4000"
     cap_drop:
