@@ -47,7 +47,7 @@ jobs:
         id: infrastructure
         run: "echo ::set-output name=changed::\
                 $(grep -cE '.stubs/infrastructure|\
-                          docker-compose*\\.yaml|\
+                          docker-compose.*\\.yaml|\
                           .github/workflows|\
                           WebhookProxy|\
                           Supervisor|\
