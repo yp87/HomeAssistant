@@ -77,9 +77,6 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - teslamate-grafana-data:/var/lib/grafana
+      - ${BASE_PATH}/volumes/teslamate-grafana-data:/var/lib/grafana
     depends_on:
       - database
-
-volumes:
-  teslamate-grafana-data:
