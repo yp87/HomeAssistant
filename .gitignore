@@ -4,7 +4,7 @@ secret*
 *.db*
 *.sqlite
 
-/automation-db
+/volumes
 /mosquitto
 /hass/certs
 /hass/zwcfg*.xml

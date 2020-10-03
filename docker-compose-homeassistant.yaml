@@ -61,7 +61,7 @@ services:
       - POSTGRES_PASSWORD=${automation_password}
       - POSTGRES_DB=${teslamate_database}
     volumes:
-      - automation-db:/var/lib/postgresql/data
+      - /volumes/automation-db:/var/lib/postgresql/data
 
   teslamate_grafana:
     image: teslamate/grafana:latest
@@ -74,6 +74,6 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - teslamate-grafana-data:/var/lib/grafana
+      - /volumes/teslamate-grafana-data:/var/lib/grafana
     depends_on:
       - database
