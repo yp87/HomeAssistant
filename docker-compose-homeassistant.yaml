@@ -82,4 +82,4 @@ services:
       - database
 
 volumes:
-  - teslamate-grafana-data
+  teslamate-grafana-data:
