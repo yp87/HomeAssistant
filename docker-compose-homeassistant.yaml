@@ -47,7 +47,7 @@ services:
       - DATABASE_HOST=database
       - MQTT_HOST=mqtt
     ports:
-      - 4000:4000
+      - "4000:4000"
     cap_drop:
       - all
     depends_on:
@@ -63,7 +63,7 @@ services:
       - POSTGRES_PASSWORD=${automation_password}
       - POSTGRES_DB=${teslamate_database}
     volumes:
-      - /volumes/automation-db:/var/lib/postgresql/data
+      - ${BASE_PATH}/volumes/automation-db:/var/lib/postgresql/data
 
   teslamate_grafana:
     container_name: teslamate_grafana
@@ -75,8 +75,8 @@ services:
       - DATABASE_NAME=${teslamate_database}
       - DATABASE_HOST=database
     ports:
-      - 3000:3000
+      - "3000:3000"
     volumes:
-      - /volumes/teslamate-grafana-data:/var/lib/grafana
+      - ${BASE_PATH}/volumes/teslamate-grafana-data:/var/lib/grafana
     depends_on:
       - database
