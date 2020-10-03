@@ -35,3 +35,45 @@ services:
     restart: always
     depends_on:
       - mqtt
+
+  teslamate:
+    image: teslamate/teslamate:latest
+    restart: always
+    environment:
+      - DATABASE_USER=${automation_username}
+      - DATABASE_PASS=${automation_password}
+      - DATABASE_NAME=${teslamate_database}
+      - DATABASE_HOST=database
+      - MQTT_HOST=mqtt
+    ports:
+      - 4000:4000
+    cap_drop:
+      - all
+    depends_on:
+      - mqtt
+      - database
+
+  database:
+    image: postgres:13
+    restart: always
+    environment:
+      - POSTGRES_USER=${automation_username}
+      - POSTGRES_PASSWORD=${automation_password}
+      - POSTGRES_DB=${teslamate_database}
+    volumes:
+      - automation-db:/var/lib/postgresql/data
+
+  teslamate_grafana:
+    image: teslamate/grafana:latest
+    restart: always
+    environment:
+      - DATABASE_USER=${automation_username}
+      - DATABASE_PASS=${automation_password}
+      - DATABASE_NAME=${teslamate_database}
+      - DATABASE_HOST=database
+    ports:
+      - 3000:3000
+    volumes:
+      - teslamate-grafana-data:/var/lib/grafana
+    depends_on:
+      - database

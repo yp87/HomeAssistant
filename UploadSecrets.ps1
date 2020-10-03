@@ -5,6 +5,7 @@ $s = New-PSSession -HostName (Get-Secret HomeAssistantHost -AsPlainText) -UserNa
 $sourcePath = Get-Location;
 $secretFiles = Get-Childitem -Path "$($sourcePath)/**/secret*" -Recurse;
 $secretFiles += Get-Childitem -Path "$($sourcePath)/**/service_account.json" -Recurse
+$secretFiles += Get-Childitem -Path "$($sourcePath)/.env"
 Foreach($secretFile in $secretFiles)
 {
     if ($secretFile -notmatch ".stubs")
