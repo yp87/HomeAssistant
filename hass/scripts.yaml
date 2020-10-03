@@ -152,7 +152,7 @@ yan_pills:
       state: "off"
     - service: input_boolean.turn_on
       entity_id: input_boolean.yan_had_pills
-    - service: notify.all_people
+    - service: notify.yan
       data:
         message: "Yan a pris ses pillules."
 
