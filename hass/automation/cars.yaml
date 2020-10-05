@@ -134,6 +134,8 @@
       to: 'home'
     - platform: state
       entity_id: sensor.eve2gmmug_charge
+    - platform: homeassistant
+      event: start
   condition: >-
     {{ as_timestamp(states('input_datetime.leaf_next_departure'))
        > as_timestamp(as_timestamp(now()) | timestamp_local) }}
