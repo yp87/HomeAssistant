@@ -1,5 +1,5 @@
 TODO:
-- Use containerized database and add to docker-compose
+- ~~Use containerized database and add to docker-compose~~
 - ~~HomeAssistant: cleanup multi script loops in favor of new repeat mode~~
 - ~~HomeAssistant: change custom_components huesensor to use git submodule that points to the original github~~ Removed the custom_component in favor of events from the official component.
 - ~~When supervisor restarts home assistant because only configurations were changed, send a restart command to home assistant instead of restarting the whole container~~
