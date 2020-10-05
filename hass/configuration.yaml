@@ -20,32 +20,22 @@ http:
   ssl_key: !secret ssl_key
 
 recorder:
-  purge_keep_days: 5
+  db_url: !secret recorder_database_url
+  purge_keep_days: 367
   exclude:
     domains:
       - automation
       - media_player
       - zwave
+    entities:
+      - sensor.time
+      - sensor.fred_last_milk_elapsed_time
+      - light.table_de_chevet_de_yan
+      - light.table_de_chevet_de_cath
 
 history:
-  exclude:
-    domains:
-      - automation
-      - media_player
-      - zwave
-    entities:
-      - sensor.time
-      - sensor.fred_last_milk_elapsed_time
 
 logbook:
-  exclude:
-    domains:
-      - automation
-      - media_player
-      - zwave
-    entities:
-      - sensor.time
-      - sensor.fred_last_milk_elapsed_time
 
 device_tracker:
   - platform: google_maps

@@ -16,6 +16,7 @@ services:
     depends_on:
       - mqtt
       - alarm
+      - database
 
   mqtt:
     container_name: mqtt
@@ -63,9 +64,12 @@ services:
     environment:
       - POSTGRES_USER=${automation_username}
       - POSTGRES_PASSWORD=${automation_password}
-      - POSTGRES_DB=${teslamate_database}
+      - POSTGRES_MULTIPLE_DATABASES=${teslamate_database},\
+          ${homeassistant_recorder_database}
     volumes:
       - ${BASE_PATH}/volumes/automation-db:/var/lib/postgresql/data
+      - ${BASE_PATH}/volumes/docker-postgresql-multiple-databases:\
+          /docker-entrypoint-initdb.d
 
   teslamate_grafana:
     container_name: teslamate_grafana

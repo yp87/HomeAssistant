@@ -4,7 +4,7 @@ secret*
 *.db*
 *.sqlite
 
-/volumes
+/volumes/*
 /mosquitto
 /hass/certs
 /hass/zwcfg*.xml
@@ -29,3 +29,4 @@ __pycache__/
 !.stubs/**
 !.github/
 !.github/**
+!/volumes/docker-postgresql-multiple-databases
