@@ -132,8 +132,6 @@
     - platform: state
       entity_id: person.cath
       to: 'home'
-    - platform: state
-      entity_id: sensor.eve2gmmug_charge
     - platform: homeassistant
       event: start
   condition: >-
