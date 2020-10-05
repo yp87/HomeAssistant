@@ -70,6 +70,8 @@ services:
       - ${BASE_PATH}/volumes/automation-db:/var/lib/postgresql/data
       - ${BASE_PATH}/volumes/docker-postgresql-multiple-databases:\
           /docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
 
   teslamate_grafana:
     container_name: teslamate_grafana
