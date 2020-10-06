@@ -1,3 +1,4 @@
+---
 - platform: mqtt
   name: tesla_charge_port_door_open
   state_topic: "teslamate/cars/1/charge_port_door_open"

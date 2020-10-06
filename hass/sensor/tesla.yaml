@@ -1,3 +1,4 @@
+---
 - platform: mqtt
   name: tesla_battery_level
   state_topic: "teslamate/cars/1/battery_level"

@@ -51,6 +51,3 @@
             La Tesla est arrêtée, mais{{ " " }}
             {{- stringMap[trigger.to_state.object_id] }}{{ " " }}
             {{- stringMap[trigger.to_state.state] }}.
-
-
-
