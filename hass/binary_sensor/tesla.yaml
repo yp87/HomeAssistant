@@ -33,6 +33,27 @@
   payload_off: "false"
   device_class: window
 
+- platform: mqtt
+  name: tesla_trunk_open
+  state_topic: "teslamate/cars/1/trunk_open"
+  payload_on: "true"
+  payload_off: "false"
+  device_class: door
+
+- platform: mqtt
+  name: tesla_frunk_open
+  state_topic: "teslamate/cars/1/frunk_open"
+  payload_on: "true"
+  payload_off: "false"
+  device_class: door
+
+- platform: mqtt
+  name: tesla_doors_open
+  state_topic: "teslamate/cars/1/doors_open"
+  payload_on: "true"
+  payload_off: "false"
+  device_class: door
+
 - platform: template
   sensors:
     tesla_park_brake:

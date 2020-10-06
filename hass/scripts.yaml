@@ -33,6 +33,7 @@ charge_the_leaf:
       entity_id: media_player.kitchen
       data:
         message: "{{ not_plugged_message }}"
+        language: 'fr'
 
 turn_off_leaf_climate:
   sequence:
@@ -69,7 +70,7 @@ update_leaf:
               as_timestamp(state_attr('sensor.eve2gmmug_charge', 'updated_on'))
               > 600 }}
     - repeat:
-        count: 2
+        count: 3
         sequence:
           - service: nissan_leaf.update
             data:
@@ -249,3 +250,17 @@ lights_off_except:
              {%- if not loop.first %}, {% endif -%}
                {{ device.entity_id }}
           {%- endfor %}
+
+notify_and_speak:
+  fields:
+    message:
+      description: 'The content of the text and voice notification'
+  sequence:
+    - service: notify.all_people
+      data:
+        message: "{{ message }}"
+    - service: tts.google_translate_say
+      entity_id: media_player.kitchen
+      data:
+        message: "{{ message }}"
+        language: 'fr'

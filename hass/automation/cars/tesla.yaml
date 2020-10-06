@@ -1,0 +1,56 @@
+---
+- alias: Initialize bibicar update to false
+  trigger:
+    platform: homeassistant
+    event: start
+  action:
+    service: switch.turn_off
+    entity_id: switch.bibicar_update_switch
+
+- alias: Notify when something is opened when parked
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.tesla_windows_open
+        - binary_sensor.tesla_trunk_open
+        - binary_sensor.tesla_frunk_open
+        - binary_sensor.tesla_doors_open
+      to: "on"
+      for: "00:05:00"
+    - platform: state
+      entity_id: binary_sensor.tesla_locked
+      to: "off"
+      for: "00:05:00"
+  condition:
+    condition: not
+    conditions:
+      - condition: state
+        entity_id: sensor.tesla_shift_state
+        state: "D"
+      - condition: state
+        entity_id: sensor.tesla_shift_state
+        state: "N"
+      - condition: state
+        entity_id: sensor.tesla_shift_state
+        state: "R"
+  action:
+    - service: script.turn_on
+      data:
+        entity_id: script.notify_and_speak
+        variables:
+          message: >-
+            {%- set stringMap = ({
+              "on": "ouverte",
+              "off": "débarrées",
+              "tesla_windows_open": "une fenêtre est",
+              "tesla_trunk_open": "la valise arrière est",
+              "tesla_frunk_open": "la valise avant est",
+              "tesla_doors_open": "une porte est",
+              "tesla_locked": "les portières sont",
+            }) -%}
+            La Tesla est arrêtée, mais{{ " " }}
+            {{- stringMap[trigger.to_state.object_id] }}{{ " " }}
+            {{- stringMap[trigger.to_state.state] }}.
+
+
+

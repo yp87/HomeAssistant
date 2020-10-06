@@ -1,16 +1,4 @@
 ---
-# Tesla
-
-- alias: Initialize bibicar update to false
-  trigger:
-    platform: homeassistant
-    event: start
-  action:
-    service: switch.turn_off
-    entity_id: switch.bibicar_update_switch
-
-# Leaf
-
 - alias: Update leaf in morning
   trigger:
     - platform: time
