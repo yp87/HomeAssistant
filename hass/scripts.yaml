@@ -255,6 +255,7 @@ notify_and_speak:
   fields:
     message:
       description: 'The content of the text and voice notification'
+  mode: queued
   sequence:
     - service: notify.all_people
       data:
