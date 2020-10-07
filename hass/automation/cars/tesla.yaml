@@ -22,47 +22,41 @@
       conditions:
         - condition: state
           entity_id:
-            - binary_sensor.tesla_windows_open
-            - binary_sensor.tesla_trunk_open
-            - binary_sensor.tesla_frunk_open
-            - binary_sensor.tesla_doors_open
+            - binary_sensor.tesla_windows
+            - binary_sensor.tesla_trunk
+            - binary_sensor.tesla_frunk
+            - binary_sensor.tesla_doors
+            - binary_sensor.tesla_lock
           state: "off"
-        - condition: state
-          entity_id: binary_sensor.tesla_locked
-          state: "on"
   action:
     - service: script.notify_and_speak
       data:
-        variables:
-          message: >-
-            La Tesla est arrêtée, mais
-            {%- set stringMap = [
-              ("tesla_windows_open", "on", "une fenêtre est ouverte"),
-              ("tesla_trunk_open", "on", "la valise arrière est ouverte"),
-              ("tesla_frunk_open", "on", "la valise avant est ouverte"),
-              ("tesla_doors_open", "on", "une porte est ouverte"),
-              ("tesla_locked", "off", "les portes sont débarrées"),
-            ] -%}
-            {%- for entity_id, problemState, string in stringMap
-                if is_state("binary_sensor."+entity_id, problemState) %}
-              {%- if loop.last and not loop.first %} et {% elif loop.first -%}
-              {{ " " }}{% else %}, {% endif -%}
-              {{string}}
-            {%- endfor %}.
+        message: >-
+          La Tesla est arrêtée, mais
+          {%- set stringMap = [
+            ("tesla_windows", "une fenêtre est ouverte"),
+            ("tesla_trunk", "la valise arrière est ouverte"),
+            ("tesla_frunk", "la valise avant est ouverte"),
+            ("tesla_doors", "une porte est ouverte"),
+            ("tesla_lock", "les portes sont débarrées"),
+          ] -%}
+          {%- for entity_id, string in stringMap
+              if is_state("binary_sensor."+entity_id, "on") %}
+            {%- if loop.last and not loop.first %} et {% elif loop.first -%}
+            {{ " " }}{% else %}, {% endif -%}
+            {{string}}
+          {%- endfor %}.
 
 - alias: Notify when something is wrong when parked
   trigger:
     - platform: state
       entity_id:
-        - binary_sensor.tesla_windows_open
-        - binary_sensor.tesla_trunk_open
-        - binary_sensor.tesla_frunk_open
-        - binary_sensor.tesla_doors_open
+        - binary_sensor.tesla_windows
+        - binary_sensor.tesla_trunk
+        - binary_sensor.tesla_frunk
+        - binary_sensor.tesla_doors
+        - binary_sensor.tesla_lock
       to: "on"
-      for: "00:05:00"
-    - platform: state
-      entity_id: binary_sensor.tesla_locked
-      to: "off"
       for: "00:05:00"
   condition:
     condition: not
@@ -73,17 +67,13 @@
   action:
     - service: script.notify_and_speak
       data:
-        variables:
-          message: >-
-            {%- set stringMap = ({
-              "on": "ouverte",
-              "off": "débarrées",
-              "tesla_windows_open": "une fenêtre est",
-              "tesla_trunk_open": "la valise arrière est",
-              "tesla_frunk_open": "la valise avant est",
-              "tesla_doors_open": "une porte est",
-              "tesla_locked": "les portières sont",
-            }) -%}
-            La Tesla est arrêtée, mais{{ " " }}
-            {{- stringMap[trigger.to_state.object_id] }}{{ " " }}
-            {{- stringMap[trigger.to_state.state] }}.
+        message: >-
+          {%- set stringMap = ({
+            "tesla_windows": "une fenêtre est ouverte",
+            "tesla_trunk": "la valise arrière est ouverte",
+            "tesla_frunk": "la valise avant est ouverte",
+            "tesla_doors": "une porte est ouverte",
+            "tesla_lock": "les portières sont débarrées",
+          }) -%}
+          La Tesla est arrêtée, mais{{ " " }}
+          {{- stringMap[trigger.to_state.object_id] }}.
