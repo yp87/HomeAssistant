@@ -10,7 +10,7 @@
       value_template: >-
         {{ (as_timestamp(states('sensor.date_time_utc'))
             - states.input_datetime.fred_last_milk.attributes.timestamp )
-           | timestamp_custom("%Hh%M")}}
+           | timestamp_custom("%Hh%M") }}
 
     front_door_action:
       value_template: >
