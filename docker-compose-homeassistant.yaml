@@ -5,8 +5,6 @@ services:
     container_name: hass
     # image: homeassistant/home-assistant:0.113.2    #Specific Version
     image: homeassistant/home-assistant:stable
-    environment:
-      - BASE_PATH
     volumes:
       - ${BASE_PATH}/hass:/config
     devices:
@@ -24,8 +22,6 @@ services:
     restart: always
     ports:
       - "1883:1883"
-    environment:
-      - BASE_PATH
     volumes:
       - ${BASE_PATH}/mosquitto/config:/mosquitto/config
 
