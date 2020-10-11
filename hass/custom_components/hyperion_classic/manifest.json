@@ -1,0 +1,6 @@
+{
+  "domain": "hyperion_classic",
+  "name": "Hyperion classic",
+  "documentation": "https://www.home-assistant.io/integrations/hyperion",
+  "codeowners": []
+}

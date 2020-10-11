@@ -148,7 +148,7 @@ notify:
       - service: cath
 
 light:
-  - platform: hyperion
+  - platform: hyperion_classic
     host: !secret hyperion_ip_address
     port: !secret hyperion_port
 
