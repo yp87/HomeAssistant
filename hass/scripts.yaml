@@ -80,7 +80,7 @@ update_leaf:
               - platform: state
                 entity_id: sensor.eve2gmmug_charge
                 attribute: update_in_progress
-                state: false
+                to: false
             timeout: 600
           - delay: "00:00:10"
     # it can take some time before the stats gets updated.
