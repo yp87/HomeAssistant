@@ -7,7 +7,7 @@
   action:
     - service: light.turn_off
       data:
-        entity_id: light.hyperion
+        entity_id: light.hyperion_classic
 
 - alias: Hyperion Hdmi when casting
   trigger:
@@ -35,7 +35,7 @@
       state: "Regarder Chromecast"
     - service: light.turn_on
       data:
-        entity_id: light.hyperion
+        entity_id: light.hyperion_classic
         effect: HDMI
 
 - alias: Hyperion pausing chromecast
