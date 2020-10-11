@@ -117,10 +117,6 @@ auto_switch_off:
 
 fred_add_consumed_milk:
   sequence:
-    - service: input_datetime.set_datetime
-      entity_id: input_datetime.fred_last_milk
-      data:
-        time: "{{ now().strftime('%H:%M:%S') }}"
     - service: input_number.set_value
       data:
         entity_id: input_number.fred_daily_milk_consumption

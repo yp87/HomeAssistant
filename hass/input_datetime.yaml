@@ -1,9 +1,4 @@
 ---
-fred_last_milk:
-  name: Dernier lait de Frédérique
-  has_date: false
-  has_time: true
-
 leaf_next_departure:
   name: Heure de départ Leaf
   has_date: true
