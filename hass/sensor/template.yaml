@@ -8,7 +8,7 @@
     fred_last_milk_elapsed_time:
       friendly_name: "Depuis le dernier lait"
       value_template: >-
-        {{ (as_timestamp(states('sensor.date_time_utc'))
+        {{ (as_timestamp(states('sensor.date_time_iso'))
             - states.input_datetime.fred_last_milk.attributes.timestamp )
            | timestamp_custom("%Hh%M") }}
 
