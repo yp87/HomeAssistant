@@ -12,12 +12,10 @@
 - platform: waze_travel_time
   name: yantotesla
   origin: person.yan
-  destination: >-
-    {{ states('sensor.tesla_latitude')+','+states('sensor.tesla_longitude') }}
+  destination: device_tracker.tesla
   region: !secret home_region
 - platform: waze_travel_time
   name: cathtotesla
   origin: person.cath
-  destination: >-
-    {{ states('sensor.tesla_latitude')+','+states('sensor.tesla_longitude') }}
+  destination: device_tracker.tesla
   region: !secret home_region
