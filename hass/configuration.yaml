@@ -28,8 +28,6 @@ recorder:
       - media_player
       - zwave
     entities:
-      - sensor.time
-      - sensor.fred_last_milk_elapsed_time
       - light.table_de_chevet_de_yan
       - light.table_de_chevet_de_cath
 
