@@ -17,6 +17,10 @@
       entity_id: sensor.tesla_state
       to: "suspended"
       for: "00:05:00"
+    - platform: state
+      entity_id: sensor.yantotesla
+    - platform: state
+      entity_id: sensor.cathtotesla
   condition:
     - condition: not
       conditions:
@@ -28,6 +32,8 @@
             - binary_sensor.tesla_doors
             - binary_sensor.tesla_lock
           state: "off"
+    - "{{ state_attr('sensor.yantotesla', 'distance')|float > 0.100 }}"
+    - "{{ state_attr('sensor.cathtotesla', 'distance')|float > 0.100 }}"
   action:
     - service: script.notify_and_speak
       data:
@@ -59,11 +65,13 @@
       to: "on"
       for: "00:05:00"
   condition:
-    condition: not
-    conditions:
-      - condition: state
-        entity_id: sensor.tesla_state
-        state: "driving"
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: sensor.tesla_state
+          state: "driving"
+    - "{{ state_attr('sensor.yantotesla', 'distance')|float > 0.100 }}"
+    - "{{ state_attr('sensor.cathtotesla', 'distance')|float > 0.100 }}"
   action:
     - service: script.notify_and_speak
       data:
