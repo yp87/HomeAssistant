@@ -125,6 +125,9 @@ google_assistant:
     script.charge_the_leaf:
       expose: true
       name: Charge la Leaf
+    switch.bibicar_climate:
+      exposed: true
+      name: La Tesla
 
 tts:
   - platform: google_translate
