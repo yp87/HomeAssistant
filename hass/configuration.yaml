@@ -126,7 +126,7 @@ google_assistant:
       expose: true
       name: Charge la Leaf
     switch.bibicar_climate:
-      exposed: true
+      expose: true
       name: La Tesla
 
 tts:
