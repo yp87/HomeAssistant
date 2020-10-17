@@ -12,10 +12,3 @@
 - platform: waze_travel_time
   name: yantotesla
   origin: person.yan
-  destination: device_tracker.tesla
-  region: !secret home_region
-- platform: waze_travel_time
-  name: cathtotesla
-  origin: person.cath
-  destination: device_tracker.tesla
-  region: !secret home_region

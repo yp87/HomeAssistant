@@ -75,19 +75,3 @@
           }) -%}
           La Tesla est arrêtée, mais{{ " " }}
           {{- stringMap[trigger.to_state.object_id] }}.
-
-- alias: update tesla gps coordinates
-  trigger:
-    - platform: state
-      entity_id:
-        - sensor.tesla_latitude
-        - sensor.tesla_longitude
-    - platform: homeassistant
-      event: start
-  action:
-    - service: device_tracker.see
-      data_template:
-        dev_id: tesla
-        gps:
-          - "{{ states('sensor.tesla_latitude') }}"
-          - "{{ states('sensor.tesla_longitude') }}"

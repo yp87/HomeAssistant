@@ -64,16 +64,6 @@
   device_class: temperature
 
 - platform: mqtt
-  name: tesla_latitude
-  state_topic: "teslamate/cars/1/latitude"
-  icon: mdi:crosshairs-gps
-
-- platform: mqtt
-  name: tesla_longitude
-  state_topic: "teslamate/cars/1/longitude"
-  icon: mdi:crosshairs-gps
-
-- platform: mqtt
   name: tesla_odometer
   state_topic: "teslamate/cars/1/odometer"
   unit_of_measurement: "km"
