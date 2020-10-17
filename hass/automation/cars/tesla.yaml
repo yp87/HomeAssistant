@@ -7,20 +7,13 @@
     service: switch.turn_off
     entity_id: switch.bibicar_update_switch
 
-- alias: Notify when something is wrong when parking
+- alias: Notify when something is opened while exiting the car
   trigger:
     - platform: state
-      entity_id: sensor.tesla_state
-      to: "online"
-      for: "00:05:00"
-    - platform: state
-      entity_id: sensor.tesla_state
-      to: "suspended"
-      for: "00:05:00"
-    - platform: state
-      entity_id: sensor.yantotesla
-    - platform: state
-      entity_id: sensor.cathtotesla
+      entity_id:
+        - input_boolean.cath_in_tesla
+        - input_boolean.yan_in_tesla
+      to: "off"
   condition:
     - condition: not
       conditions:
@@ -32,8 +25,6 @@
             - binary_sensor.tesla_doors
             - binary_sensor.tesla_lock
           state: "off"
-    - "{{ state_attr('sensor.yantotesla', 'distance')|float > 0.100 }}"
-    - "{{ state_attr('sensor.cathtotesla', 'distance')|float > 0.100 }}"
   action:
     - service: script.notify_and_speak
       data:
@@ -53,7 +44,7 @@
             {{string}}
           {%- endfor %}.
 
-- alias: Notify when something is wrong when parked
+- alias: Notify when something is opened and no one is in the car
   trigger:
     - platform: state
       entity_id:
@@ -65,13 +56,12 @@
       to: "on"
       for: "00:05:00"
   condition:
-    - condition: not
-      conditions:
-        - condition: state
-          entity_id: sensor.tesla_state
-          state: "driving"
-    - "{{ state_attr('sensor.yantotesla', 'distance')|float > 0.100 }}"
-    - "{{ state_attr('sensor.cathtotesla', 'distance')|float > 0.100 }}"
+    - condition: state
+      entity_id: input_boolean.cath_in_tesla
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.yan_in_tesla
+      state: "off"
   action:
     - service: script.notify_and_speak
       data:
