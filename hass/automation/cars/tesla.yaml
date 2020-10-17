@@ -78,10 +78,12 @@
 
 - alias: update tesla gps coordinates
   trigger:
-    platform: state
-    entity_id:
-      - sensor.tesla_latitude
-      - sensor.tesla_longitude
+    - platform: state
+      entity_id:
+        - sensor.tesla_latitude
+        - sensor.tesla_longitude
+    - platform: homeassistant
+      event: start
   action:
     - service: device_tracker.see
       data_template:
