@@ -262,3 +262,13 @@ notify_and_speak:
       data:
         message: "{{ message }}"
         language: 'fr'
+
+set_tesla_climate:
+  fields:
+    state:
+      description: 'The target state for the tesla climate'
+      example: 'on'
+  mode: restart
+  sequence:
+    - service: "{{ 'climate.turn_'+state }}"
+      entity_id: climate.bibicar_hvac_climate_system

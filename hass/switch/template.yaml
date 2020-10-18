@@ -5,11 +5,17 @@
       value_template: >-
         {{ is_state('climate.bibicar_hvac_climate_system', 'heat_cool') }}
       turn_on:
-        service: climate.turn_on
-        entity_id: climate.bibicar_hvac_climate_system
+        service: script.turn_on
+        data:
+          entity_id: script.set_tesla_climate
+          variables:
+            state: "on"
       turn_off:
-        service: climate.turn_off
-        entity_id: climate.bibicar_hvac_climate_system
+        service: script.turn_on
+        data:
+          entity_id: script.set_tesla_climate
+          variables:
+            state: "off"
     update_leaf:
       value_template: "{{ is_state('script.update_leaf', 'on') }}"
       turn_on:
