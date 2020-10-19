@@ -14,6 +14,7 @@
         - input_boolean.cath_in_tesla
         - input_boolean.yan_in_tesla
       to: "off"
+      for: "00:00:03"
   condition:
     - condition: not
       conditions:
