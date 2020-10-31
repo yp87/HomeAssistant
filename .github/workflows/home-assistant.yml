@@ -80,7 +80,7 @@ jobs:
       - name: Copy stub files
         run: cp -R ./.stubs/hass/* ./hass
       - name: Home Assistant Check Config
-        uses: docker://homeassistant/home-assistant:0.116.2
+        uses: docker://homeassistant/home-assistant:0.117.1
         with:
           args: >-
             python -m homeassistant --config ./hass/
