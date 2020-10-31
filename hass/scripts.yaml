@@ -270,5 +270,13 @@ set_tesla_climate:
       example: 'on'
   mode: restart
   sequence:
-    - service: "{{ 'climate.turn_'+state }}"
-      entity_id: climate.bibicar_hvac_climate_system
+    - service: switch.turn_on
+      entity_id: switch.bibicar_update_switch
+    - repeat:
+        count: 2
+        sequence:
+          - delay: "00:00:05"
+          - service: "{{ 'climate.turn_'+state }}"
+            entity_id: climate.bibicar_hvac_climate_system
+    - service: switch.turn_off
+      entity_id: switch.bibicar_update_switch
