@@ -275,7 +275,7 @@ set_tesla_climate:
     - repeat:
         count: 2
         sequence:
-          - delay: "00:00:05"
+          - delay: "00:00:15"
           - service: "{{ 'climate.turn_'+state }}"
             entity_id: climate.bibicar_hvac_climate_system
     - service: switch.turn_off
