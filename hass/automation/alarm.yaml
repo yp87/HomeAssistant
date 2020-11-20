@@ -74,3 +74,15 @@
       entity_id: group.all_light_switches
     - service: remote.turn_off
       entity_id: remote.yharmony
+
+- alias: Morning routine when waking up
+  trigger:
+    platform: state
+    entity_id: binary_sensor.second_floor_motion
+  condition:
+    - condition: time
+      after: "6:00:00"
+      before: "9:00:00"
+  action:
+    - service: script.morning
+
