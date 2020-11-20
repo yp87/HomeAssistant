@@ -8,3 +8,7 @@ leaf_charge_per_hour:
   name: Leaf % charge par heure
   min: 0
   max: 100
+
+leaf_charge_before_charging:
+  min: 0
+  max: 100

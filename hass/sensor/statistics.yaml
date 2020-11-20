@@ -1,5 +1,6 @@
 ---
 - platform: statistics
   entity_id: sensor.leaf_charge_per_hour
+  name: Leaf charge per hour
   sampling_size: 5
   precision: 0
