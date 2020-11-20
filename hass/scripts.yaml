@@ -284,6 +284,9 @@ set_tesla_climate:
 morning:
   sequence:
     - condition: state
+      entity_id: group.all_people
+      state: "home"
+    - condition: state
       entity_id: alarm_control_panel.home_alarm
       state: "armed_home"
     - service: alarm_control_panel.alarm_disarm
@@ -308,5 +311,6 @@ morning:
           {%- endif -%}
           {{ " " }}La dernière mise à jour est ce {{ weekday[dt.weekday()] -}}
           {{ " " }}à {{ dt.astimezone().strftime('%HH%M') }}.
+
 
 

@@ -43,9 +43,5 @@
       event_data:
         id: "hue_dimmer_switch_1"
         event: 1001
-  condition:
-    condition: state
-    entity_id: group.all_people
-    state: "home"
   action:
     - service: script.morning
