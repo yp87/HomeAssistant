@@ -85,4 +85,3 @@
       before: "9:00:00"
   action:
     - service: script.morning
-

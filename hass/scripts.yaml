@@ -311,6 +311,3 @@ morning:
           {%- endif -%}
           {{ " " }}La dernière mise à jour est ce {{ weekday[dt.weekday()] -}}
           {{ " " }}à {{ dt.astimezone().strftime('%HH%M') }}.
-
-
-
