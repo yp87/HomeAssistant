@@ -165,6 +165,16 @@
   action:
     - service: script.charge_the_leaf
 
+#- alias: Record charge per hour at depart time
+#  trigger:
+#    - platform: time
+#      at: input_datetime.leaf_next_departure
+#  action:
+#    - service: input_number.set_value
+#      data:
+#        entity_id: input_number.leaf_charge_per_hour
+#        value: >
+
 
 - alias: Start the leaf climate control
   trigger:
