@@ -310,4 +310,4 @@ morning:
           {{ " " }}DÉBRANCHÉ.
           {%- endif -%}
           {{ " " }}La dernière mise à jour est ce {{ weekday[dt.weekday()] -}}
-          {{ " " }}à {{ dt.astimezone().strftime('%HH%M') }}.
+          {{ " " }}à {{ as_timestamp(dt) | timestamp_custom('%HH%M') }}.
