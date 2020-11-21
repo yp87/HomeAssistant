@@ -51,7 +51,7 @@ jobs:
                           .github/workflows|\
                           WebhookProxy|\
                           Supervisor|\
-                          alarm'
+                          alarm/'
                 <<< \"${{ steps.changed.outputs.files }}\")"
       - name: changed files output
         run: |
