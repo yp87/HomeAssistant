@@ -83,5 +83,6 @@
     - condition: time
       after: "6:00:00"
       before: "9:00:00"
+  mode: single
   action:
     - service: script.morning
