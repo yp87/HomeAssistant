@@ -22,10 +22,6 @@
     - platform: time
       at: '00:00:00'
   action:
-    - service: input_number.set_value
-      data:
-        entity_id: input_number.fred_daily_milk_consumption
-        value: 0
     - service: input_boolean.turn_off
       entity_id: input_boolean.fred_had_drop
     - service: input_boolean.turn_off

@@ -115,22 +115,6 @@ auto_switch_off:
       data:
         entity_id: "{{ auto_switch_entity }}"
 
-fred_add_consumed_milk:
-  sequence:
-    - service: input_number.set_value
-      data:
-        entity_id: input_number.fred_daily_milk_consumption
-        value: >-
-          {{ added_milk_quantity | float
-             +
-             states('input_number.fred_daily_milk_consumption') | float }}
-    - service: notify.all_people
-      data:
-        message: >-
-           Fred est rendu à
-           {{ states('input_number.fred_daily_milk_consumption') }}
-           onces de lait.
-
 fred_vit_d_drop:
   sequence:
     - condition: state
