@@ -145,13 +145,17 @@
     - condition: numeric_state
       entity_id: sensor.eve2gmmug_charge
       below: 80
+    - service: notify.yan
+      data:
+        message: >
+          Would calculate start charge date with
+          {{states('sensor.leaf_charge_per_hour_mean')}}% per hour
     - service: input_datetime.set_datetime
       data:
         entity_id: input_datetime.leaf_start_charging
         datetime: >-
           {% set missing_charge = 80 - states('sensor.eve2gmmug_charge')|int %}
-          {% set charge_rate_seconds =
-               states('sensor.leaf_charge_per_hour_mean')|float / 3600 %}
+          {% set charge_rate_seconds = 15 / 3600 %}
           {% set seconds_to_charge = missing_charge / charge_rate_seconds %}
           {{ (as_timestamp(states('input_datetime.leaf_next_departure'))
              - seconds_to_charge) | timestamp_utc }}
@@ -169,6 +173,11 @@
       data:
         entity_id: input_number.leaf_charge_before_charging
         value: "{{ states('sensor.eve2gmmug_charge') }}"
+    - service: notify.yan
+      data:
+        message: >
+          Start charging the leaf. Setting leaf_charge_before_charging
+          to {{states('sensor.eve2gmmug_charge')}}%
 
 - alias: Record charge per hour at depart time
   trigger:
@@ -188,6 +197,19 @@
              ((as_timestamp(states('input_datetime.leaf_next_departure')) -
                as_timestamp(states('input_datetime.leaf_start_charging'))) /
               3600.0) }}
+    - service: notify.yan
+      data:
+        message: >
+          Departure time. updating input_number.leaf_charge_per_hour
+          to {{states('input_number.leaf_charge_per_hour')}}%
+          from current charge ({{states('sensor.eve2gmmug_charge')}}) -
+          charge before charging
+          ({-{ " " + states('input_number.leaf_charge_before_charging')}}) /
+          ((departure time
+          ({-{ " " + states('input_datetime.leaf_next_departure') }}) -
+          start charging time
+          ( {{states('input_datetime.leaf_start_charging')}})) / 3600)
+
 
 - alias: Notify Yan when leaf departure is set
   trigger:
