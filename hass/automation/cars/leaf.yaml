@@ -204,9 +204,9 @@
           to {{states('input_number.leaf_charge_per_hour')}}%
           from current charge ({{states('sensor.eve2gmmug_charge')}}) -
           charge before charging
-          ({-{ " " + states('input_number.leaf_charge_before_charging')}}) /
+          ({{- " " + states('input_number.leaf_charge_before_charging')}}) /
           ((departure time
-          ({-{ " " + states('input_datetime.leaf_next_departure') }}) -
+          ({{- " " + states('input_datetime.leaf_next_departure') }}) -
           start charging time
           ( {{states('input_datetime.leaf_start_charging')}})) / 3600)
 
