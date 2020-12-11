@@ -209,6 +209,10 @@
           ({{- " " + states('input_datetime.leaf_next_departure') }}) -
           start charging time
           ( {{states('input_datetime.leaf_start_charging')}})) / 3600)
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.leaf_charge_before_charging
+        value: 999
 
 
 - alias: Notify Yan when leaf departure is set
