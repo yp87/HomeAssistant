@@ -152,9 +152,6 @@ light:
   - platform: hyperion_classic
     host: !secret hyperion_ip_address
     port: !secret hyperion_port
-  - platform: twinkly
-    host: 192.168.1.222
-    name: Twinkly
 
 hyperion_priority:
   host: !secret hyperion_ip_address
