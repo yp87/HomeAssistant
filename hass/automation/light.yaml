@@ -49,3 +49,17 @@
         variables:
           duration_seconds: 300
           auto_switch_entity: switch.entrance_light
+
+- alias: turn on christmas lights when cath comes home
+  trigger:
+    - platform: zone
+      entity_id: person.cath
+      zone: zone.home
+      event: enter
+  condition:
+    - condition: state
+      entity_id: alarm_control_panel.home_alarm
+      state:  "disarmed"
+  action:
+    - service: light.turn_on
+      entity_id: light.twinkly_a80df9
