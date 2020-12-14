@@ -110,7 +110,7 @@ google_assistant:
     light.living_room_main_light:
       expose: true
       name: Salon
-    switch.christmas_tree_switch:
+    light.twinkly_a80df9:
       expose: true
       name: Sapin
     light.upper_stairs_light:

@@ -96,10 +96,9 @@
         entity_id:
           - light.frederique_main_light
           - light.frederique_night_light
-    # For baby monitor only
     - service: switch.turn_on
       data:
-        entity_id: switch.christmas_tree_switch
+        entity_id: switch.baby_monitor
     - condition: time
       after: '17:30:00'
       before: '6:30:00'
@@ -118,10 +117,9 @@
         scene_id: 1
         scene_data: 3
   action:
-    # For baby monitor only
     - service: switch.turn_off
       data:
-        entity_id: switch.christmas_tree_switch
+        entity_id: switch.baby_monitor
     - service: script.turn_on
       data:
         entity_id: script.white_noise_stop
