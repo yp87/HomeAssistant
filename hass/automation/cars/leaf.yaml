@@ -183,11 +183,11 @@
   trigger:
     - platform: time
       at: input_datetime.leaf_next_departure
-  condition: >
-    {{ states('sensor.eve2gmmug_charge')|int >
-       (states('input_number.leaf_charge_before_charging')|int + 2)  }}
   action:
     - service: script.update_leaf
+    - condition: >
+        {{ states('sensor.eve2gmmug_charge')|int >
+          (states('input_number.leaf_charge_before_charging')|int + 2)  }}
     - service: input_number.set_value
       data:
         entity_id: input_number.leaf_charge_per_hour
