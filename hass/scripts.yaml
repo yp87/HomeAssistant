@@ -314,9 +314,9 @@ remote_action:
       example: 'turning on the kicthen light'
   mode: parallel
   sequence:
-    - service: {{ service }}
+    - service: "{{ service }}"
       data:
-        entity_id: {{ entity_id }}
+        entity_id: "{{ entity_id }}"
     - service: notify.{{ owner }}
       data:
-        message: {{ message }}
+        message: "{{ message }}"
