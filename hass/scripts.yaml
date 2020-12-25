@@ -298,6 +298,22 @@ morning:
           {{ " " }}à {{ as_timestamp(dt) | timestamp_custom('%HH%M') }}.
     - delay: "00:00:05"
 
+arm_lock_home:
+  sequence:
+    - service: alarm_control_panel.alarm_arm_away
+      entity_id: alarm_control_panel.home_alarm
+    - service: lock.lock
+      entity_id: lock.front_door_lock
+
+disarm_unlock_home:
+  sequence:
+    - service: alarm_control_panel.alarm_disarm
+      entity_id: alarm_control_panel.home_alarm
+    - service: lock.unlock
+      data:
+        entity_id: lock.front_door_lock
+        code: !secret front_door_pin
+
 remote_action:
   fields:
     owner:
