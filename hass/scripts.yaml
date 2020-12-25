@@ -11,7 +11,7 @@ charge_the_leaf:
       "La Leaf ne peut pas charger car elle n'est pas branchée."
   sequence:
     # The implementation of the nissan's api is so unreliable
-    # that we do it twice just for luck...
+    # that we do it twice just for luck....
     - repeat:
         count: 2
         sequence:
