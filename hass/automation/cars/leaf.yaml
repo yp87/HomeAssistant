@@ -185,9 +185,9 @@
       at: input_datetime.leaf_next_departure
   action:
     - service: script.update_leaf
-    - condition: >
-        {{ states('sensor.eve2gmmug_charge')|int >
-          (states('input_number.leaf_charge_before_charging')|int + 2)  }}
+    - condition: numeric_state
+      entity_id: sensor.eve2gmmug_charge
+      above: input_number.leaf_charge_before_charging
     - service: input_number.set_value
       data:
         entity_id: input_number.leaf_charge_per_hour
@@ -213,7 +213,6 @@
       data:
         entity_id: input_number.leaf_charge_before_charging
         value: 999
-
 
 - alias: Notify Yan when leaf departure is set
   trigger:
