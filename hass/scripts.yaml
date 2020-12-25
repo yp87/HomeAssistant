@@ -297,3 +297,26 @@ morning:
           {{ " " }}La dernière mise à jour est ce {{ weekday[dt.weekday()] -}}
           {{ " " }}à {{ as_timestamp(dt) | timestamp_custom('%HH%M') }}.
     - delay: "00:00:05"
+
+remote_action:
+  fields:
+    owner:
+      description: 'The sender of the action'
+      example: 'Cath'
+    service:
+      description: 'The service to call'
+      example: 'light.turn_on'
+    entity_id:
+      description: 'The target of the action'
+      example: 'light.kitchen_main_light'
+    message:
+      description: 'The content of the notification'
+      example: 'turning on the kicthen light'
+  mode: parallel
+  sequence:
+    - service: {{ service }}
+      data:
+        entity_id: {{ entity_id }}
+    - service: notify.{{ owner }}
+      data:
+        message: {{ message }}
