@@ -270,7 +270,7 @@ set_tesla_climate:
           - service: climate.set_preset_mode
             data:
               entity_id: climate.bibicar_hvac_climate_system
-              hvac_mode: defrost
+              preset_mode: defrost
 
     - service: switch.turn_off
       entity_id: switch.bibicar_update_switch
