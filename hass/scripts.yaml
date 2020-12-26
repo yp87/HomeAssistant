@@ -262,6 +262,13 @@ set_tesla_climate:
           - delay: "00:00:15"
           - service: "{{ 'climate.turn_'+state }}"
             entity_id: climate.bibicar_hvac_climate_system
+          - condition: and
+            conditions:
+              - "{{ state == 'on'}}"
+              - >
+                {{(state_attr('weather.main_floor', 'temperature')|float) < 2}}
+          - service: climate.set_preset_mode
+
     - service: switch.turn_off
       entity_id: switch.bibicar_update_switch
 
