@@ -317,12 +317,21 @@ arm_lock_home:
 
 disarm_unlock_home:
   sequence:
-    - service: alarm_control_panel.alarm_disarm
-      entity_id: alarm_control_panel.home_alarm
+    - service: script.disarm_home
     - service: lock.unlock
       data:
         entity_id: lock.front_door_lock
         code: !secret front_door_pin
+
+disarm_home:
+  sequence:
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: "disarmed"
+    - service: alarm_control_panel.alarm_disarm
+      entity_id: alarm_control_panel.home_alarm
 
 remote_action:
   fields:
