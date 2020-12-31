@@ -34,9 +34,6 @@
     - condition: state
       entity_id: person.cath
       state: "home"
-    - service: light.turn_on
-      data:
-        entity_id: light.twinkly_a80df9
 
 - alias: Disarmed alarm from pending
   trigger:
