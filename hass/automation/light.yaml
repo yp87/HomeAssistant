@@ -58,7 +58,8 @@
       entity_id: alarm_control_panel.home_alarm
   action:
     - service: >
-        {% if is_state('person.cath', 'home') and is_state('alarm_control_panel.home_alarm', 'disarmed') %}
+        {% if is_state('person.cath', 'home') and
+           is_state('alarm_control_panel.home_alarm', 'disarmed') %}
           light.turn_on
         {% else %}
           light.turn_off
