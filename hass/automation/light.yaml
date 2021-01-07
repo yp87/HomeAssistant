@@ -33,9 +33,6 @@
     - platform: state
       entity_id: sensor.front_door_action
       to: "Keypad Unlock"
-    - platform: state
-      entity_id: sensor.front_door_action
-      to: "Wireless Unlock"
   condition:
     condition: or
     conditions:
