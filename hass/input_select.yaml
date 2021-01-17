@@ -2,7 +2,7 @@
 diaper_cleaning_state:
   name: Lavage des couches
   options:
-    - Attente du premier rinçage
+    - Aucun
     - Premier rinçage
     - Attente du deuxième rinçage
     - Deuxième rinçage
@@ -16,4 +16,4 @@ diaper_cleaning_state:
     - Premier séchage
     - Attente du deuxième séchage
     - Deuxième séchage
-  initial: Attente premier rinçage
+  initial: Attente du premier rinçage

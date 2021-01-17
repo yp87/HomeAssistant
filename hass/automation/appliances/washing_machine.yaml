@@ -12,4 +12,17 @@
   action:
     - service: notify.all_people
       data:
-        message: '{{ states("input_select.diaper_cleaning_state") }} des couches.'
+        message: >-
+          {{ states("input_select.diaper_cleaning_state") }} des couches.
+
+- alias: Diaper cleaning state changed
+  trigger:
+    - platform: state
+      entity_id: input_select.diaper_cleaning_state
+      #for: "01:15:00"
+      for: "00:00:15"
+  condition:
+    - '{{ state.state.startswith("Attente") }}'
+  action:
+    - service: input_select.select_next
+      entity_id: input_select.diaper_cleaning_state
