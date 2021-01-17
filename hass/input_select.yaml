@@ -16,4 +16,4 @@ diaper_cleaning_state:
     - Premier séchage
     - Attente du deuxième séchage
     - Deuxième séchage
-  initial: Attente du premier rinçage
+  initial: Aucun
