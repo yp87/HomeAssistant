@@ -183,6 +183,8 @@
   trigger:
     - platform: time
       at: input_datetime.leaf_next_departure
+  condition: >-
+    {{ as_timestamp(states('input_datetime.leaf_start_charging')) > 0 }}
   action:
     - service: script.update_leaf
     - condition: numeric_state
