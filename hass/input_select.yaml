@@ -1,0 +1,19 @@
+---
+diaper_cleaning_state:
+  name: Lavage des couches
+  options:
+    - Attente du premier rinçage
+    - Premier rinçage
+    - Attente du deuxième rinçage
+    - Deuxième rinçage
+    - Attente du premier lavage
+    - Premier lavage
+    - Attente du deuxième lavage
+    - Deuxième lavage
+    - Attente du troisième rinçage
+    - Troisième rinçage
+    - Attente du premier séchage
+    - Premier séchage
+    - Attente du deuxième séchage
+    - Deuxième séchage
+  initial: Attente premier rinçage

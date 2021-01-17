@@ -1,0 +1,15 @@
+---
+- alias: Diaper cleaning notification
+  trigger:
+    - platform: state
+      entity_id: input_select.diaper_cleaning_state
+    - platform: zone
+      zone: zone.home
+      event: enter
+    - platform: state
+      entity_id: alarm_control_panel.home_alarm
+      from: 'armed_home'
+  action:
+    - service: notify.all_people
+      data:
+        message: '{{ states("input_select.diaper_cleaning_state") }} des couches.'
