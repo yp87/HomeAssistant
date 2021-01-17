@@ -5,6 +5,7 @@
       entity_id: input_select.diaper_cleaning_state
     - platform: zone
       zone: zone.home
+      entity_id: person.cath, person.yan
       event: enter
     - platform: state
       entity_id: alarm_control_panel.home_alarm
