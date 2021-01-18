@@ -348,8 +348,8 @@ next_diaper_cleaning_step:
       conditions:
         - "{{ 'Attente' in states('input_select.diaper_cleaning_state') }}"
         - >-
-          "{{ states('input_select.diaper_cleaning_state') !=
-          'Attente du premier rinçage' }}"
+          {{ states('input_select.diaper_cleaning_state') !=
+          'Attente du premier rinçage' }}
     - service: input_select.select_next
       entity_id: input_select.diaper_cleaning_state
 
