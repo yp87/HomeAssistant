@@ -350,6 +350,7 @@ next_diaper_cleaning_step:
         - >-
           {{ states('input_select.diaper_cleaning_state') !=
           'Attente du premier rinçage' }}
+    - delay: "00:00:01"
     - service: input_select.select_next
       entity_id: input_select.diaper_cleaning_state
 
