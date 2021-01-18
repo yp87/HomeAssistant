@@ -339,6 +339,20 @@ disarm_home:
     - service: alarm_control_panel.alarm_disarm
       entity_id: alarm_control_panel.home_alarm
 
+# Remotely called by Fitbit
+next_diaper_cleaning_step:
+  variables:
+    state: "{{ states('input_select.diaper_cleaning_state') }}"
+  sequence:
+    - service: input_select.select_next
+      entity_id: input_select.diaper_cleaning_state
+    - condition: and
+      conditions:
+        - "{{ 'Attente' in state }}"
+        - "{{ state != 'Attente du premier rinçage' }}"
+    - service: input_select.select_next
+      entity_id: input_select.diaper_cleaning_state
+
 remote_action:
   fields:
     owner:

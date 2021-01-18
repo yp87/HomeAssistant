@@ -43,7 +43,7 @@
           {% elif state == "Attente du deuxième séchage" %}
           Keep thick Diapers and inserts Only (Harry Potter, Panda,
           {{- " "}} M. Potato, Cats) - Timed Dry - 30 Minutes - Medium Heat
-          {{% endif %}}
+          {% endif %}
 
 - alias: Diaper cleaning state changed
   trigger:
@@ -52,6 +52,7 @@
       for: "01:15:00"
   condition:
     - '{{ "Attente" not in trigger.to_state.state }}'
+  mode: restart
   action:
     - service: input_select.select_next
       entity_id: input_select.diaper_cleaning_state
