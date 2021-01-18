@@ -10,18 +10,46 @@
     - platform: state
       entity_id: alarm_control_panel.home_alarm
       from: 'armed_home'
+    - platform: time
+      at: "12:00:00"
+  condition:
+    - condition: or
+      conditions:
+        - '{{ trigger.to_state.object_id == "diaper_cleaning_state" }}'
+        - condition: and
+          conditions:
+            - '{{ "Attente" in trigger.to_state.state }}'
+            - '{{ trigger.to_state.state != "Attente du premier rinçage" }}'
   action:
     - service: notify.all_people
       data:
         message: >-
-          {{ states("input_select.diaper_cleaning_state") }} des couches.
+          {% set state = states("input_select.diaper_cleaning_state") %}
+          {{ state }} des couches.
+          {%- if state == "Attente du premier rinçage" %}
+          Shake - No Wet Bag - Heavy Duty - Cold - Spin High - Soil Heavy
+          {% elif state == "Attente du deuxième rinçage" %}
+          Shake - No Wet Bag - Heavy Duty - Cold - Spin High - Soil Heavy
+          {% elif state == "Attente du premier lavage" %}
+          Shake - Add Wet Bag - Heavy Duty - Soap Bottom Line - Hot
+          {{- " " }}- Spin High - Soil Heavy - Jet Wash
+          {% elif state == "Attente du deuxième lavage" %}
+          Shake - Heavy Duty - Soap Top Line - Hot
+          {{- " " }}- Spin High - Soil Heavy - Jet Wash
+          {% elif state == "Attente du troisième rinçage" %}
+          Shake - Normal - Warm - Spin High - Soil Normal
+          {% elif state == "Attente du premier séchage" %}
+          All - Stick Velcros - My Cycle
+          {% elif state == "Attente du deuxième séchage" %}
+          Keep thick Diapers and inserts Only (Harry Potter, Panda,
+          {{- " "}} M. Potato, Cats) - Timed Dry - 30 Minutes - Medium Heat
+          {{% endif %}}
 
 - alias: Diaper cleaning state changed
   trigger:
     - platform: state
       entity_id: input_select.diaper_cleaning_state
-      #for: "01:15:00"
-      for: "00:00:15"
+      for: "01:15:00"
   condition:
     - '{{ "Attente" not in trigger.to_state.state }}'
   action:
