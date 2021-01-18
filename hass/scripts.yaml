@@ -341,15 +341,15 @@ disarm_home:
 
 # Remotely called by Fitbit
 next_diaper_cleaning_step:
-  variables:
-    state: "{{ states('input_select.diaper_cleaning_state') }}"
   sequence:
     - service: input_select.select_next
       entity_id: input_select.diaper_cleaning_state
     - condition: and
       conditions:
-        - "{{ 'Attente' in state }}"
-        - "{{ state != 'Attente du premier rinçage' }}"
+        - "{{ 'Attente' in states('input_select.diaper_cleaning_state') }}"
+        - >-
+          "{{ states('input_select.diaper_cleaning_state') !=
+          'Attente du premier rinçage' }}"
     - service: input_select.select_next
       entity_id: input_select.diaper_cleaning_state
 
