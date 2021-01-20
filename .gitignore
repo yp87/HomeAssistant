@@ -15,6 +15,7 @@ secret*
 /hass/harmony_6042342.conf
 /hass/harmony_yharmony.conf
 /hass/tts/
+/hass/blueprints/
 
 __pycache__/
 
