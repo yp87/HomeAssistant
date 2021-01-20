@@ -13,6 +13,9 @@
     - platform: time
       at: "12:00:00"
   condition:
+    - condition: state
+      entity_id: alarm_control_panel.home_alarm
+      state: 'disarmed'
     - condition: or
       conditions:
         - '{{ trigger.to_state.object_id == "diaper_cleaning_state" }}'
