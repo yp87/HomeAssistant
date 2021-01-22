@@ -9,6 +9,8 @@
 #  Triple tap off	2	4
 #  Tap and hold on	1	2
 #  Tap and hold off	2	2
+#  Release after hold on 1 1
+#  Release after hold off» 2 1
 # ------------------------------
 - alias: Frederique main light brightness
   trigger:
@@ -100,14 +102,20 @@
       data:
         entity_id: switch.baby_monitor
 
-- alias: Frederique main light double up
+- alias: Frederique main light single up or release from hold up
   trigger:
     - platform: event
       event_type: zwave.scene_activated
       event_data:
         entity_id: zwave.frederique_main_light
         scene_id: 1
-        scene_data: 3
+        scene_data: 0
+    - platform: event
+      event_type: zwave.scene_activated
+      event_data:
+        entity_id: zwave.frederique_main_light
+        scene_id: 1
+        scene_data: 1
   action:
     - service: switch.turn_off
       data:
