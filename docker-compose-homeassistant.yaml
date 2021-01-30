@@ -15,6 +15,7 @@ services:
       - mqtt
       - alarm
       - database
+      - leaf
 
   mqtt:
     container_name: mqtt
