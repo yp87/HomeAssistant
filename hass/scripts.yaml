@@ -16,8 +16,8 @@ charge_the_leaf:
         count: 2
         sequence:
           - service: nissan_leaf.start_charge
-            data:
-              vin: !secret nissan_vin
+            # data:
+              # vin: !secret nissan_vin
           - delay: "00:00:30"
     - condition: state
       entity_id: alarm_control_panel.home_alarm
@@ -73,8 +73,8 @@ update_leaf:
         count: 3
         sequence:
           - service: nissan_leaf.update
-            data:
-              vin: !secret nissan_vin
+            # data:
+              # vin: !secret nissan_vin
           - delay: "00:00:10"
           - wait_for_trigger:
               - platform: state
