@@ -1,0 +1,11 @@
+---
+- platform: mqtt
+  name: leaf_battery_level
+  state_topic: "leaf/battery/percentage"
+  unit_of_measurement: "%"
+  device_class: battery
+
+- platform: mqtt
+  name: leaf_battery_updated
+  state_topic: "leaf/battery/updated"
+  device_class: timestamp
