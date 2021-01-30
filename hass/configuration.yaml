@@ -67,17 +67,6 @@ remote:
     name: YHarmony
     host: !secret harmony_ip
 
-nissan_leaf:
-  username: !secret nissan_username
-  password: !secret nissan_password
-  region: !secret nissan_region
-  update_interval:
-    days: 365
-  update_interval_charging:
-    minutes: 30
-  update_interval_climate:
-    minutes: 10
-
 # TODO - move this to another file
 google_assistant:
   project_id: !secret project_id
