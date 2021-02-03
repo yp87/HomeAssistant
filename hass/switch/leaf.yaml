@@ -1,0 +1,18 @@
+---
+- platform: mqtt
+  unique_id: leaf_battery_charging
+  name: "Chargement de la Leaf"
+  state_topic: "leaf/battery/charging"
+  command_topic: "leaf/command/battery"
+  payload_on: "startCharging"
+  state_on: "true"
+  state_off: "false"
+  icon: mdi:ev-station
+
+- platform: mqtt
+  unique_id: leaf_climate
+  name: "HVAC Leaf"
+  command_topic: "leaf/command/climate"
+  payload_on: "start"
+  payload_off: "stop"
+  icon: mdi:hvac
