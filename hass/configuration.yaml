@@ -6,6 +6,7 @@ homeassistant:
   elevation: !secret home_elevation
   unit_system: !secret home_unit_system
   time_zone: !secret home_timezone
+  customize: !include customize.yaml
 
 frontend:
 

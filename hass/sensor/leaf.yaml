@@ -1,7 +1,6 @@
 ---
 - platform: mqtt
-  unique_id: leaf_battery_level
-  name: "Batterie Leaf"
+  name: leaf_battery_level
   state_topic: "leaf/battery/percentage"
   unit_of_measurement: "%"
   device_class: battery
