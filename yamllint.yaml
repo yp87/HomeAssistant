@@ -1,0 +1,5 @@
+---
+extends: auto
+
+ignore: |
+  leaf2mqtt/
