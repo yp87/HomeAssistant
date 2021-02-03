@@ -1,5 +1,5 @@
 ---
-extends: auto
+extends: default
 
 ignore: |
   leaf2mqtt/
