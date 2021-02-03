@@ -28,6 +28,7 @@ services:
 
   leaf:
     container_name: leaf2mqtt
+    build: leaf2mqtt/
     image: leaf2mqtt:latest
     restart: always
     environment:
@@ -36,7 +37,7 @@ services:
       - MQTT_HOST=mqtt
       - MQTT_USERNAME=${MQTT_USERNAME}
       - MQTT_PASSWORD=${MQTT_PASSWORD}
-      - LEAF_REGION=${LEAF_REGION}
+      - LEAF_TYPE=${LEAF_TYPE}
       - UPDATE_INTERVAL_MINUTES=1440
       - CHARGING_UPDATE_INTERVAL_MINUTES=30
     depends_on:
