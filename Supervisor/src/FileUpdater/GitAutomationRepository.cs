@@ -28,6 +28,7 @@ namespace Supervisor.FilesUpdater
             string commitIdBeforeUpdate = await _gitShellCommand.RunCommandAsync("log --format=%H -n 1");
             commitIdBeforeUpdate = SanitizeString(commitIdBeforeUpdate);
             await _gitShellCommand.RunCommandAsync("pull");
+            await _gitShellCommand.RunCommandAsync("submodule update --init --recursive");
             return await _gitShellCommand.RunCommandAsync($"diff --name-only {commitIdBeforeUpdate}");
         }
 

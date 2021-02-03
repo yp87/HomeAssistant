@@ -1,3 +1,6 @@
 [submodule "alarm/Paradox_IP150"]
 	path = alarm/Paradox_IP150
 	url = https://github.com/yp87/Paradox_IP150.git
+[submodule "leaf2mqtt"]
+	path = leaf2mqtt
+	url = https://github.com/yp87/leaf2mqtt

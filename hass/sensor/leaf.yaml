@@ -6,6 +6,6 @@
   device_class: battery
 
 - platform: mqtt
-  name: leaf_battery_updated
-  state_topic: "leaf/battery/updated"
+  name: leaf_battery_last_updated
+  state_topic: "leaf/battery/lastUpdatedDateTimeUtc"
   device_class: timestamp
