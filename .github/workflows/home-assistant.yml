@@ -66,12 +66,9 @@ jobs:
       - name: Getting Home Assistant configuration
         uses: actions/checkout@v2
       - name: Running YAMLlint
-        uses: ibiqlik/action-yamllint@v3
+        uses: docker://pipelinecomponents/yamllint:latest
         with:
-          file_or_dir: .
-          config_data: |
-            extends: auto
-            ignore: leaf2mqtt
+          args: yamllint -c yamllint.yaml .
 
   home_assistant_config_check:
     runs-on: self-hosted
