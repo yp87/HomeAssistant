@@ -5,10 +5,3 @@
   payload_on: "true"
   payload_off: "false"
   device_class: plug
-
-- platform: mqtt
-  name: leaf_battery_charging
-  state_topic: "leaf/battery/charging"
-  payload_on: "true"
-  payload_off: "false"
-  device_class: battery_charging
