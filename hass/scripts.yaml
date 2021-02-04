@@ -3,28 +3,21 @@ start_the_leaf:
   description: Used to start the climate on the leaf through google home
   sequence:
     - service: switch.turn_on
-      entity_id: switch.eve2gmmug_climate_control
+      entity_id: switch.leaf_climate
 
 charge_the_leaf:
   variables:
     not_plugged_message: >-
       "La Leaf ne peut pas charger car elle n'est pas branchée."
   sequence:
-    # The implementation of the nissan's api is so unreliable
-    # that we do it twice just for luck....
-    - repeat:
-        count: 2
-        sequence:
-          - service: nissan_leaf.start_charge
-            # data:
-              # vin: !secret nissan_vin
-          - delay: "00:00:30"
+    - service: switch.turn_on
+      entity_id: switch.leaf_battery_charging
     - condition: state
       entity_id: alarm_control_panel.home_alarm
       state: 'disarmed'
-    - service: script.update_leaf
+    - service: script.update_leaf_battery
     - condition: state
-      entity_id: binary_sensor.eve2gmmug_plug_status
+      entity_id: binary_sensor.leaf_battery_connected
       state: "off"
     - service: notify.all_people
       data:
@@ -38,53 +31,39 @@ charge_the_leaf:
 turn_off_leaf_climate:
   sequence:
     - condition: state
-      entity_id: switch.eve2gmmug_climate_control
+      entity_id: switch.leaf_climate
       state: "on"
     # This seems to always return an error...
     - service: switch.turn_off
-      entity_id: switch.eve2gmmug_climate_control
+      entity_id: switch.leaf_climate
     - service: notify.all_people
       data:
         message: >-
           Il semble que le départ prévu de la Leaf n'a pas eu lieu.
           Il est important d'arrêter le contrôle du climat manuellement.
 
-update_leaf:
+update_leaf_battery:
   description: >-
     Fetch the leaf's current state.
-    The api may return as succeeded, but with old values
-    Or it may return as error.. and it can take up to 5 minutes to return...
-    That is why we try it 4 times.
-    Calling it directly with "service: script.update_leaf"
+    Calling it directly with "service: script.update_leaf_battery"
     will ensure the calling script will wait for the update.
   mode: queued
   sequence:
-    - condition: or
-      conditions:
-        - "{{ state_attr('sensor.eve2gmmug_charge', 'updated_on') == None }}"
-        - >-
-          {{ state_attr('sensor.eve2gmmug_charge', 'updated_on')
-             == null }}
-        - >-
-          {{  as_timestamp(now()) -
-              as_timestamp(state_attr('sensor.eve2gmmug_charge', 'updated_on'))
-              > 600 }}
     - repeat:
-        count: 3
-        sequence:
-          - service: nissan_leaf.update
-            # data:
-              # vin: !secret nissan_vin
-          - delay: "00:00:10"
-          - wait_for_trigger:
-              - platform: state
-                entity_id: sensor.eve2gmmug_charge
-                attribute: update_in_progress
-                to: false
-            timeout: 600
-          - delay: "00:00:10"
+      while: >-
+        {{  as_timestamp(now()) -
+            as_timestamp(states('sensor.leaf_battery_last_updated')) > 600 }}
+      sequence:
+        - service: mqtt.publish
+          data:
+            topic: "leaf/command/battery"
+            payload: "update"
+        - wait_for_trigger:
+            - platform: state
+              entity_id: sensor.leaf_battery_last_updated
+          timeout: 600
     # it can take some time before the stats gets updated.
-    - delay: "00:01:00"
+    - delay: "00:00:10"
 
 auto_switch_on:
   mode: parallel
@@ -234,11 +213,11 @@ morning:
         message: >-
           {%- set weekday = ['Lundi','Mardi','Mercredi','Jeudi',
                             'Vendredi','Samedi','Dimanche'] -%}
-          {%- set dt = states.sensor.eve2gmmug_charge.attributes.updated_on -%}
+          {%- set dt = states('sensor.leaf_battery_last_updated') -%}
           Bon matin Catherine!
           Ton carosse est chargé à
-          {{- " " + states('sensor.eve2gmmug_charge') }}% et est
-          {%- if is_state("binary_sensor.eve2gmmug_plug_status", "on") -%}
+          {{- " " + states('sensor.leaf_battery_level') }}% et est
+          {%- if is_state("binary_sensor.leaf_battery_connected", "on") -%}
           {{ " " }}branché.
           {%- else -%}
           {{ " " }}DÉBRANCHÉ.

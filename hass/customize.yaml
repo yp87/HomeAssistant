@@ -1,3 +1,5 @@
 ---
 sensor.leaf_battery_level:
   friendly_name: Batterie Leaf
+sensor.tesla_battery_level:
+  friendly_name: Batterie Tesla

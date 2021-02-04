@@ -4,7 +4,7 @@
     - platform: time
       at: "05:45:00"
   action:
-    - service: script.update_leaf
+    - service: script.update_leaf_battery
 
 - alias: Reset leaf next departure canceled at midnight
   trigger:
@@ -57,7 +57,7 @@
                 entity_id: input_boolean.leaf_next_departure_canceled
                 state: "on"
 
-- alias: Alert if the leaf is not plugged in and need charge.
+- alias: Alert if the leaf is not plugged in and needs charge.
   trigger:
     - platform: time
       at: '21:00:00'
@@ -75,9 +75,9 @@
   action:
     - service: input_boolean.turn_off
       entity_id: input_boolean.leaf_plugged_confirmed_by_user
-    - service: script.update_leaf
+    - service: script.update_leaf_battery
     - condition: state
-      entity_id: binary_sensor.eve2gmmug_plug_status
+      entity_id: binary_sensor.leaf_battery_connected
       state: "off"
     - service: notify.all_people
       data:
@@ -102,7 +102,7 @@
         until:
           - condition: or
             conditions:
-              # Leaf updates are way to slow to check the real plug status
+              # Leaf updates are way too slow to check the real plug status
               - condition: state
                 entity_id: input_boolean.leaf_plugged_confirmed_by_user
                 state: "on"
@@ -110,7 +110,7 @@
                 entity_id: input_boolean.leaf_next_departure_canceled
                 state: "on"
               - condition: state
-                entity_id: binary_sensor.eve2gmmug_plug_status
+                entity_id: binary_sensor.leaf_battery_connected
                 state: "on"
 
 - alias: Calculate leaf charge and climate time
@@ -131,7 +131,7 @@
       entity_id: input_boolean.leaf_next_departure_canceled
     # Allow 15 minutes to plug the car before updating
     - delay: "00:15:00"
-    - service: script.update_leaf
+    - service: script.update_leaf_battery
     - service: input_datetime.set_datetime
       data:
         entity_id: input_datetime.leaf_start_climate
@@ -143,7 +143,7 @@
         entity_id: input_datetime.leaf_start_charging
         timestamp: 1
     - condition: numeric_state
-      entity_id: sensor.eve2gmmug_charge
+      entity_id: sensor.leaf_battery_level
       below: 80
     - service: notify.yan
       data:
@@ -154,7 +154,7 @@
       data:
         entity_id: input_datetime.leaf_start_charging
         datetime: >-
-          {% set missing_charge = 80 - states('sensor.eve2gmmug_charge')|int %}
+          {% set missing_charge = 80 - states('sensor.leaf_battery_level')|int %}
           {% set charge_rate_seconds = 15 / 3600 %}
           {% set seconds_to_charge = missing_charge / charge_rate_seconds %}
           {{ (as_timestamp(states('input_datetime.leaf_next_departure'))
@@ -172,12 +172,12 @@
     - service: input_number.set_value
       data:
         entity_id: input_number.leaf_charge_before_charging
-        value: "{{ states('sensor.eve2gmmug_charge') }}"
+        value: "{{ states('sensor.leaf_battery_level') }}"
     - service: notify.yan
       data:
         message: >
           Start charging the leaf. Setting leaf_charge_before_charging
-          to {{states('sensor.eve2gmmug_charge')}}%
+          to {{states('sensor.leaf_battery_level')}}%
 
 - alias: Record charge per hour at depart time
   trigger:
@@ -186,15 +186,15 @@
   condition: >-
     {{ as_timestamp(states('input_datetime.leaf_start_charging')) > 0 }}
   action:
-    - service: script.update_leaf
+    - service: script.update_leaf_battery
     - condition: numeric_state
-      entity_id: sensor.eve2gmmug_charge
+      entity_id: sensor.leaf_battery_level
       above: input_number.leaf_charge_before_charging
     - service: input_number.set_value
       data:
         entity_id: input_number.leaf_charge_per_hour
         value: >
-          {{ (states('sensor.eve2gmmug_charge')|float -
+          {{ (states('sensor.leaf_battery_level')|float -
               states('input_number.leaf_charge_before_charging')|float) /
              ((as_timestamp(states('input_datetime.leaf_next_departure')) -
                as_timestamp(states('input_datetime.leaf_start_charging'))) /
@@ -204,7 +204,7 @@
         message: >
           Departure time. updating input_number.leaf_charge_per_hour
           to {{states('input_number.leaf_charge_per_hour')}}%
-          from current charge ({{states('sensor.eve2gmmug_charge')}}) -
+          from current charge ({{states('sensor.leaf_battery_level')}}) -
           charge before charging
           ({{- " " + states('input_number.leaf_charge_before_charging')}}) /
           ((departure time
@@ -239,13 +239,13 @@
        > as_timestamp(as_timestamp(now()) | timestamp_local) }}
   action:
     - condition: state
-      entity_id: binary_sensor.eve2gmmug_plug_status
+      entity_id: binary_sensor.leaf_battery_connected
       state: "on"
     - service: switch.turn_on
-      entity_id: switch.eve2gmmug_climate_control
+      entity_id: switch.leaf_climate
     - wait_for_trigger:
         - platform: state
-          entity_id: binary_sensor.eve2gmmug_plug_status
+          entity_id: binary_sensor.leaf_battery_connected
           to: "off"
       timeout:
         minutes: 45
