@@ -128,6 +128,7 @@
   mode: restart
   action:
     - service: input_boolean.turn_off
+      entity_id: input_boolean.leaf_next_departure_canceled
     - service: script.update_leaf_battery
     - service: input_datetime.set_datetime
       data:
