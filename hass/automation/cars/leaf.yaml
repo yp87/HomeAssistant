@@ -128,9 +128,6 @@
   mode: restart
   action:
     - service: input_boolean.turn_off
-      entity_id: input_boolean.leaf_next_departure_canceled
-    # Allow 15 minutes to plug the car before updating
-    - delay: "00:15:00"
     - service: script.update_leaf_battery
     - service: input_datetime.set_datetime
       data:
