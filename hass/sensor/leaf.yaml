@@ -9,3 +9,8 @@
   name: leaf_battery_last_updated
   state_topic: "leaf/battery/lastUpdatedDateTimeUtc"
   device_class: timestamp
+
+- platform: mqtt
+  name: leaf_battery_last_received
+  state_topic: "leaf/battery/lastReceivedDateTimeUtc"
+  device_class: timestamp

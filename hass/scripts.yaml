@@ -8,7 +8,7 @@ start_the_leaf:
 charge_the_leaf:
   variables:
     not_plugged_message: >-
-      "La Leaf ne peut pas charger car elle n'est pas branchée."
+      La Leaf ne peut pas charger car elle n'est pas branchée.
   sequence:
     - service: switch.turn_on
       entity_id: switch.leaf_battery_charging
@@ -60,7 +60,7 @@ update_leaf_battery:
               payload: "update"
           - wait_for_trigger:
               - platform: state
-                entity_id: sensor.leaf_battery_last_updated
+                entity_id: sensor.leaf_battery_last_received
             timeout: 600
     # it can take some time before the stats gets updated.
     - delay: "00:00:10"
