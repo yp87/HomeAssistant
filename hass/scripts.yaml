@@ -50,18 +50,18 @@ update_leaf_battery:
   mode: queued
   sequence:
     - repeat:
-      while: >-
-        {{  as_timestamp(now()) -
-            as_timestamp(states('sensor.leaf_battery_last_updated')) > 600 }}
-      sequence:
-        - service: mqtt.publish
-          data:
-            topic: "leaf/command/battery"
-            payload: "update"
-        - wait_for_trigger:
-            - platform: state
-              entity_id: sensor.leaf_battery_last_updated
-          timeout: 600
+        while: >-
+          {{  as_timestamp(now()) -
+              as_timestamp(states('sensor.leaf_battery_last_updated')) > 600 }}
+        sequence:
+          - service: mqtt.publish
+            data:
+              topic: "leaf/command/battery"
+              payload: "update"
+          - wait_for_trigger:
+              - platform: state
+                entity_id: sensor.leaf_battery_last_updated
+            timeout: 600
     # it can take some time before the stats gets updated.
     - delay: "00:00:10"
 
