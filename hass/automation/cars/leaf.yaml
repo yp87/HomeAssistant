@@ -154,7 +154,8 @@
       data:
         entity_id: input_datetime.leaf_start_charging
         datetime: >-
-          {% set missing_charge = 80 - states('sensor.leaf_battery_level')|int %}
+          {% set missing_charge = 80 -
+             states('sensor.leaf_battery_level')|int %}
           {% set charge_rate_seconds = 15 / 3600 %}
           {% set seconds_to_charge = missing_charge / charge_rate_seconds %}
           {{ (as_timestamp(states('input_datetime.leaf_next_departure'))
