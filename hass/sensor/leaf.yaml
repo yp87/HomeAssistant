@@ -19,3 +19,12 @@
   sensors:
     leaf_charge_per_hour:
       value_template: "{{ states('input_number.leaf_charge_per_hour') }}"
+    leaf_next_departure:
+      friendly_name: Heure de départ Leaf
+      value_template: "{{ states('input_text.leaf_next_departure') }}"
+    leaf_start_charging:
+      friendly_name: Heure de charge Leaf
+      value_template: "{{ states('input_text.leaf_start_charging') }}"
+    leaf_start_climate:
+      friendly_name: Heure de régulation de température Leaf
+      value_template: "{{ states('input_text.leaf_start_climate') }}"
