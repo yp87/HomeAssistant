@@ -139,7 +139,7 @@
     - service: input_text.set_value
       data:
         entity_id: input_text.leaf_start_charging
-        value: "2000-00-00 00:00:00"
+        value: "2000-01-01 00:00:00"
     - condition: numeric_state
       entity_id: sensor.leaf_battery_level
       below: 80
@@ -183,7 +183,7 @@
     - platform: time
       at: sensor.leaf_next_departure
   condition: >-
-    {{ as_timestamp(states('input_text.leaf_start_charging')) > 0 }}
+    {{ states('input_text.leaf_start_charging') == "2000-01-01 00:00:00" }}
   action:
     - service: script.update_leaf_battery
     - condition: numeric_state
@@ -261,13 +261,13 @@
     - service: input_text.set_value
       data:
         entity_id: input_text.leaf_next_departure
-        value: "2000-00-00 00:00:00"
+        value: "2000-01-01 00:00:00"
     - service: input_text.set_value
       data:
         entity_id: input_text.leaf_start_charging
-        value: "2000-00-00 00:00:00"
+        value: "2000-01-01 00:00:00"
     - service: input_text.set_value
       data:
         entity_id: input_text.leaf_start_climate
-        value: "2000-00-00 00:00:00"
+        value: "2000-01-01 00:00:00"
     - service: script.turn_off_leaf_climate
