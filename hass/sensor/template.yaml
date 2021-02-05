@@ -22,6 +22,3 @@
         {% else %}
           Other
         {% endif %}
-
-    leaf_charge_per_hour:
-      value_template: "{{ states('input_number.leaf_charge_per_hour') }}"
