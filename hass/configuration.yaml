@@ -94,9 +94,9 @@ google_assistant:
     light.living_room_main_light:
       expose: true
       name: Salon
-    light.twinkly_a80df9:
-      expose: true
-      name: Sapin
+    # light.twinkly_a80df9:
+      # expose: true
+      # name: Sapin
     light.upper_stairs_light:
       expose: true
       name: Escalier
@@ -154,6 +154,6 @@ group: !include groups.yaml
 automation: !include_dir_merge_list automation
 script: !include scripts.yaml
 input_boolean: !include input_boolean.yaml
-input_datetime: !include input_datetime.yaml
+input_text: !include input_text.yaml
 input_number: !include input_number.yaml
 input_select: !include input_select.yaml

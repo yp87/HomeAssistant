@@ -23,7 +23,7 @@
     conditions:
       - >-
         {{ as_timestamp(as_timestamp(now()) | timestamp_local)
-           >= as_timestamp(states('input_datetime.leaf_next_departure')) }}
+           >= as_timestamp(states('input_text.leaf_next_departure')) }}
       - condition: state
         entity_id: input_boolean.leaf_next_departure_canceled
         state: "off"
@@ -51,7 +51,7 @@
           - condition: or
             conditions:
               - >-
-                {{ as_timestamp(states('input_datetime.leaf_next_departure'))
+                {{ as_timestamp(states('input_text.leaf_next_departure'))
                    > as_timestamp(as_timestamp(now()) | timestamp_local) }}
               - condition: state
                 entity_id: input_boolean.leaf_next_departure_canceled
@@ -62,12 +62,12 @@
     - platform: time
       at: '21:00:00'
     - platform: state
-      entity_id: input_datetime.leaf_start_charging
+      entity_id: input_text.leaf_start_charging
   condition:
     condition: and
     conditions:
       - >-
-        {{ as_timestamp(states('input_datetime.leaf_start_charging'))
+        {{ as_timestamp(states('input_text.leaf_start_charging'))
            > as_timestamp(as_timestamp(now()) | timestamp_local) }}
       - condition: state
         entity_id: input_boolean.leaf_next_departure_canceled
@@ -116,30 +116,30 @@
 - alias: Calculate leaf charge and climate time
   trigger:
     - platform: state
-      entity_id: input_datetime.leaf_next_departure
+      entity_id: input_text.leaf_next_departure
     - platform: state
       entity_id: person.cath
       to: 'home'
     - platform: homeassistant
       event: start
   condition: >-
-    {{ as_timestamp(states('input_datetime.leaf_next_departure'))
+    {{ as_timestamp(states('input_text.leaf_next_departure'))
        > as_timestamp(as_timestamp(now()) | timestamp_local) }}
   mode: restart
   action:
     - service: input_boolean.turn_off
       entity_id: input_boolean.leaf_next_departure_canceled
     - service: script.update_leaf_battery
-    - service: input_datetime.set_datetime
+    - service: input_text.set_value
       data:
-        entity_id: input_datetime.leaf_start_climate
-        datetime: >-
-          {{ (as_timestamp(states('input_datetime.leaf_next_departure'))
+        entity_id: input_text.leaf_start_climate
+        value: >-
+          {{ (as_timestamp(states('input_text.leaf_next_departure'))
               - 1800) | timestamp_utc }}
-    - service: input_datetime.set_datetime
+    - service: input_text.set_value
       data:
-        entity_id: input_datetime.leaf_start_charging
-        timestamp: 1
+        entity_id: input_text.leaf_start_charging
+        value: "2000-00-00 00:00:00"
     - condition: numeric_state
       entity_id: sensor.leaf_battery_level
       below: 80
@@ -148,23 +148,23 @@
         message: >
           Would calculate start charge date with
           {{states('sensor.leaf_charge_per_hour_mean')}}% per hour
-    - service: input_datetime.set_datetime
+    - service: input_text.set_value
       data:
-        entity_id: input_datetime.leaf_start_charging
-        datetime: >-
+        entity_id: input_text.leaf_start_charging
+        value: >-
           {% set missing_charge = 80 -
              states('sensor.leaf_battery_level')|int %}
           {% set charge_rate_seconds = 15 / 3600 %}
           {% set seconds_to_charge = missing_charge / charge_rate_seconds %}
-          {{ (as_timestamp(states('input_datetime.leaf_next_departure'))
+          {{ (as_timestamp(states('input_text.leaf_next_departure'))
              - seconds_to_charge) | timestamp_utc }}
 
 - alias: Start charging the leaf
   trigger:
     - platform: time
-      at: input_datetime.leaf_start_charging
+      at: input_text.leaf_start_charging
   condition: >-
-    {{ as_timestamp(states('input_datetime.leaf_next_departure'))
+    {{ as_timestamp(states('input_text.leaf_next_departure'))
        > as_timestamp(as_timestamp(now()) | timestamp_local) }}
   action:
     - service: script.charge_the_leaf
@@ -181,9 +181,9 @@
 - alias: Record charge per hour at depart time
   trigger:
     - platform: time
-      at: input_datetime.leaf_next_departure
+      at: input_text.leaf_next_departure
   condition: >-
-    {{ as_timestamp(states('input_datetime.leaf_start_charging')) > 0 }}
+    {{ as_timestamp(states('input_text.leaf_start_charging')) > 0 }}
   action:
     - service: script.update_leaf_battery
     - condition: numeric_state
@@ -195,8 +195,8 @@
         value: >
           {{ (states('sensor.leaf_battery_level')|float -
               states('input_number.leaf_charge_before_charging')|float) /
-             ((as_timestamp(states('input_datetime.leaf_next_departure')) -
-               as_timestamp(states('input_datetime.leaf_start_charging'))) /
+             ((as_timestamp(states('input_text.leaf_next_departure')) -
+               as_timestamp(states('input_text.leaf_start_charging'))) /
               3600.0) }}
     - service: notify.yan
       data:
@@ -207,9 +207,9 @@
           charge before charging
           ({{- " " + states('input_number.leaf_charge_before_charging')}}) /
           ((departure time
-          ({{- " " + states('input_datetime.leaf_next_departure') }}) -
+          ({{- " " + states('input_text.leaf_next_departure') }}) -
           start charging time
-          ( {{states('input_datetime.leaf_start_charging')}})) / 3600)
+          ( {{states('input_text.leaf_start_charging')}})) / 3600)
     - service: input_number.set_value
       data:
         entity_id: input_number.leaf_charge_before_charging
@@ -218,9 +218,9 @@
 - alias: Notify Yan when leaf departure is set
   trigger:
     - platform: state
-      entity_id: input_datetime.leaf_next_departure
+      entity_id: input_text.leaf_next_departure
   condition: >-
-    {{ as_timestamp(states('input_datetime.leaf_next_departure'))
+    {{ as_timestamp(states('input_text.leaf_next_departure'))
         > as_timestamp(as_timestamp(now()) | timestamp_local) }}
   action:
     - service: notify.yan
@@ -232,9 +232,9 @@
 - alias: Start the leaf climate control
   trigger:
     - platform: time
-      at: input_datetime.leaf_start_climate
+      at: input_text.leaf_start_climate
   condition: >-
-    {{ as_timestamp(states('input_datetime.leaf_next_departure'))
+    {{ as_timestamp(states('input_text.leaf_next_departure'))
        > as_timestamp(as_timestamp(now()) | timestamp_local) }}
   action:
     - condition: state
@@ -258,16 +258,16 @@
       entity_id: input_boolean.leaf_next_departure_canceled
       to: "on"
   action:
-    - service: input_datetime.set_datetime
+    - service: input_text.set_value
       data:
-        entity_id: input_datetime.leaf_next_departure
-        timestamp: 1
-    - service: input_datetime.set_datetime
+        entity_id: input_text.leaf_next_departure
+        value: "2000-00-00 00:00:00"
+    - service: input_text.set_value
       data:
-        entity_id: input_datetime.leaf_start_charging
-        timestamp: 1
-    - service: input_datetime.set_datetime
+        entity_id: input_text.leaf_start_charging
+        value: "2000-00-00 00:00:00"
+    - service: input_text.set_value
       data:
-        entity_id: input_datetime.leaf_start_climate
-        timestamp: 1
+        entity_id: input_text.leaf_start_climate
+        value: "2000-00-00 00:00:00"
     - service: script.turn_off_leaf_climate
