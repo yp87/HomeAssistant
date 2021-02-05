@@ -1,0 +1,9 @@
+---
+leaf_next_departure:
+  name: Heure de départ Leaf
+
+leaf_start_charging:
+  name: Heure de charge Leaf
+
+leaf_start_climate:
+  name: Heure de régulation de température Leaf
