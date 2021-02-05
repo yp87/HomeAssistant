@@ -183,7 +183,7 @@
     - platform: time
       at: sensor.leaf_next_departure
   condition: >-
-    {{ states('input_text.leaf_start_charging') == "2000-01-01 00:00:00" }}
+    {{ states('input_text.leaf_start_charging') != "2000-01-01 00:00:00" }}
   action:
     - service: script.update_leaf_battery
     - condition: numeric_state
