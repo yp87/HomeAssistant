@@ -161,8 +161,10 @@
 
 - alias: Start charging the leaf
   trigger:
-    - platform: time
-      at: sensor.leaf_start_charging
+    - platform: template
+      value_template: >
+        {{ states('sensor.time') == (as_timestamp(states('input_text.leaf_start_charging')) |
+           timestamp_custom('%H:%M', false)) }}
   condition: >-
     {{ as_timestamp(states('input_text.leaf_next_departure'))
        > as_timestamp(as_timestamp(now()) | timestamp_local) }}
@@ -180,8 +182,10 @@
 
 - alias: Record charge per hour at depart time
   trigger:
-    - platform: time
-      at: sensor.leaf_next_departure
+    - platform: template
+      value_template: >
+        {{ states('sensor.time') == (as_timestamp(states('input_text.leaf_next_departure')) |
+           timestamp_custom('%H:%M', false)) }}
   condition: >-
     {{ states('input_text.leaf_start_charging') != "2000-01-01 00:00:00" }}
   action:
@@ -231,8 +235,10 @@
 
 - alias: Start the leaf climate control
   trigger:
-    - platform: time
-      at: sensor.leaf_start_climate
+    - platform: template
+      value_template: >
+        {{ states('sensor.time') == (as_timestamp(states('input_text.leaf_start_climate')) |
+           timestamp_custom('%H:%M', false)) }}
   condition: >-
     {{ as_timestamp(states('input_text.leaf_next_departure'))
        > as_timestamp(as_timestamp(now()) | timestamp_local) }}
