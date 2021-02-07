@@ -50,9 +50,11 @@ update_leaf_battery:
   mode: queued
   sequence:
     - repeat:
-        while: >-
-          {{  as_timestamp(now()) -
+        while:
+          - >
+            {{ as_timestamp(now()) -
               as_timestamp(states('sensor.leaf_battery_last_updated')) > 600 }}
+          - "{{ repeat.index <= 4 }}"
         sequence:
           - service: mqtt.publish
             data:
