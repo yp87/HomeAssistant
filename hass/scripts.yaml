@@ -1,7 +1,13 @@
 ---
 start_the_leaf:
-  description: Used to start the climate on the leaf through google home
+  description: >
+    Used to start the climate on the leaf.
+    Since the Leaf does not report when Climate is inactive,
+    We start by turning off then on to ensure the command is sent.
   sequence:
+    - service: switch.turn_off
+      entity_id: switch.leaf_climate
+    - delay: "00:00:05"
     - service: switch.turn_on
       entity_id: switch.leaf_climate
 
