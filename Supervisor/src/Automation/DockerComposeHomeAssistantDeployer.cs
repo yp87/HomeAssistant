@@ -20,7 +20,7 @@ namespace Supervisor.Automation
             if (deployInfrastructure)
             {
                 await _automationClient.NotifyAsync("Deploying automation system...");
-                infrastructuredeploymentOutput = await _dockerComposeShellCommand.RunCommandAsync("-f docker-compose-homeassistant.yaml --env-file /Source/.env up --build -d", true);
+                infrastructuredeploymentOutput = await _dockerComposeShellCommand.RunCommandAsync("-f docker-compose-homeassistant.yaml --env-file .env up --build -d", true);
             }
             else
             {
