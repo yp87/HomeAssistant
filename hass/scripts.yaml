@@ -221,7 +221,8 @@ morning:
         message: >-
           {%- set weekday = ['Lundi','Mardi','Mercredi','Jeudi',
                             'Vendredi','Samedi','Dimanche'] -%}
-          {%- set dt = states('sensor.leaf_battery_last_updated') -%}
+          {%- set ts =
+              as_timestamp(states('sensor.leaf_battery_last_updated')) -%}
           Bon matin Catherine!
           Ton carosse est chargé à
           {{- " " + states('sensor.leaf_battery_level') }}% et est
@@ -230,8 +231,9 @@ morning:
           {%- else -%}
           {{ " " }}DÉBRANCHÉ.
           {%- endif -%}
-          {{ " " }}La dernière mise à jour est ce {{ weekday[dt.weekday()] -}}
-          {{ " " }}à {{ as_timestamp(dt) | timestamp_custom('%HH%M') }}.
+          {{ " " }}La dernière mise à jour est ce
+          {{ " " }}{{- weekday[ts|timestamp_custom('%w')|int] -}}
+          {{ " " }}à {{ ts | timestamp_custom('%HH%M') }}.
     - delay: "00:00:05"
 
 arm_lock_home:

@@ -18,7 +18,9 @@
       state: 'disarmed'
     - condition: or
       conditions:
-        - '{{ trigger.to_state.object_id == "diaper_cleaning_state" }}'
+        - >
+          {{ trigger.platform == "state" and
+             trigger.to_state.object_id == "diaper_cleaning_state" }}
         - condition: and
           conditions:
             - '{{ "Attente" in trigger.to_state.state }}'
