@@ -135,7 +135,7 @@
         entity_id: input_text.leaf_start_climate
         value: >-
           {{ (as_timestamp(states('input_text.leaf_next_departure'))
-              - 1800) | timestamp_utc }}
+              - 1500) | timestamp_utc }}
     - service: input_text.set_value
       data:
         entity_id: input_text.leaf_start_charging
@@ -259,6 +259,21 @@
     - condition: template
       value_template: "{{ wait.trigger is none }}"
     - service: script.turn_off_leaf_climate
+
+- alias: Refresh Leaf battery info while charging
+  trigger:
+    - platform: state
+      entity_id: switch.leaf_battery_charging
+      to: "on"
+  action:
+    - repeat:
+        while:
+          - condition: state
+            entity_id: switch.leaf_battery_charging
+            state: "on"
+        sequence:
+          - delay: "00:10:05"
+          - service: update_leaf_battery
 
 - alias: Cancel planned leaf departure
   trigger:

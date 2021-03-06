@@ -23,8 +23,8 @@
              trigger.to_state.object_id == "diaper_cleaning_state" }}
         - condition: and
           conditions:
-            - '{{ "Attente" in trigger.to_state.state }}'
-            - '{{ trigger.to_state.state != "Attente du premier rinçage" }}'
+            - '{{ "Attente" in states("input_select.diaper_cleaning_state") }}'
+            - '{{ states("input_select.diaper_cleaning_state") != "Attente du premier rinçage" }}'
   action:
     - service: notify.all_people
       data:
