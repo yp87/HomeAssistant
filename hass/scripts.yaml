@@ -19,8 +19,8 @@ charge_the_leaf:
     - repeat:
         count: 3
         sequence:
-          # Leaf cannot really stop charging, we just want to send
-          # the start charge command multiple times since it is unreliable.
+            # Leaf cannot really stop charging, we just want to send
+            # the start charge command multiple times since it is unreliable.
           - service: switch.turn_off
             entity_id: switch.leaf_battery_charging
           - service: switch.turn_on

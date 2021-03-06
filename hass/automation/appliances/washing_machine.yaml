@@ -24,7 +24,9 @@
         - condition: and
           conditions:
             - '{{ "Attente" in states("input_select.diaper_cleaning_state") }}'
-            - '{{ states("input_select.diaper_cleaning_state") != "Attente du premier rinçage" }}'
+            - >
+              {{ states("input_select.diaper_cleaning_state") !=
+                 "Attente du premier rinçage" }}
   action:
     - service: notify.all_people
       data:
