@@ -273,7 +273,7 @@
             state: "on"
         sequence:
           - delay: "00:10:05"
-          - service: update_leaf_battery
+          - service: script.update_leaf_battery
 
 - alias: Cancel planned leaf departure
   trigger:
