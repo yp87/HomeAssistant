@@ -17,6 +17,7 @@ secret*
 /hass/tts/
 /hass/blueprints/
 
+
 __pycache__/
 
 [Bb]in/
@@ -25,7 +26,6 @@ __pycache__/
 .*
 !.editorconfig
 !/.gitignore
-!/hass/.HA_VERSION
 !.stubs/
 !.stubs/**
 !.github/
