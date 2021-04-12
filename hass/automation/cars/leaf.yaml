@@ -58,6 +58,7 @@
                 state: "on"
 
 - alias: Alert if the leaf is not plugged in and needs charge.
+  id: Alert_if_the_leaf_is_not_plugged_in_and_needs_charge
   trigger:
     - platform: time
       at: '21:00:00'

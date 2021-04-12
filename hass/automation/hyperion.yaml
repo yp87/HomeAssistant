@@ -10,6 +10,7 @@
         entity_id: light.hyperion_classic
 
 - alias: Hyperion Hdmi when casting
+  id: hyperion_hdmi_when_casting
   trigger:
     - platform: state
       entity_id: remote.yharmony
