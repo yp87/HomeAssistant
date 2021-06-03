@@ -38,10 +38,10 @@
           {% elif state == "Attente du deuxième rinçage" %}
           Shake - No Wet Bag - Heavy Duty - Cold - Spin High - Soil Heavy
           {% elif state == "Attente du premier lavage" %}
-          Shake - Add Wet Bag - Heavy Duty - Soap Bottom Line - Hot
+          Shake - No Wet Bag - Heavy Duty - Soap Bottom Line - Hot
           {{- " " }}- Spin High - Soil Heavy - Jet Wash
           {% elif state == "Attente du deuxième lavage" %}
-          Shake - Heavy Duty - Soap Top Line - Hot
+          Shake - Add Wet Bag - Heavy Duty - Soap Top Line - Hot
           {{- " " }}- Spin High - Soil Heavy - Jet Wash
           {% elif state == "Attente du troisième rinçage" %}
           Shake - Normal - Warm - Spin High - Soil Normal

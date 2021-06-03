@@ -15,6 +15,7 @@
       entity_id: input_boolean.leaf_next_departure_canceled
 
 - alias: Ask for leaf departure time for tomorrow
+  id: Ask_for_leaf_departure_time_for_tomorrow
   trigger:
     - platform: time
       at: '21:00:00'
@@ -115,6 +116,7 @@
                 state: "on"
 
 - alias: Calculate leaf charge and climate time
+  id: Calculate_leaf_charge_and_climate_time
   trigger:
     - platform: state
       entity_id: input_text.leaf_next_departure
@@ -161,6 +163,7 @@
              - seconds_to_charge) | timestamp_utc }}
 
 - alias: Start charging the leaf
+  id: Start_charging_the_leaf
   trigger:
     - platform: template
       value_template: >
@@ -183,6 +186,7 @@
           to {{states('sensor.leaf_battery_level')}}%
 
 - alias: Record charge per hour at depart time
+  id: Record_charge_per_hour_at_depart_time
   trigger:
     - platform: template
       value_template: >
@@ -237,6 +241,7 @@
            {{- " " + states('sensor.leaf_charge_per_hour_mean') }}% par heure.
 
 - alias: Start the leaf climate control
+  id: Start_the_leaf_climate_control
   trigger:
     - platform: template
       value_template: >
@@ -262,6 +267,7 @@
     - service: script.turn_off_leaf_climate
 
 - alias: Refresh Leaf battery info while charging
+  id: Refresh_Leaf_battery_info_while_charging
   trigger:
     - platform: state
       entity_id: switch.leaf_battery_charging
@@ -277,6 +283,7 @@
           - service: script.update_leaf_battery
 
 - alias: Cancel planned leaf departure
+  id: Cancel_planned_leaf_departure
   trigger:
     - platform: state
       entity_id: input_boolean.leaf_next_departure_canceled

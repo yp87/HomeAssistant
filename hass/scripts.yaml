@@ -16,16 +16,11 @@ charge_the_leaf:
     not_plugged_message: >-
       La Leaf ne peut pas charger car elle n'est pas branchée.
   sequence:
-    - repeat:
-        count: 3
-        sequence:
-            # Leaf cannot really stop charging, we just want to send
-            # the start charge command multiple times since it is unreliable.
-          - service: switch.turn_off
-            entity_id: switch.leaf_battery_charging
-          - service: switch.turn_on
-            entity_id: switch.leaf_battery_charging
-          - delay: "00:00:30"
+    - service: switch.turn_off
+      entity_id: switch.leaf_battery_charging
+    - service: switch.turn_on
+      entity_id: switch.leaf_battery_charging
+    - delay: "00:00:30"
     - condition: state
       entity_id: alarm_control_panel.home_alarm
       state: 'disarmed'
