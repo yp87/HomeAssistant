@@ -9,6 +9,7 @@
   condition:
     condition: state
     entity_id: climate.main_floor
+    attribute: preset_mode
     state: home
   action:
     - service: climate.set_preset_mode
