@@ -56,6 +56,7 @@
         message: Le problème est maintenant réglé.
 
 - alias: intrusion when no one is home
+  id: intrusion_when_no_one_is_home
   trigger:
     - platform: state
       entity_id: switch.garage_door
@@ -63,6 +64,8 @@
     - platform: state
       entity_id: alarm_control_panel.home_alarm
       from: 'armed_away'
+  mode: single
+  max_exceeded: silent
   action:
     - delay:
         seconds: 60
@@ -108,6 +111,7 @@
         volume_level: 0.3
 
 - alias: close garage door if no one is home
+  id: close_garage_door_if_no_one_is_home
   trigger:
     - platform: state
       entity_id: group.all_people
@@ -125,6 +129,8 @@
       - condition: state
         entity_id: group.all_people
         state: 'not_home'
+  mode: single
+  max_exceeded: silent
   action:
     - service: notify.all_people
       data:

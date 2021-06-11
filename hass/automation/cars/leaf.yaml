@@ -224,7 +224,7 @@
     - service: input_number.set_value
       data:
         entity_id: input_number.leaf_charge_before_charging
-        value: 999
+        value: 100
 
 - alias: Notify Yan when leaf departure is set
   trigger:

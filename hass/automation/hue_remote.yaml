@@ -1,11 +1,14 @@
 ---
 - alias: Hue remote automation - Long Press Off
+  id: Hue_remote_automation_Long_Press_Off
   trigger:
     - platform: event
       event_type: hue_event
       event_data:
         id: "hue_dimmer_switch_1"
         event: 4001
+  mode: single
+  max_exceeded: silent
   action:
     - service: alarm_control_panel.alarm_arm_home
       entity_id: all

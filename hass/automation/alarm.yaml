@@ -75,6 +75,7 @@
       entity_id: remote.yharmony
 
 - alias: Morning routine when waking up
+- id: Morning_routine_when_waking_up
   trigger:
     platform: state
     entity_id: binary_sensor.second_floor_motion
@@ -83,5 +84,6 @@
       after: "6:00:00"
       before: "9:00:00"
   mode: single
+  max_exceeded: silent
   action:
     - service: script.morning
