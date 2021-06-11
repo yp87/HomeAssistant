@@ -75,7 +75,7 @@
       entity_id: remote.yharmony
 
 - alias: Morning routine when waking up
-- id: Morning_routine_when_waking_up
+  id: Morning_routine_when_waking_up
   trigger:
     platform: state
     entity_id: binary_sensor.second_floor_motion
