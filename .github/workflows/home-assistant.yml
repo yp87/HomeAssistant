@@ -69,7 +69,7 @@ jobs:
       - name: Running YAMLlint
         uses: docker://pipelinecomponents/yamllint:latest
         with:
-          args: yamllint -c yamllint.yaml .
+          args: yamllint .
 
   home_assistant_config_check:
     runs-on: self-hosted
