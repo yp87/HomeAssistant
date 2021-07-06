@@ -69,7 +69,7 @@ jobs:
       - name: Running YAMLlint
         uses: ibiqlik/action-yamllint@v3
         with:
-          config_file: yamllint.yml
+          config_file: yamllint.yaml
 
   home_assistant_config_check:
     runs-on: self-hosted
