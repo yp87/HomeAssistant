@@ -241,18 +241,18 @@ morning:
 
 lock_door:
   fields:
-    entity_id:
+    lock_id:
       description: 'The entity to lock'
       example: 'lock.front_door_lock'
   mode: parallel
   sequence:
     - service: lock.lock
       data:
-        entity_id: '{{ entity_id }}'
+        entity_id: '{{ lock_id }}'
     - delay: "00:00:05"
     - service: lock.lock
       data:
-        entity_id: '{{ entity_id }}'
+        entity_id: '{{ lock_id }}'
 
 arm_lock_home:
   sequence:
@@ -261,7 +261,7 @@ arm_lock_home:
     - service: script.lock_door
       data:
         variables:
-          entity_id: lock.front_door_lock
+          lock_id: lock.front_door_lock
 
 disarm_unlock_home:
   sequence:
