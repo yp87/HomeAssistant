@@ -260,8 +260,7 @@ arm_lock_home:
       entity_id: alarm_control_panel.home_alarm
     - service: script.lock_door
       data:
-        variables:
-          lock_id: lock.front_door_lock
+        lock_id: lock.front_door_lock
 
 disarm_unlock_home:
   sequence:

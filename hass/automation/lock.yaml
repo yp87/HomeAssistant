@@ -20,8 +20,7 @@
   action:
     - service: script.lock_door
       data:
-        variables:
-          lock_id: lock.front_door_lock
+        lock_id: lock.front_door_lock
 
 - alias: 'Auto unlock Front Door if door is open'
   trigger:
