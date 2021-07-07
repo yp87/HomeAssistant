@@ -84,7 +84,7 @@
           }
     - repeat:
         sequence:
-          - service: notify.yan
+          - service: notify.all_people
             data:
               message: "De l'eau est détectée dans le bac de la laveuse."
           - delay:
@@ -93,7 +93,7 @@
           - condition: state
             entity_id: binary_sensor.washer_leak_sensor
             state: 'off'
-    - service: notify.yan
+    - service: notify.all_people
       data:
         message: Le problème est maintenant réglé.
     - service: hyperion_priority.clear_priority
