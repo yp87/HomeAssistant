@@ -10,6 +10,11 @@
   mode: single
   max_exceeded: silent
   action:
+    - service: script.turn_on
+      data:
+        entity_id: script.lock_door
+        variables:
+          entity_id: lock.garage_door_lock
     - service: alarm_control_panel.alarm_arm_home
       entity_id: all
     - service: script.turn_on

@@ -239,15 +239,29 @@ morning:
           {{ " " }}à {{ ts | timestamp_custom('%HH%M') }}.
     - delay: "00:00:05"
 
+lock_door:
+  fields:
+    entity_id:
+      description: 'The entity to lock'
+      example: 'lock.front_door_lock'
+  mode: parallel
+  sequence:
+    - service: lock.lock
+      data:
+        entity_id: '{{ entity_id }}'
+    - delay: "00:00:05"
+    - service: lock.lock
+      data:
+        entity_id: '{{ entity_id }}'
+
 arm_lock_home:
   sequence:
     - service: alarm_control_panel.alarm_arm_away
       entity_id: alarm_control_panel.home_alarm
-    - service: lock.lock
-      entity_id: lock.front_door_lock
-    - delay: "00:00:05"
-    - service: lock.lock
-      entity_id: lock.front_door_lock
+    - service: script.lock_door
+      data:
+        variables:
+          entity_id: lock.front_door_lock
 
 disarm_unlock_home:
   sequence:
