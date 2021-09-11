@@ -1,0 +1,25 @@
+---
+- alias: Google tv turns on
+  id: google_tv_turns_on
+  trigger:
+  - platform: state
+    entity_id: media_player.living_room_tv
+    from: 'off'
+  action:
+    - service: remote.turn_on
+      entity_id: remote.yharmony
+      data:
+        activity: 'Regarder Chromecast'
+
+- alias: Google tv turns off
+  id: google_tv_turns_off
+  trigger:
+  - platform: state
+    entity_id: media_player.living_room_tv
+    to: 'off'
+  action:
+    - service: remote.turn_on
+      entity_id: remote.yharmony
+      data:
+        activity: 'Off'
+
