@@ -4,12 +4,12 @@
   trigger:
     - platform: state
       entity_id: media_player.living_room_tv
-      from: 'off'
-      to: 'paused'
-    - platform: state
-      entity_id: media_player.living_room_tv
-      from: 'unavailable'
-      to: 'paused'
+  condition:
+    condition: template
+    value_template: >
+      {{ trigger.from_state is not none and trigger.to_state is not none and
+         trigger.from_state.state in ['off', 'unavailable'] and
+         trigger.to_state.state in ['playing', 'paused'] }}
   action:
     - service: remote.turn_on
       entity_id: remote.yharmony
