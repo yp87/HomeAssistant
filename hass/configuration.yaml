@@ -51,7 +51,7 @@ sun:
 media_player:
   - platform: androidtv
     name: Living room TV
-    host: 192.168.1.37
+    host: 192.168.1.128
     screencap: false
     get_sources: false
 
