@@ -4,3 +4,6 @@
 [submodule "leaf2mqtt"]
 	path = leaf2mqtt
 	url = https://github.com/yp87/leaf2mqtt
+[submodule "hass/external_dependencies/tesla"]
+	path = hass/external_dependencies/tesla
+	url = https://github.com/alandtse/tesla
