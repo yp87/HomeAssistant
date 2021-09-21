@@ -5,7 +5,7 @@
     event: start
   action:
     service: switch.turn_off
-    entity_id: switch.bibicar_update_switch
+    entity_id: switch.bibicar_polling_switch
 
 - alias: Notify when something is opened while exiting the car
   trigger:
