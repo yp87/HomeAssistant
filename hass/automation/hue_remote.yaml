@@ -1,6 +1,6 @@
 ---
 - alias: Hue restart integration event workaround
-  id:
+  id: Hue_restart_integration_event_workaround
   trigger:
     platform: time
     at: "19:00:00"
