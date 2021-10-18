@@ -9,7 +9,6 @@
     data:
       entry_id: 1742bde87dfd47a5a80d11af5a0bcd86
 
-
 - alias: Hue remote automation - Long Press Off
   id: Hue_remote_automation_Long_Press_Off
   trigger:
