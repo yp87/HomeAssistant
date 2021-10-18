@@ -1,4 +1,15 @@
 ---
+- alias: Hue restart integration event workaround
+  id:
+  trigger:
+    platform: time
+    at: "19:00:00"
+  action:
+    service: homeassistant.reload_config_entry
+    data:
+      entry_id: 1742bde87dfd47a5a80d11af5a0bcd86
+
+
 - alias: Hue remote automation - Long Press Off
   id: Hue_remote_automation_Long_Press_Off
   trigger:
