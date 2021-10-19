@@ -1,4 +1,14 @@
 ---
+- alias: Hangout restart integration notification workaround
+  id: Hangout_restart_integration_notification_workaround
+  trigger:
+    platform: time
+    at: "00:00:00"
+  action:
+    service: homeassistant.reload_config_entry
+    data:
+      entry_id: 69cb93656b7a4e8294af31e5e8171084
+
 - alias: Home assistant started notification
   trigger:
     platform: homeassistant
