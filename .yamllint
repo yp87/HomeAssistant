@@ -3,3 +3,4 @@ extends: default
 
 ignore: |
   leaf2mqtt/
+  hass/external_dependencies/
