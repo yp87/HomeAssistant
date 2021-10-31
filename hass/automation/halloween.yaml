@@ -8,7 +8,7 @@
   action:
     - repeat:
         sequence:
-          - service: light.toggle
+          - service: switch.toggle
             entity_id: switch.light_front
           - delay:
               milliseconds: "{{ ( range(100, 4000) | random | int) }}"
