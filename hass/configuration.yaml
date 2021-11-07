@@ -101,9 +101,9 @@ google_assistant:
     light.living_room_main_light:
       expose: true
       name: Salon
-  # light.twinkly_a80df9:
-    # expose: true
-    # name: Sapin
+    light.twinkly_a80df9:
+      expose: true
+      name: Sapin
     light.upper_stairs_light:
       expose: true
       name: Escalier
