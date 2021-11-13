@@ -15,7 +15,7 @@
   state_topic: "leaf/battery/lastReceivedDateTimeUtc"
   device_class: timestamp
 
-- platform: template
-  sensors:
-    leaf_charge_per_hour:
-      value_template: "{{ states('input_number.leaf_charge_per_hour') }}"
+- platform: mqtt
+  name: leaf_last_error_occured
+  state_topic: "leaf/lastErrorDateTimeUtc"
+  device_class: timestamp

@@ -1,5 +1,22 @@
 ---
+- alias: Leaf error notification
+  id: Leaf_error_notification
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: sensor.leaf_last_error_occured
+  action:
+    - service: notify.all_people
+      data:
+        message: >
+          Une erreur c'est produite.
+          Impossible de communiquer avec la Leaf.
+          Utilisez l'application native.
+    - delay: "01:00:00"
+
+
 - alias: Update leaf in morning
+  id: Update_leaf_in_morning
   trigger:
     - platform: time
       at: "05:45:00"
@@ -7,6 +24,7 @@
     - service: script.update_leaf_battery
 
 - alias: Reset leaf next departure canceled at midnight
+  id: Reset_leaf_next_departure_canceled_at_midnight
   trigger:
     - platform: time
       at: "00:00:00"
@@ -125,6 +143,8 @@
       to: 'home'
     - platform: homeassistant
       event: start
+    - platform: state
+      entity_id: input_number.leaf_charge_per_hour
   condition: >-
     {{ as_timestamp(states('input_text.leaf_next_departure'))
        > as_timestamp(as_timestamp(now()) | timestamp_local) }}
@@ -146,18 +166,14 @@
     - condition: numeric_state
       entity_id: sensor.leaf_battery_level
       below: 80
-    - service: notify.yan
-      data:
-        message: >
-          Would calculate start charge date with
-          {{states('sensor.leaf_charge_per_hour_mean')}}% per hour
     - service: input_text.set_value
       data:
         entity_id: input_text.leaf_start_charging
         value: >-
           {% set missing_charge = 80 -
              states('sensor.leaf_battery_level')|int %}
-          {% set charge_rate_seconds = 15 / 3600 %}
+          {% set charge_rate_seconds =
+             states('input_number.leaf_charge_per_hour')|int / 3600 %}
           {% set seconds_to_charge = missing_charge / charge_rate_seconds %}
           {{ (as_timestamp(states('input_text.leaf_next_departure'))
              - seconds_to_charge) | timestamp_utc }}
@@ -175,70 +191,6 @@
        > as_timestamp(as_timestamp(now()) | timestamp_local) }}
   action:
     - service: script.charge_the_leaf
-    - service: input_number.set_value
-      data:
-        entity_id: input_number.leaf_charge_before_charging
-        value: "{{ states('sensor.leaf_battery_level') }}"
-    - service: notify.yan
-      data:
-        message: >
-          Start charging the leaf. Setting leaf_charge_before_charging
-          to {{states('sensor.leaf_battery_level')}}%
-
-- alias: Record charge per hour at depart time
-  id: Record_charge_per_hour_at_depart_time
-  trigger:
-    - platform: template
-      value_template: >
-        {{ states('sensor.date_time') ==
-           (as_timestamp(states('input_text.leaf_next_departure')) |
-            timestamp_custom('%Y-%m-%d, %H:%M', false)) }}
-  condition: >-
-    {{ states('input_text.leaf_start_charging') != "2000-01-01 00:00:00" }}
-  action:
-    - service: script.update_leaf_battery
-    - condition: numeric_state
-      entity_id: sensor.leaf_battery_level
-      above: input_number.leaf_charge_before_charging
-    - service: input_number.set_value
-      data:
-        entity_id: input_number.leaf_charge_per_hour
-        value: >
-          {{ (states('sensor.leaf_battery_level')|float -
-              states('input_number.leaf_charge_before_charging')|float) /
-             ((as_timestamp(states('input_text.leaf_next_departure')) -
-               as_timestamp(states('input_text.leaf_start_charging'))) /
-              3600.0) }}
-    - service: notify.yan
-      data:
-        message: >
-          Departure time. updating input_number.leaf_charge_per_hour
-          to {{states('input_number.leaf_charge_per_hour')}}%
-          from current charge ({{states('sensor.leaf_battery_level')}}) -
-          charge before charging
-          ({{- " " + states('input_number.leaf_charge_before_charging')}}) /
-          ((departure time
-          ({{- " " + states('input_text.leaf_next_departure') }}) -
-          start charging time
-          ( {{states('input_text.leaf_start_charging')}})) / 3600)
-    - service: input_number.set_value
-      data:
-        entity_id: input_number.leaf_charge_before_charging
-        value: 100
-
-- alias: Notify Yan when leaf departure is set
-  trigger:
-    - platform: state
-      entity_id: input_text.leaf_next_departure
-  condition: >-
-    {{ as_timestamp(states('input_text.leaf_next_departure'))
-        > as_timestamp(as_timestamp(now()) | timestamp_local) }}
-  action:
-    - service: notify.yan
-      data:
-        message: >
-          Le temps de charge de la leaf sera calculé avec un taux de
-           {{- " " + states('sensor.leaf_charge_per_hour_mean') }}% par heure.
 
 - alias: Start the leaf climate control
   id: Start_the_leaf_climate_control
