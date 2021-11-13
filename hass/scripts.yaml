@@ -183,26 +183,17 @@ set_tesla_climate:
       example: 'on'
   mode: restart
   sequence:
-    - service: switch.turn_on
-      entity_id: switch.bibicar_polling_switch
-    - repeat:
-        count: 2
-        sequence:
-          - delay: "00:00:15"
-          - service: "{{ 'climate.turn_'+state }}"
-            entity_id: climate.bibicar_hvac_climate_system
-          - condition: and
-            conditions:
-              - "{{ state == 'on'}}"
-              - >
-                {{(state_attr('weather.main_floor', 'temperature')|float) < 2}}
-          - service: climate.set_preset_mode
-            data:
-              entity_id: climate.bibicar_hvac_climate_system
-              preset_mode: defrost
-
-    - service: switch.turn_off
-      entity_id: switch.bibicar_polling_switch
+    - service: "{{ 'climate.turn_'+state }}"
+      entity_id: climate.bibicar_hvac_climate_system
+    - condition: and
+      conditions:
+        - "{{ state == 'on'}}"
+        - >
+          {{(state_attr('weather.main_floor', 'temperature')|float) < 2}}
+    - service: climate.set_preset_mode
+      data:
+        entity_id: climate.bibicar_hvac_climate_system
+        preset_mode: defrost
 
 morning:
   mode: single
