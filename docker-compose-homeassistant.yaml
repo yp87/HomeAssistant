@@ -102,20 +102,22 @@ services:
       - database
 
 zwavejs2mqtt:
-    container_name: zwavejs2mqtt
-    image: zwavejs/zwavejs2mqtt:latest
-    restart: always
-    tty: true
-    stop_signal: SIGINT
-    environment:
-      - SESSION_SECRET=${ZWAVE_SESSION_SECRET}
-    devices:
-      - '/dev/zwave:/dev/zwave'
-    volumes:
-      - zwave-config:/usr/src/app/store
-    ports:
-      - '8091:8091' # port for web interface
-      - '3000:3000' # port for Z-Wave JS websocket server
+  container_name: zwavejs2mqtt
+  image: zwavejs/zwavejs2mqtt:latest
+  restart: always
+  tty: true
+  stop_signal: SIGINT
+  environment:
+    - SESSION_SECRET=${ZWAVE_SESSION_SECRET}
+  devices:
+    - '/dev/zwave:/dev/zwave'
+  volumes:
+    - zwave-config:/usr/src/app/store
+  ports:
+    # port for web interface
+    - '8091:8091'
+    # port for Z-Wave JS websocket server
+    - '3000:3000'
 
 volumes:
   teslamate-grafana-data:
