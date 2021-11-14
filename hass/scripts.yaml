@@ -266,11 +266,6 @@ disarm_unlock_home:
         variables:
           duration_seconds: 300
           auto_switch_entity: switch.entrance_light
-    - delay: "00:00:10"
-    - service: lock.unlock
-      data:
-        entity_id: lock.front_door_lock
-        code: !secret front_door_pin
 
 disarm_home:
   sequence:
