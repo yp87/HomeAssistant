@@ -33,7 +33,7 @@
     - platform: event
       event_type: zwave_js_notification
       event_data:
-        device_id:  "{{ device_id('lock.front_door_lock') }}"
+        device_id: "{{ device_id('lock.front_door_lock') }}"
         event_label: "Keypad unlock operation"
   condition:
     condition: or
