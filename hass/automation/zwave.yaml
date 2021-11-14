@@ -29,11 +29,11 @@
 - alias: Frederique main light triple up
   trigger:
     - platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        entity_id: zwave.frederique_main_light
-        scene_id: 1
-        scene_data: 4
+        device_id: "{{ device_id('light.frederique_main_light') }}"
+        property_key_name: "001"
+        value: "KeyPressed3x"
   action:
     - service: light.turn_on
       data:
@@ -43,11 +43,11 @@
 - alias: Frederique main light triple down
   trigger:
     - platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        entity_id: zwave.frederique_main_light
-        scene_id: 2
-        scene_data: 4
+        device_id: "{{ device_id('light.frederique_main_light') }}"
+        property_key_name: "002"
+        value: "KeyPressed3x"
   action:
     - service: light.turn_off
       data:
@@ -58,17 +58,17 @@
 - alias: Stairs double down
   trigger:
     - platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        entity_id: zwave.upper_stairs_light
-        scene_id: 2
-        scene_data: 3
+        device_id: "{{ device_id('light.upper_stairs_light') }}"
+        property_key_name: "002"
+        value: "KeyPressed2x"
     - platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        entity_id: zwave.ground_floor_hallway_light
-        scene_id: 2
-        scene_data: 3
+        device_id: "{{ device_id('light.ground_floor_hallway_light') }}"
+        property_key_name: "002"
+        value: "KeyPressed2x"
   action:
     - service: light.turn_on
       data:
@@ -80,11 +80,11 @@
 - alias: Frederique main light double down
   trigger:
     - platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        entity_id: zwave.frederique_main_light
-        scene_id: 2
-        scene_data: 3
+        device_id: "{{ device_id('light.frederique_main_light') }}"
+        property_key_name: "002"
+        value: "KeyPressed2x"
   action:
     - service: light.turn_off
       data:
@@ -98,17 +98,17 @@
 - alias: Frederique main light single up or release from hold up
   trigger:
     - platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        entity_id: zwave.frederique_main_light
-        scene_id: 1
-        scene_data: 0
+        device_id: "{{ device_id('light.frederique_main_light') }}"
+        property_key_name: "001"
+        value: "KeyPressed"
     - platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        entity_id: zwave.frederique_main_light
-        scene_id: 1
-        scene_data: 1
+        device_id: "{{ device_id('light.frederique_main_light') }}"
+        property_key_name: "001"
+        value: "KeyHeldDown"
   action:
     - service: switch.turn_off
       data:
@@ -136,18 +136,18 @@
           {% else %}
             255
           {% endif %}
-    - service: zwave.refresh_entity
+    - service: zwave_js.refresh_value
       data:
         entity_id: '{{ light_entity_id }}'
 
 - alias: Bathroom ceiling light single click up
   trigger:
     - platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        entity_id: zwave.bathroom_ceiling_light
-        scene_id: 1
-        scene_data: 0
+        device_id: "{{ device_id('light.bathroom_ceiling_light') }}"
+        property_key_name: "001"
+        value: "KeyPressed"
   action:
     - service: light.turn_on
       data:
@@ -162,17 +162,17 @@
 - alias: bathroom any light single click down
   trigger:
     - platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        entity_id: zwave.bathroom_ceiling_light
-        scene_id: 2
-        scene_data: 0
+        device_id: "{{ device_id('light.bathroom_ceiling_light') }}"
+        property_key_name: "002"
+        value: "KeyPressed"
     - platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        entity_id: zwave.bathroom_mirror_light
-        scene_id: 2
-        scene_data: 0
+        device_id: "{{ device_id('light.bathroom_mirror_light') }}"
+        property_key_name: "002"
+        value: "KeyPressed"
   action:
     - service: light.turn_off
       entity_id:
@@ -188,11 +188,11 @@
 - alias: bathroom fan double click up
   trigger:
     - platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        entity_id: zwave.master_bathroom_fan
-        scene_id: 1
-        scene_data: 3
+        device_id: "{{ device_id('switch.master_bathroom_fan') }}"
+        property_key_name: "001"
+        value: "KeyPressed2x"
   action:
     - service: script.turn_on
       data:
@@ -204,11 +204,11 @@
 - alias: bathroom fan triple click up
   trigger:
     - platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        entity_id: zwave.master_bathroom_fan
-        scene_id: 1
-        scene_data: 4
+        device_id: "{{ device_id('switch.master_bathroom_fan') }}"
+        property_key_name: "001"
+        value: "KeyPressed3x"
   action:
     - service: script.turn_on
       data:
@@ -220,20 +220,20 @@
 - alias: bathroom any light double click up
   trigger:
     - platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        entity_id: zwave.bathroom_ceiling_light
-        scene_id: 1
-        scene_data: 3
+        device_id: "{{ device_id('light.bathroom_ceiling_light') }}"
+        property_key_name: "001"
+        value: "KeyPressed2x"
     - platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        entity_id: zwave.bathroom_mirror_light
-        scene_id: 1
-        scene_data: 3
+        device_id: "{{ device_id('light.bathroom_mirror_light') }}"
+        property_key_name: "001"
+        value: "KeyPressed2x"
   variables:
     light_entity_id: >-
-      {{ "light." + trigger.event.data.entity_id.split(".")[1] }}
+       {{ device_entities(trigger.event.data.device_id) | first }}
   condition: '{{ states(light_entity_id) != "unknown" }}'
   action:
     - service: light.turn_on
@@ -244,11 +244,11 @@
 - alias: bathroom ceiling tripple click down
   trigger:
     - platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        entity_id: zwave.bathroom_ceiling_light
-        scene_id: 2
-        scene_data: 4
+        device_id: "{{ device_id('light.bathroom_ceiling_light') }}"
+        property_key_name: "002"
+        value: "KeyPressed3x"
   action:
     - service: light.turn_off
       entity_id:
@@ -266,17 +266,17 @@
 - alias: bathroom any light double click down
   trigger:
     - platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        entity_id: zwave.bathroom_ceiling_light
-        scene_id: 2
-        scene_data: 3
+        device_id: "{{ device_id('light.bathroom_ceiling_light') }}"
+        property_key_name: "002"
+        value: "KeyPressed2x"
     - platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        entity_id: zwave.bathroom_mirror_light
-        scene_id: 2
-        scene_data: 3
+        device_id: "{{ device_id('light.bathroom_mirror_light') }}"
+        property_key_name: "002"
+        value: "KeyPressed2x"
   variables:
     light_entity_id: >-
       {{ "light." + trigger.event.data.entity_id.split(".")[1] }}
@@ -289,11 +289,11 @@
 - alias: front light double click down
   trigger:
     - platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        entity_id: zwave.light_front
-        scene_id: 2
-        scene_data: 3
+        device_id: "{{ device_id('switch.light_front') }}"
+        property_key_name: "002"
+        value: "KeyPressed2x"
   action:
     - service: light.turn_off
       entity_id:
