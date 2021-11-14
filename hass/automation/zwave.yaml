@@ -119,11 +119,11 @@
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
-        value: KeyPressed
+        value: "KeyPressed"
         property_key_name: "001"
   variables:
     light_entity_id: >-
-      {{ "light." + trigger.event.data.entity_id.split(".")[1] }}
+      {{ device_entities(trigger.event.data.device_id) | first }}
   condition: '{{ states(light_entity_id) != "unknown" }}'
   action:
     - service: light.turn_on
@@ -136,9 +136,9 @@
           {% else %}
             255
           {% endif %}
-    #  - service: zwave.refresh_entity
-    #  data:
-    #    entity_id: '{{ light_entity_id }}'
+    - service: zwave.refresh_entity
+      data:
+        entity_id: '{{ light_entity_id }}'
 
 - alias: Bathroom ceiling light single click up
   trigger:
