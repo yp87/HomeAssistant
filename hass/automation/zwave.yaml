@@ -18,7 +18,8 @@
           data:
             entity_id: light.frederique_night_light
             brightness: >-
-              {{ state_attr('light.frederique_main_light', 'brightness')|int(0) }}
+              {{ state_attr('light.frederique_main_light', 'brightness')
+                 |int(0) }}
         - delay:
             milliseconds: 500
       until: >-
