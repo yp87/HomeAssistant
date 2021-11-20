@@ -63,6 +63,8 @@
     - condition: state
       entity_id: input_boolean.yan_in_tesla
       state: "off"
+  mode: single
+  max_exceeded: silent
   action:
     - service: script.notify_and_speak
       data:

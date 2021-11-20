@@ -32,10 +32,7 @@
         entity_id: script.lights_off_except
         variables:
           exclude_lights:
-            - light.frederique_main_light
-            - light.frederique_night_light
-    - service: switch.turn_off
-      entity_id: group.all_light_switches
+            - switch.light_front
     - service: remote.turn_off
       entity_id: remote.yharmony
     - service: climate.set_preset_mode

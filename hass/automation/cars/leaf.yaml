@@ -1,10 +1,11 @@
 ---
 - alias: Leaf error notification
   id: Leaf_error_notification
-  mode: single
   trigger:
     - platform: state
       entity_id: sensor.leaf_last_error_occured
+  mode: single
+  max_exceeded: silent
   action:
     - service: notify.all_people
       data:
@@ -171,9 +172,9 @@
         entity_id: input_text.leaf_start_charging
         value: >-
           {% set missing_charge = 80 -
-             states('sensor.leaf_battery_level')|int %}
+             states('sensor.leaf_battery_level')|int(0) %}
           {% set charge_rate_seconds =
-             states('input_number.leaf_charge_per_hour')|int / 3600 %}
+             states('input_number.leaf_charge_per_hour')|int(0) / 3600 %}
           {% set seconds_to_charge = missing_charge / charge_rate_seconds %}
           {{ (as_timestamp(states('input_text.leaf_next_departure'))
              - seconds_to_charge) | timestamp_utc }}

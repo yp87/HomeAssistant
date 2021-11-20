@@ -154,16 +154,13 @@ lights_off_except:
     exclude_lights:
       description: 'Excluded lights as list'
   sequence:
-    - service: light.turn_off
+    - service: homeassistant.turn_off
       data:
         entity_id: >-
-          {% for device in
-                 states.light |
-                 rejectattr('entity_id','in', exclude_lights ) |
-                 rejectattr('state','in','unavailable') %}
-             {%- if not loop.first %}, {% endif -%}
-               {{ device.entity_id }}
-          {%- endfor %}
+          {{ (states.light|list + expand('group.all_light_switches')) |
+             rejectattr('entity_id','in', exclude_lights ) |
+             rejectattr('state','in','unavailable') |
+             map(attribute='entity_id') | list | join(', ') }}
 
 notify_and_speak:
   fields:

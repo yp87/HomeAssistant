@@ -18,13 +18,13 @@
           data:
             entity_id: light.frederique_night_light
             brightness: >-
-              {{ state_attr('light.frederique_main_light', 'brightness')|int }}
+              {{ state_attr('light.frederique_main_light', 'brightness')|int(0) }}
         - delay:
             milliseconds: 500
       until: >-
-        {{ (state_attr('light.frederique_night_light', 'brightness')|int)
+        {{ (state_attr('light.frederique_night_light', 'brightness')|int(0))
            ==
-           (state_attr('light.frederique_main_light', 'brightness')|int) }}
+           (state_attr('light.frederique_main_light', 'brightness')|int(0)) }}
 
 - alias: Frederique main light triple up
   trigger:
@@ -109,6 +109,8 @@
         device_id: "{{ device_id('light.frederique_main_light') }}"
         property_key_name: "001"
         value: "KeyHeldDown"
+  mode: single
+  max_exceeded: silent
   action:
     - service: switch.turn_off
       data:
@@ -233,7 +235,7 @@
         value: "KeyPressed2x"
   variables:
     light_entity_id: >-
-       {{ device_entities(trigger.event.data.device_id) | first }}
+      {{ device_entities(trigger.event.data.device_id) | first }}
   condition: '{{ states(light_entity_id) != "unknown" }}'
   action:
     - service: light.turn_on
@@ -264,6 +266,7 @@
         brightness: 40
 
 - alias: bathroom any light double click down
+  id: bathroom_any_light_double_click_down
   trigger:
     - platform: event
       event_type: zwave_js_value_notification
@@ -279,7 +282,7 @@
         value: "KeyPressed2x"
   variables:
     light_entity_id: >-
-      {{ "light." + trigger.event.data.entity_id.split(".")[1] }}
+      {{ device_entities(trigger.event.data.device_id) | first }}
   condition: '{{ states(light_entity_id) != "unknown" }}'
   action:
     - service: light.turn_off

@@ -68,10 +68,12 @@
       data:
         entity_id: climate.main_floor
         preset_mode: away
-    - service: light.turn_off
-      entity_id: all
-    - service: switch.turn_off
-      entity_id: group.all_light_switches
+    - service: script.turn_on
+      data:
+        entity_id: script.lights_off_except
+        variables:
+          exclude_lights:
+            - switch.light_front
     - service: remote.turn_off
       entity_id: remote.yharmony
 
