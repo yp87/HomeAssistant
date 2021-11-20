@@ -39,6 +39,7 @@ services:
       - LEAF_TYPE=${LEAF_TYPE}
       - UPDATE_INTERVAL_MINUTES=1440
       - CHARGING_UPDATE_INTERVAL_MINUTES=30
+      - COMMAND_ATTEMPTS=5
     depends_on:
       - mqtt
 

@@ -4,17 +4,11 @@ start_the_leaf:
     Used to start the climate on the leaf.
     Since the Leaf does not report when Climate is inactive,
     We start by turning off then on to ensure the command is sent.
-    We repeat the command because it is very unreliable.
   sequence:
-    repeat:
-      count: 5
-      sequence:
-        - service: switch.turn_off
-          entity_id: switch.leaf_climate
-        - delay: "00:00:01"
-        - service: switch.turn_on
-          entity_id: switch.leaf_climate
-        - delay: "00:00:01"
+    - service: switch.turn_off
+      entity_id: switch.leaf_climate
+    - service: switch.turn_on
+      entity_id: switch.leaf_climate
 
 charge_the_leaf:
   variables:
