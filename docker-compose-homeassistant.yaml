@@ -27,8 +27,7 @@ services:
 
   leaf:
     container_name: leaf2mqtt
-    build: leaf2mqtt/
-    image: leaf2mqtt:latest
+    image: yp87/leaf2mqtt:latest
     restart: always
     environment:
       - LEAF_USERNAME=${LEAF_USERNAME}
