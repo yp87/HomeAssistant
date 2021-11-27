@@ -202,10 +202,11 @@ morning:
       state: "armed_home"
     - service: alarm_control_panel.alarm_disarm
       entity_id: all
-    - service: climate.set_preset_mode
+    - service: ecobee.resume_program
       data:
         entity_id: climate.main_floor
-        preset_mode: home
+        resume_all: true
+
     - service: notify.cath
       data:
         message: >-

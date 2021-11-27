@@ -18,10 +18,11 @@
         entity_id: climate.main_floor
         preset_mode: Away
     - wait_template: '{{ is_state("binary_sensor.back_door", "off") }}'
-    - service: climate.set_preset_mode
+    - service: ecobee.resume_program
       data:
         entity_id: climate.main_floor
-        preset_mode: Home
+        resume_all: true
+
 
 - alias: Disarmed alarm
   trigger:
@@ -29,13 +30,10 @@
     entity_id: alarm_control_panel.home_alarm
     to: 'disarmed'
   action:
-    - service: climate.set_preset_mode
+    - service: ecobee.resume_program
       data:
         entity_id: climate.main_floor
-        preset_mode: home
-    - condition: state
-      entity_id: person.cath
-      state: "home"
+        resume_all: true
 
 - alias: Disarmed alarm from pending
   trigger:
