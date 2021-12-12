@@ -1,17 +1,1 @@
-TODO:
-- ~~Use containerized database and add to docker-compose~~
-- ~~HomeAssistant: cleanup multi script loops in favor of new repeat mode~~
-- ~~HomeAssistant: change custom_components huesensor to use git submodule that points to the original github~~ Removed the custom_component in favor of events from the official component.
-- ~~When supervisor restarts home assistant because only configurations were changed, send a restart command to home assistant instead of restarting the whole container~~
-- ~~Correctly implement supervisor's home assistant notifier to send messages to home assistant~~
-- ~~Only restart home assistant if config changed~~
-- ~~Only restart Home assistant dependencies if they changed~~
-- ~~Containerize alarm system scripts and add to docker-compose~~
-- ~~Use containerized mosquitto and add to docker-compose~~
-- ~~create script to easily transfer all secrets to home assistant host~~
-- ~~Setup stub secrets for futur travis integration~~
-- ~~Setup travis to validate configs in PR~~
-- ~~Automatically update config for hass and restart when build pass on master~~
-- ~~Read .HA_VERSION to pull correct image in travis~~
-- ~~Check what can be done with Travis to only run home assistant config check when something actually changed in home assistant~~
-- ~~Travis build should build all the containers and validate the outcome (only if something changed that impact each container)~~
+My home automation services and configurations.
