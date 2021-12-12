@@ -1,0 +1,39 @@
+---
+fred_vit_d_drop:
+  sequence:
+    - condition: state
+      entity_id: input_boolean.fred_had_drop
+      state: "off"
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.fred_had_drop
+    - service: notify.all_people
+      data:
+        message: "Fred a pris sa goutte."
+
+yan_pills:
+  sequence:
+    - condition: state
+      entity_id: input_boolean.yan_had_pills
+      state: "off"
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.yan_had_pills
+    - service: notify.yan
+      data:
+        message: "Yan a pris ses pillules."
+
+phone_notification:
+  mode: parallel
+  sequence:
+    - condition: template
+      value_template: '{{ is_state("person." + owner, "home") }}'
+    - service_template: >-
+        input_boolean.
+        {%- if type == "notification" -%}
+          toggle
+        {%- elif type == "rings" -%}
+          turn_on
+        {%- else -%}
+          turn_off
+        {%- endif -%}
+      data:
+        entity_id: input_boolean.{{ owner }}_phone_{{ type | default("rings") }}

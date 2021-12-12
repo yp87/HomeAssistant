@@ -1,0 +1,76 @@
+---
+start_the_leaf:
+  description: >
+    Used to start the climate on the leaf.
+    Since the Leaf does not report when Climate is inactive,
+    We start by turning off then on to ensure the command is sent.
+  sequence:
+    - service: switch.turn_off
+      entity_id: switch.leaf_climate
+    - service: switch.turn_on
+      entity_id: switch.leaf_climate
+
+charge_the_leaf:
+  variables:
+    not_plugged_message: >-
+      La Leaf ne peut pas charger car elle n'est pas branchée.
+  sequence:
+    - service: switch.turn_off
+      entity_id: switch.leaf_battery_charging
+    - service: switch.turn_on
+      entity_id: switch.leaf_battery_charging
+    - delay: "00:00:30"
+    - condition: state
+      entity_id: alarm_control_panel.home_alarm
+      state: 'disarmed'
+    - service: script.update_leaf_battery
+    - condition: state
+      entity_id: binary_sensor.leaf_battery_connected
+      state: "off"
+    - service: notify.all_people
+      data:
+        message: "{{ not_plugged_message }}"
+    - service: tts.google_translate_say
+      entity_id: media_player.kitchen
+      data:
+        message: "{{ not_plugged_message }}"
+        language: 'fr'
+
+turn_off_leaf_climate:
+  sequence:
+    - condition: state
+      entity_id: switch.leaf_climate
+      state: "on"
+    # This seems to always return an error...
+    - service: switch.turn_off
+      entity_id: switch.leaf_climate
+    - service: notify.all_people
+      data:
+        message: >-
+          Il semble que le départ prévu de la Leaf n'a pas eu lieu.
+          Il est important d'arrêter le contrôle du climat manuellement.
+
+update_leaf_battery:
+  description: >-
+    Fetch the leaf's current state.
+    Calling it directly with "service: script.update_leaf_battery"
+    will ensure the calling script will wait for the update.
+  mode: queued
+  sequence:
+    - repeat:
+        while:
+          - >
+            {{ as_timestamp(now()) -
+              as_timestamp(states('sensor.leaf_battery_last_updated')) > 600 }}
+          - "{{ repeat.index <= 4 }}"
+        sequence:
+          - service: mqtt.publish
+            data:
+              topic: "leaf/command/battery"
+              payload: "update"
+          - wait_for_trigger:
+              - platform: state
+                entity_id: sensor.leaf_battery_last_received
+            timeout: 600
+    # it can take some time before the stats gets updated.
+    - delay: "00:00:10"

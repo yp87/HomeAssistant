@@ -1,0 +1,36 @@
+---
+morning:
+  mode: single
+  sequence:
+    - condition: state
+      entity_id: group.all_people
+      state: "home"
+    - condition: state
+      entity_id: alarm_control_panel.home_alarm
+      state: "armed_home"
+    - service: alarm_control_panel.alarm_disarm
+      entity_id: all
+    - service: ecobee.resume_program
+      data:
+        entity_id: climate.main_floor
+        resume_all: true
+
+    - service: notify.cath
+      data:
+        message: >-
+          {%- set weekday = ['Lundi','Mardi','Mercredi','Jeudi',
+                            'Vendredi','Samedi','Dimanche'] -%}
+          {%- set ts =
+              as_timestamp(states('sensor.leaf_battery_last_updated')) -%}
+          Bon matin Catherine!
+          Ton carosse est chargé à
+          {{- " " + states('sensor.leaf_battery_level') }}% et est
+          {%- if is_state("binary_sensor.leaf_battery_connected", "on") -%}
+          {{ " " }}branché.
+          {%- else -%}
+          {{ " " }}DÉBRANCHÉ.
+          {%- endif -%}
+          {{ " " }}La dernière mise à jour est ce
+          {{ " " }}{{- weekday[ts|timestamp_custom('%w')|int] -}}
+          {{ " " }}à {{ ts | timestamp_custom('%HH%M') }}.
+    - delay: "00:00:05"

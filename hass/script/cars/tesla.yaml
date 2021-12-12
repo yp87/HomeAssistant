@@ -1,0 +1,19 @@
+---
+set_tesla_climate:
+  fields:
+    state:
+      description: 'The target state for the tesla climate'
+      example: 'on'
+  mode: restart
+  sequence:
+    - service: "{{ 'climate.turn_'+state }}"
+      entity_id: climate.bibicar_hvac_climate_system
+    - condition: and
+      conditions:
+        - "{{ state == 'on'}}"
+        - >
+          {{(state_attr('weather.main_floor', 'temperature')|float) < 2}}
+    - service: climate.set_preset_mode
+      data:
+        entity_id: climate.bibicar_hvac_climate_system
+        preset_mode: defrost

@@ -1,0 +1,96 @@
+---
+auto_switch_on:
+  mode: parallel
+  sequence:
+    - service: switch.turn_on
+      data:
+        entity_id: "{{ auto_switch_entity }}"
+    - service: script.turn_on
+      data:
+        entity_id: script.auto_switch_off
+        variables:
+          auto_switch_entity: "{{ auto_switch_entity }}"
+          duration_seconds: "{{ duration_seconds }}"
+
+auto_switch_off:
+  mode: parallel
+  sequence:
+    - delay:
+        seconds: "{{ duration_seconds }}"
+    - condition: template
+      value_template: >-
+        {{ as_timestamp(now())
+           -
+           as_timestamp(states[auto_switch_entity].last_changed)
+           >=
+           duration_seconds|int - 10 }}
+    - service: switch.turn_off
+      data:
+        entity_id: "{{ auto_switch_entity }}"
+
+lights_off_except:
+  fields:
+    exclude_lights:
+      description: 'Excluded lights as list'
+  sequence:
+    - service: homeassistant.turn_off
+      data:
+        entity_id: >-
+          {{ (states.light|list + expand('group.all_light_switches')) |
+             rejectattr('entity_id','in', exclude_lights ) |
+             rejectattr('state','in','unavailable') |
+             map(attribute='entity_id') | list | join(', ') }}
+
+# Remotely called by Fitbit
+next_diaper_cleaning_step:
+  sequence:
+    - service: input_select.select_next
+      entity_id: input_select.diaper_cleaning_state
+    - condition: and
+      conditions:
+        - "{{ 'Attente' in states('input_select.diaper_cleaning_state') }}"
+        - >-
+          {{ states('input_select.diaper_cleaning_state') !=
+          'Attente du premier rinçage' }}
+    - delay: "00:00:01"
+    - service: input_select.select_next
+      entity_id: input_select.diaper_cleaning_state
+
+remote_action:
+  fields:
+    owner:
+      description: 'The sender of the action'
+      example: 'Cath'
+    service:
+      description: 'The service to call'
+      example: 'light.turn_on'
+    entity_id:
+      description: 'The target of the action'
+      example: 'light.kitchen_main_light'
+    message:
+      description: 'The content of the notification'
+      example: 'turning on the kitchen light'
+  mode: parallel
+  sequence:
+    - service: "{{ service }}"
+      data:
+        entity_id: "{{ entity_id }}"
+    - service: notify.{{ owner }}
+      data:
+        message: "{{ message }}"
+
+notify_and_speak:
+  fields:
+    message:
+      description: 'The content of the text and voice notification'
+      example: 'Hello everyone!'
+  mode: queued
+  sequence:
+    - service: notify.all_people
+      data:
+        message: "{{ message }}"
+    - service: tts.google_translate_say
+      entity_id: media_player.kitchen
+      data:
+        message: "{{ message }}"
+        language: 'fr'

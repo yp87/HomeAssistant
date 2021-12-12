@@ -153,7 +153,7 @@ binary_sensor: !include_dir_merge_list binary_sensor
 sensor: !include_dir_merge_list sensor
 group: !include groups.yaml
 automation: !include_dir_merge_list automation
-script: !include scripts.yaml
+script: !include_dir_merge_list script
 input_boolean: !include input_boolean.yaml
 input_text: !include input_text.yaml
 input_number: !include input_number.yaml
