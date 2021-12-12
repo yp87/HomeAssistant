@@ -27,7 +27,7 @@
     - repeat:
         sequence:
           - delay:
-              milliseconds: 20000
+              seconds: 20
           - service: notify.all_people
             data:
               message: >
@@ -163,3 +163,51 @@
             La porte de garage n'est pas encore fermée,
             mais il y a maintenant quelqu'un à la maison.
           {% endif %}
+
+
+- alias: Alert when front door stays open
+  id: Alert_when_front_door_stays_open
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.front_door
+      to: 'on'
+      for:
+        minutes: 2
+  mode: single
+  max_exceeded: silent
+  action:
+    - service: notify.all_people
+      data:
+        message: La porte d'entrée est ouverte depuis plus de deux minutes.
+    - service: media_player.volume_set
+      entity_id: media_player.kitchen
+      data:
+        volume_level: 0.5
+    - repeat:
+        sequence:
+          - delay:
+              seconds: 20
+          - service: notify.all_people
+            data:
+              message: La porte d'entrée est toujours ouverte.
+          - service: tts.google_translate_say
+            entity_id: media_player.kitchen
+            data:
+              message: La porte d'entréee est ouverte.
+              language: 'fr'
+        until:
+          - condition: state
+            entity_id: binary_sensor.front_door
+            state: 'off'
+    - service: notify.all_people
+      data:
+        message: La porte est maintenant fermée.
+    - service: tts.google_translate_say
+      entity_id: media_player.kitchen
+      data:
+        message: La porte d'entréee est mnaintenant fermée.
+        language: 'fr'
+    - service: media_player.volume_set
+      entity_id: media_player.kitchen
+      data:
+        volume_level: 0.2
