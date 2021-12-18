@@ -262,7 +262,7 @@
       entity_id: switch.heated_bed
 
 - alias: Heated bed turn off after 20 minutes
-  id:  Heated_bed_turn_off_after_20_minutes
+  id: Heated_bed_turn_off_after_20_minutes
   trigger:
     - platform: state
       entity_id: switch.heated_bed
