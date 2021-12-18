@@ -33,6 +33,7 @@
         variables:
           exclude_lights:
             - switch.light_front
+            - switch.heated_bed
     - service: remote.turn_off
       entity_id: remote.yharmony
     - service: climate.set_preset_mode

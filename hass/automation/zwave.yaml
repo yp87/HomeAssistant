@@ -244,6 +244,35 @@
         entity_id: '{{ light_entity_id }}'
         brightness: 255
 
+- alias: bathroom ceiling tripple click up
+  id: bathroom_ceiling_tripple_click_up
+  trigger:
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "{{ device_id('light.bathroom_ceiling_light') }}"
+        property_key_name: "001"
+        value: "KeyPressed3x"
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.bathronom_ceiling_light
+        brightness: 255
+    - service: switch.turn_on
+      entity_id: switch.heated_bed
+
+- alias: Heated bed turn off after 20 minutes
+  id:  Heated_bed_turn_off_after_20_minutes
+  trigger:
+    - platform: state
+      entity_id: switch.heated_bed
+      to: "on"
+      for:
+        minutes: 20
+  action:
+    - service: switch.turn_off
+      entity_id: switch.heated_bed
+
 - alias: bathroom ceiling tripple click down
   trigger:
     - platform: event
