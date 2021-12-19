@@ -4,6 +4,17 @@
 # trigger.event.data.property_key_name 001 (up) 002 (down)
 # trigger.event.data.value KeyHeldDown KeyPressed KeyPressed2x KeyPressed3x
 # trigger.event.data.device_id
+# Entity_id: device_id
+# light.bathroom_ceiling_light: 2c427c7f426b4cefcfc24fe63e0664ac
+# light.bathroom_mirror_light: 4853ba66604677034d45be8923e869ec
+# light.frederique_main_light: 81780280fccdf00cb4be8b12a447d298
+# light.ground_floor_hallway_light: fcf124887fb9dfd39a88d04311b212dc
+# light.kitchen_main_light: 6b1eccc8c4bbb9613bae53ed04d11e0d
+# light.living_room_main_light: 36fad11a283d726011e51384cc3c9b0a
+# light.upper_stairs_light: 927df698d25aba71a9f5e492714c4e46
+# switch.entrance_light: c63159c0b13882f64616192ab5723bbb
+# switch.light_front: cc0f80b851b180f1a279a28c960c522d
+# switch.master_bathroom_fan: 8a48d9a7bc38aaaa6a273c71f800df70
 # ------------------------------
 - alias: Frederique main light brightness
   trigger:
@@ -32,7 +43,7 @@
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
-        device_id: "{{ device_id('light.frederique_main_light') }}"
+        device_id: "81780280fccdf00cb4be8b12a447d298"
         property_key_name: "001"
         value: "KeyPressed3x"
   action:
@@ -46,7 +57,7 @@
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
-        device_id: "{{ device_id('light.frederique_main_light') }}"
+        device_id: "81780280fccdf00cb4be8b12a447d298"
         property_key_name: "002"
         value: "KeyPressed3x"
   action:
@@ -61,13 +72,13 @@
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
-        device_id: "{{ device_id('light.upper_stairs_light') }}"
+        device_id: "927df698d25aba71a9f5e492714c4e46"
         property_key_name: "002"
         value: "KeyPressed2x"
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
-        device_id: "{{ device_id('light.ground_floor_hallway_light') }}"
+        device_id: "fcf124887fb9dfd39a88d04311b212dc"
         property_key_name: "002"
         value: "KeyPressed2x"
   action:
@@ -83,7 +94,7 @@
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
-        device_id: "{{ device_id('light.frederique_main_light') }}"
+        device_id: "81780280fccdf00cb4be8b12a447d298"
         property_key_name: "002"
         value: "KeyPressed2x"
   action:
@@ -101,13 +112,13 @@
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
-        device_id: "{{ device_id('light.frederique_main_light') }}"
+        device_id: "81780280fccdf00cb4be8b12a447d298"
         property_key_name: "001"
         value: "KeyPressed"
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
-        device_id: "{{ device_id('light.frederique_main_light') }}"
+        device_id: "81780280fccdf00cb4be8b12a447d298"
         property_key_name: "001"
         value: "KeyHeldDown"
   mode: single
@@ -148,7 +159,7 @@
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
-        device_id: "{{ device_id('light.bathroom_ceiling_light') }}"
+        device_id: "2c427c7f426b4cefcfc24fe63e0664ac"
         property_key_name: "001"
         value: "KeyPressed"
   action:
@@ -167,13 +178,13 @@
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
-        device_id: "{{ device_id('light.bathroom_ceiling_light') }}"
+        device_id: "2c427c7f426b4cefcfc24fe63e0664ac"
         property_key_name: "002"
         value: "KeyPressed"
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
-        device_id: "{{ device_id('light.bathroom_mirror_light') }}"
+        device_id: "4853ba66604677034d45be8923e869ec"
         property_key_name: "002"
         value: "KeyPressed"
   action:
@@ -193,7 +204,7 @@
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
-        device_id: "{{ device_id('switch.master_bathroom_fan') }}"
+        device_id: "8a48d9a7bc38aaaa6a273c71f800df70"
         property_key_name: "001"
         value: "KeyPressed2x"
   action:
@@ -209,7 +220,7 @@
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
-        device_id: "{{ device_id('switch.master_bathroom_fan') }}"
+        device_id: "8a48d9a7bc38aaaa6a273c71f800df70"
         property_key_name: "001"
         value: "KeyPressed3x"
   action:
@@ -225,13 +236,13 @@
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
-        device_id: "{{ device_id('light.bathroom_ceiling_light') }}"
+        device_id: "2c427c7f426b4cefcfc24fe63e0664ac"
         property_key_name: "001"
         value: "KeyPressed2x"
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
-        device_id: "{{ device_id('light.bathroom_mirror_light') }}"
+        device_id: "4853ba66604677034d45be8923e869ec"
         property_key_name: "001"
         value: "KeyPressed2x"
   variables:
@@ -250,7 +261,7 @@
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
-        device_id: "{{ device_id('light.bathroom_ceiling_light') }}"
+        device_id: "2c427c7f426b4cefcfc24fe63e0664ac"
         property_key_name: "001"
         value: "KeyPressed3x"
   action:
@@ -278,7 +289,7 @@
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
-        device_id: "{{ device_id('light.bathroom_ceiling_light') }}"
+        device_id: "2c427c7f426b4cefcfc24fe63e0664ac"
         property_key_name: "002"
         value: "KeyPressed3x"
   action:
@@ -301,13 +312,13 @@
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
-        device_id: "{{ device_id('light.bathroom_ceiling_light') }}"
+        device_id: "2c427c7f426b4cefcfc24fe63e0664ac"
         property_key_name: "002"
         value: "KeyPressed2x"
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
-        device_id: "{{ device_id('light.bathroom_mirror_light') }}"
+        device_id: "4853ba66604677034d45be8923e869ec"
         property_key_name: "002"
         value: "KeyPressed2x"
   variables:
@@ -324,7 +335,7 @@
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
-        device_id: "{{ device_id('switch.light_front') }}"
+        device_id: "cc0f80b851b180f1a279a28c960c522d"
         property_key_name: "002"
         value: "KeyPressed2x"
   action:

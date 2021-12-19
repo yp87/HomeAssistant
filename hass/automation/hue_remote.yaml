@@ -16,7 +16,8 @@
       event_type: hue_event
       event_data:
         id: "hue_dimmer_switch_1"
-        event: 4001
+        type: "repeat"
+        subtype: 4
   mode: single
   max_exceeded: silent
   action:
@@ -51,6 +52,8 @@
           N'oubliez pas vos pilules et la nourriture sur le comptoir.
           Bonne nuit!
         language: 'fr'
+    - delay:
+        seconds: 10
 
 - alias: Hue remote automation - Long Press ON
   trigger:
@@ -58,6 +61,11 @@
       event_type: hue_event
       event_data:
         id: "hue_dimmer_switch_1"
-        event: 1001
+        type: "repeat"
+        subtype: 1
+  mode: single
+  max_exceeded: silent
   action:
     - service: script.morning
+    - delay:
+        seconds: 10
