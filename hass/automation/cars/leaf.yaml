@@ -42,7 +42,7 @@
     condition: and
     conditions:
       - >-
-        {{ as_timestamp(as_timestamp(now()) | timestamp_local)
+        {{ as_timestamp(now())
            >= as_timestamp(states('input_text.leaf_next_departure')) }}
       - condition: state
         entity_id: input_boolean.leaf_next_departure_canceled
@@ -72,7 +72,7 @@
             conditions:
               - >-
                 {{ as_timestamp(states('input_text.leaf_next_departure'))
-                   > as_timestamp(as_timestamp(now()) | timestamp_local) }}
+                   > as_timestamp(now()) }}
               - condition: state
                 entity_id: input_boolean.leaf_next_departure_canceled
                 state: "on"
@@ -89,7 +89,7 @@
     conditions:
       - >-
         {{ as_timestamp(states('input_text.leaf_start_charging'))
-           > as_timestamp(as_timestamp(now()) | timestamp_local) }}
+           > as_timestamp(now()) }}
       - condition: state
         entity_id: input_boolean.leaf_next_departure_canceled
         state: "off"
@@ -148,7 +148,7 @@
       entity_id: input_number.leaf_charge_per_hour
   condition: >-
     {{ as_timestamp(states('input_text.leaf_next_departure'))
-       > as_timestamp(as_timestamp(now()) | timestamp_local) }}
+       > as_timestamp(now()) }}
   mode: restart
   action:
     - service: input_boolean.turn_off
@@ -159,7 +159,7 @@
         entity_id: input_text.leaf_start_climate
         value: >-
           {{ (as_timestamp(states('input_text.leaf_next_departure'))
-              - 1500) | timestamp_utc }}
+              - 1500) | timestamp_local }}
     - service: input_text.set_value
       data:
         entity_id: input_text.leaf_start_charging
@@ -177,7 +177,7 @@
              states('input_number.leaf_charge_per_hour')|int(0) / 3600 %}
           {% set seconds_to_charge = missing_charge / charge_rate_seconds %}
           {{ (as_timestamp(states('input_text.leaf_next_departure'))
-             - seconds_to_charge) | timestamp_utc }}
+             - seconds_to_charge) | timestamp_local }}
 
 - alias: Start charging the leaf
   id: Start_charging_the_leaf
@@ -186,10 +186,10 @@
       value_template: >
         {{ states('sensor.date_time') ==
            (as_timestamp(states('input_text.leaf_start_charging')) |
-            timestamp_custom('%Y-%m-%d, %H:%M', false)) }}
+            timestamp_custom('%Y-%m-%d, %H:%M', true)) }}
   condition: >-
     {{ as_timestamp(states('input_text.leaf_next_departure'))
-       > as_timestamp(as_timestamp(now()) | timestamp_local) }}
+       > as_timestamp(now()) }}
   action:
     - service: script.charge_the_leaf
 
@@ -203,7 +203,7 @@
             timestamp_custom('%Y-%m-%d, %H:%M', false)) }}
   condition: >-
     {{ as_timestamp(states('input_text.leaf_next_departure'))
-       > as_timestamp(as_timestamp(now()) | timestamp_local) }}
+       > as_timestamp(now()) }}
   action:
     - condition: state
       entity_id: binary_sensor.leaf_battery_connected
