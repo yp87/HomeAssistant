@@ -200,7 +200,7 @@
       value_template: >
         {{ states('sensor.date_time') ==
            (as_timestamp(states('input_text.leaf_start_climate')) |
-            timestamp_custom('%Y-%m-%d, %H:%M', false)) }}
+            timestamp_custom('%Y-%m-%d, %H:%M', true)) }}
   condition: >-
     {{ as_timestamp(states('input_text.leaf_next_departure'))
        > as_timestamp(now()) }}
