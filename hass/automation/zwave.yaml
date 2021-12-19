@@ -255,8 +255,8 @@
         entity_id: '{{ light_entity_id }}'
         brightness: 255
 
-- alias: bathroom ceiling tripple click up
-  id: bathroom_ceiling_tripple_click_up
+- alias: bathroom ceiling triple click up
+  id: bathroom_ceiling_triple_click_up
   trigger:
     - platform: event
       event_type: zwave_js_value_notification

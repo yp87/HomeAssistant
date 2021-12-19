@@ -79,3 +79,27 @@
           light.turn_off
         {% endif %}
       entity_id: light.twinkly_a80df9
+
+- alias: Turn on second floor hallway lights when motion is detected
+  id: Turn_on_second_floor_hallway_lights_when_motion_is_detected
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.second_floor_motion
+      to: "on"
+  mode: restart
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.second_floor_hallway_light
+        brightness: 100
+    - wait_for_trigger:
+        - platform: state
+          entity_id: light.second_floor_hallway_light
+      timeout:
+        minutes: 2
+    - condition: template
+      value_template: "{{ wait.trigger is none }}"
+    - service: light.turn_off
+      entity_id: light.second_floor_hallway_light
+
+
