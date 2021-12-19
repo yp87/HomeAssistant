@@ -95,13 +95,13 @@
         - condition: state
           entity_id: light.second_floor_hallway_light
           attribute: brightness
-          state: 101
+          state: 103
   mode: restart
   action:
     - service: light.turn_on
       data:
         entity_id: light.second_floor_hallway_light
-        brightness: 101
+        brightness: 103
     - wait_for_trigger:
         - platform: state
           entity_id: light.second_floor_hallway_light
