@@ -101,5 +101,3 @@
       value_template: "{{ wait.trigger is none }}"
     - service: light.turn_off
       entity_id: light.second_floor_hallway_light
-
-
