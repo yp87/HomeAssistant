@@ -87,15 +87,21 @@
       entity_id: binary_sensor.second_floor_motion
       to: "on"
   condition:
-    condition: state
-    entity_id: light.second_floor_hallway_light
-    state: "off"
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: light.second_floor_hallway_light
+          state: "off"
+        - condition: state
+          entity_id: light.second_floor_hallway_light
+          attribute: brightness
+          state: 101
   mode: restart
   action:
     - service: light.turn_on
       data:
         entity_id: light.second_floor_hallway_light
-        brightness: 100
+        brightness: 101
     - wait_for_trigger:
         - platform: state
           entity_id: light.second_floor_hallway_light
