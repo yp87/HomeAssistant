@@ -15,7 +15,7 @@
     - platform: event
       event_type: hue_event
       event_data:
-        id: "hue_dimmer_switch_1"
+        id: "hue_dimmer_switch_1_button"
         type: "repeat"
         subtype: 4
   mode: single
@@ -60,7 +60,7 @@
     - platform: event
       event_type: hue_event
       event_data:
-        id: "hue_dimmer_switch_1"
+        id: "hue_dimmer_switch_1_button"
         type: "repeat"
         subtype: 1
   mode: single
