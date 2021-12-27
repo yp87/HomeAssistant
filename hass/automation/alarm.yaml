@@ -78,6 +78,10 @@
             - switch.light_front
     - service: remote.turn_off
       entity_id: remote.yharmony
+    - service: climate.set_temperature
+      entity_id: climate.fred_bedroom_thermostat
+      data:
+        temperature: 15
 
 - alias: Morning routine when waking up
   id: Morning_routine_when_waking_up
