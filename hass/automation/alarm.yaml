@@ -34,6 +34,10 @@
       data:
         entity_id: climate.main_floor
         resume_all: true
+    - service: climate.set_temperature
+      entity_id: climate.fred_bedroom_thermostat
+      data:
+        temperature: 17.5
 
 - alias: Disarmed alarm from pending
   trigger:
@@ -88,3 +92,15 @@
   max_exceeded: silent
   action:
     - service: script.morning
+
+- alias: Armed home alarm
+  id: Armed_home_alarm
+  trigger:
+    platform: state
+    entity_id: alarm_control_panel.home_alarm
+    to: 'armed_home'
+  action:
+    - service: climate.set_temperature
+      entity_id: climate.fred_bedroom_thermostat
+      data:
+        temperature: 19.5
