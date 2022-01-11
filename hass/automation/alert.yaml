@@ -16,9 +16,12 @@
       entity_id: climate.main_floor
   variables:
     climate_mode: "{{ state('climate.main_floor') }}"
-    single_temp_target: "{{ state_attr('climate.main_floor', 'temperature')|float(0) }}"
-    high_temp_target: "{{ state_attr('climate.main_floor', 'target_temp_high')|float(0) }}"
-    low_temp_target: "{{ state_attr('climate.main_floor', 'target_temp_low')|float(0) }}"
+    single_temp_target: >-
+      {{ state_attr('climate.main_floor', 'temperature')|float(0) }}
+    high_temp_target: >-
+      {{ state_attr('climate.main_floor', 'target_temp_high')|float(0) }}
+    low_temp_target: >-
+      {{ state_attr('climate.main_floor', 'target_temp_low')|float(0) }}
   condition:
     # if the climate was manually set.
     - >-
