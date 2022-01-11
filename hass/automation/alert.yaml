@@ -15,7 +15,7 @@
     platform: state
     entity_id: climate.main_floor
   variables:
-    climate_mode: "{{ state('climate.main_floor') }}"
+    climate_mode: "{{ states('climate.main_floor') }}"
     single_temp_target: >-
       {{ state_attr('climate.main_floor', 'temperature')|float(0) }}
     high_temp_target: >-
