@@ -12,8 +12,8 @@
 - alias: Alert when house heating is out of normal parameters
   id: Alert_when_house_heating_is_out_of_normal_parameters
   trigger:
-    platform:
-      entity_id: climate.main_floor
+    platform: state
+    entity_id: climate.main_floor
   variables:
     climate_mode: "{{ state('climate.main_floor') }}"
     single_temp_target: >-
