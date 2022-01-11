@@ -9,6 +9,67 @@
     data:
       entry_id: 69cb93656b7a4e8294af31e5e8171084
 
+- alias: Alert when house heating is out of normal parameters
+  id: Alert_when_house_heating_is_out_of_normal_parameters
+  trigger:
+    platform:
+      entity_id: climate.main_floor
+  variables:
+    climate_mode: "{{ state('climate.main_floor') }}"
+    single_temp_target: "{{ state_attr('climate.main_floor', 'temperature')|float(0) }}"
+    high_temp_target: "{{ state_attr('climate.main_floor', 'target_temp_high')|float(0) }}"
+    low_temp_target: "{{ state_attr('climate.main_floor', 'target_temp_low')|float(0) }}"
+  condition:
+    # if the climate was manually set.
+    - >-
+      {{ is_state_attr('climate.main_floor', 'preset_mode', 'temp')
+          or climate_mode == 'off' }}
+    - condition: or
+      conditions:
+        - "{{ climate_mode == 'heat' and single_temp_target > 23 }}"
+        - "{{ climate_mode == 'heat' and single_temp_target < 20  }}"
+        - "{{ climate_mode == 'cool' and single_temp_target < 21  }}"
+        - "{{ climate_mode == 'cool' and single_temp_target > 26  }}"
+        - "{{ climate_mode == 'heat_cool' and low_temp_target > 23  }}"
+        - "{{ climate_mode == 'heat_cool' and low_temp_target < 20  }}"
+        - "{{ climate_mode == 'heat_cool' and high_temp_target < 21  }}"
+        - "{{ climate_mode == 'heat_cool' and high_temp_target > 26  }}"
+        - >-
+          {{ single_temp_target == high_temp_target == low_temp_target == 0 }}
+  action:
+    - service: ecobee.resume_program
+      data:
+        entity_id: climate.main_floor
+        resume_all: true
+    - service: notify.all_people
+      data:
+        message: >-
+          Le thermostat de la maison a été
+          configuré en dehors des paramètres normaux.
+          mode: {{ climate_mode }}
+          {% if climate_mode == "heat_cool" %}
+          Température minimale: {{ low_temp_target }}
+          Température maximale: {{ high_temp_target }}
+          {% else %}
+          Température cible: {{ single_temp_target }}
+          {% endif %}
+
+- alias: Alert for food
+  id: alert_for_food
+  trigger:
+    platform: time
+    at: "12:45:00"
+  action:
+    - service: media_player.volume_set
+      entity_id: media_player.kitchen
+      data:
+        volume_level: 0.2
+    - service: tts.google_translate_say
+      entity_id: media_player.kitchen
+      data:
+        message: N'oubliez pas de ranger la nourriture sur le comptoir.
+        language: 'fr'
+
 - alias: Home assistant started notification
   trigger:
     platform: homeassistant
