@@ -1,18 +1,31 @@
 ---
+auto_light_on:
+  mode: parallel
+  sequence:
+    - service: light.turn_on
+      data:
+        entity_id: "{{ auto_entity }}"
+        brightness: "{{ brightness }}"
+
+    - service: script.auto_off
+      data:
+        variables:
+          auto_entity: "{{ auto_entity }}"
+          duration_seconds: "{{ duration_seconds }}"
+
 auto_switch_on:
   mode: parallel
   sequence:
     - service: switch.turn_on
       data:
-        entity_id: "{{ auto_switch_entity }}"
-    - service: script.turn_on
+        entity_id: "{{ auto_entity }}"
+    - service: script.auto_off
       data:
-        entity_id: script.auto_switch_off
         variables:
-          auto_switch_entity: "{{ auto_switch_entity }}"
+          auto_entity: "{{ auto_entity }}"
           duration_seconds: "{{ duration_seconds }}"
 
-auto_switch_off:
+auto_off:
   mode: parallel
   sequence:
     - delay:
@@ -21,12 +34,12 @@ auto_switch_off:
       value_template: >-
         {{ as_timestamp(now())
            -
-           as_timestamp(states[auto_switch_entity].last_changed)
+           as_timestamp(states[auto_entity].last_changed)
            >=
            duration_seconds|int - 10 }}
-    - service: switch.turn_off
+    - service: homeassistant.turn_off
       data:
-        entity_id: "{{ auto_switch_entity }}"
+        entity_id: "{{ auto_entity }}"
 
 lights_off_except:
   fields:
