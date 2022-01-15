@@ -7,10 +7,12 @@ auto_light_on:
         entity_id: "{{ auto_entity }}"
         brightness: "{{ brightness }}"
 
-    - service: script.auto_off
+    - service: script.turn_on
       data:
-        auto_entity: "{{ auto_entity }}"
-        duration_seconds: "{{ duration_seconds }}"
+        entity_id: script.auto_off
+        variables:
+          auto_entity: "{{ auto_entity }}"
+          duration_seconds: "{{ duration_seconds }}"
 
 auto_switch_on:
   mode: parallel
@@ -18,10 +20,12 @@ auto_switch_on:
     - service: switch.turn_on
       data:
         entity_id: "{{ auto_entity }}"
-    - service: script.auto_off
+    - service: script.turn_on
       data:
-        auto_entity: "{{ auto_entity }}"
-        duration_seconds: "{{ duration_seconds }}"
+        entity_id: script.auto_off
+        variables:
+          auto_entity: "{{ auto_entity }}"
+          duration_seconds: "{{ duration_seconds }}"
 
 auto_off:
   mode: parallel
