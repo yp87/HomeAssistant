@@ -108,10 +108,9 @@
         entity_id: switch.baby_monitor
     - service: script.auto_light_on
       data:
-        variables:
-          auto_entity: light.upper_stairs_light
-          brightness: 127
-          duration_seconds: 180
+        auto_entity: light.upper_stairs_light
+        brightness: 127
+        duration_seconds: 180
 
 - alias: Frederique main light single up or release from hold up
   trigger:
@@ -198,12 +197,10 @@
       entity_id:
         - light.bathroom_ceiling_light
         - light.bathroom_mirror_light
-    - service: script.turn_on
+    - service: script.auto_off
       data:
-        entity_id: script.auto_off
-        variables:
-          auto_entity: switch.master_bathroom_fan
-          duration_seconds: 600
+        auto_entity: switch.master_bathroom_fan
+        duration_seconds: 600
 
 - alias: bathroom fan double click up
   trigger:
@@ -214,12 +211,10 @@
         property_key_name: "001"
         value: "KeyPressed2x"
   action:
-    - service: script.turn_on
+    - service: script.auto_switch_on
       data:
-        entity_id: script.auto_switch_on
-        variables:
-          auto_entity: switch.master_bathroom_fan
-          duration_seconds: 600
+        auto_entity: switch.master_bathroom_fan
+        duration_seconds: 600
 
 - alias: bathroom fan triple click up
   trigger:
@@ -230,12 +225,10 @@
         property_key_name: "001"
         value: "KeyPressed3x"
   action:
-    - service: script.turn_on
+    - service: script.auto_switch_on
       data:
-        entity_id: script.auto_switch_on
-        variables:
-          auto_entity: switch.master_bathroom_fan
-          duration_seconds: 900
+        auto_entity: switch.master_bathroom_fan
+        duration_seconds: 900
 
 - alias: bathroom any light double click up
   trigger:

@@ -9,9 +9,8 @@ auto_light_on:
 
     - service: script.auto_off
       data:
-        variables:
-          auto_entity: "{{ auto_entity }}"
-          duration_seconds: "{{ duration_seconds }}"
+        auto_entity: "{{ auto_entity }}"
+        duration_seconds: "{{ duration_seconds }}"
 
 auto_switch_on:
   mode: parallel
@@ -21,9 +20,8 @@ auto_switch_on:
         entity_id: "{{ auto_entity }}"
     - service: script.auto_off
       data:
-        variables:
-          auto_entity: "{{ auto_entity }}"
-          duration_seconds: "{{ duration_seconds }}"
+        auto_entity: "{{ auto_entity }}"
+        duration_seconds: "{{ duration_seconds }}"
 
 auto_off:
   mode: parallel
