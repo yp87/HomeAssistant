@@ -9,13 +9,15 @@
       data:
         entity_id: light.hyperion_classic
 
-- alias: Hyperion Hdmi when casting
+- alias: Hyperion Hdmi when casting or gaming
   id: hyperion_hdmi_when_casting
   trigger:
     - platform: state
-      entity_id: remote.yharmony
-      attribute: current_activity
-      to: "Regarder Chromecast"
+      entity_id: switch.yharmony_chromecast
+      to: "on"
+    - platform: state
+      entity_id: switch.yharmony_nintendo
+      to: "on"
   mode: restart
   action:
     # show running dots like a loading effect
@@ -30,10 +32,14 @@
         priority: 128
     # 15 seconds is the time for the whole system to be ready.
     - delay: "00:00:15"
-    - condition: state
-      entity_id: remote.yharmony
-      attribute: current_activity
-      state: "Regarder Chromecast"
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: switch.yharmony_chromecast
+          state: "on"
+        - condition: state
+          entity_id: switch.yharmony_nintendo
+          state: "on"
     - service: light.turn_on
       data:
         entity_id: light.hyperion_classic
@@ -42,7 +48,7 @@
 - alias: Hyperion pausing chromecast
   trigger:
     - platform: state
-      entity_id: media_player.salon_tv
+      entity_id: media_player.living_room_tv
       from: "playing"
       to: "paused"
   action:
@@ -60,7 +66,7 @@
 - alias: Hyperion playing chromecast
   trigger:
     - platform: state
-      entity_id: media_player.salon_tv
+      entity_id: media_player.living_room_tv
       from: "paused"
   action:
     - service: hyperion_priority.apply_effect
