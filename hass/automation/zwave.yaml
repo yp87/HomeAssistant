@@ -106,6 +106,9 @@
     - service: switch.turn_on
       data:
         entity_id: switch.baby_monitor
+    - condition: sun
+      after: sunset
+      after_offset: "-01:00:00"
     - service: script.auto_light_on
       data:
         auto_entity: light.upper_stairs_light

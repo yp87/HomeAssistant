@@ -29,6 +29,11 @@ disarm_unlock_home:
       data:
         entity_id: lock.front_door_lock
         code: !secret front_door_pin
+    - condition: sun
+      before: sunrise
+      before_offset: "01:00:00"
+      after: sunset
+      after_offset: "-01:00:00"
     - service: script.auto_switch_on
       data:
         duration_seconds: 300
