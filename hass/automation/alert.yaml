@@ -165,4 +165,4 @@
   action:
     - service: notify.yan
       data:
-        message: "Les dépendances de leaf2mqtt doivent être mise à jour."
+        message: Les dépendances de leaf2mqtt doivent être mise à jour.

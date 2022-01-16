@@ -205,7 +205,7 @@
     - service: tts.google_translate_say
       entity_id: media_player.kitchen
       data:
-        message: La porte d'entréee est mnaintenant fermée.
+        message: La porte d'entrée est maintenant fermée.
         language: 'fr'
     - service: media_player.volume_set
       entity_id: media_player.kitchen

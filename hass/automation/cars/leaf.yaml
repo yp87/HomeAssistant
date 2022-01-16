@@ -255,3 +255,22 @@
         entity_id: input_text.leaf_start_climate
         value: "2000-01-01 00:00:00"
     - service: script.turn_off_leaf_climate
+
+- alias: Leaf 85% notification
+- id: Leaf_85_notification
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.leaf_battery_level
+      above: 85
+  condition:
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: alarm_control_panel.home_alarm
+          state: "armed_home"
+  action:
+    - service: notify.all_people
+      data:
+        message: >-
+          La leaf est chargée à {{ states('sensor.leaf_battery_level') }}%
+
