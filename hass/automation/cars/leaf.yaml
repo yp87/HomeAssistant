@@ -257,7 +257,7 @@
     - service: script.turn_off_leaf_climate
 
 - alias: Leaf 85% notification
-- id: Leaf_85_notification
+  id: Leaf_85_notification
   trigger:
     - platform: numeric_state
       entity_id: sensor.leaf_battery_level
