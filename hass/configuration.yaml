@@ -146,6 +146,15 @@ rest_command:
   update_dns_ip:
     url: !secret dns_ip_update_url
 
+feedreader:
+  urls:
+    - https://github.com/Tobiaswk/dartnissanconnectna/commits/master.atom
+    - https://github.com/Tobiaswk/dartnissanconnect/commits/master.atom
+    - https://github.com/Tobiaswk/dartcarwings/commits/master.atom
+  scan_interval:
+    hours: 24
+  max_entries: 1
+
 zone: !include zone.yaml
 alarm_control_panel: !include alarm_control_panel.yaml
 switch: !include_dir_merge_list switch

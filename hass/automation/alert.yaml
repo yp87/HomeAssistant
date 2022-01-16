@@ -157,3 +157,12 @@
         color_temp: 366
     - service: light.turn_off
       entity_id: light.table_de_chevet_de_yan
+
+- alias: Notify when leaf2mqtt need dependency update.
+  trigger:
+    platform: event
+    event_type: feedreader
+  action:
+    - service: notify.yan
+      data:
+        message: "Les dépendances de leaf2mqtt doivent être mise à jour."
