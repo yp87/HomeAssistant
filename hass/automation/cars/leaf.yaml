@@ -273,4 +273,3 @@
       data:
         message: >-
           La leaf est chargée à {{ states('sensor.leaf_battery_level') }}%
-
