@@ -39,6 +39,7 @@ services:
       - UPDATE_INTERVAL_MINUTES=1440
       - CHARGING_UPDATE_INTERVAL_MINUTES=30
       - COMMAND_ATTEMPTS=7
+      - LOG_LEVEL=FINER
     depends_on:
       - mqtt
 
