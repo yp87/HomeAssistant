@@ -71,6 +71,6 @@ update_leaf_battery:
           - wait_for_trigger:
               - platform: state
                 entity_id: sensor.leaf_battery_last_received
-            timeout: 600
+            timeout: "00:10:00"
     # it can take some time before the stats gets updated.
     - delay: "00:00:10"
