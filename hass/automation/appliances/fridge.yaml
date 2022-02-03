@@ -1,0 +1,20 @@
+---
+- alias: Fridge door opened for too long
+  id: Fridge_door_opened_for_too_long
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.fridge_door
+      to: 'on'
+      for: '00:01:00'
+  mode: restart
+  action:
+    - repeat:
+        sequence:
+          - service: script.notify_and_speak
+            data:
+              message: La porte du frigo est ouverte.
+          - delay: '00:00:10'
+        until:
+          - condition: state
+            entity_id: binary_sensor.fridge_door
+            state: 'off'
