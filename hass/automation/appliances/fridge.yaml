@@ -18,3 +18,6 @@
           - condition: state
             entity_id: binary_sensor.fridge_door
             state: 'off'
+    - service: script.notify_and_speak
+      data:
+        message: La porte du frigo est fermée.
