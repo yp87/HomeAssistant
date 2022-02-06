@@ -166,3 +166,25 @@
     - service: notify.yan
       data:
         message: Les dépendances de leaf2mqtt doivent être mise à jour.
+
+- alias: Notify when device has low battery
+  trigger:
+    platform: numeric_state
+    entity_id:
+      - sensor.fridge_door_battery_level
+      - sensor.front_door_lock_battery
+      - sensor.garage_door_lock_battery
+      - sensor.washer_leak_sensor_battery
+      - sensor.hue_dimmer_switch_1_battery_level
+    below: 20
+  mode: parallel
+  action:
+    - repeat:
+        count: 4
+        sequence:
+          - service: notify.yan
+            data:
+              message: >
+                La batterie {{ trigger.entity_id }} doit être changée.
+          - delay: "01:00:00"
+
