@@ -21,5 +21,5 @@
     entity_id: media_player.living_room_tv
     to: 'off'
   action:
-    - service: remote.turn_off
-      entity_id: remote.yharmony
+    - service: switch.turn_off
+      entity_id: switch.yharmony_chromecast
