@@ -187,4 +187,3 @@
               message: >
                 La batterie {{ trigger.entity_id }} doit être changée.
           - delay: "01:00:00"
-
