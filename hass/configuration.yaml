@@ -155,6 +155,11 @@ feedreader:
     hours: 24
   max_entries: 1
 
+joaoapps_join:
+  - name: android_server
+    device_id: !secret join_android_server_device
+    api_key: !secret join_android_server_api_key
+
 zone: !include zone.yaml
 alarm_control_panel: !include alarm_control_panel.yaml
 switch: !include_dir_merge_list switch
