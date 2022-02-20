@@ -61,7 +61,7 @@ update_leaf:
         while:
           - >
             {{ as_timestamp(now()) -
-               as_timestamp(states('sensor.leaf_last_update')) > 600 }}
+               as_timestamp(states('sensor.leaf_last_update'), 0) > 600 }}
           - "{{ repeat.index <= 4 }}"
         sequence:
           - service: joaoapps_join.android_server_send_tasker
@@ -75,7 +75,7 @@ update_leaf:
     - choose:
         - conditions: >
             {{ as_timestamp(now()) -
-               as_timestamp(states('sensor.Leaf_last_tentative')) >= 240 }}
+               as_timestamp(states('sensor.Leaf_last_tentative'), 0) >= 240 }}
           sequence:
             - service: notify.all_people
               data:
@@ -84,7 +84,7 @@ update_leaf:
                   Impossible d'effectuer une tentative de mise à jour.
         - conditions: >
             {{ as_timestamp(now()) -
-               as_timestamp(states('sensor.leaf_last_update')) > 600 }}
+               as_timestamp(states('sensor.leaf_last_update'), 0) > 600 }}
           sequence:
             - service: notify.all_people
               data:
