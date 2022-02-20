@@ -21,5 +21,6 @@
       unit_of_measurement: °C
       device_class: temperature
     - name: Leaf last update
-      state: '{{ trigger.event.data.lastUpdated | timestamp_local}}'
+      state: >
+        {{ strptime(trigger.event.data.lastUpdated, "%b %d, %Y, %I:%M %p") }}
       device_class: timestamp
