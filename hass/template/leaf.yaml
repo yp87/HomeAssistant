@@ -11,7 +11,7 @@
       state: '{{ trigger.event.data.power == "CHARGING" }}'
       device_class: plug
       icon: mdi:ev-station
-  number:
+  sensor:
     - name: Leaf charge
       state: '{{ trigger.event.data.battery }}'
       unit_of_measurement: '%'
@@ -20,7 +20,6 @@
       state: '{{ trigger.event.data.temperature.split("-")[0]|int + 1 }}'
       unit_of_measurement: °C
       device_class: temperature
-  sensor:
     - name: Leaf last update
       state: '{{ trigger.event.data.lastUpdated }}'
       device_class: timestamp
