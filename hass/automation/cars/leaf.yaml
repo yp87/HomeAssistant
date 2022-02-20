@@ -1,28 +1,11 @@
 ---
-- alias: Leaf error notification
-  id: Leaf_error_notification
-  trigger:
-    - platform: state
-      entity_id: sensor.leaf_last_error_occured
-  mode: single
-  max_exceeded: silent
-  action:
-    - service: notify.all_people
-      data:
-        message: >
-          Une erreur c'est produite.
-          Impossible de communiquer avec la Leaf.
-          Utilisez l'application native.
-    - delay: "01:00:00"
-
-
 - alias: Update leaf in morning
   id: Update_leaf_in_morning
   trigger:
     - platform: time
       at: "05:45:00"
   action:
-    - service: script.update_leaf_battery
+    - service: script.update_leaf
 
 - alias: Reset leaf next departure canceled at midnight
   id: Reset_leaf_next_departure_canceled_at_midnight
@@ -223,17 +206,17 @@
   id: Refresh_Leaf_battery_info_while_charging
   trigger:
     - platform: state
-      entity_id: switch.leaf_battery_charging
+      entity_id: switch.leaf_charging
       to: "on"
   action:
     - repeat:
         while:
           - condition: state
-            entity_id: switch.leaf_battery_charging
+            entity_id: switch.leaf_charging
             state: "on"
         sequence:
           - delay: "00:10:05"
-          - service: script.update_leaf_battery
+          - service: script.update_leaf
 
 - alias: Cancel planned leaf departure
   id: Cancel_planned_leaf_departure
