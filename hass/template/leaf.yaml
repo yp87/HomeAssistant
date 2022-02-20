@@ -24,3 +24,7 @@
       state: >
         {{ strptime(trigger.event.data.lastUpdated, "%b %d, %Y, %I:%M %p %z") }}
       device_class: timestamp
+    - name: Leaf last tentative
+      state: >
+        {{ strptime(trigger.event.data.lastTentative, "%b %d, %Y, %I:%M %p %z") }}
+      device_class: timestamp
