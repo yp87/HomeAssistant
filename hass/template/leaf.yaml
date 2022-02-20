@@ -22,5 +22,5 @@
       device_class: temperature
     - name: Leaf last update
       state: >
-        {{ strptime(trigger.event.data.lastUpdated, "%b %d, %Y, %I:%M %p") }}
+        {{ strptime(trigger.event.data.lastUpdated, "%b %d, %Y, %I:%M %p %z") }}
       device_class: timestamp
