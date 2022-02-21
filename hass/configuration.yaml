@@ -97,10 +97,10 @@ google_assistant:
     light.ground_floor_hallway_light:
       expose: true
       name: corridor
-    script.start_the_leaf:
+    input_button.leaf_start_climate:
       expose: true
       name: La Leaf
-    script.charge_the_leaf:
+    input_button.leaf_start_charge:
       expose: true
       name: Charge la Leaf
     switch.bibicar_climate:

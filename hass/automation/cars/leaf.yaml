@@ -4,20 +4,47 @@
   trigger:
     - platform: state
       entity_id: input_button.Leaf_start_climate
+  mode: single
+  max_exceeded: silent
   action:
-    - service: joaoapps_join.android_server_send_tasker
-      data:
-        command: "LeafStartClimate"
+    - repeat:
+        count: 4
+        sequence:
+          - service: joaoapps_join.android_server_send_tasker
+            data:
+              command: "LeafStartClimate"
+          - delay: "00:00:20"
 
 - alias: Leaf start charge on charge button press
   id: Leaf_start_charge_on_charge_button_press
   trigger:
     - platform: state
       entity_id: input_button.Leaf_start_charge
+  mode: single
+  max_exceeded: silent
   action:
-    - service: joaoapps_join.android_server_send_tasker
+    - repeat:
+        count: 4
+        sequence:
+          - service: joaoapps_join.android_server_send_tasker
+            data:
+              command: "LeafStartCharge"
+          - delay: "00:00:20"
+    - condition: state
+      entity_id: alarm_control_panel.home_alarm
+      state: 'disarmed'
+    - service: script.update_leaf
+    - condition: state
+      entity_id: binary_sensor.leaf_plug
+      state: "off"
+    - service: notify.all_people
       data:
-        command: "LeafStartCharge"
+        message: "{{ not_plugged_message }}"
+    - service: tts.google_translate_say
+      entity_id: media_player.kitchen
+      data:
+        message: "{{ not_plugged_message }}"
+        language: 'fr'
 
 - alias: Update leaf in morning
   id: Update_leaf_in_morning
