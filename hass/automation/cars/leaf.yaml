@@ -1,4 +1,24 @@
 ---
+- alias: Leaf start climate on climate button press
+  id: Leaf_start_climate_on_climate_button_press
+  trigger:
+    - platform: state
+      entity_id: input_button.Leaf_start_climate
+  action:
+    - service: joaoapps_join.android_server_send_tasker
+      data:
+        command: "LeafStartClimate"
+
+- alias: Leaf start charge on charge button press
+  id: Leaf_start_charge_on_charge_button_press
+  trigger:
+    - platform: state
+      entity_id: input_button.Leaf_start_charge
+  action:
+    - service: joaoapps_join.android_server_send_tasker
+      data:
+        command: "LeafStartCharge"
+
 - alias: Update leaf in morning
   id: Update_leaf_in_morning
   trigger:
