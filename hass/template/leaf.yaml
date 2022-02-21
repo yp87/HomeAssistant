@@ -17,7 +17,7 @@
       unit_of_measurement: '%'
       device_class: battery
     - name: Leaf temperature
-      state: '{{ trigger.event.data.temperature.split("-")[0]|int + 1 }}'
+      state: '{{ trigger.event.data.temperature.split("-")[0]|int(-99) + 1 }}'
       unit_of_measurement: °C
       device_class: temperature
     - name: Leaf last update

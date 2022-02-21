@@ -1,7 +1,0 @@
----
-- platform: mqtt
-  name: leaf_battery_connected
-  state_topic: "leaf/battery/connected"
-  payload_on: "true"
-  payload_off: "false"
-  device_class: plug

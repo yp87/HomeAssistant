@@ -126,9 +126,9 @@
   action:
     - service: input_boolean.turn_off
       entity_id: input_boolean.leaf_plugged_confirmed_by_user
-    - service: script.update_leaf_battery
+    - service: script.update_leaf
     - condition: state
-      entity_id: binary_sensor.leaf_battery_connected
+      entity_id: binary_sensor.leaf_plug
       state: "off"
     - service: notify.all_people
       data:
@@ -161,7 +161,7 @@
                 entity_id: input_boolean.leaf_next_departure_canceled
                 state: "on"
               - condition: state
-                entity_id: binary_sensor.leaf_battery_connected
+                entity_id: binary_sensor.leaf_plug
                 state: "on"
 
 - alias: Calculate leaf charge and climate time
@@ -183,7 +183,7 @@
   action:
     - service: input_boolean.turn_off
       entity_id: input_boolean.leaf_next_departure_canceled
-    - service: script.update_leaf_battery
+    - service: script.update_leaf
     - service: input_text.set_value
       data:
         entity_id: input_text.leaf_start_climate
@@ -195,14 +195,14 @@
         entity_id: input_text.leaf_start_charging
         value: "2000-01-01 00:00:00"
     - condition: numeric_state
-      entity_id: sensor.leaf_battery_level
+      entity_id: sensor.leaf_charge
       below: 80
     - service: input_text.set_value
       data:
         entity_id: input_text.leaf_start_charging
         value: >-
           {% set missing_charge = 80 -
-             states('sensor.leaf_battery_level')|int(0) %}
+             states('sensor.leaf_charge')|int(0) %}
           {% set charge_rate_seconds =
              states('input_number.leaf_charge_per_hour')|int(0) / 3600 %}
           {% set seconds_to_charge = missing_charge / charge_rate_seconds %}
@@ -221,7 +221,8 @@
     {{ as_timestamp(states('input_text.leaf_next_departure'))
        > as_timestamp(now()) }}
   action:
-    - service: script.charge_the_leaf
+    - service: input_button.press
+      entity_id: input_button.leaf_start_charge
 
 - alias: Start the leaf climate control
   id: Start_the_leaf_climate_control
@@ -236,30 +237,22 @@
        > as_timestamp(now()) }}
   action:
     - condition: state
-      entity_id: binary_sensor.leaf_battery_connected
+      entity_id: binary_sensor.leaf_plug
       state: "on"
-    - service: script.start_the_leaf
-    - wait_for_trigger:
-        - platform: state
-          entity_id: binary_sensor.leaf_battery_connected
-          to: "off"
-      timeout:
-        minutes: 45
-    - condition: template
-      value_template: "{{ wait.trigger is none }}"
-    - service: script.turn_off_leaf_climate
+    - service: input_button.press
+      entity_id: input_button.leaf_start_climate
 
 - alias: Refresh Leaf battery info while charging
   id: Refresh_Leaf_battery_info_while_charging
   trigger:
     - platform: state
-      entity_id: switch.leaf_charging
+      entity_id: binary_sensor.leaf_charging
       to: "on"
   action:
     - repeat:
         while:
           - condition: state
-            entity_id: switch.leaf_charging
+            entity_id: binary_sensor.leaf_charging
             state: "on"
         sequence:
           - delay: "00:10:05"
@@ -284,13 +277,12 @@
       data:
         entity_id: input_text.leaf_start_climate
         value: "2000-01-01 00:00:00"
-    - service: script.turn_off_leaf_climate
 
 - alias: Leaf 85% notification
   id: Leaf_85_notification
   trigger:
     - platform: numeric_state
-      entity_id: sensor.leaf_battery_level
+      entity_id: sensor.leaf_charge
       above: 85
   condition:
     - condition: not
@@ -302,4 +294,4 @@
     - service: notify.all_people
       data:
         message: >-
-          La leaf est chargée à {{ states('sensor.leaf_battery_level') }}%
+          La leaf est chargée à {{ states('sensor.leaf_charge') }}%
