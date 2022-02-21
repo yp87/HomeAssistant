@@ -13,7 +13,6 @@ services:
       - mqtt
       - alarm
       - database
-      - leaf
       - zwavejs2mqtt
 
   mqtt:
