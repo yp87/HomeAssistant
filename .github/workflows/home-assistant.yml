@@ -41,7 +41,7 @@ jobs:
         id: homeassistant
         run: "echo ::set-output name=changed::\
                 $(grep -cE '.stubs/hass|\
-                            .github/workflows\
+                            .github/workflows'\
                 <<< \"${{ steps.changed.outputs.files }}\")"
       - name: Check infrastructure files changed
         id: infrastructure
