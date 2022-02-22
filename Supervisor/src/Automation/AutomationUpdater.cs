@@ -53,8 +53,7 @@ namespace Supervisor.Automation
         {
             return modifiedFiles.Contains("alarm/", StringComparison.InvariantCultureIgnoreCase) ||
                    modifiedFiles.Contains("WebhookProxy/", StringComparison.InvariantCultureIgnoreCase) ||
-                   modifiedFiles.Contains("docker-compose-homeassistant.yaml", StringComparison.InvariantCultureIgnoreCase) ||
-                   modifiedFiles.Contains("leaf2mqtt");
+                   modifiedFiles.Contains("docker-compose-homeassistant.yaml", StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

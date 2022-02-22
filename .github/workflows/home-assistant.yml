@@ -42,7 +42,6 @@ jobs:
         run: "echo ::set-output name=changed::\
                 $(grep -cE '.stubs/hass|\
                             .github/workflows|\
-                            hass|leaf2mqtt'\
                 <<< \"${{ steps.changed.outputs.files }}\")"
       - name: Check infrastructure files changed
         id: infrastructure
