@@ -78,3 +78,38 @@
           }) -%}
           La Tesla est arrêtée, mais{{ " " }}
           {{- stringMap[trigger.to_state.object_id] }}.
+
+- alias: Tesla - Normal Max charge
+  id: Tesla_Normal_Max_charge
+  trigger:
+    - platform: state
+      entity_id: device_tracker.bibicar_location_tracker
+      to: "home"
+    - platform: state
+      entity_id: climate.bibicar_hvac_climate_system
+      to: "off"
+  action:
+    - service: tesla_custom.api
+      data:
+        command: CHANGE_CHARGE_LIMIT
+        parameters:
+          path_vars:
+            vehicle_id: !secret tesla_vehicle_id
+          wake_if_asleep: false
+          percent: 80
+
+- alias: Tesla - High Max charge
+  id: Tesla_High_Max_charge
+  trigger:
+    - platform: state
+      entity_id: climate.bibicar_hvac_climate_system
+      to: "heat_cool"
+  action:
+    - service: tesla_custom.api
+      data:
+        command: CHANGE_CHARGE_LIMIT
+        parameters:
+          path_vars:
+            vehicle_id: !secret tesla_vehicle_id
+          wake_if_asleep: false
+          percent: 90
