@@ -96,7 +96,7 @@
           path_vars:
             vehicle_id: !secret tesla_vehicle_id
           wake_if_asleep: false
-          percent: 80
+          percent: 86
 
 - alias: Tesla - High Max charge
   id: Tesla_High_Max_charge
