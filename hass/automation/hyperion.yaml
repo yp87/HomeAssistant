@@ -97,19 +97,19 @@
         119
       {% endif %}
   action:
-    - choose:
-        - conditions: '{{ trigger.to_state.state == "on" }}'
-          sequence:
-            - service: hyperion_priority.apply_effect
-              data:
-                effect: >-
-                  {% if trigger.entity_id == "input_boolean.yan_phone_rings" %}
-                    Police Lights Solid
-                  {% else %}
-                    Rainbow swirl fast
-                  {% endif %}
-                priority: '{{ effect_priority }}'
-      default:
+    - if:
+        - '{{ trigger.to_state.state == "on" }}'
+      then:
+        - service: hyperion_priority.apply_effect
+          data:
+            effect: >-
+              {% if trigger.entity_id == "input_boolean.yan_phone_rings" %}
+                Police Lights Solid
+              {% else %}
+                Rainbow swirl fast
+              {% endif %}
+            priority: '{{ effect_priority }}'
+      else:
         - service: hyperion_priority.clear_priority
           data:
             priority: '{{ effect_priority }}'
