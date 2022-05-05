@@ -104,7 +104,8 @@
 - platform: mqtt
   name: tesla_time_to_full_charge
   state_topic: "teslamate/cars/1/time_to_full_charge"
-  device_class: h
+  unit_of_measurement: h
+  icon: mdi:clock-outline
 
 - platform: mqtt
   name: tesla_version
