@@ -48,8 +48,7 @@
         device_id: "57d85ed64f414f701c2a5468be4f9d42"
         event_label: "Keypad unlock operation"
   condition:
-    condition: or
-    conditions:
+    or:
       - condition: sun
         after: sunset
         after_offset: "-01:00:00"
@@ -85,8 +84,7 @@
       entity_id: binary_sensor.second_floor_motion
       to: "on"
   condition:
-    - condition: or
-      conditions:
+    - or:
         - condition: state
           entity_id: light.second_floor_hallway_light
           state: "off"

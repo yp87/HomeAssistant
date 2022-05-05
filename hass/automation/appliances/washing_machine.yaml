@@ -16,13 +16,11 @@
     - condition: state
       entity_id: alarm_control_panel.home_alarm
       state: 'disarmed'
-    - condition: or
-      conditions:
+    - or:
         - >
           {{ trigger.platform == "state" and
              trigger.to_state.object_id == "diaper_cleaning_state" }}
-        - condition: and
-          conditions:
+        - and:
             - '{{ "Attente" in states("input_select.diaper_cleaning_state") }}'
             - >
               {{ states("input_select.diaper_cleaning_state") !=

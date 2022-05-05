@@ -8,8 +8,7 @@ set_tesla_climate:
   sequence:
     - service: "{{ 'climate.turn_'+state }}"
       entity_id: climate.bibicar_hvac_climate_system
-    - condition: and
-      conditions:
+    - and:
         - "{{ state == 'on'}}"
         - >
           {{(state_attr('weather.main_floor', 'temperature')|float) < 2}}

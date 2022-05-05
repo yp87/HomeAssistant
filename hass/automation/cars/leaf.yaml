@@ -69,8 +69,7 @@
     - platform: time
       at: '21:00:00'
   condition:
-    condition: and
-    conditions:
+    and:
       - >-
         {{ as_timestamp(now())
            >= as_timestamp(states('input_text.leaf_next_departure')) }}
@@ -98,8 +97,7 @@
               entity_id: light.table_de_chevet_de_cath
               transition: 1
         until:
-          - condition: or
-            conditions:
+          - or:
               - >-
                 {{ as_timestamp(states('input_text.leaf_next_departure'))
                    > as_timestamp(now()) }}
@@ -115,8 +113,7 @@
     - platform: state
       entity_id: input_text.leaf_start_charging
   condition:
-    condition: and
-    conditions:
+    and:
       - >-
         {{ as_timestamp(states('input_text.leaf_start_charging'))
            > as_timestamp(now()) }}
@@ -151,8 +148,7 @@
               entity_id: light.table_de_chevet_de_cath
               transition: 1
         until:
-          - condition: or
-            conditions:
+          - or:
               # Leaf updates are way too slow to check the real plug status
               - condition: state
                 entity_id: input_boolean.leaf_plugged_confirmed_by_user

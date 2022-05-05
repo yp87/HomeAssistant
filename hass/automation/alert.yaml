@@ -27,8 +27,7 @@
     - >-
       {{ is_state_attr('climate.main_floor', 'preset_mode', 'temp')
           or climate_mode == 'off' }}
-    - condition: or
-      conditions:
+    - or:
         - "{{ climate_mode == 'heat' and single_temp_target > 23 }}"
         - "{{ climate_mode == 'heat' and single_temp_target < 20  }}"
         - "{{ climate_mode == 'cool' and single_temp_target < 21  }}"
@@ -127,8 +126,7 @@
     - service: notify.yan
       data:
         message: "Yan, prends tes pillules!"
-    - condition: and
-      conditions:
+    - and:
         - condition: state
           entity_id: person.yan
           state: "home"

@@ -6,8 +6,7 @@
     from: 'home'
     to: 'not_home'
   condition:
-    condition: or
-    conditions:
+    or:
       - condition: state
         entity_id: switch.garage_door
         state: 'on'
@@ -38,13 +37,11 @@
                 le système d'alarme est toujours désarmé.
                 {% endif %}
         until:
-          - condition: or
-            conditions:
+          - or:
               - condition: state
                 entity_id: group.all_people
                 state: 'home'
-              - condition: and
-                conditions:
+              - and:
                   - condition: state
                     entity_id: switch.garage_door
                     state: 'off'
@@ -121,8 +118,7 @@
       entity_id: switch.garage_door
       to: 'on'
   condition:
-    condition: and
-    conditions:
+    and:
       - condition: state
         entity_id: switch.garage_door
         state: 'on'
@@ -146,8 +142,7 @@
           - delay:
               milliseconds: 15000
         until:
-          - condition: or
-            conditions:
+          - or:
               - condition: state
                 entity_id: switch.garage_door
                 state: 'off'

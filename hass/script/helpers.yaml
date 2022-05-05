@@ -61,8 +61,7 @@ next_diaper_cleaning_step:
   sequence:
     - service: input_select.select_next
       entity_id: input_select.diaper_cleaning_state
-    - condition: and
-      conditions:
+    - and:
         - "{{ 'Attente' in states('input_select.diaper_cleaning_state') }}"
         - >-
           {{ states('input_select.diaper_cleaning_state') !=

@@ -46,8 +46,7 @@
     from: 'pending'
     to: 'disarmed'
   condition:
-    condition: or
-    conditions:
+    or:
       - condition: sun
         after: sunset
         after_offset: "-01:00:00"

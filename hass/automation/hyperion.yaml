@@ -32,8 +32,7 @@
         priority: 128
     # 15 seconds is the time for the whole system to be ready.
     - delay: "00:00:15"
-    - condition: or
-      conditions:
+    - or:
         - condition: state
           entity_id: switch.yharmony_chromecast
           state: "on"
