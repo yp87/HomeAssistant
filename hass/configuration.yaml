@@ -50,6 +50,8 @@ sun:
 logger:
   default: info
 
+backup:
+
 # TODO - move this to another file
 google_assistant:
   project_id: !secret project_id
