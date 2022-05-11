@@ -33,8 +33,8 @@
         - "{{ climate_mode == 'cool' and single_temp_target < 21  }}"
         - "{{ climate_mode == 'cool' and single_temp_target > 26  }}"
         - "{{ climate_mode == 'heat_cool' and low_temp_target > 23  }}"
-        - "{{ climate_mode == 'heat_cool' and low_temp_target < 20  }}"
-        - "{{ climate_mode == 'heat_cool' and high_temp_target < 21  }}"
+        - "{{ climate_mode == 'heat_cool' and low_temp_target < 19  }}"
+        - "{{ climate_mode == 'heat_cool' and high_temp_target < 20  }}"
         - "{{ climate_mode == 'heat_cool' and high_temp_target > 26  }}"
         - >-
           {{ single_temp_target == high_temp_target == low_temp_target == 0 }}
