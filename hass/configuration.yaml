@@ -5,8 +5,9 @@ homeassistant:
   longitude: !secret home_longitude
   elevation: !secret home_elevation
   unit_system: !secret home_unit_system
-  time_zone: !secret home_timezone
   customize: !include customize.yaml
+  time_zone: !secret home_timezone
+  external_url: !secret external_url
 
 frontend:
 
@@ -107,7 +108,6 @@ google_assistant:
 
 tts:
   - platform: google_translate
-    base_url: !secret base_url_tts
 
 notify:
   - name: yan
