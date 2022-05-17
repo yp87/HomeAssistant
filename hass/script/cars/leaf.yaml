@@ -10,7 +10,8 @@ update_leaf:
         while:
           - >
             {{ as_timestamp(now()) -
-               as_timestamp(states('sensor.leaf_battery_last_update'), 0) > 600 }}
+               as_timestamp(states('sensor.leaf_battery_last_update'), 0)
+               > 600 }}
           - "{{ repeat.index <= 6 }}"
         sequence:
           - service: mqtt.publish
@@ -25,7 +26,8 @@ update_leaf:
     - choose:
         - conditions: >
             {{ as_timestamp(now()) -
-               as_timestamp(states('sensor.leaf_battery_last_received'), 0) >= 240 }}
+               as_timestamp(states('sensor.leaf_battery_last_received'), 0)
+               >= 240 }}
           sequence:
             - service: notify.all_people
               data:
@@ -34,7 +36,8 @@ update_leaf:
                   Impossible d'effectuer une tentative de mise à jour.
         - conditions: >
             {{ as_timestamp(now()) -
-               as_timestamp(states('sensor.leaf_battery_last_update'), 0) > 600 }}
+               as_timestamp(states('sensor.leaf_battery_last_update'), 0)
+               > 600 }}
           sequence:
             - service: notify.all_people
               data:
