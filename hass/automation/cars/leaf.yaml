@@ -1,35 +1,42 @@
 ---
+- alias: Leaf error notification
+  id: Leaf_error_notification
+  trigger:
+    - platform: state
+      entity_id: sensor.leaf_last_error_occured
+  mode: single
+  max_exceeded: silent
+  action:
+    - service: notify.all_people
+      data:
+        message: >
+          Une erreur c'est produite.
+          Impossible de communiquer avec la Leaf.
+          Utilisez l'application native.
+    - delay: "01:00:00"
+
 - alias: Leaf start climate on climate button press
   id: Leaf_start_climate_on_climate_button_press
   trigger:
     - platform: state
-      entity_id: input_button.Leaf_start_climate
+      entity_id: input_button.leaf_start_climate
   mode: single
   max_exceeded: silent
   action:
-    - repeat:
-        count: 4
-        sequence:
-          - service: joaoapps_join.android_server_send_tasker
-            data:
-              command: "LeafStartClimate"
-          - delay: "00:00:20"
+    - service: button.press
+      entity_id: button.mqtt_leaf_start_climate
 
 - alias: Leaf start charge on charge button press
   id: Leaf_start_charge_on_charge_button_press
   trigger:
     - platform: state
-      entity_id: input_button.Leaf_start_charge
+      entity_id: input_button.leaf_start_charge
   mode: single
   max_exceeded: silent
   action:
-    - repeat:
-        count: 4
-        sequence:
-          - service: joaoapps_join.android_server_send_tasker
-            data:
-              command: "LeafStartCharge"
-          - delay: "00:00:20"
+    - service: button.press
+      entity_id: button.mqtt_leaf_start_charge
+    - delay: "00:00:30"
     - condition: state
       entity_id: alarm_control_panel.home_alarm
       state: 'disarmed'

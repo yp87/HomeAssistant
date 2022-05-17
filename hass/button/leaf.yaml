@@ -1,0 +1,10 @@
+---
+- platform: mqtt
+  name: mqtt_leaf_start_charge
+  command_topic: "leaf/command/battery"
+  payload_press: "startCharging"
+
+- platform: mqtt
+  name: mqtt_leaf_start_climate
+  command_topic: "leaf/command/climate"
+  payload_press: "start"

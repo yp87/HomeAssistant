@@ -1,0 +1,21 @@
+---
+- platform: mqtt
+  name: leaf_charge
+  state_topic: "leaf/battery/percentage"
+  unit_of_measurement: "%"
+  device_class: battery
+
+- platform: mqtt
+  name: leaf_battery_last_update
+  state_topic: "leaf/battery/lastUpdatedDateTimeUtc"
+  device_class: timestamp
+
+- platform: mqtt
+  name: leaf_battery_last_received
+  state_topic: "leaf/battery/lastReceivedDateTimeUtc"
+  device_class: timestamp
+
+- platform: mqtt
+  name: leaf_last_error_occured
+  state_topic: "leaf/lastErrorDateTimeUtc"
+  device_class: timestamp

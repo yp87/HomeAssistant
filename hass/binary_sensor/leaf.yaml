@@ -1,0 +1,15 @@
+---
+- platform: mqtt
+  name: leaf_plug
+  state_topic: "leaf/battery/connected"
+  payload_on: "true"
+  payload_off: "false"
+  device_class: plug
+
+- platform: mqtt
+  name: leaf_charging
+  state_topic: "leaf/battery/charging"
+  payload_on: "true"
+  payload_off: "false"
+  device_class: plug
+  icon: mdi:ev-station

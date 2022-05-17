@@ -21,7 +21,7 @@ morning:
           {%- set weekday = ['Lundi','Mardi','Mercredi','Jeudi',
                             'Vendredi','Samedi','Dimanche'] -%}
           {%- set ts =
-              as_timestamp(states('sensor.leaf_last_update'), 0) -%}
+              as_timestamp(states('sensor.leaf_battery_last_update'), 0) -%}
           {%- if ts == 0 -%}
           Impossible d'obtenir l'heure de la dernière mise à jour de
           l'état de la leaf.

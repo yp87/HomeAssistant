@@ -137,14 +137,10 @@ rest_command:
   update_dns_ip:
     url: !secret dns_ip_update_url
 
-joaoapps_join:
-  - name: android_server
-    device_id: !secret join_android_server_device
-    api_key: !secret join_android_server_api_key
-
 alarm_control_panel: !include alarm_control_panel.yaml
 automation: !include_dir_merge_list automation
 binary_sensor: !include_dir_merge_list binary_sensor
+button: !include_dir_merge_list button
 group: !include groups.yaml
 input_boolean: !include input_boolean.yaml
 input_button: !include input_button.yaml
@@ -154,5 +150,4 @@ input_text: !include input_text.yaml
 script: !include_dir_merge_named script
 sensor: !include_dir_merge_list sensor
 switch: !include_dir_merge_list switch
-template: !include_dir_merge_list template
 zone: !include zone.yaml

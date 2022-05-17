@@ -10,21 +10,22 @@ update_leaf:
         while:
           - >
             {{ as_timestamp(now()) -
-               as_timestamp(states('sensor.leaf_last_update'), 0) > 600 }}
+               as_timestamp(states('sensor.leaf_battery_last_update'), 0) > 600 }}
           - "{{ repeat.index <= 6 }}"
         sequence:
-          - service: joaoapps_join.android_server_send_tasker
+          - service: mqtt.publish
             data:
-              command: "LeafRefresh"
+              topic: "leaf/command/battery"
+              payload: "update"
           - wait_for_trigger:
               - platform: state
-                entity_id: sensor.Leaf_last_tentative
+                entity_id: sensor.leaf_battery_last_received
             timeout: "00:03:00"
           - delay: "00:00:02"
     - choose:
         - conditions: >
             {{ as_timestamp(now()) -
-               as_timestamp(states('sensor.Leaf_last_tentative'), 0) >= 240 }}
+               as_timestamp(states('sensor.leaf_battery_last_received'), 0) >= 240 }}
           sequence:
             - service: notify.all_people
               data:
@@ -33,7 +34,7 @@ update_leaf:
                   Impossible d'effectuer une tentative de mise à jour.
         - conditions: >
             {{ as_timestamp(now()) -
-               as_timestamp(states('sensor.leaf_last_update'), 0) > 600 }}
+               as_timestamp(states('sensor.leaf_battery_last_update'), 0) > 600 }}
           sequence:
             - service: notify.all_people
               data:
