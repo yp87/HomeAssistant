@@ -206,3 +206,32 @@
       entity_id: media_player.kitchen
       data:
         volume_level: 0.2
+
+- alias: Alert when garage door stays open
+  id: Alert_when_garage_door_stays_open
+  trigger:
+    - platform: state
+      entity_id: switch.garage_door
+      to: 'on'
+      for:
+        minutes: 10
+  mode: single
+  max_exceeded: silent
+  action:
+    - service: notify.yan
+      data:
+        message: La porte de garage est ouverte depuis plus de dix minutes.
+    - repeat:
+        sequence:
+          - delay:
+              minutes: 10
+          - service: notify.yan
+            data:
+              message: La porte de garage est toujours ouverte.
+        until:
+          - condition: state
+            entity_id: switch.garage_door
+            state: 'off'
+    - service: notify.yan
+      data:
+        message: La porte de garage est maintenant fermée.
