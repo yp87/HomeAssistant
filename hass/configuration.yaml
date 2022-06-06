@@ -154,4 +154,3 @@ mqtt:
   button: !include_dir_merge_list mqtt/button
   binary_sensor: !include_dir_merge_list mqtt/binary_sensor
   alarm_control_panel: !include_dir_merge_list mqtt/alarm_control_panel
-
