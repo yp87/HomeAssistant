@@ -137,10 +137,7 @@ rest_command:
   update_dns_ip:
     url: !secret dns_ip_update_url
 
-alarm_control_panel: !include alarm_control_panel.yaml
 automation: !include_dir_merge_list automation
-binary_sensor: !include_dir_merge_list binary_sensor
-button: !include_dir_merge_list button
 group: !include groups.yaml
 input_boolean: !include input_boolean.yaml
 input_button: !include input_button.yaml
@@ -151,3 +148,10 @@ script: !include_dir_merge_named script
 sensor: !include_dir_merge_list sensor
 switch: !include_dir_merge_list switch
 zone: !include zone.yaml
+mqtt:
+  sensor: !include_dir_merge_list mqtt/sensor
+  switch: !include_dir_merge_list mqtt/switch
+  button: !include_dir_merge_list mqtt/button
+  binary_sensor: !include_dir_merge_list mqtt/binary_sensor
+  alarm_control_panel: !include_dir_merge_list mqtt/alarm_control_panel
+

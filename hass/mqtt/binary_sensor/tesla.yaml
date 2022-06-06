@@ -1,55 +1,47 @@
 ---
-- platform: mqtt
-  name: tesla_charge_port
+- name: tesla_charge_port
   state_topic: "teslamate/cars/1/charge_port_door_open"
   payload_on: "true"
   payload_off: "false"
   device_class: door
 
-- platform: mqtt
-  name: tesla_health
+- name: tesla_health
   state_topic: "teslamate/cars/1/healthy"
   payload_on: "true"
   payload_off: "false"
   device_class: connectivity
 
-- platform: mqtt
-  name: tesla_lock
+- name: tesla_lock
   state_topic: "teslamate/cars/1/locked"
   payload_on: "false"
   payload_off: "true"
   device_class: lock
 
-- platform: mqtt
-  name: tesla_plugged_in
+- name: tesla_plugged_in
   state_topic: "teslamate/cars/1/plugged_in"
   payload_on: "true"
   payload_off: "false"
   device_class: plug
 
-- platform: mqtt
-  name: tesla_windows
+- name: tesla_windows
   state_topic: "teslamate/cars/1/windows_open"
   payload_on: "true"
   payload_off: "false"
   device_class: window
 
-- platform: mqtt
-  name: tesla_trunk
+- name: tesla_trunk
   state_topic: "teslamate/cars/1/trunk_open"
   payload_on: "true"
   payload_off: "false"
   device_class: door
 
-- platform: mqtt
-  name: tesla_frunk
+- name: tesla_frunk
   state_topic: "teslamate/cars/1/frunk_open"
   payload_on: "true"
   payload_off: "false"
   device_class: door
 
-- platform: mqtt
-  name: tesla_doors
+- name: tesla_doors
   state_topic: "teslamate/cars/1/doors_open"
   payload_on: "true"
   payload_off: "false"
