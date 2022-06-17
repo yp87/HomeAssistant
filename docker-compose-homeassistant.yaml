@@ -126,7 +126,7 @@ services:
       # port for web interface
       - '8091:8091'
       # port for Z-Wave JS websocket server
-      - '3001:3000'
+      - '3000:3000'
 
   traefik:
     container_name: traefik
