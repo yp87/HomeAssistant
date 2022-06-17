@@ -21,7 +21,7 @@ http:
   #ssl_key: !secret ssl_key
   use_x_forwarded_for: true
   trusted_proxies:
-    - 172.19.0.5  #temp for test
+    - 127.0.0.1
 
 recorder:
   db_url: !secret recorder_database_url
