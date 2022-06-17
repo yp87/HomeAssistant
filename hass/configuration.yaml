@@ -17,13 +17,9 @@ system_health:
 config:
 
 http:
-  #ssl_certificate: !secret ssl_certificate
-  #ssl_key: !secret ssl_key
   use_x_forwarded_for: true
   trusted_proxies:
-    - traefik
-    #- 127.0.0.1
-    #- 172.19.0.0/24  # Docker network
+    - 127.0.0.1
 
 recorder:
   db_url: !secret recorder_database_url

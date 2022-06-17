@@ -8,6 +8,7 @@ services:
     volumes:
       - ${BASE_PATH}/hass:/config
     restart: always
+    network_mode: "host"
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.hass.loadbalancer.server.port=8123"
