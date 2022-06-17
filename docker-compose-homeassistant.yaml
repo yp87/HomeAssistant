@@ -8,11 +8,14 @@ services:
     volumes:
       - ${BASE_PATH}/hass:/config
     restart: always
-    #network_mode: host
+    network_mode: "host"
     labels:
-      traefik.enable: "true"
-      traefik.frontend.rule: "Host:${EXTERNAL_URL}"
-      traefik.port: "8123"
+      - "traefik.enable=true"
+      - "traefik.http.services.hass.loadbalancer.server.port=8123"
+      - "traefik.http.routers.hass.rule=Host(`${EXTERNAL_URL}`)"
+      - "traefik.http.routers.hass.entrypoints=websecure"
+      - "traefik.http.routers.hass.tls=true"
+      - "traefik.http.routers.hass.tls.certresolver=le"
     depends_on:
       - mqtt
       - alarm
@@ -126,20 +129,20 @@ services:
       - '3001:3000'
 
   traefik:
-    image: traefik:v1.7.16
-    command: >-
-      --web --docker --docker.watch --docker.domain=${EXTERNAL_URL_DOMAIN}
-       --docker.exposedbydefault=false
     container_name: traefik
-    hostname: traefik
-    restart: always
+    image: traefik:v2.8
+    command:
+      - "--log.level=DEBUG"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.le.acme.tlschallenge=true"
     ports:
-      - "80:80"
-      - "443:443"
+      - 443:443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ${BASE_PATH}/reverseproxy/acme.json:/acme.json
-      - ${BASE_PATH}/reverseproxy/traefik.toml:/traefik.toml
+    network_mode: "host"
+    restart: unless-stopped
 
 volumes:
   teslamate-grafana-data:

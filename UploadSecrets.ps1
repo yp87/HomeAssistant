@@ -6,7 +6,6 @@ $sourcePath = Get-Location;
 $secretFiles = Get-Childitem -Path "$($sourcePath)/**/secret*" -Recurse;
 $secretFiles += Get-Childitem -Path "$($sourcePath)/**/service_account.json" -Recurse
 $secretFiles += Get-Childitem -Path "$($sourcePath)/.env"
-$secretFiles += Get-Childitem -Path "$($sourcePath)/reverseproxy/traefik.toml"
 Foreach($secretFile in $secretFiles)
 {
     if ($secretFile -notmatch ".stubs")
