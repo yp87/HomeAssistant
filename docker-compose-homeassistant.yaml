@@ -126,7 +126,7 @@ services:
       - '3001:3000'
 
   traefik:
-    image: traefik:latest
+    image: traefik:v1.7.16
     command: >-
       --web --docker --docker.watch --docker.domain=${EXTERNAL_URL_DOMAIN}
        --docker.exposedbydefault=false
