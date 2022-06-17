@@ -8,7 +8,6 @@ services:
     volumes:
       - ${BASE_PATH}/hass:/config
     restart: always
-    #network_mode: "host"
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.hass.loadbalancer.server.port=8123"
@@ -141,7 +140,6 @@ services:
       - 443:443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    network_mode: "host"
     restart: unless-stopped
 
 volumes:
