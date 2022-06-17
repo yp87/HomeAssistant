@@ -139,9 +139,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ${BASE_PATH}/reverseproxy/acme.json:/acme.json
       - ${BASE_PATH}/reverseproxy/traefik.toml:/traefik.toml
-    labels:
-      traefik.enable: "true"
-
 
 volumes:
   teslamate-grafana-data:
