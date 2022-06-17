@@ -132,6 +132,7 @@ services:
        --docker.exposedbydefault=false
     container_name: traefik
     hostname: traefik
+    restart: always
     ports:
       - "80:80"
       - "443:443"
