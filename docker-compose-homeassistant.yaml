@@ -137,11 +137,15 @@ services:
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.websecure.address=:443"
       - "--certificatesresolvers.le.acme.tlschallenge=true"
+      - "--certificatesresolvers.le.acme.email=${EMAIL}"
+      - "--certificatesresolvers.le.acme.storage=/letsencrypt/acme.json"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - letsencrypt:/letsencrypt
     network_mode: "host"
     restart: unless-stopped
 
 volumes:
   teslamate-grafana-data:
   zwave-config:
+  letsencrypt:
