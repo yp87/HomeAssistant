@@ -8,7 +8,11 @@ services:
     volumes:
       - ${BASE_PATH}/hass:/config
     restart: always
-    network_mode: host
+    #network_mode: host
+    labels:
+      traefik.enable: "true"
+      traefik.frontend.rule: "Host:${EXTERNAL_URL}"
+      traefik.port: "8123"
     depends_on:
       - mqtt
       - alarm
@@ -120,6 +124,24 @@ services:
       - '8091:8091'
       # port for Z-Wave JS websocket server
       - '3001:3000'
+
+  traefik:
+    image: traefik:latest
+    command: >-
+      --web --docker --docker.watch --docker.domain=${EXTERNAL_URL_DOMAIN}
+       --docker.exposedbydefault=false
+    container_name: traefik
+    hostname: traefik
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${BASE_PATH}/reverseproxy/acme.json:/acme.json
+      - ${BASE_PATH}/reverseproxy/traefik.toml:/traefik.toml
+    labels:
+      traefik.enable: "true"
+
 
 volumes:
   teslamate-grafana-data:

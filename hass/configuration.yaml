@@ -17,8 +17,8 @@ system_health:
 config:
 
 http:
-  ssl_certificate: !secret ssl_certificate
-  ssl_key: !secret ssl_key
+  #ssl_certificate: !secret ssl_certificate
+  #ssl_key: !secret ssl_key
 
 recorder:
   db_url: !secret recorder_database_url

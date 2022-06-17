@@ -6,6 +6,7 @@ secret*
 
 /volumes/*
 /mosquitto
+/reverseproxy/*
 /hass/certs
 /hass/zwcfg*.xml
 /hass/zwscene.xml
