@@ -97,7 +97,7 @@ jobs:
         run: cp -R ./.stubs/infrastructure/* ./
       - name: Build the infrastructure
         run: >-
-          docker-compose
+          docker compose
           -f docker-compose.yaml
           -f docker-compose-homeassistant.yaml
           build --parallel
