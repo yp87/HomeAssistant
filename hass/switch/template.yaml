@@ -3,7 +3,7 @@
   switches:
     bibicar_climate:
       value_template: >-
-        {{ is_state('climate.bibicar_hvac_climate_system', 'heat_cool') }}
+        {{ is_state('binary_sensor.tesla_climate', 'true') }}
       turn_on:
         service: script.turn_on
         data:

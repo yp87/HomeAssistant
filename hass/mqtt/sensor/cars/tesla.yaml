@@ -88,6 +88,16 @@
   unit_of_measurement: h
   icon: mdi:clock-outline
 
+- name: tesla_latitude
+  state_topic: "teslamate/cars/1/latitude"
+  unit_of_measurement: °
+  icon: mdi:crosshairs-gps
+
+- name: tesla_longitude
+  state_topic: "teslamate/cars/1/longitude"
+  unit_of_measurement: °
+  icon: mdi:crosshairs-gps
+
 - name: tesla_version
   state_topic: "teslamate/cars/1/version"
   icon: mdi:alphabetical

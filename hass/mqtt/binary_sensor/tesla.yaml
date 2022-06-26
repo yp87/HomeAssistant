@@ -46,3 +46,9 @@
   payload_on: "true"
   payload_off: "false"
   device_class: door
+
+- name: tesla_climate
+  state_topic: "teslamate/cars/1/is_climate_on"
+  payload_on: "true"
+  payload_off: "false"
+  icon: mdi:fan

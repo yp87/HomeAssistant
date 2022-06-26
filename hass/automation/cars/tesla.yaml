@@ -1,12 +1,4 @@
 ---
-- alias: Initialize bibicar update to false
-  trigger:
-    platform: homeassistant
-    event: start
-  action:
-    service: switch.turn_off
-    entity_id: switch.bibicar_polling_switch
-
 - alias: Notify when something is opened while exiting the car
   trigger:
     - platform: state
@@ -83,10 +75,10 @@
   id: Tesla_Normal_Max_charge
   trigger:
     - platform: state
-      entity_id: device_tracker.bibicar_location_tracker
+      entity_id: device_tracker.tesla_location
       to: "home"
     - platform: state
-      entity_id: climate.bibicar_hvac_climate_system
+      entity_id: binary_sensor.tesla_climate
       to: "off"
   action:
     - service: tesla_custom.api
@@ -96,14 +88,14 @@
           path_vars:
             vehicle_id: !secret tesla_vehicle_id
           wake_if_asleep: false
-          percent: 86
+          percent: 80
 
 - alias: Tesla - High Max charge
   id: Tesla_High_Max_charge
   trigger:
     - platform: state
-      entity_id: climate.bibicar_hvac_climate_system
-      to: "heat_cool"
+      entity_id: binary_sensor.tesla_climate
+      to: "on"
   action:
     - service: tesla_custom.api
       data:
@@ -113,3 +105,18 @@
             vehicle_id: !secret tesla_vehicle_id
           wake_if_asleep: false
           percent: 90
+
+- alias: Tesla - Location
+  id: Tesla_Location
+  trigger:
+    - platform: mqtt
+      topic: teslamate/cars/1/latitude
+    - platform: mqtt
+      topic: teslamate/cars/1/longitude
+  action:
+    - service: device_tracker.see
+      data_template:
+        dev_id: tesla_location
+        gps:
+          - "{{ states.sensor.tesla_latitude.state }}"
+          - "{{ states.sensor.tesla_longitude.state }}"
