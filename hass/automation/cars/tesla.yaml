@@ -113,7 +113,10 @@
       topic: teslamate/cars/1/latitude
     - platform: mqtt
       topic: teslamate/cars/1/longitude
+  mode: single
+  max_exceeded: silent
   action:
+    - delay: "00:00:10"
     - service: device_tracker.see
       data_template:
         dev_id: tesla_location
