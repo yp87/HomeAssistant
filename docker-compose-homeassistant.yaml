@@ -20,7 +20,6 @@ services:
       - mqtt
       - alarm
       - database
-      - leaf
       - zwavejs2mqtt
 
   mqtt:
@@ -31,24 +30,6 @@ services:
       - "1883:1883"
     volumes:
       - ${BASE_PATH}/mosquitto/config:/mosquitto/config
-
-  leaf:
-    container_name: leaf2mqtt
-    image: yp87/leaf2mqtt:latest
-    restart: always
-    environment:
-      - LEAF_USERNAME=${LEAF_USERNAME}
-      - LEAF_PASSWORD=${LEAF_PASSWORD}
-      - MQTT_HOST=mqtt
-      - MQTT_USERNAME=${MQTT_USERNAME}
-      - MQTT_PASSWORD=${MQTT_PASSWORD}
-      - LEAF_TYPE=${LEAF_TYPE}
-      - UPDATE_INTERVAL_MINUTES=1440
-      - CHARGING_UPDATE_INTERVAL_MINUTES=30
-      - COMMAND_ATTEMPTS=7
-      - LOG_LEVEL=FINER
-    depends_on:
-      - mqtt
 
   alarm:
     container_name: alarm

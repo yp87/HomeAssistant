@@ -140,6 +140,11 @@ rest_command:
   update_dns_ip:
     url: !secret dns_ip_update_url
 
+joaoapps_join:
+  - name: android_server
+    device_id: !secret join_android_server_device
+    api_key: !secret join_android_server_api_key
+
 automation: !include_dir_merge_list automation
 group: !include groups.yaml
 input_boolean: !include input_boolean.yaml
@@ -151,9 +156,9 @@ script: !include_dir_merge_named script
 sensor: !include_dir_merge_list sensor
 switch: !include_dir_merge_list switch
 zone: !include zone.yaml
+template: !include_dir_merge_list template
 mqtt:
   sensor: !include_dir_merge_list mqtt/sensor
   switch: !include_dir_merge_list mqtt/switch
-  button: !include_dir_merge_list mqtt/button
   binary_sensor: !include_dir_merge_list mqtt/binary_sensor
   alarm_control_panel: !include_dir_merge_list mqtt/alarm_control_panel
