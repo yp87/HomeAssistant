@@ -98,11 +98,18 @@
         property_key_name: "002"
         value: "KeyPressed2x"
   action:
-    - service: light.turn_off
-      data:
-        entity_id:
-          - light.frederique_main_light
-          - light.frederique_night_light
+    - if:
+        condition: time
+        after: "18:00:00"
+      then:
+        - service: light.turn_on
+          data:
+            entity_id: light.frederique_main_light
+            brightness: 1
+      else:
+        - service: light.turn_off
+          data:
+            entity_id: light.frederique_main_light
     - service: switch.turn_on
       data:
         entity_id: switch.baby_monitor

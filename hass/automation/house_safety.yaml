@@ -180,16 +180,19 @@
         volume_level: 0.5
     - repeat:
         sequence:
-          - delay:
-              seconds: 20
-          - service: notify.all_people
-            data:
-              message: La porte d'entrée est toujours ouverte.
-          - service: tts.google_translate_say
-            entity_id: media_player.kitchen
-            data:
-              message: La porte d'entréee est ouverte.
-              language: 'fr'
+          - wait_template: "{{ is_state('binary_sensor.front_door', 'off') }}"
+            timeout: "00:00:20"
+          - if:
+              - "{{ not wait.completed }}"
+            then:
+              - service: notify.all_people
+                data:
+                  message: La porte d'entrée est toujours ouverte.
+              - service: tts.google_translate_say
+                entity_id: media_player.kitchen
+                data:
+                  message: La porte d'entrée est ouverte.
+                  language: 'fr'
         until:
           - condition: state
             entity_id: binary_sensor.front_door

@@ -35,6 +35,8 @@
           exclude_lights:
             - switch.light_front
             - switch.heated_bed
+            - light.frederique_main_light
+            - light.frederique_night_light
     - service: remote.turn_off
       entity_id: remote.yharmony
     - service: climate.set_preset_mode
