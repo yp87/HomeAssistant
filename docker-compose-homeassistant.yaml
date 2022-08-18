@@ -51,6 +51,7 @@ services:
       - MQTT_HOST=mqtt
       - MQTT_USERNAME=${MQTT_USERNAME}
       - MQTT_PASSWORD=${MQTT_PASSWORD}
+      - ENCRYPTION_KEY=${TESLAMATE_ENCRYPTION_KEY}
     ports:
       - "4000:4000"
     cap_drop:
