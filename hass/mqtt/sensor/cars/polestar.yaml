@@ -1,0 +1,3 @@
+---
+- name: polestar_preconfigured
+  state_topic: "polestar/preconfigured"

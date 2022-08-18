@@ -1,0 +1,9 @@
+---
+- alias: polestar preconfigured alarm
+  trigger:
+    - platform: state
+      entity_id: sensor.polestar_preconfigured
+  action:
+    - service: notify.yan
+      data:
+        message: "{{ states('sensor.polestar_preconfigured') }}"
