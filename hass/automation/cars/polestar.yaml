@@ -3,8 +3,8 @@
   trigger:
     - platform: state
       entity_id: sensor.polestar_preconfigured
-      from: 0
-      to: 1
+      from: "0"
+      to: "1"
   action:
     - service: joaoapps_join.phone_send_tasker
       data:
