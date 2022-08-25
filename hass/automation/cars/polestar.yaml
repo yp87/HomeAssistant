@@ -6,6 +6,6 @@
       from: 0
       to: 1
   action:
-    - service: joaoapps_join.android_server_send_tasker
+    - service: joaoapps_join.phone_send_tasker
       data:
         command: "Polestar"
