@@ -3,6 +3,8 @@
   trigger:
     - platform: state
       entity_id: sensor.polestar_preconfigured
+      from: 0
+      to: 1
   action:
     - service: joaoapps_join.android_server_send_tasker
       data:
