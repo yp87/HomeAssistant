@@ -4,6 +4,6 @@
     - platform: state
       entity_id: sensor.polestar_preconfigured
   action:
-    - service: notify.yan
+    - service: joaoapps_join.android_server_send_tasker
       data:
-        message: "{{ states('sensor.polestar_preconfigured') }}"
+        command: "Polestar"
