@@ -3,9 +3,18 @@
   trigger:
     - platform: state
       entity_id: sensor.polestar_preconfigured
-      from: "0"
       to: "1"
   action:
     - service: joaoapps_join.phone_send_tasker
       data:
         command: "Polestar"
+
+- alias: polestar preconfigured alarm 2
+  trigger:
+    - platform: state
+      entity_id: sensor.polestar_preconfigured
+      to: "2"
+  action:
+    - service: notify.yan
+      data:
+        message: "preconfigured polestars available."
