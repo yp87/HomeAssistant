@@ -1,4 +1,4 @@
-FROM python:3.8.7-slim-buster
+FROM python:3.10.6-slim-buster
 
 ENV LANG C.UTF-8
 
