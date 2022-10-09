@@ -31,8 +31,6 @@ recorder:
     entities:
       - light.table_de_chevet_de_yan
       - light.table_de_chevet_de_cath
-      - sensor.tesla_longitude
-      - sensor.tesla_latitude
 
 history:
 
@@ -105,9 +103,6 @@ google_assistant:
     input_button.leaf_start_charge:
       expose: true
       name: Charge la Leaf
-    switch.bibicar_climate:
-      expose: true
-      name: La Tesla
 
 tts:
   - platform: google_translate
@@ -153,7 +148,6 @@ group: !include groups.yaml
 input_boolean: !include input_boolean.yaml
 input_button: !include input_button.yaml
 input_number: !include input_number.yaml
-input_select: !include input_select.yaml
 input_text: !include input_text.yaml
 script: !include_dir_merge_named script
 sensor: !include_dir_merge_list sensor

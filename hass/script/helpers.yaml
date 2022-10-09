@@ -56,20 +56,6 @@ lights_off_except:
              rejectattr('state','in','unavailable') |
              map(attribute='entity_id') | list | join(', ') }}
 
-# Remotely called by Fitbit
-next_diaper_cleaning_step:
-  sequence:
-    - service: input_select.select_next
-      entity_id: input_select.diaper_cleaning_state
-    - and:
-        - "{{ 'Attente' in states('input_select.diaper_cleaning_state') }}"
-        - >-
-          {{ states('input_select.diaper_cleaning_state') !=
-          'Attente du premier rinçage' }}
-    - delay: "00:00:01"
-    - service: input_select.select_next
-      entity_id: input_select.diaper_cleaning_state
-
 remote_action:
   fields:
     owner:

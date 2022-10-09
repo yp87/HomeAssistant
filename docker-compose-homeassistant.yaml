@@ -39,27 +39,6 @@ services:
     depends_on:
       - mqtt
 
-  teslamate:
-    container_name: teslamate
-    image: teslamate/teslamate:latest
-    restart: always
-    environment:
-      - DATABASE_USER=${AUTOMATION_USERNAME}
-      - DATABASE_PASS=${AUTOMATION_PASSWORD}
-      - DATABASE_NAME=${TESLAMATE_DATABASE}
-      - DATABASE_HOST=database
-      - MQTT_HOST=mqtt
-      - MQTT_USERNAME=${MQTT_USERNAME}
-      - MQTT_PASSWORD=${MQTT_PASSWORD}
-      - ENCRYPTION_KEY=${TESLAMATE_ENCRYPTION_KEY}
-    ports:
-      - "4000:4000"
-    cap_drop:
-      - all
-    depends_on:
-      - mqtt
-      - database
-
   database:
     container_name: postgres
     image: postgres:13

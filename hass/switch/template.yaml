@@ -1,36 +1,6 @@
 ---
 - platform: template
   switches:
-    tesla_charger:
-      value_template: >-
-        {{ not is_state('sensor.tesla_charger_power', '0') }}
-      turn_on:
-        service: switch.turn_on
-        data:
-          entity_id: switch.bibicar_charger_switch
-          variables:
-            state: "on"
-      turn_off:
-        service: switch.turn_off
-        data:
-          entity_id: switch.bibicar_charger_switch
-          variables:
-            state: "off"
-    bibicar_climate:
-      value_template: >-
-        {{ is_state('binary_sensor.tesla_climate', 'true') }}
-      turn_on:
-        service: script.turn_on
-        data:
-          entity_id: script.set_tesla_climate
-          variables:
-            state: "on"
-      turn_off:
-        service: script.turn_on
-        data:
-          entity_id: script.set_tesla_climate
-          variables:
-            state: "off"
     update_leaf:
       value_template: "{{ is_state('script.update_leaf', 'on') }}"
       turn_on:

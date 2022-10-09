@@ -21,9 +21,3 @@ cath_phone_notification:
 leaf_next_departure_canceled:
 
 leaf_plugged_confirmed_by_user:
-
-yan_in_tesla:
-  initial: false
-
-cath_in_tesla:
-  initial: false
