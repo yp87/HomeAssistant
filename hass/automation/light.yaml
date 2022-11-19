@@ -63,8 +63,9 @@
 
 - alias: Update christmas lights
   trigger:
-    - platform: state
+    - platform: zone
       entity_id: person.cath
+      zone: zone.home
     - platform: state
       entity_id: alarm_control_panel.home_alarm
   action:
