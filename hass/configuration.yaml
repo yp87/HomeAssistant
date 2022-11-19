@@ -108,14 +108,14 @@ tts:
   - platform: google_translate
 
 notify:
-  - name: yan
-    platform: hangouts
-    default_conversations:
-      - id: !secret hangout_yan_id
-  - name: cath
-    platform: hangouts
-    default_conversations:
-      - id: !secret hangout_cath_id
+  #- name: yan
+  #  platform: hangouts
+  #  default_conversations:
+  #    - id: !secret hangout_yan_id
+  #- name: cath
+  #  platform: hangouts
+  #  default_conversations:
+  #    - id: !secret hangout_cath_id
   - name: all_people
     platform: group
     services:
@@ -124,7 +124,11 @@ notify:
   - platform: joaoapps_join
     api_key: !secret join_phone_api_key
     device_id: !secret join_phone_device
-    name: test
+    name: yan
+  - platform: joaoapps_join
+    api_key: !secret join_phone_api_key_cath
+    device_id: !secret join_phone_device_cath
+    name: cath
 
 light:
   - platform: hyperion_classic
