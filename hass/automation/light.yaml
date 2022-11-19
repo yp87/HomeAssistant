@@ -85,17 +85,17 @@
       to: "on"
   condition:
     - and:
-      - condition: state
-        entity_id: switch.baby_monitor
-        state: "off"
-      - or:
-          - condition: state
-            entity_id: light.second_floor_hallway_light
-            state: "off"
-          - condition: state
-            entity_id: light.second_floor_hallway_light
-            attribute: brightness
-            state: 103
+        - condition: state
+          entity_id: switch.baby_monitor
+          state: "off"
+        - or:
+            - condition: state
+              entity_id: light.second_floor_hallway_light
+              state: "off"
+            - condition: state
+              entity_id: light.second_floor_hallway_light
+              attribute: brightness
+              state: 103
   mode: restart
   action:
     - service: light.turn_on
