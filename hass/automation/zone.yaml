@@ -20,15 +20,7 @@
   trigger:
     - platform: zone
       entity_id: person.cath
-      zone: zone.work_cath_1
-      event: leave
-    - platform: zone
-      entity_id: person.cath
-      zone: zone.work_cath_2
-      event: leave
-    - platform: zone
-      entity_id: person.cath
-      zone: zone.work_cath_3
+      zone: zone.work_cath
       event: leave
   action:
     service: notify.yan
