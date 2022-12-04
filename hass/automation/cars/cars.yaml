@@ -358,8 +358,8 @@
               entity_id: input_select.car_plugged
               data:
                 option: Leaf
-        - conditions: >-
-            "{{ states('sensor.wallbox_portal_charging_power')|float > 6.45 }}"
+        - conditions:
+            - "{{ states('sensor.wallbox_portal_charging_power')|float > 6.45 }}"
           sequence:
             - service: input_select.select_option
               entity_id: input_select.car_plugged
