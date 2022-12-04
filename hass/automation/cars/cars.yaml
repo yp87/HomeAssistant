@@ -198,14 +198,14 @@
         entity_id: input_text.leaf_start_charging
         value: "2000-01-01 00:00:00"
     - condition: numeric_state
-      entity_id: sensor.leaf_charge
+      entity_id: input_number.leaf_selected_battery
       below: 80
     - service: input_text.set_value
       data:
         entity_id: input_text.leaf_start_charging
         value: >-
           {% set missing_charge = 80 -
-             states('sensor.leaf_charge')|int(0) %}
+             states('input_number.leaf_selected_battery')|int(0) %}
           {% set charge_rate_seconds =
              states('input_number.leaf_charge_per_hour')|int(0) / 3600 %}
           {% set seconds_to_charge = missing_charge / charge_rate_seconds %}
@@ -365,6 +365,18 @@
               entity_id: input_select.car_plugged
               data:
                 option: Polestar 2
+
+- alias: Notify unknown plugged car
+  id: Notify_unknown_plugged_car
+  trigger:
+    - platform: state
+      entity_id: input_select.car_plugged
+      to: "Unknown"
+      for: "00:00:10"
+  action:
+    - service: notify.all_people
+      data:
+        message: "Impossible de reconnaitre la voiture branchée."
 
 - alias: Reset force charge car
   id: Reset_force_charge_car
