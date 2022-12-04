@@ -6,3 +6,7 @@ leaf_charge_per_hour:
   initial: 15
 
 leaf_selected_battery:
+  name: Selected leaf % for charging before departure
+  min: 0
+  max: 100
+  initial: 50
