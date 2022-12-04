@@ -1,5 +1,9 @@
 ---
 extends: default
 
+rules:
+  line-length:
+    max: 90
+
 ignore: |
   hass/external_dependencies/

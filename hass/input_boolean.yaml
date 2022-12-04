@@ -20,4 +20,4 @@ cath_phone_notification:
 
 leaf_next_departure_canceled:
 
-leaf_plugged_confirmed_by_user:
+force_charge_car:

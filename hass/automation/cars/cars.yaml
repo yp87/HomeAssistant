@@ -7,6 +7,13 @@
   mode: single
   max_exceeded: silent
   action:
+    - if:
+        - condition: state
+          entity_id: input_select.car_plugged
+          state: "Leaf"
+      then:
+        - service: switch.turn_on
+          entity_id: switch.wallbox_portal_pause_resume
     - repeat:
         count: 4
         sequence:
@@ -15,42 +22,47 @@
               command: "LeafStartClimate"
           - delay: "00:00:20"
 
-- alias: Leaf start charge on charge button press
-  id: Leaf_start_charge_on_charge_button_press
+- alias: Start charge on charge button press
+  id: start_charge_on_charge_button_press
   trigger:
     - platform: state
       entity_id: input_button.leaf_start_charge
+  variables:
+    not_plugged_message: "L'auto n'est pas branchée."
   mode: single
   max_exceeded: silent
   action:
-    - repeat:
-        count: 4
-        sequence:
-          - service: joaoapps_join.android_server_send_tasker
-            data:
-              command: "LeafStartCharge"
-          - delay: "00:00:20"
-    - condition: state
-      entity_id: alarm_control_panel.home_alarm
-      state: 'disarmed'
-    - service: script.update_leaf
-    - condition: state
-      entity_id: binary_sensor.leaf_plug
-      state: "off"
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.force_charge_car
+    - service: switch.turn_on
+      entity_id: switch.wallbox_portal_pause_resume
+    - wait_template: "{{ is_state('sensor.wallbox_portal_status_description', 'Charging') }}"
+      timeout: "00:01:00"
+    - condition: template
+      value_template: "{{ not wait.completed }}"
     - service: notify.all_people
       data:
         message: "{{ not_plugged_message }}"
+    - condition: state
+      entity_id: alarm_control_panel.home_alarm
+      state: 'disarmed'
     - service: tts.google_translate_say
       entity_id: media_player.kitchen
       data:
         message: "{{ not_plugged_message }}"
         language: 'fr'
 
-- alias: Update leaf in morning
-  id: Update_leaf_in_morning
+- alias: Update leaf
+  id: Update_leaf
   trigger:
     - platform: time
       at: "05:45:00"
+    - platform: state
+      entity_id: person.cath
+      to: 'home'
+    - platform: state
+      entity_id: input_select.car_plugged
+      to: "Leaf"
   action:
     - service: script.update_leaf
 
@@ -120,13 +132,12 @@
       - condition: state
         entity_id: input_boolean.leaf_next_departure_canceled
         state: "off"
+      - condition: not
+        conditions:
+          - condition: state
+            entity_id: input_select.car_plugged
+            state: "Leaf"
   action:
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.leaf_plugged_confirmed_by_user
-    - service: script.update_leaf
-    - condition: state
-      entity_id: binary_sensor.leaf_plug
-      state: "off"
     - service: notify.all_people
       data:
         message: >-
@@ -151,13 +162,10 @@
           - or:
               # Leaf updates are way too slow to check the real plug status
               - condition: state
-                entity_id: input_boolean.leaf_plugged_confirmed_by_user
-                state: "on"
+                entity_id: input_select.car_plugged
+                state: "Leaf"
               - condition: state
                 entity_id: input_boolean.leaf_next_departure_canceled
-                state: "on"
-              - condition: state
-                entity_id: binary_sensor.leaf_plug
                 state: "on"
 
 - alias: Calculate leaf charge and climate time
@@ -179,7 +187,6 @@
   action:
     - service: input_boolean.turn_off
       entity_id: input_boolean.leaf_next_departure_canceled
-    - service: script.update_leaf
     - service: input_text.set_value
       data:
         entity_id: input_text.leaf_start_climate
@@ -233,8 +240,8 @@
        > as_timestamp(now()) }}
   action:
     - condition: state
-      entity_id: binary_sensor.leaf_plug
-      state: "on"
+      entity_id: input_select.car_plugged
+      state: "Leaf"
     - service: input_button.press
       entity_id: input_button.leaf_start_climate
 
@@ -242,14 +249,17 @@
   id: Refresh_Leaf_battery_info_while_charging
   trigger:
     - platform: state
-      entity_id: binary_sensor.leaf_charging
-      to: "on"
+      entity_id: sensor.wallbox_portal_status_description
+      to: "Charging"
   action:
     - repeat:
         while:
           - condition: state
-            entity_id: binary_sensor.leaf_charging
-            state: "on"
+            entity_id: sensor.wallbox_portal_status_description
+            state: "Charging"
+          - condition: state
+            entity_id: input_select.car_plugged
+            state: "Leaf"
         sequence:
           - delay: "00:10:05"
           - service: script.update_leaf
@@ -274,20 +284,75 @@
         entity_id: input_text.leaf_start_climate
         value: "2000-01-01 00:00:00"
 
-- alias: Leaf 85% notification
-  id: Leaf_85_notification
+- alias: Stop charge on leaf charge detected
+  id: Stop_charge_on_leaf_charge_detected
   trigger:
-    - platform: numeric_state
-      entity_id: sensor.leaf_charge
-      above: 85
+    - platform: state
+      entity_id: input_select.car_plugged
+      to: "Leaf"
   condition:
-    - condition: not
-      conditions:
-        - condition: state
-          entity_id: alarm_control_panel.home_alarm
-          state: "armed_home"
+    or:
+      - >-
+        {{ as_timestamp(now())
+           >= as_timestamp(states('input_text.leaf_next_departure')) }}
+      - >-
+        {{ as_timestamp(now())
+           < as_timestamp(states('input_text.leaf_start_charging')) }}
   action:
-    - service: notify.all_people
-      data:
-        message: >-
-          La leaf est chargée à {{ states('sensor.leaf_charge') }}%
+    - condition: state
+      entity_id: input_boolean.force_charge_car
+      state: "off"
+    - service: switch.turn_off
+      entity_id: switch.wallbox_portal_pause_resume
+
+- alias: Detect plugged car
+  id: Detect_plugged_car
+  trigger:
+    - platform: state
+      entity_id: sensor.wallbox_portal_charging_power
+      for: "00:00:10"
+    - platform: state
+      entity_id: sensor.wallbox_portal_status_description
+      to: "Ready"
+  action:
+    - choose:
+        - conditions:
+            - "{{ is_state('sensor.wallbox_portal_status_description', 'Ready') }}"
+          sequence:
+            - service: input_select.select_option
+              entity_id: input_select.car_plugged
+              data:
+                option: None
+        - conditions:
+            - "{{ states('sensor.wallbox_portal_charging_power')|float < 6 }}"
+            - "{{ is_state('sensor.wallbox_portal_status_description', 'Charging') }}"
+          sequence:
+            - service: input_select.select_option
+              entity_id: input_select.car_plugged
+              data:
+                option: Unknown
+        - conditions:
+            - "{{ states('sensor.wallbox_portal_charging_power')|float >= 6 }}"
+            - "{{ states('sensor.wallbox_portal_charging_power')|float <= 6.45 }}"
+          sequence:
+            - service: input_select.select_option
+              entity_id: input_select.car_plugged
+              data:
+                option: Leaf
+        - conditions: >-
+            "{{ states('sensor.wallbox_portal_charging_power')|float > 6.45 }}"
+          sequence:
+            - service: input_select.select_option
+              entity_id: input_select.car_plugged
+              data:
+                option: Polestar 2
+
+- alias: Reset force charge car
+  id: Reset_force_charge_car
+  trigger:
+    - platform: state
+      entity_id: sensor.wallbox_portal_status_description
+      from: "Charging"
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.force_charge_car
