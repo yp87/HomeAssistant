@@ -180,6 +180,8 @@
       event: start
     - platform: state
       entity_id: input_number.leaf_charge_per_hour
+    - platform: state
+      entity_id: input_number.leaf_selected_battery
   condition: >-
     {{ as_timestamp(states('input_text.leaf_next_departure'))
        > as_timestamp(now()) }}
