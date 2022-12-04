@@ -251,6 +251,7 @@
     - platform: state
       entity_id: sensor.wallbox_portal_status_description
       to: "Charging"
+      for: "00:00:10"
   action:
     - repeat:
         while:
@@ -283,6 +284,24 @@
       data:
         entity_id: input_text.leaf_start_climate
         value: "2000-01-01 00:00:00"
+
+- alias: Leaf 85% notification
+  id: Leaf_85_notification
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.leaf_charge
+      above: 85
+  condition:
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: alarm_control_panel.home_alarm
+          state: "armed_home"
+  action:
+    - service: notify.all_people
+      data:
+        message: >-
+          La leaf est chargée à {{ states('sensor.leaf_charge') }}%
 
 - alias: Stop charge on leaf charge detected
   id: Stop_charge_on_leaf_charge_detected
