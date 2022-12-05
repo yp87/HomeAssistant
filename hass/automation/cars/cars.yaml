@@ -36,7 +36,8 @@
       entity_id: input_boolean.force_charge_car
     - service: switch.turn_on
       entity_id: switch.wallbox_portal_pause_resume
-    - wait_template: "{{ is_state('sensor.wallbox_portal_status_description', 'Charging') }}"
+    - wait_template: >-
+        "{{ is_state('sensor.wallbox_portal_status_description', 'Charging') }}"
       timeout: "00:01:00"
     - condition: template
       value_template: "{{ not wait.completed }}"
