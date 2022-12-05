@@ -108,14 +108,6 @@ tts:
   - platform: google_translate
 
 notify:
-  #- name: yan
-  #  platform: hangouts
-  #  default_conversations:
-  #    - id: !secret hangout_yan_id
-  #- name: cath
-  #  platform: hangouts
-  #  default_conversations:
-  #    - id: !secret hangout_cath_id
   - name: all_people
     platform: group
     services:
