@@ -107,6 +107,8 @@ google_assistant:
 tts:
   - platform: google_translate
 
+ocpp:
+
 notify:
   - name: all_people
     platform: group
