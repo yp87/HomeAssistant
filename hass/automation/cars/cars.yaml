@@ -13,7 +13,7 @@
           state: "Leaf"
       then:
         - service: switch.turn_on
-          entity_id: switch.wallbox_portal_pause_resume
+          entity_id: switch.charger_charge_control
     - repeat:
         count: 4
         sequence:
@@ -35,9 +35,9 @@
     - service: input_boolean.turn_on
       entity_id: input_boolean.force_charge_car
     - service: switch.turn_on
-      entity_id: switch.wallbox_portal_pause_resume
+      entity_id: switch.charger_charge_control
     - wait_template: >-
-        "{{ is_state('sensor.wallbox_portal_status_description', 'Charging') }}"
+        "{{ is_state('sensor.charger_status_connector', 'Charging') }}"
       timeout: "00:05:00"
     - condition: template
       value_template: "{{ not wait.completed }}"
@@ -126,18 +126,17 @@
     - platform: state
       entity_id: input_text.leaf_start_charging
   condition:
-    and:
-      - >-
-        {{ as_timestamp(states('input_text.leaf_start_charging'))
-           > as_timestamp(now()) }}
-      - condition: state
-        entity_id: input_boolean.leaf_next_departure_canceled
-        state: "off"
-      - condition: not
-        conditions:
-          - condition: state
-            entity_id: input_select.car_plugged
-            state: "Leaf"
+    - >-
+      {{ as_timestamp(states('input_text.leaf_start_charging'))
+          > as_timestamp(now()) }}
+    - condition: state
+      entity_id: input_boolean.leaf_next_departure_canceled
+      state: "off"
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: input_select.car_plugged
+          state: "Leaf"
   action:
     - service: notify.all_people
       data:
@@ -252,14 +251,16 @@
   id: Refresh_Leaf_battery_info_while_charging
   trigger:
     - platform: state
-      entity_id: sensor.wallbox_portal_status_description
+      entity_id: sensor.charger_status_connector
       to: "Charging"
-      for: "00:00:10"
+    - platform: state
+      entity_id: input_select.car_plugged
+      to: "Leaf"
   action:
     - repeat:
         while:
           - condition: state
-            entity_id: sensor.wallbox_portal_status_description
+            entity_id: sensor.charger_status_connector
             state: "Charging"
           - condition: state
             entity_id: input_select.car_plugged
@@ -313,56 +314,72 @@
       entity_id: input_select.car_plugged
       to: "Leaf"
   condition:
-    or:
-      - >-
-        {{ as_timestamp(now())
-           >= as_timestamp(states('input_text.leaf_next_departure')) }}
-      - >-
-        {{ as_timestamp(now())
-           < as_timestamp(states('input_text.leaf_start_charging')) }}
-  action:
+    - or:
+        - >-
+          {{ as_timestamp(now())
+            >= as_timestamp(states('input_text.leaf_next_departure')) }}
+        - >-
+          {{ as_timestamp(now())
+            < as_timestamp(states('input_text.leaf_start_charging')) }}
     - condition: state
       entity_id: input_boolean.force_charge_car
       state: "off"
+  action:
     - service: switch.turn_off
-      entity_id: switch.wallbox_portal_pause_resume
+      entity_id: switch.charger_charge_control
+
+- alias: Reset plugged car
+  id: dfgh
+  trigger:
+    - platform: state
+      entity_id: switch.charger_availability
+      to: "on"
+  action:
+    - service: input_select.select_option
+      entity_id: input_select.car_plugged
+      data:
+        option: None
 
 - alias: Detect plugged car
   id: Detect_plugged_car
   trigger:
     - platform: state
-      entity_id: sensor.wallbox_portal_charging_power
+      entity_id: sensor.charger_current_import
       for: "00:00:10"
     - platform: state
-      entity_id: sensor.wallbox_portal_status_description
-      to: "Ready"
+      entity_id: sensor.charger_status_connector
+      to: "Charging"
+      for: "00:00:10"
+  condition:
+    - or:
+        - condition: state
+          entity_id: input_select.car_plugged
+          state: "None"
+        - condition: state
+          entity_id: input_select.car_plugged
+          state: "Unknown"
+    - condition: state
+      entity_id: sensor.charger_status_connector
+      state: "Charging"
   action:
     - choose:
         - conditions:
-            - "{{ is_state('sensor.wallbox_portal_status_description', 'Ready') }}"
-          sequence:
-            - service: input_select.select_option
-              entity_id: input_select.car_plugged
-              data:
-                option: None
-        - conditions:
-            - "{{ states('sensor.wallbox_portal_charging_power')|float < 5 }}"
-            - "{{ is_state('sensor.wallbox_portal_status_description', 'Charging') }}"
+            - "{{ states('sensor.charger_current_import')|float < 25 }}"
           sequence:
             - service: input_select.select_option
               entity_id: input_select.car_plugged
               data:
                 option: Unknown
         - conditions:
-            - "{{ states('sensor.wallbox_portal_charging_power')|float >= 5 }}"
-            - "{{ states('sensor.wallbox_portal_charging_power')|float <= 6.45 }}"
+            - "{{ states('sensor.charger_current_import')|float >= 25 }}"
+            - "{{ states('sensor.charger_current_import')|float <= 28 }}"
           sequence:
             - service: input_select.select_option
               entity_id: input_select.car_plugged
               data:
                 option: Leaf
         - conditions:
-            - "{{ states('sensor.wallbox_portal_charging_power')|float > 6.45 }}"
+            - "{{ states('sensor.charger_current_import')|float > 28 }}"
           sequence:
             - service: input_select.select_option
               entity_id: input_select.car_plugged
@@ -385,8 +402,19 @@
   id: Reset_force_charge_car
   trigger:
     - platform: state
-      entity_id: sensor.wallbox_portal_status_description
-      from: "Charging"
+      entity_id: switch.charger_availability
+      to: "on"
   action:
     - service: input_boolean.turn_off
       entity_id: input_boolean.force_charge_car
+
+- alias: Start charge when plugged
+  id: Start_charge_when_plugged
+  trigger:
+    - platform: state
+      entity_id: switch.charger_availability
+      to: "off"
+      for: "00:00:05"
+  action:
+    - service: switch.turn_on
+      entity_id: switch.charger_charge_control
