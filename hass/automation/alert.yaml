@@ -1,14 +1,4 @@
 ---
-- alias: Hangout restart integration notification workaround
-  id: Hangout_restart_integration_notification_workaround
-  trigger:
-    platform: time_pattern
-    minutes: 15
-  action:
-    service: homeassistant.reload_config_entry
-    data:
-      entry_id: 69cb93656b7a4e8294af31e5e8171084
-
 - alias: Alert when house heating is out of normal parameters
   id: Alert_when_house_heating_is_out_of_normal_parameters
   trigger:
