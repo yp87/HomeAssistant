@@ -3,4 +3,4 @@
 	url = https://github.com/yp87/Paradox_IP150.git
 [submodule "hass/external_dependencies/ocpp"]
 	path = hass/external_dependencies/ocpp
-	url = https://github.com/lbbrhzn/ocpp
+	url = https://github.com/lbbrhzn/ocpp.git
