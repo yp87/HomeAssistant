@@ -328,6 +328,22 @@
     - service: switch.turn_off
       entity_id: switch.charger_charge_control
 
+- alias: Stop charge on leaf when departure
+  id: Stop_charge_on_leaf_when_departure
+  trigger:
+    - platform: template
+      value_template: >
+        {{ states('sensor.date_time') ==
+           ((as_timestamp(states('input_text.leaf_next_departure')) + (15 * 60)) |
+            timestamp_custom('%Y-%m-%d, %H:%M', true)) }}
+  condition:
+    - condition: state
+      entity_id: input_select.car_plugged
+      state: "Leaf"
+  action:
+    - service: switch.turn_off
+      entity_id: switch.charger_charge_control
+
 - alias: Reset plugged car
   id: dfgh
   trigger:
@@ -404,6 +420,9 @@
     - platform: state
       entity_id: switch.charger_availability
       to: "on"
+    - platform: state
+      entity_id: switch.charger_charge_control
+      to: "off"
   action:
     - service: input_boolean.turn_off
       entity_id: input_boolean.force_charge_car
