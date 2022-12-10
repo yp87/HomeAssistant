@@ -177,6 +177,33 @@
     - service: input_boolean.turn_off
       entity_id: input_boolean.car_charge_only
 
+- alias: Calculate leaf charge period end
+  id: Calculate_leaf_charge_period_end
+  trigger:
+    - platform: state
+      entity_id: input_text.leaf_next_charge
+  condition:
+    - condition: state
+      entity_id: input_select.car_plugged
+      state: "Leaf"
+  action:
+    - condition: numeric_state
+      entity_id: input_number.leaf_selected_battery
+      below: 80
+    - service: input_text.set_value
+      data:
+        entity_id: input_text.leaf_next_departure
+        value: >-
+          {% set missing_charge = 80 -
+             states('input_number.leaf_selected_battery')|int(0) %}
+          {% set charge_rate_seconds =
+             states('input_number.leaf_charge_per_hour')|int(0) / 3600 %}
+          {% set seconds_to_charge = missing_charge / charge_rate_seconds %}
+          {{ (as_timestamp(states('input_text.leaf_next_charge'))
+             + seconds_to_charge) | timestamp_local }}
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.car_charge_only
+
 - alias: Calculate leaf charge and climate time
   id: Calculate_leaf_charge_and_climate_time
   trigger:

@@ -7,3 +7,5 @@ leaf_start_charging:
 
 leaf_start_climate:
   name: Heure de régulation de température Leaf
+
+leaf_next_charge:
