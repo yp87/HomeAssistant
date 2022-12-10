@@ -374,7 +374,7 @@
   trigger:
     - platform: state
       entity_id: sensor.charger_current_import
-      for: "00:00:10"
+      for: "00:00:15"
   condition:
     - or:
         - condition: state
