@@ -456,9 +456,11 @@
     - platform: state
       entity_id: switch.charger_availability
       to: "on"
+      for: "00:00:01"
     - platform: state
       entity_id: switch.charger_charge_control
       to: "off"
+      for: "00:00:01"
   action:
     - service: input_boolean.turn_off
       entity_id: input_boolean.force_charge_car
