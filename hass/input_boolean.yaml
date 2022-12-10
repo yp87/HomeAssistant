@@ -23,3 +23,5 @@ leaf_next_departure_canceled:
 force_charge_car:
 
 car_charge_only:
+
+previous_charge_control:

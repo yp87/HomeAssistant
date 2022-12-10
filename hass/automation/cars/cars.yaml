@@ -475,3 +475,33 @@
   action:
     - service: switch.turn_on
       entity_id: switch.charger_charge_control
+
+- alias: Restart charger when session issue
+  id: Restart_charger_when_session_issue
+  trigger:
+    - platform: state
+      entity_id: sensor.charger_status
+      from: "Unavailable"
+      to: "Available"
+      for: "00:00:05"
+  action:
+    - service: "input_boolean.turn_{{ states('switch.charger_charge_control') }}"
+      entity_id: input_boolean.previous_charge_control
+    - service: switch.toggle
+      entity_id: switch.charger_charge_control
+    - if:
+        - >
+          {{ states('switch.charger_charge_control') ==
+             states('input_boolean.previous_charge_control') }}
+      then:
+        - service: button.press
+          entity_id: button.charger_reset
+        - service: notify.yan
+          data:
+            message: Rebooting charger since transaction seems lost.
+      else:
+        - service: switch.toggle
+          entity_id: switch.charger_charge_control
+
+
+
