@@ -168,6 +168,15 @@
                 entity_id: input_boolean.leaf_next_departure_canceled
                 state: "on"
 
+- alias: Reset charge only when set departure
+  id: Reset_charge_only_charge_when_set_departure
+  trigger:
+    - platform: state
+      entity_id: input_text.leaf_next_departure
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.car_charge_only
+
 - alias: Calculate leaf charge and climate time
   id: Calculate_leaf_charge_and_climate_time
   trigger:
@@ -237,13 +246,17 @@
         {{ states('sensor.date_time') ==
            (as_timestamp(states('input_text.leaf_start_climate')) |
             timestamp_custom('%Y-%m-%d, %H:%M', true)) }}
-  condition: >-
-    {{ as_timestamp(states('input_text.leaf_next_departure'))
-       > as_timestamp(now()) }}
-  action:
+  condition:
+    - >
+      {{ as_timestamp(states('input_text.leaf_next_departure'))
+         > as_timestamp(now()) }}
     - condition: state
       entity_id: input_select.car_plugged
       state: "Leaf"
+    - condition: state
+      entity_id: input_boolean.car_charge_only
+      state: "off"
+  action:
     - service: input_button.press
       entity_id: input_button.leaf_start_climate
 
