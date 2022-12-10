@@ -375,10 +375,6 @@
     - platform: state
       entity_id: sensor.charger_current_import
       for: "00:00:10"
-    - platform: state
-      entity_id: sensor.charger_status_connector
-      to: "Charging"
-      for: "00:00:10"
   condition:
     - or:
         - condition: state
