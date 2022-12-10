@@ -489,6 +489,7 @@
       entity_id: input_boolean.previous_charge_control
     - service: switch.toggle
       entity_id: switch.charger_charge_control
+    - delay: "00:00:05"
     - if:
         - >
           {{ states('switch.charger_charge_control') ==
