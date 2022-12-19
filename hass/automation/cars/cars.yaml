@@ -15,7 +15,7 @@
         - service: switch.turn_on
           entity_id: switch.charger_charge_control
     - repeat:
-        count: 4
+        count: 2
         sequence:
           - service: joaoapps_join.android_server_send_tasker
             data:
@@ -444,7 +444,7 @@
     - platform: state
       entity_id: input_select.car_plugged
       to: "Unknown"
-      for: "00:00:10"
+      for: "00:00:30"
   action:
     - service: notify.all_people
       data:
