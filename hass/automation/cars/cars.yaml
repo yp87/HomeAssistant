@@ -503,6 +503,3 @@
       else:
         - service: switch.toggle
           entity_id: switch.charger_charge_control
-
-
-
