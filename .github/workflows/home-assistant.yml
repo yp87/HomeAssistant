@@ -78,7 +78,7 @@ jobs:
       - name: Copy stub files
         run: cp -R ./.stubs/hass/* ./hass
       - name: Home Assistant Check Config
-        uses: docker://homeassistant/home-assistant:2022.12.8
+        uses: docker://homeassistant/home-assistant:2023.1.5
         with:
           args: >-
             python -m homeassistant --config ./hass/
