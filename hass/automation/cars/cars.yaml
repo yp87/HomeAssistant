@@ -470,6 +470,7 @@
   trigger:
     - platform: state
       entity_id: switch.charger_availability
+      from: "on"
       to: "off"
       for: "00:00:05"
   action:

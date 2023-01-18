@@ -8,6 +8,8 @@ homeassistant:
   customize: !include customize.yaml
   time_zone: !secret home_timezone
   external_url: !secret external_url
+  currency: !secret currency
+  country: !secret country
 
 frontend:
 
