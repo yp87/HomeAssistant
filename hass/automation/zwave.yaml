@@ -89,6 +89,21 @@
           - light.table_de_chevet_de_yan
         brightness: 150
 
+- alias: Kitchen double up
+  trigger:
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "6b1eccc8c4bbb9613bae53ed04d11e0d"
+        value: "KeyPressed2x"
+  action:
+    - service_template: >
+        light.turn_{{ "on" if trigger.event.data.property_key_name == "001" else "off"}}
+      entity_id:
+        - light.kitchen_main_light
+        - light.living_room_main_light
+        - light.ground_floor_hallway_light
+
 - alias: Frederique main light double down
   trigger:
     - platform: event
