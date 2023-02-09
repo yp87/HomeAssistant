@@ -106,6 +106,21 @@ services:
     network_mode: "host"
     restart: unless-stopped
 
+  hydroqc2mqtt:
+    image: registry.gitlab.com/hydroqc/hydroqc2mqtt
+    environment:
+      - MQTT_USERNAME: ${MQTT_USERNAME}
+      - MQTT_PASSWORD: ${MQTT_PASSWORD}
+      - MQTT_HOST: mqtt
+      - MQTT_PORT: '1883'
+      - HQ2M_CONTRACTS_0_NAME: 'maison'
+      - HQ2M_CONTRACTS_0_USERNAME: ${HYDROQC_USER}
+      - HQ2M_CONTRACTS_0_PASSWORD: ${HYDROQC_PASSWORD}
+      - HQ2M_CONTRACTS_0_CUSTOMER: ${HYDROQC_CUSTOMER}
+      - HQ2M_CONTRACTS_0_ACCOUNT: ${HYDROQC_ACCOUNT}
+      - HQ2M_CONTRACTS_0_CONTRACT: ${HYDROQC_CONTRACT}
+    restart: unless-stopped
+
 volumes:
   teslamate-grafana-data:
   zwave-config:

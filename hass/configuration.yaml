@@ -124,11 +124,6 @@ notify:
     device_id: !secret join_phone_device_cath
     name: cath
 
-light:
-  - platform: hyperion_classic
-    host: !secret hyperion_ip_address
-    port: !secret hyperion_port
-
 hyperion_priority:
   host: !secret hyperion_ip_address
   port: !secret hyperion_port
