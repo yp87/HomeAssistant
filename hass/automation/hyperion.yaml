@@ -24,12 +24,12 @@
     # instead of glitchy lights when starting up the system.
     - service: hyperion_priority.apply_effect
       data:
-        effect: Running dots
+        effect: Lights
         priority: 130
     # 128 is the priority used by the true hyperion integration.
     - service: hyperion_priority.clear_priority
       data:
-        priority: 128
+        priority: 240
     # 15 seconds is the time for the whole system to be ready.
     - delay: "00:00:15"
     - or:
@@ -78,7 +78,7 @@
             "color-end": [136, 97, 7],
             "fade-time": 2
           }
-    - delay: "00:00:02"
+    - delay: "00:00:03"
     - service: hyperion_priority.clear_priority
       data:
         priority: 130
