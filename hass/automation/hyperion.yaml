@@ -26,12 +26,11 @@
       data:
         effect: Lights
         priority: 130
-    # 128 is the priority used by the true hyperion integration.
-    - service: hyperion_priority.clear_priority
-      data:
-        priority: 240
     # 15 seconds is the time for the whole system to be ready.
     - delay: "00:00:15"
+    - service: hyperion_priority.clear_priority
+      data:
+        priority: 130
     - or:
         - condition: state
           entity_id: switch.yharmony_chromecast
@@ -43,45 +42,6 @@
       data:
         entity_id: light.hyperion
         effect: "USB Capture"
-
-- alias: Hyperion pausing chromecast
-  trigger:
-    - platform: state
-      entity_id: media_player.living_room_tv
-      from: "playing"
-      to: "paused"
-  action:
-    - service: hyperion_priority.apply_effect
-      data:
-        effect: Cinema brighten lights
-        priority: 130
-        args: >-
-          {
-            "color-start": [136, 97, 7],
-            "color-end": [238, 173, 47],
-            "fade-time": 2
-          }
-
-- alias: Hyperion playing chromecast
-  trigger:
-    - platform: state
-      entity_id: media_player.living_room_tv
-      from: "paused"
-  action:
-    - service: hyperion_priority.apply_effect
-      data:
-        effect: Cinema dim lights
-        priority: 130
-        args: >-
-          {
-            "color-start": [238, 173, 47],
-            "color-end": [136, 97, 7],
-            "fade-time": 2
-          }
-    - delay: "00:00:03"
-    - service: hyperion_priority.clear_priority
-      data:
-        priority: 130
 
 - alias: Hyperion phone ringing
   trigger:
