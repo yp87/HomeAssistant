@@ -132,6 +132,8 @@ rest_command:
   update_dns_ip:
     url: !secret dns_ip_update_url
 
+conversation:
+
 joaoapps_join:
   - name: android_server
     device_id: !secret join_android_server_device
