@@ -12,7 +12,7 @@ services:
     logging:
       driver: "json-file"
       options:
-          max-size: "1d"
+          max-size: "100m"
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.hass.loadbalancer.server.port=8123"
