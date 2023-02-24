@@ -53,6 +53,8 @@ sun:
 
 logger:
   default: info
+  logs:
+    custom_components.ocpp: warning
 
 backup:
 

@@ -9,6 +9,10 @@ services:
       - ${BASE_PATH}/hass:/config
     restart: always
     network_mode: "host"
+    logging:
+      driver: "json-file"
+      options:
+          max-size: "1d"
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.hass.loadbalancer.server.port=8123"
