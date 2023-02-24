@@ -14,13 +14,9 @@
       then:
         - service: switch.turn_on
           entity_id: switch.charger_charge_control
-    - repeat:
-        count: 2
-        sequence:
-          - service: joaoapps_join.android_server_send_tasker
-            data:
-              command: "LeafStartClimate"
-          - delay: "00:00:20"
+    - service: joaoapps_join.android_server_send_tasker
+      data:
+        command: "LeafStartClimate"
 
 - alias: Start charge on charge button press
   id: start_charge_on_charge_button_press

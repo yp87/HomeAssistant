@@ -89,7 +89,7 @@
           - light.table_de_chevet_de_yan
         brightness: 150
 
-- alias: Kitchen double up
+- alias: Kitchen double up/down
   trigger:
     - platform: event
       event_type: zwave_js_value_notification
@@ -120,7 +120,7 @@
         - service: light.turn_on
           data:
             entity_id: light.frederique_main_light
-            brightness: 1
+            brightness: 44
       else:
         - service: light.turn_off
           data:
@@ -128,14 +128,6 @@
     - service: switch.turn_on
       data:
         entity_id: switch.baby_monitor
-    - condition: sun
-      after: sunset
-      after_offset: "-01:00:00"
-    - service: script.auto_light_on
-      data:
-        auto_entity: light.upper_stairs_light
-        brightness: 127
-        duration_seconds: 180
 
 - alias: Frederique main light single up or release from hold up
   trigger:

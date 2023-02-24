@@ -1,4 +1,16 @@
 ---
+- alias: Cath leaving home
+  trigger:
+    - platform: zone
+      entity_id: person.cath
+      zone: zone.home
+      event: leave
+  action:
+    service: light.turn_off
+    entity_id:
+      - light.table_de_chevet_de_cath
+      - light.frederique_main_light
+
 - alias: Yan leaving work
   trigger:
     platform: zone
