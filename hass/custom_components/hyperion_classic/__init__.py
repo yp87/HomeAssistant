@@ -1,1 +1,0 @@
-"""The Hyperion classic component."""

@@ -11,6 +11,7 @@ EFFECT = 'effect'
 PRIORITY = 'priority'
 COLOR = 'color'
 ARGS = 'args'
+STATE = 'state'
 
 def setup(hass, config):
     """Service to send commands to hyperion."""
@@ -33,14 +34,27 @@ def setup(hass, config):
             }
         )
 
-    def clear_priority(call):
-        priority = call.data.get(PRIORITY)
+    def update_tv_state(call):
+        state = call.data.get(STATE).lower() == 'on'
+
         json_request(
             {
+                "command": "componentstate",
+                "componentstate":{
+                    "component":"V4L",
+                    "state": state
+                }
+            }
+        )
+
+    def clear_priority(call):
+        priority = call.data.get(PRIORITY)
+        data = {
                 "command": "clear",
                 "priority": int(priority),
             }
-        )
+        json_request(data)
+        json_request(data)
 
     def json_request(request):
         """Communicate with the JSON server."""
