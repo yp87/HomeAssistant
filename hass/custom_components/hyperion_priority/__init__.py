@@ -34,19 +34,6 @@ def setup(hass, config):
             }
         )
 
-    def update_tv_state(call):
-        state = call.data.get(STATE).lower() == 'on'
-
-        json_request(
-            {
-                "command": "componentstate",
-                "componentstate":{
-                    "component":"V4L",
-                    "state": state
-                }
-            }
-        )
-
     def clear_priority(call):
         priority = call.data.get(PRIORITY)
         data = {

@@ -8,6 +8,7 @@
     - service: light.turn_on
       data:
         entity_id: light.hyperion
+        effect: "off"
 
 - alias: Turn hyperion tv off when harmony is turned off
   trigger:
@@ -15,9 +16,10 @@
       entity_id: remote.yharmony
       to: 'off'
   action:
-    - service: hyperion_priority.update_tv_state
+    - service: light.turn_on
       data:
-        state: "off"
+        entity_id: light.hyperion
+        effect: "off"
 
 - alias: Hyperion Hdmi when casting or gaming
   id: hyperion_hdmi_when_casting
@@ -48,9 +50,10 @@
         - condition: state
           entity_id: switch.yharmony_nintendo
           state: "on"
-    - service: hyperion_priority.update_tv_state
+    - service: light.turn_on
       data:
-        state: "on"
+        entity_id: light.hyperion
+        effect: "USB Capture"
 
 - alias: Hyperion pausing chromecast
   trigger:

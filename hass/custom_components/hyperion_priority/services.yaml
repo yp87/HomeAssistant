@@ -1,11 +1,4 @@
 ---
-update_tv_state:
-  description: Change the state of the tv input.
-  fields:
-    state:
-      description: On if tv input must be activated. Off otherwise.
-      example: "on"
-
 apply_effect:
   description: Apply an effect to hyperion for a specified priority.
   fields:
