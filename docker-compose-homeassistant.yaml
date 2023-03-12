@@ -45,7 +45,7 @@ services:
 
   database:
     container_name: postgres
-    image: postgres:13
+    image: postgres:latest
     restart: always
     environment:
       - POSTGRES_USER=${AUTOMATION_USERNAME}
