@@ -217,7 +217,7 @@
     - service: script.auto_off
       data:
         auto_entity: switch.master_bathroom_fan
-        duration_seconds: 600
+        duration_seconds: 1800
 
 - alias: bathroom fan double click up
   trigger:
@@ -231,7 +231,7 @@
     - service: script.auto_switch_on
       data:
         auto_entity: switch.master_bathroom_fan
-        duration_seconds: 600
+        duration_seconds: 1800
 
 - alias: bathroom fan triple click up
   trigger:
@@ -245,7 +245,7 @@
     - service: script.auto_switch_on
       data:
         auto_entity: switch.master_bathroom_fan
-        duration_seconds: 900
+        duration_seconds: 3600
 
 - alias: bathroom any light double click up
   trigger:
