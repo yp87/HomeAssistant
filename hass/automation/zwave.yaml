@@ -103,6 +103,7 @@
         - light.kitchen_main_light
         - light.living_room_main_light
         - light.ground_floor_hallway_light
+        - light.salle_de_lecture
 
 - alias: Frederique main light double down
   trigger:
