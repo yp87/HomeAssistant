@@ -5,10 +5,14 @@
       entity_id: light.hyperion
       to: 'off'
   action:
-    - service: light.turn_on
-      data:
-        entity_id: light.hyperion
-        effect: "off"
+    - repeat:
+        count: 2
+        sequence:
+          - delay: "00:00:01"
+          - service: light.turn_on
+            data:
+              entity_id: light.hyperion
+              effect: "off"
 
 - alias: Turn hyperion tv off when harmony is turned off
   trigger:
