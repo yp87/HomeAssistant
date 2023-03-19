@@ -7,11 +7,11 @@
   action:
     - repeat:
         sequence:
-          - delay: "00:00:01"
           - service: light.turn_on
             data:
               entity_id: light.hyperion
               effect: "off"
+          - delay: "00:00:01"
         until:
           - condition: state
             entity_id: light.hyperion
