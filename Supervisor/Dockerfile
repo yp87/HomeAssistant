@@ -22,6 +22,7 @@ RUN curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-c
 RUN chmod +x /usr/local/bin/docker-compose
 
 RUN apt-get update && apt-get install -y git
+RUN git config --global --add safe.directory '*'
 
 COPY --from=build-env /app/out .
 
