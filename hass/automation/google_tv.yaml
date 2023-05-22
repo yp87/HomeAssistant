@@ -3,13 +3,8 @@
   id: google_tv_turns_on
   trigger:
     - platform: state
-      entity_id: media_player.living_room_tv
-  condition:
-    condition: template
-    value_template: >
-      {{ trigger.from_state is not none and trigger.to_state is not none and
-         trigger.from_state.state in ['off', 'unavailable'] and
-         trigger.to_state.state in ['idle', 'playing', 'paused'] }}
+      entity_id: remote.salon_tv
+      to: 'on'
   action:
     - service: switch.turn_on
       entity_id: switch.yharmony_chromecast
@@ -18,7 +13,7 @@
   id: google_tv_turns_off
   trigger:
     platform: state
-    entity_id: media_player.living_room_tv
+    entity_id: remote.salon_tv
     to: 'off'
   condition:
     condition: state
