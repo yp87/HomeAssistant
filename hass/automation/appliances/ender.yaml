@@ -1,6 +1,6 @@
 ---
-- alias: Notify when ender3 print is done
-  id: Notify_when_ender3_print_is_done
+- alias: Notify when ender print is done
+  id: Notify_when_ender_print_is_done
   trigger:
     platform: state
     entity_id: sensor.octoprint_job_percentage
