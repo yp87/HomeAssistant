@@ -3,8 +3,9 @@
   id: Notify_when_ender3_print_is_done
   trigger:
     platform: state
-    entity_id: sensor.octoprint_job_percentage
-    to: '100'
+    entity_id: binary_sensor.octoprint_printing
+    from: "on"
+    to: "off"
   action:
     - service: script.notify_and_speak
       data:

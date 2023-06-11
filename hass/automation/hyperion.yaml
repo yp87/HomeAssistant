@@ -99,6 +99,9 @@
     - service: hyperion_priority.clear_priority
       data:
         priority: 130
+    - service: hyperion_priority.clear_priority
+      data:
+        priority: 130
 
 - alias: Hyperion phone ringing
   trigger:
