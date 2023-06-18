@@ -134,6 +134,14 @@ rest_command:
   update_dns_ip:
     url: !secret dns_ip_update_url
 
+command_line:
+  - sensor:
+      name: Hard drive space usage
+      command: "df -Ph /config | awk 'NR == 2{print $5+0}'"
+      unit_of_measurement: "%"
+      scan_interval: 86400
+
+
 conversation:
 
 joaoapps_join:
