@@ -1,32 +1,15 @@
 ---
-- alias: Keep hyperion on
-  trigger:
-    - platform: state
-      entity_id: light.hyperion
-      to: 'off'
-  action:
-    - repeat:
-        sequence:
-          - service: light.turn_on
-            data:
-              entity_id: light.hyperion
-              effect: "off"
-          - delay: "00:00:01"
-        until:
-          - condition: state
-            entity_id: light.hyperion
-            attribute: effect
-            state: "off"
-
 - alias: Turn hyperion tv off when harmony is turned off
   trigger:
     - platform: state
       entity_id: remote.yharmony
       to: 'off'
   action:
-    - service: light.turn_off
+    - service: homeassistant.turn_off
       data:
-        entity_id: light.hyperion
+        entity_id:
+          - light.hyperion
+          - switch.hyperion_component_usb_capture
 
 - alias: Hyperion Hdmi when casting or gaming
   id: hyperion_hdmi_when_casting
@@ -57,10 +40,9 @@
         - condition: state
           entity_id: switch.yharmony_nintendo
           state: "on"
-    - service: light.turn_on
+    - service: switch.turn_on
       data:
-        entity_id: light.hyperion
-        effect: "USB Capture"
+        entity_id: switch.hyperion_component_usb_capture
 
 - alias: Hyperion pausing chromecast
   trigger:
@@ -79,6 +61,7 @@
             "color-end": [238, 173, 47],
             "fade-time": 2
           }
+
 - alias: Hyperion playing chromecast
   trigger:
     - platform: state
