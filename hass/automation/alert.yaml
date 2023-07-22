@@ -86,22 +86,7 @@
       at: '00:00:00'
   action:
     - service: input_boolean.turn_off
-      entity_id: input_boolean.fred_had_drop
-    - service: input_boolean.turn_off
       entity_id: input_boolean.yan_had_pills
-
-- alias: frederique drop notify
-  trigger:
-    - platform: time
-      at: '09:00:00'
-  condition:
-    - condition: state
-      entity_id: input_boolean.fred_had_drop
-      state: "off"
-  action:
-    - service: notify.all_people
-      data:
-        message: "N'oubliez pas la goutte à Fred!"
 
 - alias: yan pills notify
   trigger:

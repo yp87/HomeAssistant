@@ -1,15 +1,4 @@
 ---
-fred_vit_d_drop:
-  sequence:
-    - condition: state
-      entity_id: input_boolean.fred_had_drop
-      state: "off"
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.fred_had_drop
-    - service: notify.all_people
-      data:
-        message: "Fred a pris sa goutte."
-
 yan_pills:
   sequence:
     - condition: state
