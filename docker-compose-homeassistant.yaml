@@ -3,7 +3,6 @@ version: '3'
 services:
   homeassistant:
     container_name: hass
-    # image: homeassistant/home-assistant:0.113.2    #Specific Version
     image: homeassistant/home-assistant:stable
     volumes:
       - ${BASE_PATH}/hass:/config
@@ -50,30 +49,13 @@ services:
     environment:
       - POSTGRES_USER=${AUTOMATION_USERNAME}
       - POSTGRES_PASSWORD=${AUTOMATION_PASSWORD}
-      - "POSTGRES_MULTIPLE_DATABASES=${TESLAMATE_DATABASE},\
-         ${HOMEASSISTANT_RECORDER_DATABASE}"
+      - "POSTGRES_MULTIPLE_DATABASES=${HOMEASSISTANT_RECORDER_DATABASE}"
     volumes:
       - ${BASE_PATH}/volumes/automation-db:/var/lib/postgresql/data
       - "${BASE_PATH}/volumes/docker-postgresql-multiple-databases:\
          /docker-entrypoint-initdb.d"
     ports:
       - "5432:5432"
-
-  teslamate_grafana:
-    container_name: teslamate_grafana
-    image: teslamate/grafana:latest
-    restart: always
-    environment:
-      - DATABASE_USER=${AUTOMATION_USERNAME}
-      - DATABASE_PASS=${AUTOMATION_PASSWORD}
-      - DATABASE_NAME=${TESLAMATE_DATABASE}
-      - DATABASE_HOST=database
-    ports:
-      - "3000:3000"
-    volumes:
-      - teslamate-grafana-data:/var/lib/grafana
-    depends_on:
-      - database
 
   zwavejs2mqtt:
     container_name: zwavejs2mqtt
@@ -111,6 +93,5 @@ services:
     restart: unless-stopped
 
 volumes:
-  teslamate-grafana-data:
   zwave-config:
   letsencrypt:
