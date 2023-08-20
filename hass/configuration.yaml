@@ -60,6 +60,8 @@ backup:
 
 media_source:
 
+mobile_app:
+
 # TODO - move this to another file
 google_assistant:
   project_id: !secret project_id
