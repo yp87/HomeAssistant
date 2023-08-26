@@ -10,6 +10,8 @@ homeassistant:
   external_url: !secret external_url
   currency: !secret currency
   country: !secret country
+  whitelist_external_dirs:
+    - /local/images
 
 frontend:
 
