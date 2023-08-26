@@ -62,6 +62,9 @@ media_source:
 
 mobile_app:
 
+whitelist_external_dirs:
+  - /local/images
+
 # TODO - move this to another file
 google_assistant:
   project_id: !secret project_id
