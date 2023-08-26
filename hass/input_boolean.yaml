@@ -16,6 +16,8 @@ yan_phone_notification:
 cath_phone_notification:
   initial: false
 
+yan_phone_plugged:
+
 leaf_next_departure_canceled:
 
 force_charge_car:
