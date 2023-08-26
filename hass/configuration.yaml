@@ -11,7 +11,7 @@ homeassistant:
   currency: !secret currency
   country: !secret country
   whitelist_external_dirs:
-    - /local/images
+    - /config/local/images
 
 frontend:
 
