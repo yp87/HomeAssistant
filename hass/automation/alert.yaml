@@ -92,10 +92,19 @@
   trigger:
     - platform: time
       at: '21:00:00'
+    - platform: state
+      entity_id: input_boolean.yan_phone_plugged
+      to: "on"
   condition:
     - condition: state
       entity_id: input_boolean.yan_had_pills
       state: "off"
+    - condition: state
+      entity_id: input_boolean.yan_phone_plugged
+      state: "on"
+    - condition: time
+      after: "21:00:00"
+      before: "04:00:00"
   mode: single
   action:
     - service: notify.yan
