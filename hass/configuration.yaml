@@ -121,10 +121,12 @@ notify:
     services:
       - service: yan
       - service: cath
-  - platform: joaoapps_join
-    api_key: !secret join_phone_api_key
-    device_id: !secret join_phone_device
-    name: yan
+  - name: yan
+    platform: group
+    services:
+      - service: pushover
+        data:
+          target: pixel7
   - platform: joaoapps_join
     api_key: !secret join_phone_api_key_cath
     device_id: !secret join_phone_device_cath
