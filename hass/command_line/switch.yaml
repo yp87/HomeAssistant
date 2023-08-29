@@ -6,4 +6,7 @@
     command_state: !secret camera_garage_led_status_template
     value_template: >
       {{value == "light1=100"}}
-    device_class: light
+    icon: >
+      {% if value == "light1=100" %} mdi:toggle-switch
+      {% else %} mdi:toggle-switch-off
+      {% endif %}
