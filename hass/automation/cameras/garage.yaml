@@ -7,6 +7,6 @@
       entity_id: binary_sensor.garage_motion_detection
   action:
     - service: >
-        switch.turn_{{ "on" if trigger..data.property_key_name == "001" else "off"}}
+        switch.turn_{{ "on" if trigger.state == "on" else "off"}}
       entity_id: switch.garage_camera_led
 
