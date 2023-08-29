@@ -1,0 +1,8 @@
+---
+- sensor:
+    - name: Garage motion detection
+      device_class: motion
+      state: "{{ is_state('sensor.garage_camera_pir_0', 'on') }}"
+      delay_off:
+        minutes: 1
+      friendly_name: "Garage motion"

@@ -1,0 +1,9 @@
+---
+- switch:
+    name: Garage Camera Led
+    command_on: !secret camera_garage_led_on_template
+    command_off: !secret camera_garage_led_off_template
+    command_state: !secret camera_garage_led_status_template
+    value_template: >
+      {{value == "light1=100"}}
+    device_class: light

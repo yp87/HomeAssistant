@@ -1,0 +1,6 @@
+---
+- sensor:
+    name: Hard drive space usage
+    command: "df -Ph /config | awk 'NR == 2{print $5+0}'"
+    unit_of_measurement: "%"
+    scan_interval: 86400
