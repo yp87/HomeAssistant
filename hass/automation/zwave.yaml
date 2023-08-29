@@ -97,8 +97,8 @@
         device_id: "6b1eccc8c4bbb9613bae53ed04d11e0d"
         value: "KeyPressed2x"
   action:
-    - service_template: >
-        light.turn_{{ "on" if trigger.event.data.property_key_name == "001" else "off"}}
+    - service: >
+        light.turn_{{ "on" if trigger.state == "on" else "off"}}
       entity_id:
         - light.kitchen_main_light
         - light.living_room_main_light

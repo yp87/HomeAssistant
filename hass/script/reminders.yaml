@@ -15,7 +15,7 @@ phone_notification:
   sequence:
     - condition: template
       value_template: '{{ is_state("person." + owner, "home") }}'
-    - service_template: >-
+    - service: >-
         input_boolean.
         {%- if type == "notification" -%}
           toggle
