@@ -140,8 +140,8 @@ rest_command:
     url: !secret dns_ip_update_url
   garage_camera_output:
     url: !secret camera_garage_output_url
-    username: !secret camera_garage_output_username
-    password: !secret camera_garage_output_password
+    username: !secret camera_garage_username
+    password: !secret camera_garage_password
 
 conversation:
 
