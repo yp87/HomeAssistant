@@ -10,3 +10,33 @@
         switch.turn_{{ "on" if trigger.to_state.state == "on" else "off"}}
       entity_id: switch.garage_camera_led
 
+- alias: Notify when motion in garage
+  id: Notify_when_motion_in_garage
+  mode: single
+  max_exceeded: silent
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.garage_motion_detection
+      to: "on"
+      for: "00:00:03"
+  condition:
+    - or:
+        - condition: state
+          entity_id: switch.garage_door
+          state: "on"
+        - not:
+            - condition: state
+              entity_id: alarm_control_panel.home_alarm
+              state: 'disarmed'
+  action:
+    - service: camera.snapshot
+      data:
+        entity_id: camera.garage_camera
+        filename: /media/garage.jpg
+    - service: notify.yan
+      data:
+        message: "Garage - motion detected"
+        data:
+          attachment:  /media/garage.jpg
+
+
