@@ -48,5 +48,3 @@
         message: "Garage - motion detected"
         data:
           attachment:  /media/garage.jpg
-
-
