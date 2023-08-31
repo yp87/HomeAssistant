@@ -10,6 +10,16 @@
         switch.turn_{{ "on" if trigger.to_state.state == "on" else "off"}}
       entity_id: switch.garage_camera_led
 
+- alias: Sync garage camera time
+  id: sync_garage_camera_time
+  trigger:
+    - platform: time
+      at: '00:00:00'
+    - platform: homeassistant
+      event: start
+  action:
+    - service: shell_command.set_garage_camera_time
+
 - alias: Notify when motion in garage
   id: Notify_when_motion_in_garage
   mode: single

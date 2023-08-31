@@ -129,6 +129,9 @@ notify:
     device_id: !secret join_phone_device_cath
     name: cath
 
+shell_command:
+  set_garage_camera_time: !secret camera_garage_set_time_template
+
 hyperion_priority:
   host: !secret hyperion_ip_address
   port: !secret hyperion_port
