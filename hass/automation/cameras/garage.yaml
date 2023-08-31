@@ -18,7 +18,7 @@
     - platform: state
       entity_id: binary_sensor.garage_motion_detection
       to: "on"
-      for: "00:00:03"
+      for: "00:00:01"
   condition:
     - or:
         - condition: state
