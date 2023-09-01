@@ -3,3 +3,8 @@
     - name: Garage motion detection
       state: "{{ is_state('binary_sensor.garage_camera_pir_0', 'on') }}"
       delay_off: "00:01:00"
+- binary_sensor:
+    - name: Garage door
+      state: "{{ is_state('binary_sensor.garage_camera_input', 'on') }}"
+      device_class: garage_door
+
