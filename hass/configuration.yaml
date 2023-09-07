@@ -131,6 +131,7 @@ notify:
 
 shell_command:
   set_garage_camera_time: !secret camera_garage_set_time_template
+  set_front_window_camera_time: !secret camera_front_window_set_time_template
 
 hyperion_priority:
   host: !secret hyperion_ip_address
