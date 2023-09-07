@@ -1,6 +1,6 @@
 ---
-- alias: Sync garage camera time
-  id: sync_garage_camera_time
+- alias: Sync front window camera time
+  id: sync_front_window_camera_time
   trigger:
     - platform: time
       at: '00:00:00'
