@@ -7,4 +7,3 @@
     - name: Garage door
       state: "{{ is_state('binary_sensor.garage_camera_input', 'on') }}"
       device_class: garage_door
-
