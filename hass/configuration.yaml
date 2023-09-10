@@ -36,6 +36,9 @@ recorder:
       - binary_sensor.garage_camera_pir_0
       - binary_sensor.front_window_pir_0
       - binary_sensor.rear_window_pir_0
+      - binary_sensor.front_window_motion_0
+      - binary_sensor.front_window_motion_1
+      - binary_sensor.front_window_motion_2
 
 history:
 
