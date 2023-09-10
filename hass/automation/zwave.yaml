@@ -90,6 +90,7 @@
         brightness: 150
 
 - alias: Kitchen double up/down
+  id: kitchen_double_up_down
   trigger:
     - platform: event
       event_type: zwave_js_value_notification
