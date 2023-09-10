@@ -75,11 +75,12 @@ remote_action:
     - service: "{{ service }}"
       data:
         entity_id: "{{ entity_id }}"
-    - if: "{{ message != '' }}"
-    - then:
-      - service: notify.{{ owner }}
-        data:
-          message: "{{ message }}"
+    - if:
+        - "{{ message != '' }}"
+      then:
+        - service: notify.{{ owner }}
+          data:
+            message: "{{ message }}"
 
 notify_and_speak:
   fields:
