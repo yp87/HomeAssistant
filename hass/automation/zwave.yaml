@@ -99,7 +99,8 @@
         value: "KeyPressed2x"
   action:
     - service: >
-        light.turn_{{ "on" if trigger.state == "on" else "off"}}
+        light.turn_{{ "on" if trigger.event.data.property_key_name == "001"
+                      else "off"}}
       entity_id:
         - light.kitchen_main_light
         - light.living_room_main_light
