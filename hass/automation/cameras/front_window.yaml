@@ -8,3 +8,22 @@
       event: start
   action:
     - service: shell_command.set_front_window_camera_time
+
+- alias: Notify when motion in front yard
+  id: Notify_when_motion_in_front_yard
+  mode: single
+  max_exceeded: silent
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.front_window_motion_detection
+      to: "on"
+  action:
+    - service: camera.snapshot
+      data:
+        entity_id: camera.front_window
+        filename: /media/frontwindow.jpg
+    - service: notify.yan
+      data:
+        message: "Front yard - motion detected"
+        data:
+          attachment: /media/frontwindow.jpg
