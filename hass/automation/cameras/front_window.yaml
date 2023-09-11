@@ -27,3 +27,26 @@
         message: "Front yard - motion detected"
         data:
           attachment: /media/frontwindow.jpg
+
+- alias: Set front window camera motion sensitiviy to low
+  id: set_front_window_camera_motion_sensitiviy_to_low
+  trigger:
+    - platform: sun
+      event: sunset
+      offset: "-01:00:00"
+  action:
+    - service: shell_command.camera_front_window_set_m0_sensitivity_low_template
+    - service: shell_command.camera_front_window_set_m1_sensitivity_low_template
+    - service: shell_command.camera_front_window_set_m2_sensitivity_low_template
+
+- alias: Set front window camera motion sensitiviy to high
+  id: set_front_window_camera_motion_sensitiviy_to_high
+  trigger:
+    - platform: sun
+      event: sunrise
+      offset: "01:00:00"
+  action:
+    - service: shell_command.camera_front_window_set_m0_sensitivity_high_template
+    - service: shell_command.camera_front_window_set_m1_sensitivity_high_template
+    - service: shell_command.camera_front_window_set_m2_sensitivity_high_template
+
