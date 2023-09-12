@@ -33,7 +33,6 @@
   trigger:
     - platform: sun
       event: sunset
-      offset: "-01:00:00"
   action:
     - service: shell_command.camera_front_window_set_m0_sensitivity_low_template
     - service: shell_command.camera_front_window_set_m1_sensitivity_low_template
@@ -44,7 +43,6 @@
   trigger:
     - platform: sun
       event: sunrise
-      offset: "01:00:00"
   action:
     - service: shell_command.camera_front_window_set_m0_sensitivity_high_template
     - service: shell_command.camera_front_window_set_m1_sensitivity_high_template
