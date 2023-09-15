@@ -1,0 +1,10 @@
+---
+- alias: sync photo yan
+  id: sync_photo_yan
+  trigger:
+    - platform: state
+      entity_id: input_button.sync_photo_yan
+  action:
+    - service: joaoapps_join.android_server_send_tasker
+      data:
+        command: "SyncPhotoYan"
