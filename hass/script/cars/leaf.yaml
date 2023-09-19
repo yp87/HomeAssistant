@@ -28,18 +28,24 @@ update_leaf:
                as_timestamp(states('sensor.Leaf_last_tentative'), 0)
                >= 240 }}
           sequence:
-            - service: notify.all_people
-              data:
-                message: >
-                  Erreur d'obtention des données de la Leaf:
+            - service: input_text.set_value
+              data_template:
+                entity_id: input_text.leaf_update_message
+                value: >
                   Impossible d'effectuer une tentative de mise à jour.
         - conditions: >
             {{ as_timestamp(now()) -
                as_timestamp(states('sensor.leaf_last_update'), 0)
                > 600 }}
           sequence:
-            - service: notify.all_people
-              data:
-                message: >
-                  Erreur d'obtention des données de la Leaf:
-                  Les dernières valeurs obtenues sont trop vieilles
+            - service: input_text.set_value
+              data_template:
+                entity_id: input_text.leaf_update_message
+                value: >
+                  Les dernières valeurs obtenues sont trop vieilles.
+      default:
+        - service: input_text.set_value
+          data_template:
+            entity_id: input_text.leaf_update_message
+            value: "Succès."
+
