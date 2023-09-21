@@ -1,0 +1,10 @@
+---
+- alias: Sync parking camera time
+  id: sync_parking_camera_time
+  trigger:
+    - platform: time
+      at: '00:00:00'
+    - platform: homeassistant
+      event: start
+  action:
+    - service: shell_command.set_parking_camera_time

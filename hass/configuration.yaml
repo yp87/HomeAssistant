@@ -138,6 +138,7 @@ shell_command:
   set_garage_camera_time: !secret camera_garage_set_time_template
   set_front_window_camera_time: !secret camera_front_window_set_time_template
   set_rear_window_camera_time: !secret camera_rear_window_set_time_template
+  set_parking_camera_time: !secret camera_parking_set_time_template
   camera_front_window_set_m0_sensitivity_low_template: !secret camera_front_window_set_m0_sensitivity_low_template
   camera_front_window_set_m1_sensitivity_low_template: !secret camera_front_window_set_m1_sensitivity_low_template
   camera_front_window_set_m2_sensitivity_low_template: !secret camera_front_window_set_m2_sensitivity_low_template
