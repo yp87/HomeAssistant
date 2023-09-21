@@ -39,6 +39,7 @@ recorder:
       - binary_sensor.front_window_motion_0
       - binary_sensor.front_window_motion_1
       - binary_sensor.front_window_motion_2
+      - binary_sensor.parking_vmd4_camera1profileany
 
 history:
 
