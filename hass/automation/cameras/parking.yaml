@@ -14,7 +14,12 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.parking_motion_detection
+  condition:
+    condition: state
+    entity_id: binary_sensor.parking_daynight
+    state: "off"
   action:
+    - delay: "00:00:05"
     - service: >
         light.turn_{{ "on" if trigger.to_state.state == "on" else "off"}}
       entity_id: light.parking_ir_light_0
