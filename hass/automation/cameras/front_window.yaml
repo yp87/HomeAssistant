@@ -47,4 +47,3 @@
     - service: shell_command.camera_front_window_set_m0_sensitivity_high_template
     - service: shell_command.camera_front_window_set_m1_sensitivity_high_template
     - service: shell_command.camera_front_window_set_m2_sensitivity_high_template
-
