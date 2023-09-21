@@ -8,3 +8,32 @@
       event: start
   action:
     - service: shell_command.set_parking_camera_time
+
+- alias: Turn on parking IR light when motion
+  id: Turn_on_parking_IR_light_when_motion
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.parking_motion_detection
+  action:
+    - service: >
+        light.turn_{{ "on" if trigger.to_state.state == "on" else "off"}}
+      entity_id: light.parking_ir_light_0
+
+- alias: Notify when motion in parking
+  id: Notify_when_motion_in_parking
+  mode: single
+  max_exceeded: silent
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.parking_motion_detection
+      to: "on"
+  action:
+    - service: camera.snapshot
+      data:
+        entity_id: camera.parking
+        filename: /media/parking.jpg
+    - service: notify.yan
+      data:
+        message: "Parking - motion detected"
+        data:
+          attachment: /media/parking.jpg
