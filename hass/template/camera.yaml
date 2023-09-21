@@ -14,4 +14,4 @@
       delay_off: "00:05:00"
     - name: Parking motion detection
       state: "{{ is_state('binary_sensor.parking_vmd4_camera1profileany', 'on') }}"
-      delay_off: "00:00:05"
+      delay_off: "00:00:06"
