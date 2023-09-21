@@ -12,4 +12,3 @@
            is_state('binary_sensor.front_window_motion_1', 'on') or
            is_state('binary_sensor.front_window_motion_2', 'on') }}
       delay_off: "00:05:00"
-
