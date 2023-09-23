@@ -1,15 +1,4 @@
 ---
-- alias: Light up garage camera led when motion is detected
-  id: Light_up_garage_camera_led_when_motion_is_detected
-  mode: queued
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.garage_motion_detection
-  action:
-    - service: >
-        switch.turn_{{ "on" if trigger.to_state.state == "on" else "off"}}
-      entity_id: switch.garage_camera_led
-
 - alias: Sync garage camera time
   id: sync_garage_camera_time
   trigger:
