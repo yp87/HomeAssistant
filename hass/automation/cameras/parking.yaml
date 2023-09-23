@@ -55,7 +55,11 @@
         filename: /media/parking.jpg
     - service: input_number.set_value
       entity_id: input_number.car_speed
-      value: 10
+      value: >
+        {{ (0.00762 /
+           (((trigger.to_state.state|float) -
+           (states("sensor.first_line_left_to_right")|float)) /
+           3600000)) | round(1) }}
 
 - alias: Calculate speed right to left
   id: calculate_speed_right_to_left
@@ -69,7 +73,11 @@
         filename: /media/parking.jpg
     - service: input_number.set_value
       entity_id: input_number.car_speed
-      value: 10
+      value: >
+        {{ (0.00762 /
+           (((trigger.to_state.state|float) -
+           (states("sensor.first_line_right_to_left")|float)) /
+           3600000)) | round(1) }}
 
 - alias: Notify high speed
   id: Notify_high_speed
