@@ -10,3 +10,5 @@ leaf_selected_battery:
   max: 100
 
 car_speed:
+  min: 0
+  max: 200
