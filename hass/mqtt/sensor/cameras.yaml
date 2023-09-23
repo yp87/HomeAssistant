@@ -1,0 +1,25 @@
+---
+- name: first line left to right
+  state_topic: "axis/parking/event/tns:axis/CameraApplicationPlatform/FenceGuard/Camera1Profile1"
+  unit_of_measurement: "ms"
+  value_template: >
+    {{ value_json.timestamp if value_json.message.data.active == "1" else
+       states("sensor.first_line_left_to_right") }}
+- name: second line left to right
+  state_topic: "axis/parking/event/tns:axis/CameraApplicationPlatform/FenceGuard/Camera1Profile2"
+  unit_of_measurement: "ms"
+  value_template: >
+    {{ value_json.timestamp if value_json.message.data.active == "1" else
+       states("sensor.second_line_left_to_right") }}
+- name: first line right to left
+  state_topic: "axis/parking/event/tns:axis/CameraApplicationPlatform/FenceGuard/Camera1Profile3"
+  unit_of_measurement: "ms"
+  value_template: >
+    {{ value_json.timestamp if value_json.message.data.active == "1" else
+       states("sensor.first_line_right_to_left") }}
+- name: second line right to left
+  state_topic: "axis/parking/event/tns:axis/CameraApplicationPlatform/FenceGuard/Camera1Profile4"
+  unit_of_measurement: "ms"
+  value_template: >
+    {{ value_json.timestamp if value_json.message.data.active == "1" else
+       states("sensor.second_line_right_to_left") }}
