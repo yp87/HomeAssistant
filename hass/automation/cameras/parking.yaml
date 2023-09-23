@@ -89,7 +89,7 @@
   condition:
   - condition: numeric_state
     entity_id: input_number.car_speed
-    above: 20
+    above: 40
   action:
     - service: notify.yan
       data:
