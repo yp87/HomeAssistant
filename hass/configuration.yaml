@@ -41,7 +41,10 @@ recorder:
       - binary_sensor.front_window_motion_1
       - binary_sensor.front_window_motion_2
       - binary_sensor.parking_vmd4_camera1profileany
-
+      - binary_sensor.parking_fence_guard_camera1profile1
+      - binary_sensor.parking_fence_guard_camera1profile2
+      - binary_sensor.parking_fence_guard_camera1profile3
+      - binary_sensor.parking_fence_guard_camera1profile4
 
 history:
 
