@@ -13,7 +13,7 @@
   id: Turn_on_parking_IR_light_when_motion
   trigger:
     - platform: state
-      entity_id: binary_sensor.Parking perimeter detection
+      entity_id: binary_sensor.parking_perimeter_detection
   condition:
     condition: state
     entity_id: binary_sensor.parking_daynight
@@ -30,7 +30,7 @@
   max_exceeded: silent
   trigger:
     - platform: state
-      entity_id: binary_sensor.Parking perimeter detection
+      entity_id: binary_sensor.parking_perimeter_detection
       to: "on"
   action:
     - service: camera.snapshot
