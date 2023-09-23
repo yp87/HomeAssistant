@@ -16,5 +16,5 @@
       state: "{{ is_state('binary_sensor.rear_window_motion_0', 'on') }}"
       delay_off: "00:05:00"
     - name: Parking perimeter detection
-      state: "{{ is_state('binary_sensor.parking_perimeter_entered', 'on') }}"
+      state: "{{ is_state('binary_sensor.parking_fence_guard', 'on') }}"
       delay_off: "00:05:00"
