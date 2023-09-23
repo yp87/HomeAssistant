@@ -49,13 +49,17 @@
     - platform: state
       entity_id: sensor.second_line_left_to_right
   action:
+    - service: camera.snapshot
+      data:
+        entity_id: camera.parking
+        filename: /media/parking.jpg
     - service: notify.yan
       data:
         message: >
-          Car speed - {{ 0.00762 /
+          Car speed - {{ (0.00762 /
                          (((trigger.to_state.state|float) -
                           (states("sensor.first_line_left_to_right")|float)) /
-                          3600000) }} km/h
+                          3600000)) | round(1) }} km/h
         data:
           attachment: /media/parking.jpg
 
@@ -65,12 +69,16 @@
     - platform: state
       entity_id: sensor.second_line_right_to_left
   action:
+    - service: camera.snapshot
+      data:
+        entity_id: camera.parking
+        filename: /media/parking.jpg
     - service: notify.yan
       data:
         message: >
-          Car speed - {{ 0.00762 /
+          Car speed - {{ (0.00762 /
                          (((trigger.to_state.state|int) -
                           (states("sensor.first_line_right_to_left")|int)) /
-                          3600000) }} km/h
+                          3600000)) | round(1) }} km/h
         data:
           attachment: /media/parking.jpg
