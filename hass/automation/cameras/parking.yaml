@@ -53,9 +53,9 @@
       data:
         message: >
           Car speed - {{ 0.00762 /
-                         (((trigger.to_state.state|int) -
-                          (states("sensor.first_line_left_to_right")|int)) /
-                          3,600,000) }}
+                         (((trigger.to_state.state|float) -
+                          (states("sensor.first_line_left_to_right")|float)) /
+                          3600000) }} km/h
         data:
           attachment: /media/parking.jpg
 
@@ -71,6 +71,6 @@
           Car speed - {{ 0.00762 /
                          (((trigger.to_state.state|int) -
                           (states("sensor.first_line_right_to_left")|int)) /
-                          3,600,000) }}
+                          3600000) }} km/h
         data:
           attachment: /media/parking.jpg
