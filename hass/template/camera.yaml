@@ -15,3 +15,6 @@
     - name: Parking motion detection
       state: "{{ is_state('binary_sensor.parking_vmd4_camera1profileany', 'on') }}"
       delay_off: "00:05:00"
+    - name: Rear window motion detection
+      state: "{{ is_state('binary_sensor.rear_window_motion_0', 'on') }}"
+      delay_off: "00:05:00"

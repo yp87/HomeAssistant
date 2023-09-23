@@ -8,3 +8,22 @@
       event: start
   action:
     - service: shell_command.set_rear_window_camera_time
+
+- alias: Notify when motion in rear yard
+  id: Notify_when_motion_in_rear_yard
+  mode: single
+  max_exceeded: silent
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.rear_window_motion_detection
+      to: "on"
+  action:
+    - service: camera.snapshot
+      data:
+        entity_id: camera.rear_window
+        filename: /media/rearwindow.jpg
+    - service: notify.yan
+      data:
+        message: "Rear yard - motion detected"
+        data:
+          attachment: /media/rearwindow.jpg
