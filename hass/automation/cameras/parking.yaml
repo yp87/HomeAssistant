@@ -43,8 +43,8 @@
         data:
           attachment: /media/parking.jpg
 
-- alias: Notify speed left to right
-  id: Notify_speed_left_to_right
+- alias: Calculate speed left to right
+  id: calculate_speed_left_to_right
   trigger:
     - platform: state
       entity_id: sensor.second_line_left_to_right
@@ -53,18 +53,16 @@
       data:
         entity_id: camera.parking
         filename: /media/parking.jpg
-    - service: notify.yan
-      data:
-        message: >
-          Car speed - {{ (0.00762 /
-                         (((trigger.to_state.state|float) -
-                          (states("sensor.first_line_left_to_right")|float)) /
-                          3600000)) | round(1) }} km/h
-        data:
-          attachment: /media/parking.jpg
+    - service: input_number.set_value
+      entity_id: input_number.car_speed
+      value: >
+        {{ (0.00762 /
+           (((trigger.to_state.state|float) -
+           (states("sensor.first_line_left_to_right")|float)) /
+           3600000)) | round(1) }}
 
-- alias: Notify speed right to left
-  id: Notify_speed_right_to_left
+- alias: Calculate speed right to left
+  id: calculate_speed_right_to_left
   trigger:
     - platform: state
       entity_id: sensor.second_line_right_to_left
@@ -73,12 +71,26 @@
       data:
         entity_id: camera.parking
         filename: /media/parking.jpg
+    - service: input_number.set_value
+      entity_id: input_number.car_speed
+      value: >
+        {{ (0.00762 /
+           (((trigger.to_state.state|float) -
+           (states("sensor.first_line_right_to_left")|float)) /
+           3600000)) | round(1) }}
+
+- alias: Notify high speed
+  id: Notify_high_speed
+  trigger:
+    - platform: state
+      entity_id: input_number.car_speed
+  condition:
+  - condition: numeric_state
+    entity_id: input_number.car_speed
+    above: 20
+  action:
     - service: notify.yan
       data:
-        message: >
-          Car speed - {{ (0.00762 /
-                         (((trigger.to_state.state|int) -
-                          (states("sensor.first_line_right_to_left")|int)) /
-                          3600000)) | round(1) }} km/h
+        message: Car speed - {{ states("input_number.car_speed") }} km/h
         data:
           attachment: /media/parking.jpg
