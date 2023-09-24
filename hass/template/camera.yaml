@@ -6,12 +6,6 @@
     - name: Garage door
       state: "{{ is_state('binary_sensor.garage_camera_input', 'on') }}"
       device_class: garage_door
-    - name: Front window motion detection
-      state: >
-        {{ is_state('binary_sensor.front_window_motion_0', 'on') or
-           is_state('binary_sensor.front_window_motion_1', 'on') or
-           is_state('binary_sensor.front_window_motion_2', 'on') }}
-      delay_off: "00:05:00"
     - name: Rear window motion detection
       state: "{{ is_state('binary_sensor.rear_window_motion_0', 'on') }}"
       delay_off: "00:05:00"

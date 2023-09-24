@@ -37,9 +37,6 @@ recorder:
       - binary_sensor.front_window_pir_0
       - binary_sensor.rear_window_pir_0
       - binary_sensor.rear_window_motion_0
-      - binary_sensor.front_window_motion_0
-      - binary_sensor.front_window_motion_1
-      - binary_sensor.front_window_motion_2
       - binary_sensor.parking_vmd4_camera1profileany
       - binary_sensor.parking_fence_guard_camera1profile1
       - binary_sensor.parking_fence_guard_camera1profile2
@@ -145,12 +142,6 @@ shell_command:
   set_front_window_camera_time: !secret camera_front_window_set_time_template
   set_rear_window_camera_time: !secret camera_rear_window_set_time_template
   set_parking_camera_time: !secret camera_parking_set_time_template
-  camera_front_window_set_m0_sensitivity_low_template: !secret camera_front_window_set_m0_sensitivity_low_template
-  camera_front_window_set_m1_sensitivity_low_template: !secret camera_front_window_set_m1_sensitivity_low_template
-  camera_front_window_set_m2_sensitivity_low_template: !secret camera_front_window_set_m2_sensitivity_low_template
-  camera_front_window_set_m0_sensitivity_high_template: !secret camera_front_window_set_m0_sensitivity_high_template
-  camera_front_window_set_m1_sensitivity_high_template: !secret camera_front_window_set_m1_sensitivity_high_template
-  camera_front_window_set_m2_sensitivity_high_template: !secret camera_front_window_set_m2_sensitivity_high_template
 
 hyperion_priority:
   host: !secret hyperion_ip_address
