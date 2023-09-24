@@ -48,4 +48,3 @@ update_leaf:
           data_template:
             entity_id: input_text.leaf_update_message
             value: "Succès."
-

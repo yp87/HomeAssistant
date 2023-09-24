@@ -95,9 +95,9 @@
     - platform: state
       entity_id: input_number.car_speed
   condition:
-  - condition: numeric_state
-    entity_id: input_number.car_speed
-    above: 40
+    - condition: numeric_state
+      entity_id: input_number.car_speed
+      above: 40
   action:
     - service: notify.yan
       data:
