@@ -48,6 +48,10 @@
   trigger:
     - platform: state
       entity_id: sensor.second_line_left_to_right
+  condition:
+    - condition: sun
+      after: sunrise
+      before: sunset
   action:
     - service: camera.snapshot
       data:
@@ -67,6 +71,10 @@
   trigger:
     - platform: state
       entity_id: sensor.second_line_right_to_left
+  condition:
+    - condition: sun
+      after: sunrise
+      before: sunset
   action:
     - service: camera.snapshot
       data:
