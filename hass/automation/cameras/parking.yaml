@@ -32,6 +32,33 @@
     - platform: state
       entity_id: binary_sensor.parking_perimeter_detection
       to: "on"
+  condition:
+    - condition: sun
+      after: sunrise
+      before: sunset
+  action:
+    - service: camera.snapshot
+      data:
+        entity_id: camera.parking
+        filename: /media/parking.jpg
+    - service: notify.yan
+      data:
+        message: "Parking - motion detected"
+        data:
+          attachment: /media/parking.jpg
+
+- alias: Notify when motion in parking night
+  id: Notify_when_motion_in_parking_night
+  mode: single
+  max_exceeded: silent
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.parking_perimeter_detection_night
+      to: "on"
+  condition:
+    - condition: sun
+      after: sunset
+      before: sunrise
   action:
     - service: camera.snapshot
       data:
