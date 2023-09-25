@@ -30,7 +30,7 @@
   max_exceeded: silent
   trigger:
     - platform: state
-      entity_id: binary_sensor.parking_perimeter_detection
+      entity_id: binary_sensor.parking_detection
       to: "on"
   condition:
     - condition: sun
@@ -53,7 +53,7 @@
   max_exceeded: silent
   trigger:
     - platform: state
-      entity_id: binary_sensor.parking_perimeter_detection_night
+      entity_id: binary_sensor.parking_detection_night
       to: "on"
   condition:
     - condition: sun
