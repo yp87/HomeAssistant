@@ -20,6 +20,9 @@
     - platform: state
       entity_id: switch.yharmony_nintendo
       to: "on"
+    - platform: state
+      entity_id: switch.yharmony_xbox
+      to: "on"
   mode: restart
   action:
     # show running dots like a loading effect
@@ -40,6 +43,9 @@
         - condition: state
           entity_id: switch.yharmony_nintendo
           state: "on"
+        - platform: state
+          entity_id: switch.yharmony_xbox
+          to: "on"
     - service: switch.turn_on
       data:
         entity_id: switch.hyperion_component_usb_capture
