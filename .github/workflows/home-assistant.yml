@@ -17,6 +17,10 @@ jobs:
       homeassistant: ${{ steps.homeassistant.outputs.changed }}
       infrastructure: ${{ steps.infrastructure.outputs.changed }}
     steps:
+      - name: Clean Workspace Folder
+        run: |
+          rm -rf ./* || true
+          rm -rf ./.??* || true
       - name: Getting Home Assistant configuration
         uses: actions/checkout@v2
       - name: Get all changed files
@@ -63,6 +67,10 @@ jobs:
     needs: config_changed
     if: needs.config_changed.outputs.homeassistant > 0
     steps:
+      - name: Clean Workspace Folder
+        run: |
+          rm -rf ./* || true
+          rm -rf ./.??* || true
       - name: Getting Home Assistant configuration
         uses: actions/checkout@v2
       - name: Running YAMLlint
@@ -73,6 +81,10 @@ jobs:
     needs: config_changed
     if: needs.config_changed.outputs.homeassistant > 0
     steps:
+      - name: Clean Workspace Folder
+        run: |
+          rm -rf ./* || true
+          rm -rf ./.??* || true
       - name: Getting Home Assistant configuration
         uses: actions/checkout@v2
       - name: Copy stub files
@@ -89,6 +101,10 @@ jobs:
     needs: config_changed
     if: needs.config_changed.outputs.infrastructure > 0
     steps:
+      - name: Clean Workspace Folder
+        run: |
+          rm -rf ./* || true
+          rm -rf ./.??* || true
       - name: Getting repository files
         uses: actions/checkout@v2
         with:
