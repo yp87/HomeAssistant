@@ -1,0 +1,24 @@
+---
+- alias: xbox turns on
+  id: xbox_turns_on
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.xbox
+      to: 'on'
+  action:
+    - service: switch.turn_on
+      entity_id: switch.yharmony_xbox
+
+- alias: xbox turns off
+  id: xbox_turns_off
+  trigger:
+    platform: state
+    entity_id: binary_sensor.xbox
+    to: 'off'
+  condition:
+    condition: state
+    entity_id: switch.yharmony_xbox
+    state: "on"
+  action:
+    - service: switch.turn_off
+      entity_id: switch.yharmony_xbox
