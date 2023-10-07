@@ -69,6 +69,8 @@ backup:
 
 media_source:
 
+stream:
+
 # TODO - move this to another file
 google_assistant:
   project_id: !secret project_id
