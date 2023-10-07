@@ -70,6 +70,8 @@ backup:
 media_source:
 
 stream:
+  part_duration: 0.50
+  segment_duration: 3
 
 # TODO - move this to another file
 google_assistant:
