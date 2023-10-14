@@ -131,6 +131,11 @@
     - service: switch.turn_on
       data:
         entity_id: switch.baby_monitor
+    - service: script.turn_on
+      data:
+        entity_id: script.white_noise_start
+        variables:
+          media_player_id: media_player.kitchen
 
 - alias: Frederique main light single up or release from hold up
   trigger:
@@ -152,6 +157,11 @@
     - service: switch.turn_off
       data:
         entity_id: switch.baby_monitor
+    - service: script.turn_on
+      data:
+        entity_id: script.white_noise_stop
+        variables:
+          media_player_id: media_player.kitchen
 
 - alias: Set zwave light to default when single click up
   trigger:

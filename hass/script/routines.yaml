@@ -39,3 +39,64 @@ morning:
           {{ " " }}à {{ ts | timestamp_custom('%HH%M') }}.
           {%- endif -%}
     - delay: "00:00:05"
+
+white_noise_start:
+  sequence:
+    # This is to prevent the annoying google home startup sound.
+    # -----------------------------------------------------------
+    - service: media_player.volume_set
+      data:
+        entity_id: "{{ media_player_id }}"
+        volume_level: 0.01
+    - service: media_player.turn_off
+      data:
+        entity_id: "{{ media_player_id }}"
+    - delay: 00:00:01
+    - service: media_player.turn_on
+      data:
+        entity_id: "{{ media_player_id }}"
+    - delay: 00:00:01
+    # -----------------------------------------------------------
+    - service: script.turn_on
+      data:
+        entity_id: script.white_noise_play
+        variables:
+          media_player_id: "{{ media_player_id }}"
+    - delay: 00:00:02
+    - service: media_player.volume_set
+      data:
+        entity_id: "{{ media_player_id }}"
+        volume_level: 0.20
+
+white_noise_play:
+  sequence:
+    - service: media_player.play_media
+      data:
+        media_content_type: audio/mp3
+        entity_id: "{{ media_player_id }}"
+        media_content_id: >-
+          http://www.gstatic.com/voice_delight/sounds/long/pink_noise.mp3
+    - service: script.turn_on
+      data:
+        entity_id: script.white_noise_loop
+        variables:
+          media_player_id: "{{ media_player_id }}"
+
+white_noise_loop:
+  sequence:
+    - delay: 00:52:00
+    - service: script.turn_on
+      data:
+        entity_id: script.white_noise_play
+        variables:
+          media_player_id: "{{ media_player_id }}"
+
+white_noise_stop:
+  sequence:
+    - service: script.turn_off
+      entity_id: script.white_noise_play
+    - service: script.turn_off
+      entity_id: script.white_noise_loop
+    - service: media_player.turn_off
+      data:
+        entity_id: "{{ media_player_id }}"
