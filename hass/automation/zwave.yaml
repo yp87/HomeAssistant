@@ -135,7 +135,7 @@
       data:
         entity_id: script.white_noise_start
         variables:
-          media_player_id: media_player.kitchen
+          media_player_id: media_player.bureau
 
 - alias: Frederique main light single up or release from hold up
   trigger:
@@ -161,7 +161,7 @@
       data:
         entity_id: script.white_noise_stop
         variables:
-          media_player_id: media_player.kitchen
+          media_player_id: media_player.bureau
 
 - alias: Set zwave light to default when single click up
   trigger:
