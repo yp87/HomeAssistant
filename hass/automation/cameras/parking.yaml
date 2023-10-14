@@ -92,19 +92,3 @@
             (((trigger.to_state.state|float) -
             (states("sensor.first_line_right_to_left")|float)) /
             3600000)) | round(1) }}
-
-- alias: Notify high speed
-  id: Notify_high_speed
-  trigger:
-    - platform: state
-      entity_id: input_number.car_speed
-  condition:
-    - condition: numeric_state
-      entity_id: input_number.car_speed
-      above: 40
-  action:
-    - service: notify.yan
-      data:
-        message: Car speed - {{ states("input_number.car_speed") }} km/h
-        data:
-          attachment: /media/parking.jpg
