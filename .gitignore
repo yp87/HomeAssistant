@@ -3,6 +3,7 @@ secret*
 *.log
 *.db*
 *.sqlite
+ .vscode/
 
 /volumes/*
 /mosquitto
