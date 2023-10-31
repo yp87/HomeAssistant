@@ -11,7 +11,7 @@
           - service: switch.turn_off
             entity_id: switch.light_front
           - delay:
-              milliseconds: "{{ ( range(100, 2000) | random | int) }}"
+              milliseconds: "{{ ( range(100, 700) | random | int) }}"
           - service: switch.turn_on
             entity_id: switch.light_front
           - delay:
