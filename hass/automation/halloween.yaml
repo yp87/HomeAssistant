@@ -8,10 +8,14 @@
   action:
     - repeat:
         sequence:
-          - service: switch.toggle
+          - service: switch.turn_off
             entity_id: switch.light_front
           - delay:
-              milliseconds: "{{ ( range(100, 4000) | random | int) }}"
+              milliseconds: "{{ ( range(100, 2000) | random | int) }}"
+          - service: switch.turn_on
+            entity_id: switch.light_front
+          - delay:
+              milliseconds: "{{ ( range(2000, 4000) | random | int) }}"
         until:
           - condition: state
             entity_id: input_boolean.halloween
