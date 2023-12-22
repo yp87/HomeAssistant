@@ -18,6 +18,7 @@ secret*
 /hass/tts/
 /hass/blueprints/
 /hass/.HA_VERSION
+/hass/home-assistant.log*
 
 __pycache__/
 
