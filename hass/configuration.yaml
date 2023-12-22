@@ -51,10 +51,6 @@ device_tracker:
   - platform: google_maps
     username: !secret tracker_account
     max_gps_accuracy: 100
-  - platform: ping
-    hosts:
-      yan: !secret yan_phone_ip
-      cath: !secret cath_phone_ip
 
 map:
 
