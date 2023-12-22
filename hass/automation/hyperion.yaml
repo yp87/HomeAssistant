@@ -15,14 +15,14 @@
   id: hyperion_hdmi_when_casting
   trigger:
     - platform: state
-      entity_id: switch.yharmony_chromecast
-      to: "on"
+      entity_id: select.yharmony_activities
+      to: "Regarder Chromecast"
     - platform: state
-      entity_id: switch.yharmony_nintendo
-      to: "on"
+      entity_id: select.yharmony_activities
+      to: "Wii u"
     - platform: state
-      entity_id: switch.yharmony_xbox
-      to: "on"
+      entity_id: select.yharmony_activities
+      to: "XBOX"
   mode: restart
   action:
     # show running dots like a loading effect
@@ -38,14 +38,14 @@
         priority: 130
     - or:
         - condition: state
-          entity_id: switch.yharmony_chromecast
-          state: "on"
+          entity_id: select.yharmony_activities
+          state: "Regarder Chromecast"
         - condition: state
-          entity_id: switch.yharmony_nintendo
-          state: "on"
+          entity_id: select.yharmony_activities
+          state: "Wii u"
         - condition: state
-          entity_id: switch.yharmony_xbox
-          state: "on"
+          entity_id: select.yharmony_activities
+          state: "XBOX"
     - service: switch.turn_on
       data:
         entity_id: switch.hyperion_component_usb_capture

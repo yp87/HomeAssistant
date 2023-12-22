@@ -6,8 +6,9 @@
       entity_id: binary_sensor.xbox
       to: 'on'
   action:
-    - service: switch.turn_on
-      entity_id: switch.yharmony_xbox
+    - service: select.select_option
+      entity_id: select.yharmony_activities
+      options: "XBOX"
 
 - alias: xbox turns off
   id: xbox_turns_off
@@ -17,8 +18,9 @@
     to: 'off'
   condition:
     condition: state
-    entity_id: switch.yharmony_xbox
-    state: "on"
+    entity_id: select.yharmony_activities
+    state: "XBOX"
   action:
-    - service: switch.turn_off
-      entity_id: switch.yharmony_xbox
+    - service: select.select_option
+      entity_id: select.yharmony_activities
+      options: "Power Off"

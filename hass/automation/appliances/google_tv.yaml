@@ -6,8 +6,9 @@
       entity_id: remote.salon_tv
       to: 'on'
   action:
-    - service: switch.turn_on
-      entity_id: switch.yharmony_chromecast
+    - service: select.select_option
+      entity_id: select.yharmony_activities
+      options: "Regarder Chromecast"
 
 - alias: Google tv turns off
   id: google_tv_turns_off
@@ -17,8 +18,9 @@
     to: 'off'
   condition:
     condition: state
-    entity_id: switch.yharmony_chromecast
-    state: "on"
+    entity_id: select.yharmony_activities
+    state: "Regarder Chromecast"
   action:
-    - service: switch.turn_off
-      entity_id: switch.yharmony_chromecast
+    - service: select.select_option
+      entity_id: select.yharmony_activities
+      options: "Power Off"
