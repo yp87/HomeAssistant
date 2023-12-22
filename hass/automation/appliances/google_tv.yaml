@@ -7,8 +7,9 @@
       to: 'on'
   action:
     - service: select.select_option
-      entity_id: select.yharmony_activities
-      options: "Regarder Chromecast"
+      data:
+        entity_id: select.yharmony_activities
+        option: "Regarder Chromecast"
 
 - alias: Google tv turns off
   id: google_tv_turns_off
@@ -22,5 +23,6 @@
     state: "Regarder Chromecast"
   action:
     - service: select.select_option
-      entity_id: select.yharmony_activities
-      options: "Power Off"
+      data:
+        entity_id: select.yharmony_activities
+        options: "Power Off"

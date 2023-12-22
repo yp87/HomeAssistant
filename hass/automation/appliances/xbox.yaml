@@ -7,8 +7,9 @@
       to: 'on'
   action:
     - service: select.select_option
-      entity_id: select.yharmony_activities
-      options: "XBOX"
+      data:
+        entity_id: select.yharmony_activities
+        options: "XBOX"
 
 - alias: xbox turns off
   id: xbox_turns_off
@@ -22,5 +23,6 @@
     state: "XBOX"
   action:
     - service: select.select_option
-      entity_id: select.yharmony_activities
-      options: "Power Off"
+      data:
+        entity_id: select.yharmony_activities
+        options: "Power Off"
