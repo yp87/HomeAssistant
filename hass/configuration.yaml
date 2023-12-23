@@ -114,6 +114,9 @@ google_assistant:
     input_button.leaf_start_charge:
       expose: true
       name: Charge la Leaf
+    switch.charger_charge_control:
+      expose: true
+      name: Charger
 
 tts:
   - platform: google_translate
