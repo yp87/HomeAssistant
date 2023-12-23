@@ -25,4 +25,4 @@
     - service: select.select_option
       data:
         entity_id: select.yharmony_activities
-        options: "Power Off"
+        option: "power_off"
