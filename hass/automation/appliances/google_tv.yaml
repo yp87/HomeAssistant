@@ -5,6 +5,10 @@
     - platform: state
       entity_id: remote.salon_tv
       to: 'on'
+  condition:
+    condition: state
+    entity_id: select.yharmony_activities
+    state: "power_off"
   action:
     - service: select.select_option
       data:

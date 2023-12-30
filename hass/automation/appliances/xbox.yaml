@@ -5,6 +5,13 @@
     - platform: state
       entity_id: binary_sensor.xbox
       to: 'on'
+  condition:
+    - condition: state
+      entity_id: select.yharmony_activities
+      state: "power_off"
+    - condition: state
+      entity_id: person.yan
+      state: "home"
   action:
     - service: select.select_option
       data:
