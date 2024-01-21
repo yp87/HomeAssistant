@@ -166,7 +166,7 @@ joaoapps_join:
     device_id: !secret join_phone_device
     api_key: !secret join_phone_api_key
   
-polestar:
+polestar_api:
 
 automation: !include_dir_merge_list automation
 group: !include groups.yaml
