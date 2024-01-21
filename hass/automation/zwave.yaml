@@ -124,6 +124,11 @@
         entity_id: switch.baby_monitor
     - service: script.turn_on
       data:
+        entity_id: script.white_noise_stop
+        variables:
+          media_player_id: media_player.bureau
+    - service: script.turn_on
+      data:
         entity_id: script.white_noise_start
         variables:
           media_player_id: media_player.bureau

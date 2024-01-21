@@ -7,3 +7,6 @@
 [submodule "hass/external_dependencies/upnp"]
 	path = hass/external_dependencies/upnp
 	url = https://github.com/rytilahti/homeassistant-upnp-availability
+[submodule "hass/external_dependencies/polestar"]
+	path = hass/external_dependencies/polestar
+	url = https://github.com/leeyuentuen/polestar_api
