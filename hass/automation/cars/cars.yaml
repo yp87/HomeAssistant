@@ -497,21 +497,54 @@
       to: "Available"
       for: "00:00:05"
   action:
-    - service: automation.turn_off
-      entity_id: automation.sync_charger_charge_control
-    - service: "switch.turn_{{ states('input_boolean.car_charging') }}"
+    - service: "input_boolean.turn_{{ states('switch.charger_charge_control') }}"
+      entity_id: input_boolean.previous_charge_control
+    - service: switch.toggle
       entity_id: switch.charger_charge_control
     - delay: "00:00:05"
     - if:
         - >
-          {{ states('switch.charger_charge_control') !=
-             states('input_boolean.car_charging') }}
+          {{ states('switch.charger_charge_control') ==
+             states('input_boolean.previous_charge_control') }}
       then:
         - service: button.press
           entity_id: button.charger_reset
         - service: notify.yan
           data:
             message: Rebooting charger since transaction seems lost.
+      else:
+        - service: switch.toggle
+          entity_id: switch.charger_charge_control
+
+- alias: Restart charger when session issue
+  id: Restart_charger_when_session_issue
+  trigger:
+    - platform: state
+      entity_id: sensor.charger_status
+      from: "Unavailable"
+      to: "Available"
+      for: "00:00:05"
+  action:
+    - service: automation.turn_off
+      entity_id: automation.sync_charger_charge_control
+    - service: "input_boolean.turn_{{ states('switch.charger_charge_control') }}"
+      entity_id: input_boolean.previous_charge_control
+    - service: switch.toggle
+      entity_id: switch.charger_charge_control
+    - delay: "00:00:05"
+    - if:
+        - >
+          {{ states('switch.charger_charge_control') ==
+             states('input_boolean.previous_charge_control') }}
+      then:
+        - service: button.press
+          entity_id: button.charger_reset
+        - service: notify.yan
+          data:
+            message: Rebooting charger since transaction seems lost.
+      else:
+        - service: switch.toggle
+          entity_id: switch.charger_charge_control
     - service: automation.turn_on
       entity_id: automation.sync_charger_charge_control
 
