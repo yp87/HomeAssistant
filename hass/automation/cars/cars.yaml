@@ -12,8 +12,8 @@
           entity_id: input_select.car_plugged
           state: "Leaf"
       then:
-        - service: switch.turn_on
-          entity_id: switch.charger_charge_control
+        - service: input_boolean.turn_on
+          entity_id: input_boolean.car_charging
     - service: joaoapps_join.android_server_send_tasker
       data:
         command: "LeafStartClimate"
@@ -30,8 +30,8 @@
   action:
     - service: input_boolean.turn_on
       entity_id: input_boolean.force_charge_car
-    - service: switch.turn_on
-      entity_id: switch.charger_charge_control
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.car_charging
     - wait_template: >-
         {{ is_state('sensor.charger_status_connector', 'Charging') }}
       timeout: "00:05:00"
@@ -361,8 +361,8 @@
       entity_id: input_boolean.force_charge_car
       state: "off"
   action:
-    - service: switch.turn_off
-      entity_id: switch.charger_charge_control
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.car_charging
 
 - alias: Stop charge on leaf when departure
   id: Stop_charge_on_leaf_when_departure
@@ -377,8 +377,8 @@
       entity_id: input_select.car_plugged
       state: "Leaf"
   action:
-    - service: switch.turn_off
-      entity_id: switch.charger_charge_control
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.car_charging
 
 - alias: Reset plugged car
   id: dfgh
@@ -454,7 +454,7 @@
       to: "on"
       for: "00:00:01"
     - platform: state
-      entity_id: switch.charger_charge_control
+      entity_id: input_boolean.car_charging
       to: "off"
       for: "00:00:01"
   action:
@@ -470,7 +470,22 @@
       to: "off"
       for: "00:00:05"
   action:
-    - service: switch.turn_on
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.car_charging
+
+- alias: Sync charger charge control
+  id: sync_charger_charge_control
+  trigger:
+    - platform: state
+      entity_id: input_boolean.car_charging
+    - platform: time_pattern
+      minutes: '/1'
+  condition:
+    - >
+      {{ states('switch.charger_charge_control') !=
+          states('input_boolean.car_charging') }}
+  action:
+    - service: "switch.turn_{{ states('input_boolean.car_charging') }}"
       entity_id: switch.charger_charge_control
 
 - alias: Restart charger when session issue
@@ -482,21 +497,17 @@
       to: "Available"
       for: "00:00:05"
   action:
-    - service: "input_boolean.turn_{{ states('switch.charger_charge_control') }}"
-      entity_id: input_boolean.previous_charge_control
-    - service: switch.toggle
+    - service: "switch.turn_{{ states('input_boolean.car_charging') }}"
       entity_id: switch.charger_charge_control
     - delay: "00:00:05"
     - if:
         - >
-          {{ states('switch.charger_charge_control') ==
-             states('input_boolean.previous_charge_control') }}
+          {{ states('switch.charger_charge_control') !=
+             states('input_boolean.car_charging') }}
       then:
         - service: button.press
           entity_id: button.charger_reset
         - service: notify.yan
           data:
             message: Rebooting charger since transaction seems lost.
-      else:
-        - service: switch.toggle
-          entity_id: switch.charger_charge_control
+
