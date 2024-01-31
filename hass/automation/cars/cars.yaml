@@ -497,6 +497,8 @@
       to: "Available"
       for: "00:00:05"
   action:
+    - service: automation.turn_off
+      entity_id: automation.sync_charger_charge_control
     - service: "switch.turn_{{ states('input_boolean.car_charging') }}"
       entity_id: switch.charger_charge_control
     - delay: "00:00:05"
@@ -510,4 +512,6 @@
         - service: notify.yan
           data:
             message: Rebooting charger since transaction seems lost.
+    - service: automation.turn_on
+      entity_id: automation.sync_charger_charge_control
 

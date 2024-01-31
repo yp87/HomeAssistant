@@ -18,6 +18,7 @@ morning:
     - service: notify.cath
       data:
         message: >-
+          Charge: {{ states('sensor.leaf_charge') }}%
           {%- set weekday = ['Lundi','Mardi','Mercredi','Jeudi',
                             'Vendredi','Samedi','Dimanche'] -%}
           {%- set ts =
