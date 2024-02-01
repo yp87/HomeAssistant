@@ -489,7 +489,7 @@
       entity_id: switch.charger_charge_control
 
 - alias: Restart charger when session issue
-  id: Restart_charger_when_session_issue
+  id: Restart_charger_when_session_issue_2
   trigger:
     - platform: state
       entity_id: sensor.charger_status
