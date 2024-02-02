@@ -114,7 +114,7 @@ google_assistant:
     input_button.leaf_start_charge:
       expose: true
       name: Charge la Leaf
-    switch.charger_charge_control:
+    input_boolean.car_charging:
       expose: true
       name: Charger
 
