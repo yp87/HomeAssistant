@@ -491,7 +491,7 @@
         value: 0
     - repeat:
         sequence:
-          - wait_template: '{{ is_state("sensor.charger_status", "on") }}'
+          - wait_template: '{{ is_state("sensor.charger_status", "Available") }}'
           - service: "switch.turn_{{ states('input_boolean.car_charging') }}"
             entity_id: switch.charger_charge_control
           - delay: "00:00:06"
