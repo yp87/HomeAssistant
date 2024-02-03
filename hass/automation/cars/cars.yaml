@@ -503,13 +503,15 @@
           - or:
               - >
                 {{ states('switch.charger_charge_control') }} ==
-                 {{ states('input_boolean.car_charging') }}
+                {{ states('input_boolean.car_charging') }}
               - condition: numeric_state
                 entity_id: input_number.car_charger_failures
                 above: 5
-    - >
-      {{ states('switch.charger_charge_control') }} !=
-      {{ states('input_boolean.car_charging') }}
-    - service: button.press
-      entity_id: button.charger_reset
+    - if:
+        - >
+          {{ states('switch.charger_charge_control') }} !=
+          {{ states('input_boolean.car_charging') }}
+      then:
+        - service: button.press
+          entity_id: button.charger_reset
 
