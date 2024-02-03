@@ -490,7 +490,7 @@
     - service: input_number.set_value
       entity_id: input_number.car_charger_failures
       data:
-        value: 0
+        value: 1
     - repeat:
         sequence:
           - wait_template: '{{ states("sensor.charger_status") != "unavailable"}}'
@@ -508,7 +508,7 @@
                    states('input_boolean.car_charging') }}
               - condition: numeric_state
                 entity_id: input_number.car_charger_failures
-                above: 5
+                above: 4
     - if:
         - >
           {{ states('switch.charger_charge_control') !=
@@ -516,4 +516,7 @@
       then:
         - service: button.press
           entity_id: button.charger_reset
+        - service: notify.yan
+          data:
+            message: "Restarting chargre after 5 tries"
 
