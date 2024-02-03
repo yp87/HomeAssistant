@@ -496,7 +496,7 @@
           - wait_template: '{{ states("sensor.charger_status") != "unavailable"}}'
           - service: "switch.turn_{{ states('input_boolean.car_charging') }}"
             entity_id: switch.charger_charge_control
-          - delay: "00:00:06"
+          - delay: "00:00:10"
           - service: input_number.increment
             entity_id: input_number.car_charger_failures
         until:
