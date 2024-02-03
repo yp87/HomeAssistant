@@ -12,3 +12,7 @@ leaf_selected_battery:
 car_speed:
   min: 0
   max: 200
+
+car_charger_failures:
+  min: 0
+  max: 100

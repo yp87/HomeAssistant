@@ -24,6 +24,4 @@ force_charge_car:
 
 car_charge_only:
 
-previous_charge_control:
-
 car_charging:
