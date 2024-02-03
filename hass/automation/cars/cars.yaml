@@ -494,7 +494,9 @@
     - repeat:
         sequence:
           - wait_template: '{{ states("sensor.charger_status") != "unavailable"}}'
-          - service: "switch.turn_{{ states('input_boolean.car_charging') }}"
+          - alias: try setting the charge
+            continue_on_error: true
+            service: "switch.turn_{{ states('input_boolean.car_charging') }}"
             entity_id: switch.charger_charge_control
           - delay: "00:00:10"
           - service: input_number.increment
