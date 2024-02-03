@@ -479,11 +479,13 @@
     - platform: state
       entity_id: input_boolean.car_charging
     - platform: time_pattern
-      minutes: '/1'
+      minutes: '/5'
   condition:
     - >
       {{ states('switch.charger_charge_control') !=
           states('input_boolean.car_charging') }}
+  mode: single
+  max_exceeded: silent
   action:
     - service: input_number.set_value
       entity_id: input_number.car_charger_failures
