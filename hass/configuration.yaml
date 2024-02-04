@@ -144,10 +144,7 @@ shell_command:
   set_rear_window_camera_time: !secret camera_rear_window_set_time_template
   set_parking_camera_time: !secret camera_parking_set_time_template
 
-camera:
-   - platform: generic
-     name: ender3 camera
-     stream_source: !secret ender3_camera
+stream:
 
 hyperion_priority:
   host: !secret hyperion_ip_address
