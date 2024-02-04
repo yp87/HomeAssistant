@@ -43,6 +43,11 @@
       data:
         entity_id: climate.main_floor
         preset_mode: sleep
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.chauffage_sous_sol_thermostat
+        temperature: 19
+
     - service: media_player.volume_set
       entity_id: media_player.bedroom
       data:
