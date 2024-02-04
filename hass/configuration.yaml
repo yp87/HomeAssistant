@@ -144,6 +144,8 @@ shell_command:
   set_rear_window_camera_time: !secret camera_rear_window_set_time_template
   set_parking_camera_time: !secret camera_parking_set_time_template
 
+ffmpeg:
+
 camera:
   - platform: ffmpeg
     name: Ender3 camera
