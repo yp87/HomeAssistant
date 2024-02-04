@@ -146,6 +146,7 @@ shell_command:
 
 camera:
    - platform: generic
+     name: ender3 camera
      stream_source: !secret ender3_camera
 
 hyperion_priority:
