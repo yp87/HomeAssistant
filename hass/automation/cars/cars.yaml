@@ -530,4 +530,3 @@
         - service: notify.yan
           data:
             message: "Restarting chargre after 5 tries"
-
