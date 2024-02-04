@@ -473,6 +473,17 @@
     - service: input_boolean.turn_on
       entity_id: input_boolean.car_charging
 
+- alias: Stop charge when unplugged
+  id: stop_charge_when_unplugged
+  trigger:
+    - platform: state
+      entity_id: switch.charger_availability
+      to: "on"
+      for: "00:00:05"
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.car_charging
+
 - alias: Sync charger charge control
   id: sync_charger_charge_control
   trigger:
