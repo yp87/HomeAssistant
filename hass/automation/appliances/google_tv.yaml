@@ -30,3 +30,15 @@
       data:
         entity_id: select.yharmony_activities
         option: "power_off"
+
+- alias: Google tv turns off
+  id: google_tv_turns_off
+  trigger:
+    platform: state
+    entity_id: remote.salon_tv
+    to: 'unavailable'
+    for: "00:00:05"
+  action:
+    - service: homeassistant.reload_config_entry
+      data:
+        entity_id: remote.salon_tv
