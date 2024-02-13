@@ -116,7 +116,7 @@ google_assistant:
       name: Charge la Leaf
     input_boolean.car_charging:
       expose: true
-      name: Charger
+      name: Chargeur
 
 tts:
   - platform: google_translate
