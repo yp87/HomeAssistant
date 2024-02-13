@@ -31,8 +31,8 @@
         entity_id: select.yharmony_activities
         option: "power_off"
 
-- alias: Google tv turns off
-  id: google_tv_turns_off
+- alias: Reset google tv
+  id: reset_google_tv
   trigger:
     platform: state
     entity_id: remote.salon_tv
