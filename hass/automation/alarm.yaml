@@ -68,7 +68,7 @@
     - service: climate.set_preset_mode
       data:
         entity_id: climate.main_floor
-        preset_mode: away
+        preset_mode: Away
     - service: script.turn_on
       data:
         entity_id: script.lights_off_except

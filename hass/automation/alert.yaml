@@ -89,6 +89,7 @@
       entity_id: input_boolean.yan_had_pills
 
 - alias: yan pills notify
+  id: yan_pills_notify
   trigger:
     - platform: time
       at: '21:00:00'

@@ -6,6 +6,10 @@
       at: '00:00:00'
     - platform: homeassistant
       event: start
+  condition:
+    condition: state
+    entity_id: camera.parking
+    state: idle
   action:
     - service: shell_command.set_parking_camera_time
 
