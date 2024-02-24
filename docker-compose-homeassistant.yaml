@@ -19,6 +19,7 @@ services:
       - "traefik.http.routers.hass.entrypoints=websecure"
       - "traefik.http.routers.hass.tls=true"
       - "traefik.http.routers.hass.tls.certresolver=le"
+      - 'custom.label=hass'
     depends_on:
       - mqtt
       - alarm
@@ -86,6 +87,7 @@ services:
       - "--certificatesresolvers.le.acme.tlschallenge=true"
       - "--certificatesresolvers.le.acme.email=${EMAIL}"
       - "--certificatesresolvers.le.acme.storage=/letsencrypt/acme.json"
+      - "--providers.docker.constraints=Label(`custom.label`,`hass`)"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - letsencrypt:/letsencrypt
