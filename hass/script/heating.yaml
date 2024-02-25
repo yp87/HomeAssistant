@@ -8,6 +8,12 @@ increase_basement_heating:
           value_template: >
             {{ state_attr('climate.chauffage_sous_sol_thermostat', 'temperature') | float < 24 }}
         sequence:
+          - service: notify.yan
+            data:
+              message: >-
+                Ajustement graduel de la température du sous-sol de
+                {{- " " + state_attr('climate.chauffage_sous_sol_thermostat', 'current_temperature') | string }} à
+                {{- " " + state_attr('climate.chauffage_sous_sol_thermostat', 'temperature') | string -}}.
           - service: climate.set_temperature
             data_template:
               entity_id: climate.chauffage_sous_sol_thermostat
