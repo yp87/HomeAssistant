@@ -1,0 +1,19 @@
+---
+increase_basement_heating:
+  mode: single
+  sequence:
+    - repeat:
+        while:
+          condition: template
+          value_template: >
+            {{ state_attr('climate.chauffage_sous_sol_thermostat', 'temperature') | float < 24 }}
+        sequence:
+          - service: climate.set_temperature
+            data_template:
+              entity_id: climate.chauffage_sous_sol_thermostat
+              temperature: >
+                {{ (state_attr('climate.chauffage_sous_sol_thermostat', 'current_temperature') | float + 1)
+                   | round(1) }}
+          - wait_template: >
+              {{ state_attr('climate.chauffage_sous_sol_thermostat', 'current_temperature') | float >=
+                 (state_attr('climate.chauffage_sous_sol_thermostat', 'temperature') | float - 0.3) }}
