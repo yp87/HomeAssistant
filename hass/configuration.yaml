@@ -146,13 +146,6 @@ shell_command:
 
 stream:
 
-ffmpeg:
-
-camera:
-  - platform: ffmpeg
-    name: Parking Rtsp
-    input: !secret camera_parking_rtsp
-
 hyperion_priority:
   host: !secret hyperion_ip_address
   port: !secret hyperion_port
