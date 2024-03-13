@@ -13,7 +13,7 @@ increase_basement_heating:
               message: >-
                 Ajustement graduel de la température du sous-sol de
                 {{- " " + state_attr('climate.chauffage_sous_sol_thermostat', 'current_temperature') | string }} à
-                {{- " " + state_attr('climate.chauffage_sous_sol_thermostat', 'temperature') | string -}}.
+                {{- " " + (state_attr('climate.chauffage_sous_sol_thermostat', 'temperature') + 1) | string -}}.
           - service: climate.set_temperature
             data_template:
               entity_id: climate.chauffage_sous_sol_thermostat
