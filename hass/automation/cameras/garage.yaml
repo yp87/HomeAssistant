@@ -8,7 +8,7 @@
       event: start
   condition:
     condition: state
-    entity_id: camera.garage_camera
+    entity_id: camera.garage
     state: idle
   action:
     - service: shell_command.set_garage_camera_time
@@ -19,12 +19,12 @@
   max_exceeded: silent
   trigger:
     - platform: state
-      entity_id: binary_sensor.garage_motion
+      entity_id: binary_sensor.garage_motion_detection
       to: "on"
   condition:
     - or:
         - condition: state
-          entity_id: binary_sensor.garage_door_1
+          entity_id: binary_sensor.garage_door
           state: "on"
         - not:
             - condition: state
@@ -33,7 +33,7 @@
   action:
     - service: camera.snapshot
       data:
-        entity_id: camera.garage_camera
+        entity_id: camera.garage
         filename: /media/garage.jpg
     - service: notify.yan
       data:

@@ -8,7 +8,7 @@
   condition:
     or:
       - condition: state
-        entity_id: binary_sensor.garage_door_1
+        entity_id: binary_sensor.garage_door
         state: 'on'
       - condition: state
         entity_id: alarm_control_panel.home_alarm
@@ -30,7 +30,7 @@
           - service: notify.all_people
             data:
               message: >
-                {% if is_state('binary_sensor.garage_door_1', 'on') %}
+                {% if is_state('binary_sensor.garage_door', 'on') %}
                 la porte de garage est toujours ouverte.
                 {% endif %}
                 {% if is_state('alarm_control_panel.home_alarm', 'disarmed') %}
@@ -43,7 +43,7 @@
                 state: 'home'
               - and:
                   - condition: state
-                    entity_id: binary_sensor.garage_door_1
+                    entity_id: binary_sensor.garage_door
                     state: 'off'
                   - condition: state
                     entity_id: alarm_control_panel.home_alarm
@@ -56,7 +56,7 @@
   id: intrusion_when_no_one_is_home
   trigger:
     - platform: state
-      entity_id: binary_sensor.garage_door_1
+      entity_id: binary_sensor.garage_door
       to: 'on'
     - platform: state
       entity_id: alarm_control_panel.home_alarm
@@ -115,12 +115,12 @@
       from: 'home'
       to: 'not_home'
     - platform: state
-      entity_id: binary_sensor.garage_door_1
+      entity_id: binary_sensor.garage_door
       to: 'on'
   condition:
     and:
       - condition: state
-        entity_id: binary_sensor.garage_door_1
+        entity_id: binary_sensor.garage_door
         state: 'on'
       - condition: state
         entity_id: group.all_people
@@ -144,7 +144,7 @@
         until:
           - or:
               - condition: state
-                entity_id: binary_sensor.garage_door_1
+                entity_id: binary_sensor.garage_door
                 state: 'off'
               - condition: state
                 entity_id: group.all_people
@@ -152,7 +152,7 @@
     - service: notify.all_people
       data:
         message: >
-          {% if is_state('binary_sensor.garage_door_1', 'off') %}
+          {% if is_state('binary_sensor.garage_door', 'off') %}
             La porte de garage est maintenant fermée.
           {% else %}
             La porte de garage n'est pas encore fermée,
@@ -214,7 +214,7 @@
   id: Alert_when_garage_door_stays_open
   trigger:
     - platform: state
-      entity_id: binary_sensor.garage_door_1
+      entity_id: binary_sensor.garage_door
       to: 'on'
       for:
         minutes: 10
@@ -233,7 +233,7 @@
               message: La porte de garage est toujours ouverte.
         until:
           - condition: state
-            entity_id: binary_sensor.garage_door_1
+            entity_id: binary_sensor.garage_door
             state: 'off'
     - service: notify.yan
       data:

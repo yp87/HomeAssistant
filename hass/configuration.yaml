@@ -33,10 +33,6 @@ recorder:
     entities:
       - light.table_de_chevet_de_yan
       - light.table_de_chevet_de_cath
-      - binary_sensor.garage_camera_pir_0
-      - binary_sensor.front_window_pir_0
-      - binary_sensor.rear_window_pir_0
-      - binary_sensor.rear_window_motion_0
 
 history:
 
