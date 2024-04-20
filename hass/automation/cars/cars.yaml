@@ -530,3 +530,20 @@
         - service: notify.yan
           data:
             message: "Restarting chargre after 5 tries"
+
+- alias: Notify when leaf ready to charge
+  id: Notify_when_leaf_ready_to_charge
+  trigger:
+    - platform: state
+      entity_id: input_select.car_plugged
+      to: "Leaf"
+      for: "00:10:00"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.car_charging
+      state: "off"
+  action:
+    - service: notify.cath
+      entity_id: input_boolean.car_charging
+      data:
+        message: "The leaf is ready to charge."
