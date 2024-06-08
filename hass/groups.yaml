@@ -21,3 +21,4 @@ all_blinds:
   entities:
     - cover.kitchen_window_blind
     - cover.patio_door_blind
+    - cover.living_room_window_blind
