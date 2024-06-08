@@ -16,3 +16,7 @@ all_people:
   entities:
     - person.yan
     - person.cath
+
+all_blinds:
+  entities:
+    - cover.kitchen_window

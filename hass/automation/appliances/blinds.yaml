@@ -1,0 +1,40 @@
+---
+- alias: Open blinds in the morning
+  id: open_blinds_in_the_morning
+  trigger:
+    - platform: sun
+      event: sunrise
+      offset: 00:00:30
+    - platform: state
+      entity_id: climate.main_floor
+      attribute: climate_mode
+      from: Sleep
+      to: Home
+  condition:
+    - condition: sun
+      after: sunrise
+      after_offset: 00:00:30
+      before: sunset
+      before_offset: -00:00:30
+    - not:
+        condition: state
+        entity_id: climate.main_floor
+        attribute: climate_mode
+        state: Sleep
+  action:
+    - service: cover.open_cover
+      entity_id: group.all_blinds
+
+- alias: Close blinds in the evening
+  id: close_blinds_in_the_evening
+  trigger:
+    - platform: sun
+      event: sunset
+      offset: -00:00:30
+    - platform: state
+      entity_id: climate.main_floor
+      attribute: climate_mode
+      to: Sleep
+  action:
+    - service: cover.open_cover
+      entity_id: group.all_blinds
