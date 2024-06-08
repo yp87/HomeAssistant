@@ -19,4 +19,5 @@ all_people:
 
 all_blinds:
   entities:
-    - cover.kitchen_window
+    - cover.kitchen_window_blind
+    - cover.patio_door_blind
