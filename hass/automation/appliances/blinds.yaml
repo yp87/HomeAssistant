@@ -44,6 +44,7 @@
   trigger:
     - platform: state
       entity_id: remote.salon_tv
+      for: "00:01:00"
   condition:
     - condition: sun
       after: sunrise
