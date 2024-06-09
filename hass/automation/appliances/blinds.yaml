@@ -54,7 +54,45 @@
     - service: "cover.{{ 'close' if trigger.to_state.state == 'on' else 'open' }}_cover"
       entity_id: cover.living_room_window_blind
 
-#- alias: Sync office blind with sun when working
-#  id: sync_office_blind_with_sun_when_working
-#  trigger:
-#    -
+- alias: Sync office blind with sun when working
+  id: sync_office_blind_with_sun_when_working
+  trigger:
+    - platform: time_pattern
+      minutes: '/5'  # Checks every 5 minutes; adjust as needed
+    - platform: state
+      entity_id: binary_sensor.laptop_wifi
+      to: "on"
+    - platform: state
+      entity_id: binary_sensor.laptop_ethernet
+      to: "on"
+  condition:
+    - or:
+      - condition: state
+        entity_id: binary_sensor.laptop_wifi
+        state: "on"
+      - condition: state
+        entity_id: binary_sensor.laptop_ethernet
+        state: "on"
+    - condition: numeric_state
+      entity_id: sun.sun
+      value_template: "{{ state_attr('sun.sun', 'azimuth') }}"
+      above: 239
+    - condition: numeric_state
+      entity_id: sun.sun
+      value_template: "{{ state_attr('sun.sun', 'elevation') }}"
+      below: 45  # Adjust based on the angle of the sun that affects your screen
+    - condition: time
+      after: '07:00:00'
+      before: '16:00:00'
+      weekday:
+        - mon
+        - wed
+        - fri
+  action:
+    - service: cover.set_cover_position
+      data_template:
+        entity_id: cover.office_window_blind
+        position: >
+          {% set azimuth = state_attr('sun.sun', 'azimuth') %}
+          {% set position = 100 - ((azimuth - 239) * 0.5) %}
+          {{ [0, position] | max }}
