@@ -7,7 +7,7 @@
       offset: 00:30:00
     - platform: state
       entity_id: climate.main_floor
-      attribute: climate_mode
+      attribute: preset_mode
       from: Sleep
       to: Home
   condition:
@@ -19,7 +19,7 @@
     - not:
         condition: state
         entity_id: climate.main_floor
-        attribute: climate_mode
+        attribute: preset_mode
         state: Sleep
   action:
     - service: cover.open_cover
@@ -33,7 +33,7 @@
       offset: -00:30:00
     - platform: state
       entity_id: climate.main_floor
-      attribute: climate_mode
+      attribute: preset_mode
       to: Sleep
   action:
     - service: cover.open_cover
