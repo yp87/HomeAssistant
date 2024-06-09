@@ -4,7 +4,7 @@
   trigger:
     - platform: sun
       event: sunrise
-      offset: 00:00:30
+      offset: 00:30:00
     - platform: state
       entity_id: climate.main_floor
       attribute: climate_mode
@@ -13,9 +13,9 @@
   condition:
     - condition: sun
       after: sunrise
-      after_offset: 00:00:30
+      after_offset: 00:30:00
       before: sunset
-      before_offset: -00:00:30
+      before_offset: -00:30:00
     - not:
         condition: state
         entity_id: climate.main_floor
@@ -30,7 +30,7 @@
   trigger:
     - platform: sun
       event: sunset
-      offset: -00:00:30
+      offset: -00:30:00
     - platform: state
       entity_id: climate.main_floor
       attribute: climate_mode
@@ -47,9 +47,14 @@
   condition:
     - condition: sun
       after: sunrise
-      after_offset: 00:00:30
+      after_offset: 00:30:00
       before: sunset
-      before_offset: -00:00:30
+      before_offset: -00:30:00
   action:
     - service: "cover.{{ 'close' if trigger.to_state.state == 'on' else 'open' }}_cover"
       entity_id: cover.living_room_window_blind
+
+#- alias: Sync office blind with sun when working
+#  id: sync_office_blind_with_sun_when_working
+#  trigger:
+#    -
