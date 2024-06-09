@@ -55,6 +55,19 @@
     - service: "cover.{{ 'close' if trigger.to_state.state == 'on' else 'open' }}_cover"
       entity_id: cover.living_room_window_blind
 
+- alias: CLose office blind when kid goes to sleep
+  id: cLose_office_blind_when_kid_goes_to_sleep
+  trigger:
+    - platform: state
+      entity_id: switch.baby_monitor
+      to: "on"
+  condition:
+    - condition: time
+      after: " 18:00:00"
+  action:
+    - service: cover.close_cover
+      entity_id: cover.office_window_blind
+
 - alias: Sync office blind with sun when working
   id: sync_office_blind_with_sun_when_working
   trigger:

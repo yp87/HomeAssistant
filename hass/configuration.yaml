@@ -109,6 +109,15 @@ google_assistant:
     cover.kitchen_window_blind:
       expose: true
       name: Fenêtre de la cuisine
+    cover.patio_door_blind:
+      expose: true
+      name: Fenêtre du patio
+    cover.living_room_window_blind:
+      expose: true
+      name: Fenêtre du salon
+    cover.office_window_blind:
+      expose: true
+      name: Fenêtre du bureau
 
 tts:
   - platform: google_translate
