@@ -106,6 +106,9 @@ google_assistant:
     input_boolean.car_charging:
       expose: true
       name: Chargeur
+    cover.kitchen_window_blind:
+      expose: true
+      name: Fenêtre de la cuisine
 
 tts:
   - platform: google_translate
