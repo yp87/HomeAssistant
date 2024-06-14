@@ -10,12 +10,30 @@
       attribute: preset_mode
       from: Sleep
       to: Home
+    - platform: time
+      at: "06:30:00"
+    - platform: time
+      at: "07:00:00"
   condition:
     - condition: sun
       after: sunrise
       after_offset: 00:30:00
       before: sunset
       before_offset: -00:30:00
+    - or:
+      - condition: time
+        after: "06:30:00"
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+      - condition: time
+        after: "07:00:00"
+        weekday:
+          - sat
+          - sun
     - not:
         condition: state
         entity_id: climate.main_floor
@@ -69,7 +87,7 @@
       to: "on"
   condition:
     - condition: time
-      after: " 18:00:00"
+      after: "18:00:00"
   action:
     - service: cover.close_cover
       entity_id: cover.office_window_blind
