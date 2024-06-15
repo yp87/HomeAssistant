@@ -8,7 +8,7 @@
     - platform: state
       entity_id: climate.main_floor
       attribute: preset_mode
-      from: Sleep
+      from: sleep
       to: Home
     - platform: time
       at: "06:30:00"
@@ -21,24 +21,24 @@
       before: sunset
       before_offset: -00:30:00
     - or:
-      - condition: time
-        after: "06:30:00"
-        weekday:
-          - mon
-          - tue
-          - wed
-          - thu
-          - fri
-      - condition: time
-        after: "07:00:00"
-        weekday:
-          - sat
-          - sun
+        - condition: time
+          after: "06:30:00"
+          weekday:
+            - mon
+            - tue
+            - wed
+            - thu
+            - fri
+        - condition: time
+          after: "07:00:00"
+          weekday:
+            - sat
+            - sun
     - not:
         condition: state
         entity_id: climate.main_floor
         attribute: preset_mode
-        state: Sleep
+        state: sleep
   action:
     - service: cover.open_cover
       entity_id: group.all_blinds
@@ -52,7 +52,7 @@
     - platform: state
       entity_id: climate.main_floor
       attribute: preset_mode
-      to: Sleep
+      to: sleep
   action:
     - service: cover.close_cover
       data_template:
@@ -105,12 +105,12 @@
       to: "on"
   condition:
     - or:
-      - condition: state
-        entity_id: binary_sensor.laptop_wifi
-        state: "on"
-      - condition: state
-        entity_id: binary_sensor.laptop_ethernet
-        state: "on"
+        - condition: state
+          entity_id: binary_sensor.laptop_wifi
+          state: "on"
+        - condition: state
+          entity_id: binary_sensor.laptop_ethernet
+          state: "on"
     - condition: numeric_state
       entity_id: sun.sun
       value_template: "{{ state_attr('sun.sun', 'azimuth') }}"

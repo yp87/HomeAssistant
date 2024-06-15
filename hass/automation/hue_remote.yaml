@@ -42,7 +42,7 @@
     - service: climate.set_preset_mode
       data:
         entity_id: climate.main_floor
-        preset_mode: Sleep
+        preset_mode: sleep
     - service: script.turn_off
       entity_id: script.increase_basement_heating
     - service: climate.set_temperature
