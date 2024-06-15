@@ -161,6 +161,8 @@ rest_command:
 
 conversation:
 
+polestar_api:
+
 joaoapps_join:
   - name: android_server
     device_id: !secret join_android_server_device
