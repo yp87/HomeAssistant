@@ -13,21 +13,6 @@
   action:
     - service: shell_command.set_parking_camera_time
 
-- alias: Turn on parking IR light when motion
-  id: Turn_on_parking_IR_light_when_motion
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.parking_perimeter_detection
-  condition:
-    condition: state
-    entity_id: binary_sensor.parking_daynight
-    state: "off"
-  action:
-    - delay: "00:00:05"
-    - service: >
-        light.turn_{{ "on" if trigger.to_state.state == "on" else "off"}}
-      entity_id: light.parking_ir_light_0
-
 - alias: Notify when motion in parking
   id: Notify_when_motion_in_parking
   mode: single
