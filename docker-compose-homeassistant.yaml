@@ -107,11 +107,11 @@ services:
       - 10200:10200
 
   whisper:
-    container_name: whisper
-    image: rhasspy/wyoming-whisper
-    command: --model base-int8 --language fr
+    container_name: vosk
+    image: rhasspy/wyoming-vosk
+    command: --language fr --model-for-language fr vosk-model-fr-0.22 --data-dir data
     volumes:
-      - whisper-data:/data
+      - vosk-data:/data
     environment:
       - TZ=America/New_York
     restart: unless-stopped
@@ -122,4 +122,4 @@ volumes:
   zwave-config:
   letsencrypt:
   piper-data:
-  whisper-data:
+  vosk-data:
