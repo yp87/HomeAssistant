@@ -159,7 +159,7 @@ rest_command:
     username: !secret camera_garage_username
     password: !secret camera_garage_password
 
-#conversation:
+conversation:
 #assist_pipeline:
 
 joaoapps_join:
