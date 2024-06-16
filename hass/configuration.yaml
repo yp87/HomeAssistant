@@ -160,6 +160,7 @@ rest_command:
     password: !secret camera_garage_password
 
 conversation:
+assist_pipeline:
 
 joaoapps_join:
   - name: android_server
