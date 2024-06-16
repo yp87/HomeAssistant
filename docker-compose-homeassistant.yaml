@@ -109,7 +109,7 @@ services:
   whisper:
     container_name: vosk
     image: rhasspy/wyoming-vosk
-    command: --language fr --model-for-language fr vosk-model-fr-0.22 --data-dir data
+    command: --language fr --data-dir data
     volumes:
       - vosk-data:/data
     environment:
