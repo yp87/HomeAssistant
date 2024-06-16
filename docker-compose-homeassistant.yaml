@@ -103,6 +103,8 @@ services:
     environment:
       - TZ=America/New_York
     restart: unless-stopped
+    ports:
+      - 10200:10200
 
 volumes:
   zwave-config:
