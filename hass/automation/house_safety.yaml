@@ -226,11 +226,14 @@
         message: La porte de garage est ouverte depuis plus de dix minutes.
     - repeat:
         sequence:
-          - delay:
-              minutes: 10
-          - service: notify.yan
-            data:
-              message: La porte de garage est toujours ouverte.
+          - wait_template: "{{ is_state('binary_sensor.garage_door', 'off') }}"
+            timeout: "00:10:00"
+          - if:
+              - "{{ not wait.completed }}"
+            then:
+              - service: notify.yan
+                data:
+                  message: La porte de garage est toujours ouverte.
         until:
           - condition: state
             entity_id: binary_sensor.garage_door
