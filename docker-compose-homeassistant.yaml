@@ -94,6 +94,17 @@ services:
     network_mode: "host"
     restart: unless-stopped
 
+  piper:
+    container_name: piper
+    image: rhasspy/wyoming-piper
+    command: --voice fr-siwis-medium
+    volumes:
+      - piper-data:/data
+    environment:
+      - TZ=America/New_York
+    restart: unless-stopped
+
 volumes:
   zwave-config:
   letsencrypt:
+  piper-data:
