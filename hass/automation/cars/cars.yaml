@@ -538,7 +538,7 @@
       entity_id: input_select.car_plugged
       to: "Leaf"
       for: "00:10:00"
-  conditions:
+  condition:
     - condition: state
       entity_id: input_boolean.car_charging
       state: "off"
