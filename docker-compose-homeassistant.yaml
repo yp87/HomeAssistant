@@ -94,32 +94,32 @@ services:
     network_mode: "host"
     restart: unless-stopped
 
-  piper:
-    container_name: piper
-    image: rhasspy/wyoming-piper
-    command: --voice fr-siwis-medium
-    volumes:
-      - piper-data:/data
-    environment:
-      - TZ=America/New_York
-    restart: unless-stopped
-    ports:
-      - 10200:10200
+#  piper:
+#    container_name: piper
+#    image: rhasspy/wyoming-piper
+#    command: --voice fr-siwis-medium
+#    volumes:
+#      - piper-data:/data
+#    environment:
+#      - TZ=America/New_York
+#    restart: unless-stopped
+#    ports:
+#      - 10200:10200
 
-  whisper:
-    container_name: vosk
-    image: rhasspy/wyoming-vosk
-    command: --language fr --data-dir data
-    volumes:
-      - vosk-data:/data
-    environment:
-      - TZ=America/New_York
-    restart: unless-stopped
-    ports:
-      - 10300:10300
+#  vosk:
+#    container_name: vosk
+#    image: rhasspy/wyoming-vosk
+#    command: --language fr --data-dir data
+#    volumes:
+#      - vosk-data:/data
+#    environment:
+#      - TZ=America/New_York
+#    restart: unless-stopped
+#    ports:
+#      - 10300:10300
 
 volumes:
   zwave-config:
   letsencrypt:
-  piper-data:
-  vosk-data:
+  #piper-data:
+  #vosk-data:
