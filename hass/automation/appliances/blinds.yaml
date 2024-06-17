@@ -19,7 +19,7 @@
       after: sunrise
       after_offset: 00:30:00
       before: sunset
-      before_offset: -00:30:00
+      before_offset: -00:10:00
     - or:
         - condition: time
           after: "06:30:00"
@@ -48,7 +48,7 @@
   trigger:
     - platform: sun
       event: sunset
-      offset: -00:30:00
+      offset: -00:10:00
     - platform: state
       entity_id: climate.main_floor
       attribute: preset_mode
@@ -74,7 +74,7 @@
       after: sunrise
       after_offset: 00:30:00
       before: sunset
-      before_offset: -00:30:00
+      before_offset: -00:10:00
   action:
     - service: "cover.{{ 'close' if trigger.to_state.state == 'on' else 'open' }}_cover"
       entity_id: cover.living_room_window_blind
@@ -96,7 +96,7 @@
   id: sync_office_blind_with_sun_when_working
   trigger:
     - platform: time_pattern
-      minutes: '/5'  # Checks every 5 minutes; adjust as needed
+      minutes: '/5'
     - platform: state
       entity_id: binary_sensor.laptop_wifi
       to: "on"
@@ -118,7 +118,7 @@
     - condition: numeric_state
       entity_id: sun.sun
       value_template: "{{ state_attr('sun.sun', 'elevation') }}"
-      below: 45  # Adjust based on the angle of the sun that affects your screen
+      below: 45
     - condition: time
       after: '07:00:00'
       before: '16:00:00'
