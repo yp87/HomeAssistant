@@ -75,6 +75,10 @@
       after_offset: 00:30:00
       before: sunset
       before_offset: -00:10:00
+    - condition: template
+      value_template: "{{ trigger.to_state.state != 'unavailable' }}"
+    - condition: template
+      value_template: "{{ trigger.from_state.state != 'unavailable' }}"
   action:
     - service: "cover.{{ 'close' if trigger.to_state.state == 'on' else 'open' }}_cover"
       entity_id: cover.living_room_window_blind
