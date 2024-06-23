@@ -118,6 +118,9 @@ google_assistant:
     cover.office_window_blind:
       expose: true
       name: Fenêtre du bureau
+    climate.main_floor:
+      expose: true
+      name: Thermostat
 
 tts:
   - platform: google_translate
