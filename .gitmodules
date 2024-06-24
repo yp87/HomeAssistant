@@ -10,3 +10,6 @@
 [submodule "hass/external_dependencies/polestar"]
 	path = hass/external_dependencies/polestar
 	url = https://github.com/leeyuentuen/polestar_api
+[submodule "hass/external_dependencies/webrtc"]
+	path = hass/external_dependencies/webrtc
+	url = https://github.com/AlexxIT/WebRTC
