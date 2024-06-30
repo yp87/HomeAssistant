@@ -1,0 +1,67 @@
+---
+- alias: Hyperion phone ringing
+  trigger:
+    - platform: state
+      entity_id: input_boolean.yan_phone_rings
+      to: "on"
+    - platform: state
+      entity_id: input_boolean.cath_phone_rings
+      to: "on"
+  variables:
+    name: >-
+      {% if trigger.entity_id == "input_boolean.yan_phone_rings" %}
+        Yan
+      {% else %}
+        Cath
+      {% endif %}
+  action:
+    - service: notify.tv
+      data:
+        message: "{{ name }}' phone is ringing"
+
+
+- alias: Hyperion phone notification
+  trigger:
+    - platform: state
+      entity_id: input_boolean.yan_phone_notification
+    - platform: state
+      entity_id: input_boolean.cath_phone_notification
+  variables:
+    notification_color: >-
+      {% if trigger.entity_id == "input_boolean.yan_phone_notification" %}
+        [0, 255, 0]
+      {% else %}
+        [190, 0, 255]
+      {% endif %}
+    effect_priority: >-
+      {% if trigger.entity_id == "input_boolean.yan_phone_notification" %}
+        126
+      {% else %}
+        124
+      {% endif %}
+  mode: queued
+  action:
+    - repeat:
+        count: 2
+        sequence:
+          - service: hyperion_priority.apply_effect
+            data:
+              effect: Cinema brighten lights
+              args: >
+                { "color-start": [0, 0, 0],
+                  "color-end": {{ notification_color }},
+                  "fade-time": 0.8 }
+              priority: '{{ effect_priority }}'
+          - delay: "00:00:01"
+          - service: hyperion_priority.apply_effect
+            data:
+              effect: Cinema dim lights
+              args: >
+                { "color-start": {{ notification_color }},
+                  "color-end": [0, 0, 0],
+                  "fade-time": 0.8 }
+              priority: '{{ effect_priority }}'
+          - delay: "00:00:01"
+    - service: hyperion_priority.clear_priority
+      data:
+        priority: '{{ effect_priority }}'
