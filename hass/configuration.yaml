@@ -150,10 +150,6 @@ shell_command:
 
 stream:
 
-hyperion_priority:
-  host: !secret hyperion_ip_address
-  port: !secret hyperion_port
-
 rest_command:
   update_dns_ip:
     url: !secret dns_ip_update_url
