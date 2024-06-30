@@ -37,3 +37,36 @@
     - service: notify.tv
       data:
         message: "{{ name }} received a message"
+
+- alias: tv turns on
+  id: tv_turns_on
+  trigger:
+    - platform: state
+      entity_id: media_player.tv
+      to: 'on'
+  condition:
+    condition: state
+    entity_id: select.yharmony_activities
+    state: "power_off"
+  action:
+    - service: select.select_option
+      data:
+        entity_id: select.yharmony_activities
+        option: "Regarder Chromecast"
+
+- alias: tv turns off
+  id: tv_turns_off
+  trigger:
+    platform: state
+    entity_id: media_player.tv
+    to: 'off'
+  condition:
+    condition: state
+    entity_id: select.yharmony_activities
+    state: "Regarder Chromecast"
+  action:
+    - service: select.select_option
+      data:
+        entity_id: select.yharmony_activities
+        option: "power_off"
+
