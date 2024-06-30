@@ -63,26 +63,6 @@
             group.all_blinds
           {% endif %}
 
-- alias: Sync living room blinds with TV
-  id: sync living room blinds with tv
-  trigger:
-    - platform: state
-      entity_id: remote.salon_tv
-      for: "00:01:00"
-  condition:
-    - condition: sun
-      after: sunrise
-      after_offset: 00:30:00
-      before: sunset
-      before_offset: -00:10:00
-    - condition: template
-      value_template: "{{ trigger.to_state.state != 'unavailable' }}"
-    - condition: template
-      value_template: "{{ trigger.from_state.state != 'unavailable' }}"
-  action:
-    - service: "cover.{{ 'close' if trigger.to_state.state == 'on' else 'open' }}_cover"
-      entity_id: cover.living_room_window_blind
-
 - alias: CLose office blind when kid goes to sleep
   id: cLose_office_blind_when_kid_goes_to_sleep
   trigger:
