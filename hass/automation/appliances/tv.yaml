@@ -52,7 +52,7 @@
     - service: select.select_option
       data:
         entity_id: select.yharmony_activities
-        option: "Regarder Chromecast"
+        option: "Watch TV"
 
 - alias: tv turns off
   id: tv_turns_off
@@ -63,7 +63,39 @@
   condition:
     condition: state
     entity_id: select.yharmony_activities
-    state: "Regarder Chromecast"
+    state: "Watch TV"
+  action:
+    - service: select.select_option
+      data:
+        entity_id: select.yharmony_activities
+        option: "power_off"
+
+- alias: chromecast turns on
+  id: chromecast_turns_on
+  trigger:
+    - platform: state
+      entity_id: media_player.salon_tv
+      from: 'off'
+  condition:
+    condition: state
+    entity_id: select.yharmony_activities
+    state: "power_off"
+  action:
+    - service: select.select_option
+      data:
+        entity_id: select.yharmony_activities
+        option: "Music"
+
+- alias: chromecast turns off
+  id: chromecast_turns_off
+  trigger:
+    - platform: state
+      entity_id: media_player.salon_tv
+      to: 'off'
+  condition:
+    condition: state
+    entity_id: select.yharmony_activities
+    state: "Music"
   action:
     - service: select.select_option
       data:
