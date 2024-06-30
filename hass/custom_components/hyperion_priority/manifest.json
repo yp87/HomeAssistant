@@ -1,7 +1,0 @@
-{
-  "domain": "hyperion_priority",
-  "name": "Hyperion priority",
-  "documentation": "https://www.home-assistant.io/integrations/hyperion",
-  "codeowners": [],
-  "version": "1.0.0"
-}
