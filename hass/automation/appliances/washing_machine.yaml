@@ -8,7 +8,7 @@
   action:
     - service: switch.turn_off
       entity_id: switch.washer_power
-    - service: notify.tv
+    - service: notify.lg_webos_smart_tv
       data:
         message: "Washing machine is leaking"
     - repeat:
