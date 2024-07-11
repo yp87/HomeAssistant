@@ -15,7 +15,7 @@
         Cath
       {% endif %}
   action:
-    - service: notify.lg_webos_smart_tv
+    - service: notify.tv
       data:
         message: "{{ name }}'s phone is ringing"
 
@@ -34,7 +34,7 @@
       {% endif %}
   mode: queued
   action:
-    - service: notify.lg_webos_smart_tv
+    - service: notify.tv
       data:
         message: "{{ name }} received a message"
 
