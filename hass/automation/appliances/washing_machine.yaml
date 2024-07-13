@@ -8,6 +8,15 @@
   action:
     - service: switch.turn_off
       entity_id: switch.washer_power
+    - service: hyperion_priority.apply_effect
+      data:
+        effect: Knight rider
+        priority: 100
+        args: >-
+          {
+            "speed": 2,
+            "fadeFactor" : 0.98,
+          }
     - service: notify.tv
       data:
         message: "Washing machine is leaking"
@@ -25,3 +34,6 @@
     - service: notify.all_people
       data:
         message: Le problème est maintenant réglé.
+    - service: hyperion_priority.clear_priority
+      data:
+        priority: 100
