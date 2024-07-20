@@ -186,5 +186,3 @@
     - service: hyperion_priority.clear_priority
       data:
         priority: '{{ effect_priority }}'
-
-
