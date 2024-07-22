@@ -38,11 +38,11 @@
       data:
         message: "{{ name }} received a message"
 
-- alias: tv turns on
-  id: tv_turns_on
+- alias: chromecast turns on
+  id: chromecast_turns_on
   trigger:
     - platform: state
-      entity_id: media_player.tv
+      entity_id: remote.salon_tv
       to: 'on'
   condition:
     condition: state
@@ -58,13 +58,17 @@
         entity_id: light.hyperion
         kelvin: 6000
         brightness_pct: 40
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.tv
+        source: HDMI 3
 
-- alias: tv turns off
-  id: tv_turns_off
+- alias: chromecast turns off
+  id: chromecast_turns_off
   trigger:
-    platform: state
-    entity_id: media_player.tv
-    to: 'off'
+    - platform: state
+      entity_id: remote.salon_tv
+      to: 'off'
   condition:
     condition: state
     entity_id: select.yharmony_activities
@@ -77,38 +81,6 @@
     - service: light.turn_off
       data:
         entity_id: light.hyperion
-
-- alias: chromecast turns on
-  id: chromecast_turns_on
-  trigger:
-    - platform: state
-      entity_id: media_player.salon_tv
-      from: 'off'
-  condition:
-    condition: state
-    entity_id: select.yharmony_activities
-    state: "power_off"
-  action:
-    - service: select.select_option
-      data:
-        entity_id: select.yharmony_activities
-        option: "Music"
-
-- alias: chromecast turns off
-  id: chromecast_turns_off
-  trigger:
-    - platform: state
-      entity_id: media_player.salon_tv
-      to: 'off'
-  condition:
-    condition: state
-    entity_id: select.yharmony_activities
-    state: "Music"
-  action:
-    - service: select.select_option
-      data:
-        entity_id: select.yharmony_activities
-        option: "power_off"
 
 - alias: Hyperion phone ringing
   trigger:
