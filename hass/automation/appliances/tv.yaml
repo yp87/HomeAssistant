@@ -58,10 +58,6 @@
         entity_id: light.hyperion
         kelvin: 6000
         brightness_pct: 40
-    - service: media_player.select_source
-      data:
-        entity_id: media_player.tv
-        source: HDMI 3
 
 - alias: chromecast turns off
   id: chromecast_turns_off
@@ -73,6 +69,46 @@
     condition: state
     entity_id: select.yharmony_activities
     state: "Watch TV"
+  action:
+    - service: select.select_option
+      data:
+        entity_id: select.yharmony_activities
+        option: "power_off"
+    - service: light.turn_off
+      data:
+        entity_id: light.hyperion
+
+- alias: xbox turns on
+  id: xbox_turns_on
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.xbox
+      to: 'on'
+  condition:
+    condition: state
+    entity_id: select.yharmony_activities
+    state: "power_off"
+  action:
+    - service: select.select_option
+      data:
+        entity_id: select.yharmony_activities
+        option: "XBOX"
+    - service: light.turn_on
+      data:
+        entity_id: light.hyperion
+        kelvin: 6000
+        brightness_pct: 40
+
+- alias: xbox turns off
+  id: xbox_turns_off
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.xbox
+      to: 'off'
+  condition:
+    condition: state
+    entity_id: select.yharmony_activities
+    state: "XBOX"
   action:
     - service: select.select_option
       data:
