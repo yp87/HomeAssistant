@@ -12,11 +12,6 @@
       data:
         effect: Knight rider
         priority: 100
-        args: >-
-          {
-            "speed": 2,
-            "fadeFactor" : 0.98,
-          }
     - service: notify.tv
       data:
         message: "Washing machine is leaking"

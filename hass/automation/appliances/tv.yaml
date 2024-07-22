@@ -148,11 +148,11 @@
     - platform: state
       entity_id: input_boolean.cath_phone_notification
   variables:
-    notification_color: >-
+    effect: >-
       {% if trigger.entity_id == "input_boolean.yan_phone_notification" %}
-        [0, 255, 0]
+        Candle
       {% else %}
-        [190, 0, 255]
+        Notify blue
       {% endif %}
     effect_priority: >-
       {% if trigger.entity_id == "input_boolean.yan_phone_notification" %}
@@ -162,27 +162,11 @@
       {% endif %}
   mode: queued
   action:
-    - repeat:
-        count: 2
-        sequence:
-          - service: hyperion_priority.apply_effect
-            data:
-              effect: Cinema brighten lights
-              args: >
-                { "color-start": [0, 0, 0],
-                  "color-end": {{ notification_color }},
-                  "fade-time": 0.8 }
-              priority: '{{ effect_priority }}'
-          - delay: "00:00:01"
-          - service: hyperion_priority.apply_effect
-            data:
-              effect: Cinema dim lights
-              args: >
-                { "color-start": {{ notification_color }},
-                  "color-end": [0, 0, 0],
-                  "fade-time": 0.8 }
-              priority: '{{ effect_priority }}'
-          - delay: "00:00:01"
+    - service: hyperion_priority.apply_effect
+      data:
+        effect: '{{ effect }}'
+        priority: '{{ effect_priority }}'
+    - delay: "00:00:04"
     - service: hyperion_priority.clear_priority
       data:
         priority: '{{ effect_priority }}'

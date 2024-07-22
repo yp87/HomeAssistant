@@ -31,4 +31,4 @@
     - name: Polestar last update
       state: >
         {{ "Last update " +
-           relative_time(states('sensor.polestar_last_updated_battery_data') | as_datetime) + " ago"}}
+           relative_time(states('sensor.polestar_last_updated_battery_data') | as_datetime) + " ago" }}

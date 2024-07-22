@@ -10,7 +10,6 @@ from homeassistant.const import CONF_HOST, CONF_PORT
 EFFECT = 'effect'
 PRIORITY = 'priority'
 COLOR = 'color'
-ARGS = 'args'
 STATE = 'state'
 
 def setup(hass, config):
@@ -21,16 +20,12 @@ def setup(hass, config):
     def apply_effect(call):
         effect = call.data.get(EFFECT)
         priority = call.data.get(PRIORITY)
-        args = call.data.get(ARGS, {})
-
-        if isinstance(args, str):
-            args = ast.literal_eval(args)
 
         json_request(
             {
                 "command": "effect",
                 "priority": int(priority),
-                "effect": {"name": effect, "args": args,}
+                "effect": {"name": effect,}
             }
         )
 
