@@ -300,9 +300,9 @@ class DenonDevice(MediaPlayerEntity):
 
         if event == "SS" and parameter.startswith("INFSIGHDR O"):
             if parameter.contains("---"):
-                self._hass.bus.fire("denon_hdr", 0)
+                self._hass.bus.fire("denon_hdr", {"value": 0})
             else:
-                self._hass.bus.fire("denon_hdr", 1)
+                self._hass.bus.fire("denon_hdr", {"value": 1})
 
         self._hass.bus.fire("denon_telnet_event", {"zone": zone, "event": event, "parameter": parameter})
 
