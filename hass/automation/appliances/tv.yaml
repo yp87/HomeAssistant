@@ -170,11 +170,9 @@
       entity_id: media_player.tv
       to: 'on'
   action:
-    - service: light.turn_on
+    - service: hyperion_priority.set_usb_capture
       data:
-        entity_id: light.hyperion
-        kelvin: 6000
-        brightness_pct: 40
+        usb_capture: true
 
 - alias: tv turns off
   id: tv_turns_off
@@ -183,9 +181,9 @@
       entity_id: media_player.tv
       to: 'off'
   action:
-    - service: light.turn_off
+    - service: hyperion_priority.set_usb_capture
       data:
-        entity_id: light.hyperion
+        usb_capture: false
 
 - alias: set hyperhd hdr mode
   id: set_hyperhd_hdr_mode

@@ -1,4 +1,11 @@
 ---
+set_usb_capture:
+  description: Activate or deactivate usb capture of hyperhd.
+  fields:
+    usb_capture:
+      description: true to activate usb capture, false otherwise.
+      example: true
+
 set_hdr_mode:
   description: Activate or deactivate hdr mode of hyperhd.
   fields:

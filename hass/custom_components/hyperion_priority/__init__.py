@@ -12,11 +12,26 @@ PRIORITY = 'priority'
 COLOR = 'color'
 STATE = 'state'
 HDR_MODE = 'hdr_mode'
+USB_CAPTURE = 'usb_capture'
 
 def setup(hass, config):
     """Service to send commands to hyperion."""
     _host = config[DOMAIN][CONF_HOST]
     _port = config[DOMAIN][CONF_PORT]
+
+    def set_usb_capture(call):
+        usbCapture = call.data.get(USB_CAPTURE)
+
+        json_request(
+            {
+                "command":"componentstate",
+                "componentstate":
+                {
+                    "component":"VIDEOGRABBER",
+                    "state": bool(usbCapture)
+                }
+            }
+        )
 
     def set_hdr_mode(call):
         hdrMode = call.data.get(HDR_MODE)
