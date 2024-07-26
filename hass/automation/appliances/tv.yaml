@@ -195,7 +195,7 @@
   action:
     - service: hyperion_priority.set_hdr_mode
       data:
-        hdr_mode: '{{ 1 if trigger.event.data.value == "on" else 0 }}'
+        hdr_mode: '{{ trigger.event.data.value }}'
 
 - alias: Query denon hdr mode
   id: query_denon_hdr_mode
