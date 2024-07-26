@@ -115,6 +115,7 @@ async def async_setup_entry(
 ) -> None:
     """Set up the DenonAVR receiver from a config entry."""
     entities = []
+    self._hass = hass
     data = hass.data[DOMAIN][config_entry.entry_id]
     receiver = data[CONF_RECEIVER]
     update_audyssey = config_entry.options.get(
@@ -282,7 +283,7 @@ class DenonDevice(MediaPlayerEntity):
         """Process a telnet command callback."""
         # There are multiple checks implemented which reduce unnecessary updates of the ha state machine
 
-        hass.bus.fire("denon_telnet_event", {"zone": zone, "event": event, "parameter": parameter})
+        self._hass.bus.fire("denon_telnet_event", {"zone": zone, "event": event, "parameter": parameter})
 
         if zone not in (self._receiver.zone, ALL_ZONES):
             return
