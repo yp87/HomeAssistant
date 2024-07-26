@@ -190,12 +190,12 @@
 - alias: set hyperhd hdr mode
   id: set_hyperhd_hdr_mode
   trigger:
-    - platform: state
-      entity_id: binary_sensor.denon_hdr
+    - platform: event
+      event_type: denon_hdr
   action:
     - service: hyperion_priority.set_hdr_mode
       data:
-        hdr_mode: '{{ 1 if is_state("binary_sensor.denon_hdr", "on") else 0 }}'
+        hdr_mode: '{{ 1 if trigger.event.data.value == "on" else 0 }}'
 
 - alias: Query denon hdr mode
   id: query_denon_hdr_mode
