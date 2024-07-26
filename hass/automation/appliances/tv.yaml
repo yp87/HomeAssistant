@@ -196,3 +196,18 @@
     - service: hyperion_priority.set_hdr_mode
       data:
         effect: '{{ 1 if is_state("binary_sensor.denon_hdr", "on") else 0 }}'
+
+- alias: Query denon hdr mode
+  id: query_denon_hdr_mode
+  trigger:
+    - platform: time_pattern
+      seconds: '/30'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.denon_avr_x3500h
+      state: "on"
+  action:
+    - service: denonavr_hdr.get_command
+      data:
+        command: /goform/formiPhoneAppDirect.xml?SSINFSIGHDR ?
+        entity_id: media_player.denon_avr_x3500h
