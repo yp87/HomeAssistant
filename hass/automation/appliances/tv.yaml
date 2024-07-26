@@ -186,3 +186,13 @@
     - service: light.turn_off
       data:
         entity_id: light.hyperion
+
+- alias: set hyperhd hdr mode
+  id: set_hyperhd_hdr_mode
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.denon_hdr
+  action:
+    - service: hyperion_priority.set_hdr_mode
+      data:
+        effect: '{{ 1 if is_state("binary_sensor.denon_hdr", "on") else 0 }}'

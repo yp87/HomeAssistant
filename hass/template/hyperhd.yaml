@@ -1,0 +1,7 @@
+---
+- trigger:
+    - platform: event
+      event_type: denon_hdr
+  binary_sensor:
+    - name: denon_hdr
+      state: '{{ trigger.event.data.value == 1 }}'

@@ -11,11 +11,22 @@ EFFECT = 'effect'
 PRIORITY = 'priority'
 COLOR = 'color'
 STATE = 'state'
+HDR_MODE = 'hdr_mode'
 
 def setup(hass, config):
     """Service to send commands to hyperion."""
     _host = config[DOMAIN][CONF_HOST]
     _port = config[DOMAIN][CONF_PORT]
+
+    def set_hdr_mode(call):
+        hdrMode = call.data.get(HDR_MODE)
+
+        json_request(
+            {
+                "command":"videomodehdr",
+	            "HDR":int(hdrMode)
+            }
+        )
 
     def apply_effect(call):
         effect = call.data.get(EFFECT)
@@ -77,6 +88,7 @@ def setup(hass, config):
         sock.close()
         return json.loads(response)
 
+    hass.services.register(DOMAIN, 'set_hdr_mode', set_hdr_mode)
     hass.services.register(DOMAIN, 'apply_effect', apply_effect)
     hass.services.register(DOMAIN, 'clear_priority', clear_priority)
     return True

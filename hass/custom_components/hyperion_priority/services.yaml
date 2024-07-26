@@ -1,6 +1,13 @@
 ---
+set_hdr_mode:
+  description: Activate or deactivate hdr mode of hyperhd.
+  fields:
+    hdr_mode:
+      description: 1 to activate hdr mode, 0 otherwise.
+      example: 1
+
 apply_effect:
-  description: Apply an effect to hyperion for a specified priority.
+  description: Apply an effect to hyperhd for a specified priority.
   fields:
     effect:
       description: The name of the effect.
