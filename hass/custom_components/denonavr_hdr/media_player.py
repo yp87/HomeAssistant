@@ -285,8 +285,6 @@ class DenonDevice(MediaPlayerEntity):
         """Process a telnet command callback."""
         # There are multiple checks implemented which reduce unnecessary updates of the ha state machine
 
-        self._hass.bus.fire("denon_telnet_event", {"zone": zone, "event": event, "parameter": parameter})
-
         if zone not in (self._receiver.zone, ALL_ZONES):
             return
         if event not in TELNET_EVENTS:
@@ -299,6 +297,15 @@ class DenonDevice(MediaPlayerEntity):
             return
         if event == "HD" and not parameter.startswith("ALBUM"):
             return
+
+        if event == "SS" and parameter.startswith("INFSIGHDR O"):
+            if parameter.contains("---"):
+                self._hass.bus.fire("denon_hdr", 0)
+            else:
+                self._hass.bus.fire("denon_hdr", 1)
+
+        self._hass.bus.fire("denon_telnet_event", {"zone": zone, "event": event, "parameter": parameter})
+
         self.async_write_ha_state()
 
     async def async_added_to_hass(self) -> None:
