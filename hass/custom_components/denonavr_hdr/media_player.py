@@ -115,7 +115,6 @@ async def async_setup_entry(
 ) -> None:
     """Set up the DenonAVR receiver from a config entry."""
     entities = []
-    self._hass = hass
     data = hass.data[DOMAIN][config_entry.entry_id]
     receiver = data[CONF_RECEIVER]
     update_audyssey = config_entry.options.get(
@@ -133,6 +132,7 @@ async def async_setup_entry(
                 unique_id,
                 config_entry,
                 update_audyssey,
+                hass
             )
         )
     _LOGGER.debug(
@@ -257,6 +257,7 @@ class DenonDevice(MediaPlayerEntity):
         unique_id: str,
         config_entry: ConfigEntry,
         update_audyssey: bool,
+        hass: HomeAssistant,
     ) -> None:
         """Initialize the device."""
         self._attr_unique_id = unique_id
@@ -269,6 +270,7 @@ class DenonDevice(MediaPlayerEntity):
             model=config_entry.data[CONF_MODEL],
             name=receiver.name,
         )
+        self._hass = hass
         self._attr_sound_mode_list = receiver.sound_mode_list
         self._receiver = receiver
         self._update_audyssey = update_audyssey
