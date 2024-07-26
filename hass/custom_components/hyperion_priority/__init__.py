@@ -103,7 +103,7 @@ def setup(hass, config):
         sock.close()
         return json.loads(response)
 
-    hass.services.register(DOMAIN, 'set_usb_capture', set_hdr_mode)
+    hass.services.register(DOMAIN, 'set_usb_capture', set_usb_capture)
     hass.services.register(DOMAIN, 'set_hdr_mode', set_hdr_mode)
     hass.services.register(DOMAIN, 'apply_effect', apply_effect)
     hass.services.register(DOMAIN, 'clear_priority', clear_priority)
