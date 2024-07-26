@@ -299,7 +299,7 @@ class DenonDevice(MediaPlayerEntity):
             return
 
         if event == "SS" and parameter.startswith("INFSIGHDR O"):
-            if parameter == "INFSIGHDR O ---":
+            if parameter == "INFSIGHDR O --- ":
                 self._hass.bus.fire("denon_hdr", {"value": 0})
             else:
                 self._hass.bus.fire("denon_hdr", {"value": 1})
