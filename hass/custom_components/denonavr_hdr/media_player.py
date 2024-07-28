@@ -304,8 +304,6 @@ class DenonDevice(MediaPlayerEntity):
             else:
                 self._hass.bus.fire("denon_hdr", {"value": 1})
 
-        self._hass.bus.fire("denon_telnet_event", {"zone": zone, "event": event, "parameter": parameter})
-
         self.async_write_ha_state()
 
     async def async_added_to_hass(self) -> None:
