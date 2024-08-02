@@ -544,7 +544,6 @@
       state: "off"
   action:
     - service: notify.cath
-      entity_id: input_boolean.car_charging
       data:
         message: "The leaf is ready to charge."
 

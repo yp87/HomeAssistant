@@ -101,6 +101,7 @@ services:
       - '1984:1984'
       - '8554:8554'
       - '8555:8555'
+    restart: unless-stopped
 
 #  piper:
 #    container_name: piper
