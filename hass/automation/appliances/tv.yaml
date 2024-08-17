@@ -202,7 +202,7 @@
       seconds: '/30'
   condition:
     - condition: state
-      entity_id: binary_sensor.denon_avr_x3500h
+      entity_id: media_player.denon_avr_x3500h
       state: "on"
   action:
     - service: denonavr_hdr.get_command
