@@ -99,6 +99,7 @@
             data:
               entity_id: light.table_de_chevet_de_cath
               brightness: 50
+              color_temp: 366
               transition: 1
           - delay: "00:00:02"
           - service: light.turn_off
