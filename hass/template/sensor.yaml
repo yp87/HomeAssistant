@@ -1,4 +1,0 @@
----
-- binary_sensor:
-    - name: Hyperion music
-      state: "{{ is_state_attr('light.hyperion', 'effect', 'Music: quatro for LED strip (MULTI COLOR SLOW)') }}"
