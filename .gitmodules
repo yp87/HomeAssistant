@@ -13,3 +13,6 @@
 [submodule "hass/external_dependencies/webrtc"]
 	path = hass/external_dependencies/webrtc
 	url = https://github.com/AlexxIT/WebRTC
+[submodule "hass/external_dependencies/adaptive-cover"]
+	path = hass/external_dependencies/adaptive-cover
+	url = https://github.com/basbruss/adaptive-cover
