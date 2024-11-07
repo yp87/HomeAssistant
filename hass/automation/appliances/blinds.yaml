@@ -94,10 +94,12 @@
       entity_id: switch.vertical_toggle_control_office
 
 - alias: Turn on office blind control in the morning on work from home days
-  id: turn_on_office_blind_in_the_morning
+  id: turn_on_office_blind_control_in_the_morning_on_work_from_home_days
   trigger:
     - platform: time
       at: "07:00:00"
+  condition:
+    - condition: time
       weekday:
         - mon
         - wed
@@ -107,10 +109,12 @@
       entity_id: switch.vertical_toggle_control_office
 
 - alias: Turn off office blind control in the evening on work from home days
-  id: turn_off_office_blind_in_the_evening
+  id: turn_off_office_blind_control_in_the_evening_on_work_from_home_days
   trigger:
     - platform: time
       at: "16:20:00"
+  condition:
+    - condition: time
       weekday:
         - mon
         - wed
