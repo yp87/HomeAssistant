@@ -8,6 +8,8 @@ services:
       - ${BASE_PATH}/hass:/config
     restart: always
     network_mode: "host"
+    environment:
+      - TZ=America/Montreal
     logging:
       driver: "json-file"
       options:
