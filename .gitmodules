@@ -1,9 +1,6 @@
 [submodule "alarm/Paradox_IP150"]
 	path = alarm/Paradox_IP150
 	url = https://github.com/maisken/Paradox_IP150
-[submodule "hass/external_dependencies/ocpp"]
-	path = hass/external_dependencies/ocpp
-	url = https://github.com/lbbrhzn/ocpp.git
 [submodule "hass/external_dependencies/upnp"]
 	path = hass/external_dependencies/upnp
 	url = https://github.com/rytilahti/homeassistant-upnp-availability
