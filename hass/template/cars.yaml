@@ -1,33 +1,5 @@
 ---
-- trigger:
-    - platform: event
-      event_type: leaf_state
-  binary_sensor:
-    - name: Leaf plug
-      state: '{{ trigger.event.data.power != "UNPLUGGED" }}'
-      device_class: plug
-    - name: Leaf charging
-      state: '{{ trigger.event.data.power == "CHARGING" }}'
-      device_class: plug
-      icon: mdi:ev-station
-  sensor:
-    - name: Leaf charge
-      state: '{{ trigger.event.data.battery }}'
-      unit_of_measurement: '%'
-      device_class: battery
-    - name: Leaf temperature
-      state: '{{ trigger.event.data.temperature.split("-")[0]|int(-99) + 1 }}'
-      unit_of_measurement: °C
-      device_class: temperature
-    - name: Leaf last update
-      state: >
-        {{ strptime(trigger.event.data.lastUpdated, "%b %d, %Y, %I:%M %p %z") }}
-      device_class: timestamp
-    - name: Leaf last tentative
-      state: >
-        {{ strptime(trigger.event.data.lastTentative,
-           "%b %d, %Y, %I:%M:%S %p %z") }}
-      device_class: timestamp
+- sensor:
     - name: Polestar last update
       state: >
         {{ "Last update " +

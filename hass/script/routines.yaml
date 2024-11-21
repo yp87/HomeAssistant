@@ -14,31 +14,6 @@ morning:
       data:
         entity_id: climate.main_floor
         resume_all: true
-
-    - service: notify.cath
-      data:
-        message: >-
-          Charge: {{ states('sensor.leaf_charge') }}%
-          {%- set weekday = ['Lundi','Mardi','Mercredi','Jeudi',
-                            'Vendredi','Samedi','Dimanche'] -%}
-          {%- set ts =
-              as_timestamp(states('sensor.leaf_last_update'), 0) -%}
-          {%- if ts == 0 -%}
-          Impossible d'obtenir l'heure de la dernière mise à jour de
-          l'état de la leaf.
-          {%- else -%}
-          Bon matin Catherine!
-          Ton carosse est chargé à
-          {{- " " + states('sensor.leaf_charge') }}% et est
-          {%- if is_state("binary_sensor.leaf_plug", "on") -%}
-          {{ " " }}branché.
-          {%- else -%}
-          {{ " " }}DÉBRANCHÉ.
-          {%- endif -%}
-          {{ " " }}La dernière mise à jour est ce
-          {{ " " }}{{- weekday[ts|timestamp_custom('%w')|int] -}}
-          {{ " " }}à {{ ts | timestamp_custom('%HH%M') }}.
-          {%- endif -%}
     - delay: "00:00:05"
 
 white_noise_start:
