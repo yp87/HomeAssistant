@@ -97,15 +97,6 @@ google_assistant:
     light.ground_floor_hallway_light:
       expose: true
       name: corridor
-    input_button.leaf_start_climate:
-      expose: true
-      name: La Leaf
-    input_button.leaf_start_charge:
-      expose: true
-      name: Charge la Leaf
-    input_boolean.car_charging:
-      expose: true
-      name: Chargeur
     cover.kitchen_window_blind:
       expose: true
       name: Fenêtre de la cuisine
@@ -177,7 +168,6 @@ automation: !include_dir_merge_list automation
 group: !include groups.yaml
 input_boolean: !include input_boolean.yaml
 input_button: !include input_button.yaml
-input_number: !include input_number.yaml
 input_select: !include input_select.yaml
 input_text: !include input_text.yaml
 script: !include_dir_merge_named script
