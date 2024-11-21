@@ -1,0 +1,50 @@
+---
+update_leaf:
+  description: >-
+    Fetch the leaf's current state.
+    Calling it directly with "service: script.update_leaf"
+    will ensure the calling script will wait for the update.
+  mode: queued
+  sequence:
+    - repeat:
+        while:
+          - >
+            {{ as_timestamp(now()) -
+               as_timestamp(states('sensor.leaf_last_update'), 0)
+               > 600 }}
+          - "{{ repeat.index <= 6 }}"
+        sequence:
+          - service: joaoapps_join.android_server_send_tasker
+            data:
+              command: "LeafRefresh"
+          - wait_for_trigger:
+              - platform: state
+                entity_id: sensor.Leaf_last_tentative
+            timeout: "00:03:00"
+          - delay: "00:00:02"
+    - choose:
+        - conditions: >
+            {{ as_timestamp(now()) -
+               as_timestamp(states('sensor.Leaf_last_tentative'), 0)
+               >= 240 }}
+          sequence:
+            - service: input_text.set_value
+              data_template:
+                entity_id: input_text.leaf_update_message
+                value: >
+                  Impossible d'effectuer une tentative de mise à jour.
+        - conditions: >
+            {{ as_timestamp(now()) -
+               as_timestamp(states('sensor.leaf_last_update'), 0)
+               > 600 }}
+          sequence:
+            - service: input_text.set_value
+              data_template:
+                entity_id: input_text.leaf_update_message
+                value: >
+                  Les dernières valeurs obtenues sont trop vieilles.
+      default:
+        - service: input_text.set_value
+          data_template:
+            entity_id: input_text.leaf_update_message
+            value: "Succès."
