@@ -96,15 +96,6 @@ services:
     network_mode: "host"
     restart: unless-stopped
 
-  go2rtc:
-    container_name: go2rtc
-    image: alexxit/go2rtc
-    ports:
-      - '1984:1984'
-      - '8554:8554'
-      - '8555:8555'
-    restart: unless-stopped
-
 #  piper:
 #    container_name: piper
 #    image: rhasspy/wyoming-piper
