@@ -5,11 +5,12 @@
       entity_id: person.cath
       zone: zone.home
       event: leave
+  condition:
+    - condition: time
+      before: '10:00:00'
   action:
     service: light.turn_off
-    entity_id:
-      - light.table_de_chevet_de_cath
-      - light.frederique_main_light
+    entity_id: all
 
 - alias: Yan leaving work
   trigger:
