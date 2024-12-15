@@ -115,3 +115,39 @@
       value_template: "{{ wait.trigger is none }}"
     - service: light.turn_off
       entity_id: light.second_floor_hallway_light
+
+- alias: Turn on fred bathroom lights when motion is detected
+  id: Turn_on_fred_bathroom_lights_when_motion_is_detected
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.second_floor_motion
+      to: "on"
+  condition:
+    - and:
+      - condition: time
+        after: '19:00:00'
+        before: '07:00:00'
+      - or:
+          - condition: state
+            entity_id: light.fred_bathroom_main_light
+            state: "off"
+          - condition: state
+            entity_id: light.fred_bathroom_main_light
+            attribute: brightness
+            state: 103
+  mode: restart
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.fred_bathroom_main_light
+        brightness: 103
+    - wait_for_trigger:
+        - platform: state
+          entity_id: light.fred_bathroom_main_light
+      timeout:
+        seconds: 5
+    - condition: template
+      value_template: "{{ wait.trigger is none }}"
+    - service: light.turn_off
+      entity_id: light.fred_bathroom_main_light
+

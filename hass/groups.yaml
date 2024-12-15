@@ -12,6 +12,10 @@ zwave_dimmers_default_low:
     - light.living_room_main_light
     - light.salle_de_lecture
 
+zwave_dimmers_default_exclude:
+  entities:
+    - light.fred_bathroom_main_light
+
 all_people:
   entities:
     - person.yan

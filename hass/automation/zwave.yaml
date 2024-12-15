@@ -15,6 +15,7 @@
 # switch.entrance_light: c63159c0b13882f64616192ab5723bbb
 # switch.light_front: cc0f80b851b180f1a279a28c960c522d
 # switch.master_bathroom_fan: 8a48d9a7bc38aaaa6a273c71f800df70
+# light.fred_bathroom_main_light: d4119fed834e0ae4ab2c0217b69769d5
 # ------------------------------
 - alias: Frederique main light brightness
   trigger:
@@ -169,7 +170,9 @@
   variables:
     light_entity_id: >-
       {{ device_entities(trigger.event.data.device_id) | first }}
-  condition: '{{ states(light_entity_id) != "unknown" }}'
+  condition: >-
+    {{ states(light_entity_id) != "unknown" and
+       light_entity_id not in states.group.zwave_dimmers_default_exclude.attributes.entity_id }}
   action:
     - service: light.turn_on
       data:
@@ -368,3 +371,31 @@
       entity_id:
         - light.kitchen_main_light
         - light.upper_stairs_light
+
+- alias: Fred bathroom main light single click up
+  id: fred_bathroom_main_light_single_click_up
+  trigger:
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "d4119fed834e0ae4ab2c0217b69769d5"
+        property_key_name: "001"
+        value: "KeyPressed"
+  mode: single
+  max_exceeded: silent
+  variables:
+    brightness: >
+      {{ 103 if (19 <= now().hour or now().hour < 7) and
+         is_state('switch.baby_monitor', 'on') else 255 }}
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.fred_bathroom_main_light
+        brightness: "{{ brightness }}"
+    - condition: "{{ brightness == 103 }}"
+    - delay: "00:00:05"
+    - service: light.turn_off
+      data:
+        entity_id: light.fred_bathroom_main_light
+
+
