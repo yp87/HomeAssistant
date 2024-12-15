@@ -125,7 +125,7 @@
   condition:
     - and:
       - condition: time
-        after: '16:00:00'
+        after: '19:00:00'
         before: '07:00:00'
       - or:
           - condition: state
@@ -145,7 +145,7 @@
         - platform: state
           entity_id: light.fred_bathroom_main_light
       timeout:
-        seconds: 5
+        minutes: 10
     - condition: template
       value_template: "{{ wait.trigger is none }}"
     - service: light.turn_off

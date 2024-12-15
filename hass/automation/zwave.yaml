@@ -385,7 +385,7 @@
   max_exceeded: silent
   variables:
     brightness: >
-      {{ 103 if (16 <= now().hour or now().hour < 7) and
+      {{ 103 if (19 <= now().hour or now().hour < 7) and
          is_state('switch.baby_monitor', 'on') else 255 }}
   action:
     - service: light.turn_on
@@ -393,7 +393,7 @@
         entity_id: light.fred_bathroom_main_light
         brightness: "{{ brightness }}"
     - condition: "{{ brightness == 103 }}"
-    - delay: "00:00:05"
+    - delay: "00:10:00"
     - service: light.turn_off
       data:
         entity_id: light.fred_bathroom_main_light
