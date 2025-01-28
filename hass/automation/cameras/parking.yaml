@@ -30,15 +30,30 @@
       data:
         entity_id: camera.parking
         filename: /media/parking.jpg
+    - delay:
+        milliseconds: 500
+    - service: camera.snapshot
+      data:
+        entity_id: camera.parking
+        filename: /media/parking2.jpg
+    - delay:
+        milliseconds: 500
+    - service: camera.snapshot
+      data:
+        entity_id: camera.parking
+        filename: /media/parking3.jpg
     - service: google_generative_ai_conversation.generate_content
       data:
         prompt: >-
-          message: Very briefly describe what you see in this image from my front yard camera.
-          Your message needs to be short to fit in a phone notification. Don't
-          describe stationary objects, parked cars or building.
-          interesting: true if there is a person or incoming car. Otherwise, false.
-          output in this format: {message}/{interesting}
-        image_filename: /media/parking.jpg
+          Motion has been detected, compare and very briefly describe what you see
+          in the following sequence of images from my driveway camera number 1.
+          What do you think caused the motion alarm? Do not describe stationary objects or
+          buildings. If you see no obvious causes of motion, reply with "no".
+          Your message needs to be short enough to fit in a phone notification.
+        image_filename:
+          - /media/parking.jpg
+          - /media/parking2.jpg
+          - /media/parking3.jpg
       response_variable: image_description
     - service: notify.yan
       data:
