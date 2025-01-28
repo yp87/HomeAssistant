@@ -35,8 +35,8 @@
         prompt: >-
           message: Very briefly describe what you see in this image from my front yard camera.
           Your message needs to be short to fit in a phone notification. Don't
-          describe stationary objects or buildings.
-          interesting: true if the message is worthy to be sent as a notification. Otherwise, false.
+          describe stationary objects, parked cars or building.
+          interesting: true if there is a person or incoming car. Otherwise, false.
           output in this format: {message}/{interesting}
         image_filename: /media/parking.jpg
       response_variable: image_description
