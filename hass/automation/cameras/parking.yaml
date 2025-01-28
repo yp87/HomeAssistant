@@ -30,8 +30,18 @@
       data:
         entity_id: camera.parking
         filename: /media/parking.jpg
+    - service: google_generative_ai_conversation.generate_content
+      data:
+        prompt: >-
+          message: Very briefly describe what you see in this image from my front yard camera.
+          Your message needs to be short to fit in a phone notification. Don't
+          describe stationary objects or buildings.
+          interesting: true if the message is worthy to be sent as a notification. Otherwise, false.
+          output in this format: {message}/{interesting}
+        image_filename: /media/parking.jpg
+      response_variable: image_description
     - service: notify.yan
       data:
-        message: "Parking - motion detected"
+        message: "{{ image_description }}"
         data:
           attachment: /media/parking.jpg
