@@ -42,6 +42,6 @@
       response_variable: image_description
     - service: notify.yan
       data:
-        message: "{{ image_description }}"
+        message: "{{ image_description.text }}"
         data:
           attachment: /media/parking.jpg
