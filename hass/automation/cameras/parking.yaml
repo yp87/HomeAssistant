@@ -30,11 +30,10 @@
       continue_on_error: true
       data:
         prompt: >-
-          In the following sequence of images from my driveway camera,
-          describe any objects, cars, animals,
-          or person that is able to move on my lot and their location.
-          If there is none of that, reponse with "no".
-          Your message needs to be short enough to fit in a phone notification.
+          In the following sequence of images from my driveway camera, describe any objects, cars,
+          animals, or person that is able to move on my lot and their location.
+          Focus on the most probably thing that moved last. If there is none of that,
+          reponse with "no". Your message needs to be short enough to fit in a phone notification.
         image_filename:
           - /media/parking.jpg
       response_variable: image_description
