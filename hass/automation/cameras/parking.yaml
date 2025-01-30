@@ -26,30 +26,17 @@
       data:
         entity_id: camera.parking
         filename: /media/parking.jpg
-    - delay: "00:00:01"
-    - service: camera.snapshot
-      data:
-        entity_id: camera.parking
-        filename: /media/parking2.jpg
-    - delay: "00:00:01"
-    - service: camera.snapshot
-      data:
-        entity_id: camera.parking
-        filename: /media/parking3.jpg
     - service: google_generative_ai_conversation.generate_content
       continue_on_error: true
       data:
         prompt: >-
-          Motion has been detected, compare and very briefly describe what you see
-          in the following sequence of images from my driveway camera.
-          What do you think caused the motion alarm? Do not describe stationary objects or
-          buildings. If you see no obvious causes of motion, reply with "no".
-          If the motion was not on or very near my lot, reply with "out".
+          In the following sequence of images from my driveway camera,
+          describe any objects, cars, animals,
+          or person that is able to move on my lot and their location.
+          If there is none of that, reponse with "no".
           Your message needs to be short enough to fit in a phone notification.
         image_filename:
           - /media/parking.jpg
-          - /media/parking2.jpg
-          - /media/parking3.jpg
       response_variable: image_description
     - service: notify.yan
       data:
