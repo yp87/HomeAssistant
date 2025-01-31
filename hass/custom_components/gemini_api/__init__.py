@@ -13,7 +13,7 @@ GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5
 def setup(hass, config):
     """Service to send prompt and images to gemini."""
     api_key = config[DOMAIN][CONF_API_KEY]
-    gemini_full_url = GEMINI_URL + apiKey
+    gemini_full_url = GEMINI_URL + api_key
 
     def generate_text(call):
         prompt = call.data.get('prompt')
