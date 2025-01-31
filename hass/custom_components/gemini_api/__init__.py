@@ -1,10 +1,9 @@
 #imports
-import json
-import socket
-import ast
 import base64
+import requests
+import json
 
-from homeassistant.core import SupportsResponse
+from homeassistant.helpers import SupportsResponse
 
 DOMAIN = 'gemini_api'
 
@@ -52,6 +51,4 @@ def setup(hass, config):
             "text": response.json()["candidates"][0]["content"]["parts"][0]["text"]
         }
 
-
     hass.services.register(DOMAIN, 'generate_text', generate_text, supports_response=SupportsResponse.ONLY)
-    return True
