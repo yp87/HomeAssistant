@@ -10,6 +10,8 @@ homeassistant:
   external_url: !secret external_url
   currency: !secret currency
   country: !secret country
+  allowlist_external_dirs:
+    - /pictures
 
 frontend:
 
@@ -153,9 +155,6 @@ rest_command:
 
 conversation:
 #assist_pipeline:
-
-allowlist_external_dirs:
-  - /pictures
 
 joaoapps_join:
   - name: android_server
