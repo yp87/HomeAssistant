@@ -4,6 +4,8 @@ import socket
 import ast
 import base64
 
+from homeassistant.core import SupportsResponse
+
 DOMAIN = 'gemini_api'
 
 CONF_API_KEY = 'api_key'
