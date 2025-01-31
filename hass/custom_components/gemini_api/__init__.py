@@ -24,12 +24,12 @@ def setup(hass, config):
         parts = [{"text": prompt}]
         if images:
             for image_base64 in image_base64:
-            parts.append({
-                "inline_data": {
-                "mime_type": "image/jpeg",
-                "data": image_base64
-                }
-            })
+                parts.append({
+                    "inline_data": {
+                    "mime_type": "image/jpeg",
+                    "data": image_base64
+                    }
+                })
 
         content = {
             "contents": [{
