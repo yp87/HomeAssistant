@@ -22,13 +22,14 @@
       entity_id: binary_sensor.parking_motion_detection
       to: "on"
   action:
+    - delay: "00:00:02"
     - service: google_generative_ai_conversation.generate_content
       continue_on_error: true
       data:
         prompt: >-
           Analyze the sequence of images from a driveway camera to determine the cause of a motion alarm.
-          Briefly describe any significant changes between the images, focusing on objects that might have moved.
-          Your message needs to be short enough to fit in a phone notification.
+          Briefly describe any significant changes between the images.
+          Your message needs to use simple words and be short enough to fit in a phone notification.
           If the image shows no objects that might have moved, reply with "no".
           If the object was not on my parking or lot, reply with "out"
         image_filename:
