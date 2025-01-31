@@ -22,7 +22,7 @@
       entity_id: binary_sensor.parking_motion_detection
       to: "on"
   action:
-    - delay: "00:00:02"
+    - delay: "00:00:04"
     - service: google_generative_ai_conversation.generate_content
       continue_on_error: true
       data:
@@ -31,7 +31,7 @@
           Briefly describe any significant changes between the images.
           Your message needs to use simple words and be short enough to fit in a phone notification.
           If the image shows no objects that might have moved, reply with "no".
-          If the object was not on my parking or lot, reply with "out"
+          If the object was on the street, reply with "out"
         image_filename:
           - /pictures/parking00001.jpg
           - /pictures/parking00004.jpg
