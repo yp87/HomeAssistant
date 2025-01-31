@@ -20,7 +20,10 @@ def setup(hass, config):
         prompt = call.data.get('prompt')
         images = call.data.get('images')
 
-        image_base64 = [base64.b64encode(open(image, "rb").read()).decode('utf-8') for image in images]
+        if images:
+            image_base64 = [base64.b64encode(open(image, "rb").read()).decode('utf-8') for image in images]
+        else:
+            image_base64 = []
 
         parts = [{"text": prompt}]
         if images:

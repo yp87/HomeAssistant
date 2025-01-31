@@ -17,11 +17,3 @@ cath_phone_notification:
   initial: false
 
 yan_phone_plugged:
-
-leaf_next_departure_canceled:
-
-force_charge_car:
-
-car_charge_only:
-
-car_charging:
