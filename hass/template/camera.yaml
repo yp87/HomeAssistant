@@ -12,13 +12,3 @@
     - name: Parking motion detection
       state: "{{ is_state('binary_sensor.parking_motion_guard', 'on') }}"
       delay_off: "00:00:10"
-    - name: parking detection
-      state: >
-        {{ is_state('binary_sensor.parking_perimeter_detection', 'on') and
-           is_state('binary_sensor.parking_motion_detection', 'on') }}
-      delay_off: "00:05:00"
-    - name: parking detection night
-      state: >
-        {{ is_state('binary_sensor.parking_perimeter_detection_night', 'on') and
-           is_state('binary_sensor.parking_motion_detection', 'on') }}
-      delay_off: "00:05:00"

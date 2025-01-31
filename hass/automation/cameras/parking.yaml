@@ -19,26 +19,25 @@
   max_exceeded: silent
   trigger:
     - platform: state
-      entity_id: binary_sensor.parking_detection
+      entity_id: binary_sensor.parking_motion_detection
       to: "on"
   action:
-    - service: camera.snapshot
-      data:
-        entity_id: camera.parking
-        filename: /media/parking.jpg
     - service: google_generative_ai_conversation.generate_content
       continue_on_error: true
       data:
         prompt: >-
-          In the following sequence of images from my driveway camera, describe any objects, cars,
-          animals, or person that is able to move on my lot and their location.
-          Focus on the most probably thing that moved last. If there is none of that,
-          reponse with "no". Your message needs to be short enough to fit in a phone notification.
+          Analyze the sequence of images from a driveway camera to determine the cause of a motion alarm.
+          Briefly describe any significant changes between the images, focusing on objects that might have moved.
+          Your message needs to be short enough to fit in a phone notification.
+          If the image shows no objects that might have moved, reply with "no".
+          If the object was not on my parking or lot, reply with "out"
         image_filename:
-          - /media/parking.jpg
+          - /pictures/parking00001.jpg
+          - /pictures/parking00004.jpg
+          - /pictures/parking00007.jpg
       response_variable: image_description
     - service: notify.yan
       data:
         message: "{{ image_description.text or 'Parking Motion detected' }}"
         data:
-          attachment: /media/parking.jpg
+          attachment: /pictures/parking00004.jpg
