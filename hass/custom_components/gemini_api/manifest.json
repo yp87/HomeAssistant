@@ -1,7 +1,0 @@
-{
-  "domain": "gemini_api",
-  "name": "gemini_api",
-  "documentation": "https://www.home-assistant.io/integrations/gemini_api",
-  "codeowners": [],
-  "version": "1.0.0"
-}

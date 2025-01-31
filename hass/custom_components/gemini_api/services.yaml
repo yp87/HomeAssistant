@@ -1,9 +1,0 @@
----
-generate_text:
-  description: Send prompt and images to gemini and retrieve response.
-  fields:
-    prompt:
-      description: Prompt to send to gemini.
-      required: true
-    images:
-      description: List of images to send to gemini.
