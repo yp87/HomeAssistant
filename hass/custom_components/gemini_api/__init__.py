@@ -3,7 +3,7 @@ import base64
 import requests
 import json
 
-from homeassistant.helpers import SupportsResponse
+from homeassistant.core import SupportsResponse
 
 DOMAIN = 'gemini_api'
 
