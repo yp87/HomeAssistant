@@ -22,7 +22,7 @@
       entity_id: binary_sensor.parking_motion_detection
       to: "on"
   action:
-    - delay: "00:00:05"
+    - delay: "00:00:07"
     - service: google_generative_ai_conversation.generate_content
       continue_on_error: true
       data:
