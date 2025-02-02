@@ -22,7 +22,7 @@
       entity_id: binary_sensor.parking_motion_detection
       to: "on"
   action:
-    - delay: "00:00:07"
+    - delay: "00:00:08"
     - service: google_generative_ai_conversation.generate_content
       continue_on_error: true
       data:
@@ -34,12 +34,12 @@
           If the object was on the street, reply with "out"
         image_filename:
           - /pictures/parking00001.jpg
-          - /pictures/parking00004.jpg
-          - /pictures/parking00007.jpg
+          - /pictures/parking00006.jpg
+          - /pictures/parking000012.jpg
       response_variable: image_description
     - service: notify.yan
       data:
         message: "{{ image_description.text or 'Parking Motion detected' }}"
         data:
-          attachment: /pictures/parking00004.jpg
+          attachment: /pictures/parking00005.jpg
     - delay: "00:05:00"
