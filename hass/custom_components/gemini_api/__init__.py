@@ -9,7 +9,7 @@ DOMAIN = 'gemini_api'
 
 CONF_API_KEY = 'api_key'
 
-GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key="
+GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key="
 
 def setup(hass, config):
     """Service to send prompt and images to gemini."""
