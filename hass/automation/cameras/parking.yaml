@@ -39,7 +39,7 @@
       response_variable: image_description
     - service: notify.yan
       data:
-        message: "{{ image_description.text or 'Parking Motion detected' }}"
+        message: "{{ image_description.text if image_description else 'Parking Motion detected' }}"
         data:
           attachment: /pictures/parking00005.jpg
     - delay: "00:05:00"
