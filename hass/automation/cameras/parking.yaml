@@ -50,10 +50,12 @@
         - service: notify.yan
           data:
             message: "{{ image_description.text if image_description else 'Parking Motion detected' }}"
-            attachment: /pictures/parking00007.jpg
+            data:
+              attachment: /pictures/parking00007.jpg
       else:
         - service: notify.yan
           data:
             message: "no"
-            attachment: /pictures/parking00007.jpg
+            data:
+              attachment: /pictures/parking00007.jpg
     - delay: "00:05:00"
