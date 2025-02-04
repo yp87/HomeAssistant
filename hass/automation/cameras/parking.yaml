@@ -34,7 +34,7 @@
           If the object was on the street, reply with "out"
         image_filename:
           - /pictures/parking00001.jpg
-          - /pictures/parking00006.jpg
+          - /pictures/parking00007.jpg
           - /pictures/parking00012.jpg
       response_variable: image_description
     - service: notify.yan
