@@ -35,7 +35,7 @@
           - /pictures/parking00012.jpg
       response_variable: on_property
     - if:
-        - "{{ on_property and on_property.text == '1' }}"
+        - "{{ on_property is not defined or on_property.text == '1' }}"
       then:
         - service: google_generative_ai_conversation.generate_content
           continue_on_error: true
