@@ -19,8 +19,6 @@ secret*
 /hass/blueprints/**/homeassistant/
 /hass/.HA_VERSION
 /hass/home-assistant.log*
-/hass/llmvision/
-/hass/www/llmvision/
 
 __pycache__/
 

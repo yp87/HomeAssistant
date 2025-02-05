@@ -13,25 +13,6 @@
   action:
     - service: shell_command.set_parking_camera_time
 
-#- alias: Parking event summary
-#  id: Parking_event_summary
-#  use_blueprint:
-#    path: custom_event_summary.yaml
-#    input:
-#      input_mode: Camera
-#      important: false
-#      remember: true
-#      notify_device:
-#        - 336c5b4fae166f05bf031d1554f838db
-#      camera_entities:
-#        - camera.parking
-#      motion_sensors:
-#        - binary_sensor.parking_motion_guard
-#      preview_mode: Snapshot
-#      cooldown: 5
-#      provider: 01JK9JF4FXVCQ3H8HC4DC0CEJ0
-#      model: gemini-2.0-flash-exp
-
 - alias: Notify when motion in parking
   id: Notify_when_motion_in_parking
   mode: single
@@ -46,17 +27,20 @@
       continue_on_error: true
       data:
         prompt: >-
-          This is a motion alert. summarize what you see in the camera snapshot.
+          This is a motion alert in the front of my house.
+          Summarize what you see in the sequential camera snapshots.
           If there is a person, describe what they're doing and what they look like.
           If there is a car, describe where it is, the color and makes.
           Don't describe the scene.
-          The message should be short enough to fit in a phone notification.
+          Describe the thing that most probably caused the motion alert.
+          The message should be short enough simple sentence that fits in a phone notification.
         images:
-          - /pictures/parking00005.jpg
+          - /pictures/parking00001.jpg
+          - /pictures/parking00006.jpg
       response_variable: image_description
     - service: notify.yan
       data:
         message: "{{ image_description.text if image_description else 'Parking Motion detected' }}"
         data:
-          attachment: /pictures/parking00005.jpg
+          attachment: /pictures/parking00006.jpg
     - delay: "00:05:00"

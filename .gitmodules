@@ -10,6 +10,3 @@
 [submodule "hass/external_dependencies/adaptive-cover"]
 	path = hass/external_dependencies/adaptive-cover
 	url = https://github.com/basbruss/adaptive-cover
-[submodule "hass/external_dependencies/ha-llmvision"]
-	path = hass/external_dependencies/ha-llmvision
-	url = https://github.com/valentinfrlch/ha-llmvision
