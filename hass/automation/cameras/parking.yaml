@@ -16,7 +16,7 @@
 - alias: Parking event summary
   id: Parking_event_summary
   use_blueprint:
-    path: valentinfrlch/event_summary.yaml
+    path: custom_event_summary.yaml
     input:
       input_mode: Camera
       important: false
