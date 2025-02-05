@@ -47,11 +47,10 @@ def setup(hass, config):
 
         response = requests.post(gemini_full_url, headers=headers, data=json.dumps(content))
 
-        if response.status_code != 200:
-          raise Exception(f"Error {response.status_code}: {response.text}")
-
-        return {
-            "text": response.json()["candidates"][0]["content"]["parts"][0]["text"]
-        }
+        text = ""
+        if response.status_code == 200:
+          text = response.json()["candidates"][0]["content"]["parts"][0]["text"]
+        else:
+          text = f"Error {response.status_code}: {response.reason}"
 
     hass.services.register(DOMAIN, 'generate_text', generate_text, supports_response=SupportsResponse.ONLY)
