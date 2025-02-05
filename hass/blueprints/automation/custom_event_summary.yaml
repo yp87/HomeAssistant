@@ -363,6 +363,19 @@ action:
                       max_tokens: 3
                       temperature: 0.1
                     response_variable: importance
+    default:
+      - action: llmvision.image_analyzer
+        data:
+          image_entity: "{{[camera_entity]}}"
+          provider: !input provider
+          model: !input model
+          message: "{{importance_prompt}}"
+          include_filename: true
+          target_width: 1280
+          detail: low
+          max_tokens: 3
+          temperature: 0.1
+        response_variable: importanceTest
 
   # Cancel automation if event not deemed important
   - choose:
@@ -424,7 +437,7 @@ action:
             - alias: "Send instant notification to notify devices"
               action: notify.yan
               data:
-                message: "{{response.response_text}}"
+                message: "({{importanceTest is defined and importanceTest.response_text}}) {{response.response_text}}"
                 data:
                   attachment: "{{image if image != '' else None}}"
 
