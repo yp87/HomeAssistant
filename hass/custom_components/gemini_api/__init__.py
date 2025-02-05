@@ -51,6 +51,10 @@ def setup(hass, config):
         if response.status_code == 200:
           text = response.json()["candidates"][0]["content"]["parts"][0]["text"]
         else:
-          text = f"Error {response.status_code}: {response.reason}"
+          text = f"Error {response.status_code}: {response.text}"
+
+        return {
+            "text": text
+        }
 
     hass.services.register(DOMAIN, 'generate_text', generate_text, supports_response=SupportsResponse.ONLY)
