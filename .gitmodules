@@ -7,3 +7,6 @@
 [submodule "hass/external_dependencies/adaptive-cover"]
 	path = hass/external_dependencies/adaptive-cover
 	url = https://github.com/basbruss/adaptive-cover
+[submodule "hass/external_dependencies/polestar_api"]
+	path = hass/external_dependencies/polestar_api
+	url = https://github.com/pypolestar/polestar_api
