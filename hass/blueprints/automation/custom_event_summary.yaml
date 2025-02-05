@@ -424,7 +424,7 @@ action:
             - alias: "Send instant notification to notify devices"
               action: notify.yan
               data:
-                message: "{{image if image != '' else None}}"
+                message: "{{response.response_text}}"
                 data:
                   attachment: "{{image if image != '' else None}}"
 
