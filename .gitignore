@@ -16,7 +16,7 @@ secret*
 /hass/harmony_6042342.conf
 /hass/harmony_yharmony.conf
 /hass/tts/
-#/hass/blueprints/
+/hass/blueprints/**/homeassistant/
 /hass/.HA_VERSION
 /hass/home-assistant.log*
 /hass/llmvision/
