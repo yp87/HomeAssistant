@@ -58,3 +58,4 @@ def setup(hass, config):
         }
 
     hass.services.register(DOMAIN, 'generate_text', generate_text, supports_response=SupportsResponse.ONLY)
+    return True
