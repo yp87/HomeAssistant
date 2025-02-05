@@ -55,7 +55,7 @@
           - /pictures/parking00012.jpg
       response_variable: importance
     - if:
-        - "{{ importance is defined and importance.text|lower != 'passive' }}"
+        - "{{ importance is not defined or importance.text|lower != 'passive' }}"
       then:
         - service: gemini_api.generate_text
           continue_on_error: true
