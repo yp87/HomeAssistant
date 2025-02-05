@@ -13,24 +13,24 @@
   action:
     - service: shell_command.set_parking_camera_time
 
-- alias: Parking event summary
-  id: Parking_event_summary
-  use_blueprint:
-    path: custom_event_summary.yaml
-    input:
-      input_mode: Camera
-      important: false
-      remember: true
-      notify_device:
-        - 336c5b4fae166f05bf031d1554f838db
-      camera_entities:
-        - camera.parking
-      motion_sensors:
-        - binary_sensor.parking_motion_guard
-      preview_mode: Snapshot
-      cooldown: 5
-      provider: 01JK9JF4FXVCQ3H8HC4DC0CEJ0
-      model: gemini-2.0-flash-exp
+#- alias: Parking event summary
+#  id: Parking_event_summary
+#  use_blueprint:
+#    path: custom_event_summary.yaml
+#    input:
+#      input_mode: Camera
+#      important: false
+#      remember: true
+#      notify_device:
+#        - 336c5b4fae166f05bf031d1554f838db
+#      camera_entities:
+#        - camera.parking
+#      motion_sensors:
+#        - binary_sensor.parking_motion_guard
+#      preview_mode: Snapshot
+#      cooldown: 5
+#      provider: 01JK9JF4FXVCQ3H8HC4DC0CEJ0
+#      model: gemini-2.0-flash-exp
 
 - alias: Notify when motion in parking
   id: Notify_when_motion_in_parking
@@ -38,43 +38,47 @@
   max_exceeded: silent
   trigger:
     - platform: state
-      entity_id: binary_sensor.parking_motion_detection
+      entity_id: binary_sensor.parking_motion_guard
       to: "on"
   action:
     - delay: "00:00:08"
-    - service: google_generative_ai_conversation.generate_content
+    - service: gemini_api.generate_text
       continue_on_error: true
       data:
         prompt: >-
-          on these images, does the moving object appears on the property (x=1) or off the property (x=2)?
-          reply with x value only.
-        image_filename:
+          Your job is to classify security events based on cctv footage. Your options: "passive" if an event seems unimportant, "time-sensitive" if important and "critical" for suspicious events.
+          Use "critical" only for possible burglaries and similar events. "time-sensitive" could be a courier at the front door or an event of similar importance.
+          Reply with these replies exactly.
+        images:
           - /pictures/parking00001.jpg
-          - /pictures/parking00007.jpg
+          - /pictures/parking00006.jpg
           - /pictures/parking00012.jpg
-      response_variable: on_property
+      response_variable: importance
     - if:
-        - "{{ on_property is not defined or on_property.text == '1' }}"
+        - "{{ importance is defined and importance.text|lower != 'passive' }}"
       then:
-        - service: google_generative_ai_conversation.generate_content
+        - service: gemini_api.generate_text
           continue_on_error: true
           data:
             prompt: >-
-              Briefly describe the moving object as a short single line phone notification.
-            image_filename:
+              Summarize what's happening in the camera feed (one sentence max).
+              Don't describe the scene!
+              If there is a person, describe what they're doing and what they look like.
+              If they look like a courier mention that! If nothing is happening, say so.
+            images:
               - /pictures/parking00001.jpg
-              - /pictures/parking00007.jpg
+              - /pictures/parking00006.jpg
               - /pictures/parking00012.jpg
           response_variable: image_description
         - service: notify.yan
           data:
             message: "{{ image_description.text if image_description else 'Parking Motion detected' }}"
             data:
-              attachment: /pictures/parking00007.jpg
+              attachment: /pictures/parking00006.jpg
       else:
         - service: notify.yan
           data:
-            message: "no"
+            message: "passive, should be ignored."
             data:
-              attachment: /pictures/parking00007.jpg
+              attachment: /pictures/parking00006.jpg
     - delay: "00:05:00"

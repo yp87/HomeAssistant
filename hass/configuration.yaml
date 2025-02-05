@@ -145,6 +145,9 @@ hyperion_priority:
   host: !secret hyperion_ip_address
   port: !secret hyperion_port
 
+gemini_api:
+  api_key: !secret gemini_api_key
+
 rest_command:
   update_dns_ip:
     url: !secret dns_ip_update_url
