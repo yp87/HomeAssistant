@@ -12,6 +12,7 @@ homeassistant:
   country: !secret country
   allowlist_external_dirs:
     - /pictures
+    - /config/www/llmvision
 
 frontend:
 
