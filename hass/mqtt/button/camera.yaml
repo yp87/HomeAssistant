@@ -1,3 +1,0 @@
----
-- name: parking_motion_detected
-  command_topic: "axis/parking/motion"

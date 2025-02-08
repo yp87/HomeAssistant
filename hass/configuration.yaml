@@ -182,7 +182,6 @@ command_line: !include_dir_merge_list command_line
 
 mqtt:
   sensor: !include_dir_merge_list mqtt/sensor
-  button: !include_dir_merge_list mqtt/button
   switch: !include_dir_merge_list mqtt/switch
   binary_sensor: !include_dir_merge_list mqtt/binary_sensor
   alarm_control_panel: !include_dir_merge_list mqtt/alarm_control_panel
