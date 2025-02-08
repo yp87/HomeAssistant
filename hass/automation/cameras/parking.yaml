@@ -19,8 +19,7 @@
   max_exceeded: silent
   trigger:
     - platform: state
-      entity_id: binary_sensor.parking_motion_guard
-      to: "on"
+      entity_id: button.parking_motion_detected
   action:
     - delay: "00:00:01"
     - service: gemini_api.generate_text
