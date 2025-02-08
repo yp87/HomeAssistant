@@ -33,14 +33,15 @@
           If there is a car, describe where it is, the color and makes.
           Don't describe the scene.
           Describe the thing that most probably caused the motion alert.
-          The message should be short enough simple sentence that fits in a phone notification.
+          The message should be short enough simple sentence that fits in a phone notification (max 8 words).
+          Reply with the message only, nothing more.
         images:
           - /pictures/parking00001.jpg
-          - /pictures/parking00006.jpg
+          - /pictures/parking00007.jpg
       response_variable: image_description
     - service: notify.yan
       data:
         message: "{{ image_description.text if image_description else 'Parking Motion detected' }}"
         data:
-          attachment: /pictures/parking00006.jpg
+          attachment: /pictures/parking00007.jpg
     - delay: "00:05:00"

@@ -51,6 +51,8 @@ sun:
 
 logger:
   default: info
+  logs:
+    custom_components.adaptive_cover: debug
 
 backup:
 
