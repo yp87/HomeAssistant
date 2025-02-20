@@ -1,0 +1,34 @@
+---
+- alias: Sync backyard camera time
+  id: sync_backyard_camera_time
+  trigger:
+    - platform: time
+      at: '00:00:00'
+    - platform: homeassistant
+      event: start
+  condition:
+    condition: state
+    entity_id: camera.backyard
+    state: idle
+  action:
+    - service: shell_command.set_rear_window_camera_time
+
+- alias: Notify when motion in backyard
+  id: Notify_when_motion_in_backyard
+  mode: single
+  max_exceeded: silent
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.backyard_motion
+      to: "on"
+  action:
+    - service: camera.snapshot
+      data:
+        entity_id: camera.backyard
+        filename: /media/backyard.jpg
+    - service: notify.yan
+      data:
+        message: 'Backyard Motion detected'
+        data:
+          attachment: /media/backyard.jpg
+    - delay: "00:05:00"
