@@ -21,6 +21,12 @@
     - platform: state
       entity_id: binary_sensor.backyard_motion
       to: "on"
+  condition:
+    - condition: template
+      value_template: >
+        {{ (as_timestamp(now()) -
+            as_timestamp(states.cover.living_room_window_blind.last_changed))
+           > 10 }}
   action:
     - service: camera.snapshot
       data:
