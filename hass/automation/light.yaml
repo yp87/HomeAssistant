@@ -124,17 +124,17 @@
       to: "on"
   condition:
     - and:
-      - condition: time
-        after: '19:00:00'
-        before: '07:00:00'
-      - or:
-          - condition: state
-            entity_id: light.fred_bathroom_main_light
-            state: "off"
-          - condition: state
-            entity_id: light.fred_bathroom_main_light
-            attribute: brightness
-            state: 103
+        - condition: time
+          after: '19:00:00'
+          before: '07:00:00'
+        - or:
+            - condition: state
+              entity_id: light.fred_bathroom_main_light
+              state: "off"
+            - condition: state
+              entity_id: light.fred_bathroom_main_light
+              attribute: brightness
+              state: 103
   mode: restart
   action:
     - service: light.turn_on
@@ -150,4 +150,3 @@
       value_template: "{{ wait.trigger is none }}"
     - service: light.turn_off
       entity_id: light.fred_bathroom_main_light
-

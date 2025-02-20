@@ -159,15 +159,7 @@ rest_command:
     password: !secret camera_garage_password
 
 conversation:
-#assist_pipeline:
-
-joaoapps_join:
-  - name: android_server
-    device_id: !secret join_android_server_device
-    api_key: !secret join_android_server_api_key
-  - name: phone
-    device_id: !secret join_phone_device
-    api_key: !secret join_phone_api_key
+# assist_pipeline:
 
 automation: !include_dir_merge_list automation
 group: !include groups.yaml
