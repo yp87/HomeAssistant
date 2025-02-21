@@ -26,7 +26,7 @@
       value_template: >
         {{ (as_timestamp(now()) -
             as_timestamp(states.cover.living_room_window_blind.last_changed))
-           > 10 }}
+           > 20 }}
   action:
     - service: camera.snapshot
       data:
