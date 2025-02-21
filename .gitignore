@@ -19,6 +19,7 @@ secret*
 /hass/blueprints/**/homeassistant/
 /hass/.HA_VERSION
 /hass/home-assistant.log*
+/www/pictures/
 
 __pycache__/
 

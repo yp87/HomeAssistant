@@ -6,7 +6,7 @@ services:
     image: homeassistant/home-assistant:stable
     volumes:
       - ${BASE_PATH}/hass:/config
-      - /tmp/share:/pictures
+      - /tmp/share:/config/www/pictures
     restart: always
     network_mode: "host"
     environment:
