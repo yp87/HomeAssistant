@@ -19,7 +19,7 @@
   max_exceeded: silent
   trigger:
     - trigger: mqtt
-      topic: "axis/parking/motion"
+      topic: "camera/parking/motion"
   action:
     - delay: "00:00:01"
     - service: gemini_api.generate_text
